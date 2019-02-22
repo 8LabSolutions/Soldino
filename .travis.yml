@@ -1,0 +1,27 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+  - '8'
+notifications:
+  email: false
+  slack: 8labsolutions:xbZmb6AJptYE00snoApiI1F1
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - export COMMITTER_EMAIL="$(git log -1 $TRAVIS_COMMIT --pretty="%cE")"
+  - export AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
+jobs:
+  include:
+    - stage: deploy
+      script:
+        - npm run build
+      deploy:
+        provider: surge
+        skip_cleanup: true
+        domain: soldino.surge.sh
+        project: ./build/
+        on:
+          all_branches: true
