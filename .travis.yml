@@ -18,7 +18,6 @@ jobs:
     - stage: deploy
       script:
         - npm run build
-        - truffle compile
         - ganache-cli -p 7545 > /dev/null &
         - sleep 5
         - truffle migrate 
