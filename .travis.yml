@@ -13,6 +13,10 @@ cache:
 before_install:
   - export COMMITTER_EMAIL="$(git log -1 $TRAVIS_COMMIT --pretty="%cE")"
   - export AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
+  - npm install -g npm@latest
+  - npm install -g ganache-cli truffle
+install:
+  - npm install
 jobs:
   include:
     - stage: deploy
