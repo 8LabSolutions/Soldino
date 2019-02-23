@@ -1,17 +1,10 @@
 {
-  "name": "todoapp",
+  "name": "soldino-poc",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/8LabSolutions/Soldino-PoC"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -21,5 +14,28 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "./node_modules/.bin/eslint src/"
+  },
+  "dependencies": {
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-scripts": "2.1.5"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": "lint",
+  "author": "8Lab Solutions",
+  "license": "MIT"
 }

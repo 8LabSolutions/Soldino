@@ -17,6 +17,7 @@ jobs:
   include:
     - stage: deploy
       script:
+        - npm run lint
         - npm run build
       deploy:
         provider: surge
