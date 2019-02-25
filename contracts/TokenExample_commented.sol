@@ -10,7 +10,7 @@ interface tokenRecipient {
 contract owned {
     address public owner;
 
-    constructor() {
+    constructor() public{
         owner = msg.sender;
     }
 
@@ -81,16 +81,16 @@ contract TokenERC20 is owned {
         *               In questo caso tokenName e tokenSymbol sono puntatori a stringhe che sono salvate
         *               nell'area di memoria che viene allocata durante la call del costruttore 
         */ 
-    constructor(
-        uint256 initialSupply,
-        string memory tokenName,
-        string memory tokenSymbol,
-        address centralMinter
-    ) public {
-        if(centralMinter != 0) //controllo che l'indirizzo non sia invalido
+     constructor ( 
+        uint256 initialSupply, 
+        string memory tokenName, 
+        string memory tokenSymbol, 
+        address centralMinter) 
+        public {
+        if(centralMinter != address(0x0)) //controllo che l'indirizzo non sia invalido
             owner = centralMinter;
 
-        totalSupply = initialSupply
+        totalSupply = initialSupply;
         balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens
         name = tokenName;                                   // Set the name for display purposes
         symbol = tokenSymbol;                               // Set the symbol for display purposes
