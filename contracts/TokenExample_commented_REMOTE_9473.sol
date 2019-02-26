@@ -35,6 +35,7 @@ contract TokenERC20 is owned {
     string public name;
     string public symbol;
     uint8 public decimals = 2;
+    // 18 decimals is the strongly suggested default, avoid changing it
     uint256 public totalSupply;
 
     // This creates an array with all balances
@@ -211,20 +212,6 @@ contract TokenERC20 is owned {
         totalSupply -= _value;                              // Update totalSupply
         emit Burn(_from, _value);
         return true;
-    }
-
-    /**
-    * Mint and distribute token
-    * 
-    * You could send money to an address different from the owner and increase the amount of money in
-    * @param `target` the address of the receiver
-    * @param `mintedAmount` the amount of money minted
-    */
-    function mintToken(address target, uint256 mintedAmount) onlyOwner public {
-        balanceOf[target] += mintedAmount;
-        totalSupply += mintedAmount;
-        emit Transfer(0, owner, mintedAmount);
-        emit Transfer(owner, target, mintedAmount);
     }
 }
 
