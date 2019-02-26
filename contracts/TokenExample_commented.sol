@@ -35,6 +35,10 @@ contract TokenERC20 is owned {
     string public name;
     string public symbol;
     uint8 public decimals = 2;
+<<<<<<< HEAD
+=======
+    // 18 decimals is the strongly suggested default, avoid changing it
+>>>>>>> 90c6b26e31dba57780860a211ab9d8c4a6e62baa
     uint256 public totalSupply;
 
     // This creates an array with all balances
