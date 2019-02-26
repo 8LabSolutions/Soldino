@@ -100,12 +100,12 @@ contract TokenERC20 is owned {
      * Internal transfer, only can be called by this contract
      */
     function _transfer(address _from, address _to, uint _value) internal {
-        // Prevent transfer to 0x0 address. Use burn() instead
-        require(_to != address(0x0));
+        // Prevent transfer to 0x0 address. 
+        require(_to != address(0x0), "Invalid address");
         // Check if the sender has enough
-        require(balanceOf[_from] >= _value);
+        require(balanceOf[_from] >= _value, "Not enough funds");
         // Check for overflows
-        require(balanceOf[_to] + _value >= balanceOf[_to]);
+        require(balanceOf[_to] + _value >= balanceOf[_to], "Reciver overflow");
         // Save this for an assertion in the future
         uint previousBalances = balanceOf[_from] + balanceOf[_to];
         // Subtract from the sender
@@ -170,7 +170,8 @@ contract TokenERC20 is owned {
      * @param _value the max amount they can spend
      * @param _extraData some extra information to send to the approved contract
      */
-    function approveAndCall(address _spender, uint256 _value, bytes memory _extraData)
+    function approveAndCall(address _spender, uint256 _value, 
+        bytes memory _extraData)
         public
         returns (bool success) {
         tokenRecipient spender = tokenRecipient(_spender);
