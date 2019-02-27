@@ -31,11 +31,11 @@ contract Accounts {
 
     ///  address the new user's address
     /// mail: user's mail
-    /// @return a boolean telling if the operation went well
+    // @return a boolean telling if the operation went well
     function insertUser(address usAddress, bytes32 mail) public returns (bool success) {
         require(isRegistered(usAddress) == false, "User already registered");
 
-        UserStructs[usAddress].email = mail;
+        UserStructs[usAddress].email = mail;//https://metamask.io/
         UserStructs[usAddress].userType = UserType.Cit;
         UserStructs[usAddress].active = true;
         UserStructs[usAddress].indexPointer = userIndex.push(usAddress) - 1;

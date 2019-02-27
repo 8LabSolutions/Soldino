@@ -217,13 +217,13 @@ contract TokenERC20 is owned {
     * Mint and distribute token
     * 
     * You could send money to an address different from the owner and increase the amount of money in
-    * @param `target` the address of the receiver
-    * @param `mintedAmount` the amount of money minted
+    * ram `target` the address of the receiver
+    * aram `mintedAmount` the amount of money minted
     */
     function mintToken(address target, uint256 mintedAmount) onlyOwner public {
         balanceOf[target] += mintedAmount;
         totalSupply += mintedAmount;
-        emit Transfer(0, owner, mintedAmount);
+        emit Transfer(address(0x0), owner, mintedAmount);
         emit Transfer(owner, target, mintedAmount);
     }
 }
