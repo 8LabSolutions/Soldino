@@ -55,7 +55,4 @@ contract Accounts {
                 UserStructs[userAddress].userType,
                 UserStructs[userAddress].active);
     }
-
-    function f() public payable { balance = msg.value;}
-    function() external payable{}
 }
