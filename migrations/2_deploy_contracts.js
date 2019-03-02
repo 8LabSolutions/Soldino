@@ -1,12 +1,7 @@
-var Token = artifacts.require("TokenERC20");
-var Acc = artifacts.require("Accounts");
+var Accounts = artifacts.require("Accounts");
+var Token = artifacts.require("TokenERC20")
 
 module.exports = function(deployer) {
-  deployer.deploy(Token, 1000000 ,
-	"Cubit",
-	"CUB",
-	"0xA5A91DE72568141687864507423604f9Ea25E823");
-  deployer.deploy(Acc);
-
-
+  deployer.deploy(Accounts);
+  deployer.deploy(Token, 10000, "Cubit", "CC", "0xb3f592d1f38286BfAe11DA6B9bec132C8A8AAF02");
 };

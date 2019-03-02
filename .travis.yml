@@ -25,8 +25,7 @@ jobs:
         - npm run build
         - ganache-cli -p 7545 > /dev/null &
         - sleep 5
-        - truffle migrate 
-        - truffle test
+        - truffle migrate
       deploy:
         provider: surge
         skip_cleanup: true

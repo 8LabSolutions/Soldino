@@ -2,8 +2,8 @@ pragma solidity >=0.4.22 <0.6.0;
 
 
 //Le interfacce sono simili a contratti astratti ma non posso implementare funzioni
-interface tokenRecipient { 
-    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external; 
+interface tokenRecipient {
+    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external;
 }
 
 // Questo contratto serve a creare un amministratore centralizzato del token
@@ -16,7 +16,7 @@ contract owned {
 
     // i modificatori modificano la sintassi delle funzioni in cui sono inseriti
     // posso accettare parametri
-    // se il require risulta true allora "_;" indica di proseguire con la funzione, 
+    // se il require risulta true allora "_;" indica di proseguire con la funzione,
     //cioè esegue la funzione
     modifier onlyOwner {
         require(msg.sender == owner);
@@ -55,7 +55,7 @@ contract TokenERC20 is owned {
 
     // This generates a public event on the blockchain that will notify clients
     event Transfer(address indexed from, address indexed to, uint256 value);
-    
+
     // This generates a public event on the blockchain that will notify clients
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
@@ -75,16 +75,16 @@ contract TokenERC20 is owned {
         *               con le chiamate sendTransaction.
         *
         *   -Memory:    memory è un'area di memoria che viene istanziata per ogni call eseguita da un
-        *               da un contratto (più la memory cresce, più è costosa in termini di gas).   
+        *               da un contratto (più la memory cresce, più è costosa in termini di gas).
         *               Una varabile con la keyword memory è un puntatore.
         *               In questo caso tokenName e tokenSymbol sono puntatori a stringhe che sono salvate
-        *               nell'area di memoria che viene allocata durante la call del costruttore 
-        */ 
-     constructor ( 
-        uint256 initialSupply, 
-        string memory tokenName, 
-        string memory tokenSymbol, 
-        address centralMinter) 
+        *               nell'area di memoria che viene allocata durante la call del costruttore
+        */
+     constructor (
+        uint256 initialSupply,
+        string memory tokenName,
+        string memory tokenSymbol,
+        address centralMinter)
         public {
         if(centralMinter != address(0x0)) //controllo che l'indirizzo non sia invalido
             owner = centralMinter;
@@ -99,7 +99,7 @@ contract TokenERC20 is owned {
      * Internal transfer, only can be called by this contract
      */
     function _transfer(address _from, address _to, uint _value) internal {
-        // Prevent transfer to 0x0 address. 
+        // Prevent transfer to 0x0 address.
         require(_to != address(0x0), "Invalid address");
         // Check if the sender has enough
         require(balanceOf[_from] >= _value, "Not enough funds");
@@ -169,7 +169,7 @@ contract TokenERC20 is owned {
      * @param _value the max amount they can spend
      * @param _extraData some extra information to send to the approved contract
      */
-    function approveAndCall(address _spender, uint256 _value, 
+    function approveAndCall(address _spender, uint256 _value,
         bytes memory _extraData)
         public
         returns (bool success) {
@@ -215,7 +215,7 @@ contract TokenERC20 is owned {
 
     /**
     * Mint and distribute token
-    * 
+    *
     * You could send money to an address different from the owner and increase the amount of money in
     * ram `target` the address of the receiver
     * aram `mintedAmount` the amount of money minted

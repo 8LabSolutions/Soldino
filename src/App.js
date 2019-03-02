@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import './style/App.css';
+import BtnLog from './components/containers/LogContainer';
+import './styles/App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        Esempio
+        <BtnLog />
       </div>
     );
   }
 }
-
 export default App;
