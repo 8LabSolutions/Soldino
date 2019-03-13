@@ -1,18 +1,16 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from "./store/index";
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from "./store/index";
 import App from './App';
-
-
-// src/index.js
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );
 
-//da rimuovere
-window.store = store;

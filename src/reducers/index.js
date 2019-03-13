@@ -1,9 +1,11 @@
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
 import { LOGIN, LOGOUT } from "../constants/actionTypes";
 
 const initialState = {
   logged: false
 };
-function rootReducer(state = initialState, action) {
+export function rootReducer(state = initialState, action) {
   if (action.type === LOGIN || action.type === LOGOUT) {
     return Object.assign({}, state, {
       logged: action.par
@@ -11,4 +13,9 @@ function rootReducer(state = initialState, action) {
   }
   return state;
 }
-export default rootReducer;
+export const persistConfig = {
+  key: 'root',
+  storage: storage
+};
+
+export default persistReducer(persistConfig, rootReducer);
