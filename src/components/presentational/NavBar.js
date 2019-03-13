@@ -4,12 +4,7 @@ import { store } from "../../store/index";
 
 class NavBar extends Component {
   render() {
-    let text
-    if(store.getState().logged === true){
-      text = 'Logout';
-    }else{
-      text = 'Login';
-    }
+    let authText = (store.getState().logged === true) ? 'Logout' : 'Login';
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <span className="navbar-brand">Soldino</span>
@@ -21,7 +16,7 @@ class NavBar extends Component {
             <a className="nav-item nav-link" href="/other">Other</a>
           </div>
         </div>
-        <ButtonAuth text={text} />
+        <ButtonAuth text={authText} />
       </nav>
     )
   }

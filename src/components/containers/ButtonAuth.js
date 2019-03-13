@@ -10,12 +10,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  var action;
-  if(store.getState().logged === false){
-    action = logIn()
-  }else{
-    action = logOut()
-  }
+  var action = (store.getState().logged === false) ? logIn() : logOut();
   return {
     action: () => {
       dispatch(action)
