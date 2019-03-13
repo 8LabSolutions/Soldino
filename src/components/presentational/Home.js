@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
-import NavBar from './NavBar'
-import FormRegistration from './FormRegistration'
+import NavBar from './NavBar';
+import FormRegistration from './FormRegistration';
+import Store from './Store';
+import { store } from "../../store/index";
 
 class Home extends Component {
   render() {
+    let dynamicHome = (store.getState().logged === false) ? <FormRegistration /> : <Store />;
     return (
       <div>
         <NavBar />
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-12">
-              <h1>Home</h1>
-              <FormRegistration />
-            </div>
-          </div>
-        </div>
+        {dynamicHome}
       </div>
     )
   }

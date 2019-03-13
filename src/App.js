@@ -4,8 +4,8 @@ import { createBrowserHistory } from 'history';
 import './styles/App.css';
 import Home from './components/presentational/Home';
 import Government from './components/presentational/Government';
-import Store from './components/presentational/Store';
-import Other from './components/presentational/Other';
+import Cart from './components/presentational/Cart';
+import Footer from './components/presentational/Footer'
 
 
 export const history = createBrowserHistory();
@@ -17,8 +17,8 @@ class App extends Component {
         <div className="App">
           <Route exact path="/" component={Home} />
           <Route path="/government" component={Government} />
-          <Route path="/store" component={Store} />
-          <Route path="/other" component={Other} />
+          <Route path="/cart" component={Cart} />
+          <Footer />
         </div>
       </Router>
     );
