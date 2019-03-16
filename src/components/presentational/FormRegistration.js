@@ -12,7 +12,6 @@ class FormRegistration extends Component {
       <form>
         <div className="container">
           <div className="row">
-
 {/* START - User type switch buttons */}
             <div className="col-sm-12">
               {/*<div className="dropdown">
@@ -24,7 +23,7 @@ class FormRegistration extends Component {
               </div>*/}
               <input type="radio" name="userType" /> Business
               <br />
-              <input type="radio" name="userType" checked="checked" /> Citizen
+              <input type="radio" name="userType" defaultChecked="checked" /> Citizen
             </div>
 {/* END - User type switch buttons */}
 {/* START - Dynamic form based on user type */}
