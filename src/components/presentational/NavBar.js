@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-indent */
 /* eslint-disable react/jsx-wrap-multilines */
 import React, {Component} from 'react';
+import { NavLink } from 'react-router-dom'
 import ButtonAuth from '../containers/ButtonAuth';
 import { store } from "../../store/index";
+
 
 class NavBar extends Component {
   render() {
@@ -11,9 +13,9 @@ class NavBar extends Component {
     if (store.getState().logged === true){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav">
-                    <a className="nav-item nav-link" href="/">Store</a>
-                    <a className="nav-item nav-link" href="/government">Government</a>
-                    <a className="nav-item nav-link material-icons" href="/cart">shopping_cart</a>
+                    <NavLink className="nav-item nav-link" to="/">Store</NavLink>
+                    <NavLink className="nav-item nav-link" to="/government">Government</NavLink>
+                    <NavLink className="nav-item nav-link material-icons" to="/cart">shopping_cart</NavLink>
                   </div>
     }else{
       authText = 'Login'

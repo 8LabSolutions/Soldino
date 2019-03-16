@@ -7,7 +7,6 @@ import Government from './components/presentational/Government';
 import Cart from './components/presentational/Cart';
 import Footer from './components/presentational/Footer'
 
-
 export const history = createBrowserHistory();
 
 class App extends Component {
