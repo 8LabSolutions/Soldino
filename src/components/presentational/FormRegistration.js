@@ -1,50 +1,83 @@
-/* eslint-disable react/jsx-indent */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable react/no-unknown-property */
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {Component} from 'react';
-import Button from './Button'
+import Button from './Button';
+
+function citizenFormMaker() {
+  return (
+    <div className="col-sm-12">
+      <label htmlFor="InputEmail" className="form-group col-sm-6"> 
+        <span>Email</span>
+        <input type="email" className="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter Email" />
+      </label>
+      <label htmlFor="InputAddress" className="form-group col-sm-6"> 
+        <span>Address</span>
+        <input className="form-control" id="InputAddress" placeholder="Enter Address" />
+      </label>
+      <label htmlFor="InputName" className="form-group col-sm-6"> 
+        <span>Name</span>
+        <input className="form-control" id="InputName" placeholder="Enter Name" />
+      </label>
+      <label htmlFor="InputSurname" className="form-group col-sm-6"> 
+        <span>Surname</span>
+        <input className="form-control" id="InputSurname" placeholder="Enter Surname" />
+      </label>
+    </div>
+  )
+}
+
+function businessFormMaker() {
+  return (
+    <div className="col-sm-12">
+      <label htmlFor="InputEmail" className="form-group col-sm-6"> 
+        <span>Email</span>
+        <input type="email" className="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter Email" />
+      </label>
+      <label htmlFor="InputHeadquarters" className="form-group col-sm-6"> 
+        <span>Headquarters</span>
+        <input className="form-control" id="InputHeadquarters" placeholder="Enter Headquarters" />
+      </label>
+      <label htmlFor="InputVATNumber" className="form-group col-sm-6"> 
+        <span>VAT Number</span>
+        <input className="form-control" id="InputVATNumber" placeholder="Enter VAT Number" />
+      </label>
+      <label htmlFor="InputCompanyName" className="form-group col-sm-6"> 
+        <span>Company Name</span>
+        <input className="form-control" id="InputCompanyName" placeholder="Enter Company Name" />
+      </label>
+    </div>
+  )
+}
 
 class FormRegistration extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOptionChange = this.handleOptionChange.bind(this);
+    this.state = { userType: "CITIZEN" };
+  }
+
+  handleOptionChange(event){
+    this.setState({
+      userType: event.target.value
+    });
+  }
+  
   render() {
+    const { userType } = this.state;
     return (
       <form>
         <div className="container">
           <div className="row">
-{/* START - User type switch buttons */}
-            <div className="col-sm-12">
-              {/*<div className="dropdown">
-                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Business</button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <button className="dropdown-item" type="button">Citizen</button>
-                  <button className="dropdown-item" type="button">Business</button>
-                </div>
-              </div>*/}
-              <input type="radio" name="userType" /> Business
+            <div className="col-sm-12" onChange={this.handleOptionChange}>
+              <label htmlFor="businessRadio">
+                <input type="radio" name="userType" value="BUSINESS" id="businessRadio" />
+                <span>Business</span>
+              </label>
               <br />
-              <input type="radio" name="userType" defaultChecked="checked" /> Citizen
+              <label htmlFor="citizenRadio">
+                <input type="radio" name="userType" defaultChecked="checked" value="CITIZEN" id="citizenRadio" />
+                <span>Citizen</span>
+              </label>
             </div>
-{/* END - User type switch buttons */}
-{/* START - Dynamic form based on user type */}
-            <div className="form-group col-sm-6">
-              <label htmlFor="InputName">Name</label>
-              <input type="email" className="form-control" id="InputName" aria-describedby="emailHelp" placeholder="Enter name" />
-            </div>
-            <div className="form-group col-sm-6">
-              <label htmlFor="InputVAT">VAT Number</label>
-              <input className="form-control" id="InputVAT" placeholder="Enter VAT number" />
-            </div>
-            <div className="form-group col-sm-6">
-              <label htmlFor="InputEmail">Email</label>
-              <input type="email" className="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email" />
-              <small id="emailHelp" className="form-text text-muted">We will never share your email with anyone else.</small>
-            </div>
-            <div className="form-group col-sm-6">
-              <label htmlFor="InputAddress">Address</label>
-              <input className="form-control" id="InputAddress" placeholder="Enter address" />
-            </div>
-{/* END - Dynamic form based on user type */}
+            { userType==="CITIZEN" ? citizenFormMaker() : businessFormMaker() }
             <div className="col-sm-12 text-center">
               <Button text="Sign Up" />
             </div>
