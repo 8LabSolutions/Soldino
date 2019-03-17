@@ -1,4 +1,4 @@
-import Web3 from 'web3'
+/*import Web3 from 'web3'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Error from '../components/presentational/Error'
@@ -19,7 +19,7 @@ export default function getWeb3(){
     web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
   }
   return web3js
-}
+}*/
 
 /* esempio di chiamata a contratto
 export const contratto = async (web3js) => {
