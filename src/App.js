@@ -9,6 +9,8 @@ import Footer from './components/presentational/Footer'
 
 export const history = createBrowserHistory();
 
+//store.dispatch(reset())
+
 class App extends Component {
   render() {
     return (

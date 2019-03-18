@@ -4,11 +4,6 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from "./store/index";
 import App from './App';
-import { reset } from './actions/reset'
-
-window.onunload= function () {
-  store.dispatch(reset())
-}
 
 ReactDOM.render(
   <Provider store={store}>
