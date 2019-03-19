@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
   var action = (store.getState().logged === false) ? logIn() : logOut();
   return {
     action: () => {
-      dispatch(logGovern())
+      dispatch(logBusiness())
       dispatch(action)
       window.location.href = "/"
     }

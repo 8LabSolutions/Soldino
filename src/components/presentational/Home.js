@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import NavBar from './NavBar';
 import FormRegistration from './FormRegistration';
-import Store from './Store';
+import StoreContainer from '../containers/StoreContainer';
 import { store } from "../../store/index";
 import CubitManager from './CubitManager';
 
@@ -13,7 +13,7 @@ class Home extends Component {
     }else if(store.getState().userType === "Govern"){
       dynamicHome = <CubitManager />
     }else{
-      dynamicHome = <Store />
+      dynamicHome = <StoreContainer />
     }
     return (
       <div>

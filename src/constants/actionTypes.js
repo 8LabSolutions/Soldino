@@ -5,3 +5,4 @@ export const RESET = "RESET";
 export const CITIZEN = "CITIZEN";
 export const BUSINESS = "BUSINESS";
 export const GOVERN = "GOVERN";
+export const SEARCH = "SEARCH";
