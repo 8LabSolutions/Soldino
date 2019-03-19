@@ -23,7 +23,7 @@ class Store extends Component {
       name = "Product #"+ i
       grossPrice = 60
       description = "description"
-      if(name.includes(props.searchProduct) || props.searchProduct === ""){
+      if(name.toUpperCase().includes(props.searchProduct.toUpperCase()) || props.searchProduct === ""){
         product = [name, grossPrice, description]
         productArray[i] = product;
       }
