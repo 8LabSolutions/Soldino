@@ -1,10 +1,11 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN } from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH } from "../constants/actionTypes";
 
 const initialState = {
   logged: false,
   userType: null,
+  searchProduct: "",
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === LOGIN) {
@@ -23,11 +24,17 @@ export function rootReducer(state = initialState, action) {
       userType: action.user
     });
   }
+  if (action.type === SEARCH) {
+    return Object.assign({}, state, {
+      searchProduct: action.str
+    });
+  }
   return state;
 }
 export const persistConfig = {
   key: 'root',
-  storage: storage
+  storage: storage,
+  blacklist: ['searchProduct']
 };
 
 export default persistReducer(persistConfig, rootReducer);

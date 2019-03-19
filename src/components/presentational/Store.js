@@ -1,22 +1,41 @@
 import React, {Component} from 'react';
 import Product from './Product';
+import SearchContainer from '../containers/SearchContainer';
+
+
+function printProduct(product) {
+  return(
+    <Product title={product[0]} price={product[1]} description={product[2]} />
+  )
+}
+
 
 class Store extends Component {
   render() {
+    let props = this.props
+    let totalProducts = 50
+    let name
+    let grossPrice
+    let description
+    var product
+    var productArray = []
+    for(var i=0; i<totalProducts; i++){
+      name = "Product #"+ i
+      grossPrice = 60
+      description = "description"
+      if(name.includes(props.searchProduct) || props.searchProduct === ""){
+        product = [name, grossPrice, description]
+        productArray[i] = product;
+      }
+    }
+    console.log("nuovo render")
     return (
       <div>
         <h1>Store</h1>
         <div className="container">
           <div className="row">
-            <Product title="Product 1" description="Some description" />
-            <Product title="Product 2" description="Some description" />
-            <Product title="Product 3" description="Some description" />
-            <Product title="Product 4" description="Some description" />
-            <Product title="Product 5" description="Some description" />
-            <Product title="Product 6" description="Some description" />
-            <Product title="Product 7" description="Some description" />
-            <Product title="Product 8" description="Some description" />
-            <Product title="Product 9" description="Some description" />
+            <SearchContainer />
+            {productArray.map(i => printProduct(i))}
           </div>
         </div>
       </div>
