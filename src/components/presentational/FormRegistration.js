@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Button from './Button';
+import Guide from './Guide';
 
 function citizenFormMaker() {
   return (
@@ -66,21 +67,31 @@ class FormRegistration extends Component {
       <form>
         <div className="container">
           <div className="row">
-            <div className="col-sm-12" onChange={this.handleOptionChange}>
-              <label htmlFor="businessRadio">
-                <input type="radio" name="userType" value="BUSINESS" id="businessRadio" />
-                <span>Business</span>
-              </label>
+            <div className="col-sm-6">
+              <Guide />
+              <a href="https://metamask.io">Install MetaMask</a>
+            </div>
+            <div className="col-sm-6">
+              <div className="col-sm-12" onChange={this.handleOptionChange}>
+                <label htmlFor="businessRadio">
+                  <input type="radio" name="userType" value="BUSINESS" id="businessRadio" />
+                  <span>Business</span>
+                </label>
+                <br />
+                <label htmlFor="citizenRadio">
+                  <input type="radio" name="userType" defaultChecked="checked" value="CITIZEN" id="citizenRadio" />
+                  <span>Citizen</span>
+                </label>
+              </div>
+              { userType==="CITIZEN" ? citizenFormMaker() : businessFormMaker() }
+              <div className="col-sm-12 text-center">
+                <Button text="Sign Up" />
+              </div>
+            </div>
+            {/* <div className="col-sm-12">
               <br />
-              <label htmlFor="citizenRadio">
-                <input type="radio" name="userType" defaultChecked="checked" value="CITIZEN" id="citizenRadio" />
-                <span>Citizen</span>
-              </label>
-            </div>
-            { userType==="CITIZEN" ? citizenFormMaker() : businessFormMaker() }
-            <div className="col-sm-12 text-center">
-              <Button text="Sign Up" />
-            </div>
+              <iframe src="https://metamask.io" title="metamask" /> 
+            </div>*/}
           </div>
         </div>
       </form>

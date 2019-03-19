@@ -4,6 +4,7 @@ import { RESET } from "../constants/actionTypes";
 export function reset() {
   return {
     type: RESET,
-    par: false
+    par: false,
+    user: null
   };
 }

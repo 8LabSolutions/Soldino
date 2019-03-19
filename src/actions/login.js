@@ -1,5 +1,5 @@
 // src/js/actions/index.js
-import { LOGIN, LOGOUT } from "../constants/actionTypes";
+import { LOGIN, LOGOUT, BUSINESS, GOVERN, CITIZEN } from "../constants/actionTypes";
 
 export function logIn() {
   return {
@@ -11,6 +11,29 @@ export function logIn() {
 export function logOut() {
   return {
     type: LOGOUT,
-    par: false
+    par: false,
+    user: null
   };
 }
+
+export function logCitizen() {
+  return {
+    type: CITIZEN,
+    user: "Citizen"
+  };
+}
+
+export function logBusiness() {
+  return {
+    type: BUSINESS,
+    user: "Business"
+  };
+}
+
+export function logGovern() {
+  return {
+    type: GOVERN,
+    user: "Govern"
+  };
+}
+

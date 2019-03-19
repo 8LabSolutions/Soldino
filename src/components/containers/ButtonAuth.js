@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
-import { logIn, logOut } from '../../actions/login';
+import { logIn, logOut, logBusiness, logCitizen, logGovern } from '../../actions/login';
 import Button from '../presentational/Button';
 import { store } from "../../store/index";
 
@@ -13,8 +14,9 @@ const mapDispatchToProps = (dispatch) => {
   var action = (store.getState().logged === false) ? logIn() : logOut();
   return {
     action: () => {
+      dispatch(logGovern())
       dispatch(action)
-      window.location.reload();
+      window.location.href = "/"
     }
   }
 }
