@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
 import React, {Component} from 'react';
-import Button from './Button';
+import ButtonProduct from '../containers/ButtonProduct';
 
 
 class Product extends Component {
@@ -22,7 +22,7 @@ class Product extends Component {
               <label htmlFor="InputQuantity">Quantity</label>
               <input className="form-control" id="InputQuantity" placeholder="Enter quantity" defaultValue="1" type="number" min="1" max={maxQuantity} />
             </div>
-            <Button text="Add to cart" />
+            <ButtonProduct text="Add to cart" args1={props.title} args2="1" args3={props.price} />
           </div>
         </div>
         <br />

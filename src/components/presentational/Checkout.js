@@ -137,7 +137,7 @@ class Checkout extends Component {
                     <NavLink className="nav-item nav-link" to="/cart"><Button text="Cancel" /></NavLink>
                   </div>
                   <div className="col-sm-6">
-                    <Button text="Next" />
+                    <Button text="Confirm and pay" />
                   </div>
                 </div>
               </div>
