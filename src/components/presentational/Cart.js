@@ -16,18 +16,19 @@ function printProduct(product) {
 class Cart extends Component {
 
   render() {
-    let totalProducts = 5
+    let productsList = store.getState().cart;
+    let totalProducts = productsList.length
     let title
     let quantity
-    let price = 9.99
+    let price
     let product
     let productArray = []
     let totalPrice = 0
     if(store.getState().logged === false){window.location.href = "/"}
     for(var i=0; i<totalProducts; i++){
-      title = "Product #"+ i
-      quantity = 5
-      price = 9.99
+      title = productsList[i].title
+      quantity = productsList[i].quantity
+      price = productsList[i].price
       totalPrice += price*quantity
       product = [title, quantity, price]
       productArray[i] = product;

@@ -12,10 +12,14 @@ export function addToCart(title, quantity, price) {
   };
 }
 
-export function removeFromCart(product) {
+export function removeFromCart(title, quantity, price) {
   return {
     type: REMOVEFROMCART,
-    product
+    product: {
+      title, 
+      quantity, 
+      price
+  }
   };
 }
 

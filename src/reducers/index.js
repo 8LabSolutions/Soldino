@@ -37,8 +37,14 @@ export function rootReducer(state = initialState, action) {
     });
   }
   if (action.type === REMOVEFROMCART) {
+    var newCart = []
+    for(var i=0; i<state.cart.length; i++){
+      if(state.cart[i].title!==action.product.title){
+        newCart = [...newCart, state.cart[i]]
+      }
+    }
     return Object.assign({}, state, {
-      cart: state.cart.splice(state.cart.indexOf(action.product), 1)
+      cart: newCart
     });
   }
   return state;
@@ -46,7 +52,7 @@ export function rootReducer(state = initialState, action) {
 export const persistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['searchProduct', 'cart']
+  blacklist: ['searchProduct']
 };
 
 export default persistReducer(persistConfig, rootReducer);

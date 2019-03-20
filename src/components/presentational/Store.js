@@ -21,7 +21,7 @@ class Store extends Component {
     var productArray = []
     for(var i=0; i<totalProducts; i++){
       name = "Product #"+ i
-      grossPrice = 60
+      grossPrice = 9.99
       description = "description"
       if(name.toUpperCase().includes(props.searchProduct.toUpperCase()) || props.searchProduct === ""){
         product = [name, grossPrice, description]

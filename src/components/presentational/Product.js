@@ -4,8 +4,19 @@
 import React, {Component} from 'react';
 import ButtonProduct from '../containers/ButtonProduct';
 
-
 class Product extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {value: 1};
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
   render() {
     let props = this.props;
     let maxQuantity = 50;
@@ -20,9 +31,9 @@ class Product extends Component {
             <p className="card-text">{props.description}</p>
             <div className="form-group col-sm-12">
               <label htmlFor="InputQuantity">Quantity</label>
-              <input className="form-control" id="InputQuantity" placeholder="Enter quantity" defaultValue="1" type="number" min="1" max={maxQuantity} />
+              <input className="form-control" id="InputQuantity" value={this.state.value} onChange={this.handleChange} placeholder="Enter quantity" defaultValue="1" type="number" min="1" max={maxQuantity} />
             </div>
-            <ButtonProduct text="Add to cart" args1={props.title} args2="1" args3={props.price} />
+            <ButtonProduct text="Add to cart" args1={props.title} args2={this.state.value} args3={props.price} />
           </div>
         </div>
         <br />

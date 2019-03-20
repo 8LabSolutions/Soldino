@@ -2,7 +2,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
 import React, {Component} from 'react';
+import { NavLink } from 'react-router-dom'
 import Button from './Button';
+import ButtonCart from '../containers/ButtonCart'
 
 
 
@@ -31,7 +33,7 @@ class Product extends Component {
                   <h5 className="card-price">CC {props.price}</h5>
                 </div>
                 <div className="col-sm-12">
-                  <Button text="Remove" />
+                  <NavLink className="nav-item nav-link" to="/cart"><ButtonCart text="Remove" args1={props.title} args2={props.quantity} args3={props.price} /></NavLink>  
                 </div>
               </div>
             </div>
