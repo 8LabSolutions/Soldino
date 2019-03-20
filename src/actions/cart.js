@@ -4,7 +4,18 @@ import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY } from ".
 export function addToCart(title, quantity, price) {
   return {
     type: ADDTOCART,
-    product: {
+      product: {
+          title, 
+          quantity, 
+          price
+      }
+  };
+}
+
+export function removeFromCart(title, quantity, price) {
+  return {
+    type: REMOVEFROMCART,
+      product: {
         title, 
         quantity, 
         price
@@ -12,27 +23,24 @@ export function addToCart(title, quantity, price) {
   };
 }
 
-export function removeFromCart(title, quantity, price) {
-  return {
-    type: REMOVEFROMCART,
-    product: {
-      title, 
-      quantity, 
-      price
-  }
-  };
-}
-
-export function increaseQuantity(quantity) {
+export function increaseQuantity(title, quantity, price) {
   return {
     type: INCREASEQUANTITY,
-    quantity
+      product: {
+        title, 
+        quantity, 
+        price
+    }
   };
 }
 
-export function decreaseQuantity(quantity) {
+export function decreaseQuantity(title, quantity, price) {
   return {
     type: DECREASEQUANTITY,
-    quantity
+      product: {
+        title, 
+        quantity, 
+        price
+    }
   };
 }

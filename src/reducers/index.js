@@ -32,6 +32,21 @@ export function rootReducer(state = initialState, action) {
     });
   }
   if (action.type === ADDTOCART) {
+    /*var newCart1 = []
+    if(state.cart.length===0){
+      newCart1 = [...newCart1, action.product]
+    }else{
+      for(var i=0; i<state.cart.length; i++){
+        if(state.cart[i].title===action.product.title){
+          newCart1 = [...newCart1, [action.product.title, state.cart[i].quantity+action.product.quantity, action.product.price]]
+        }else{
+          newCart1 = [...newCart1, action.product]
+        }
+      }
+    }
+    return Object.assign({}, state, {
+      cart: newCart1
+    });*/
     return Object.assign({}, state, {
       cart: [...state.cart, action.product]
     });
@@ -45,6 +60,32 @@ export function rootReducer(state = initialState, action) {
     }
     return Object.assign({}, state, {
       cart: newCart
+    });
+  }
+  if (action.type === INCREASEQUANTITY) {
+    var newCartAdd = []
+    for(var j=0; j<state.cart.length; j++){
+      if(state.cart[j].title===action.product.title){
+        newCartAdd = [...newCartAdd, action.product]
+      }else{
+        newCartAdd = [...newCartAdd, state.cart[j]]
+      }
+    }
+    return Object.assign({}, state, {
+      cart: newCartAdd
+    });
+  }
+  if (action.type === DECREASEQUANTITY) {
+    var newCartRm = []
+    for(var k=0; k<state.cart.length; k++){
+      if(state.cart[k].title===action.product.title){
+        newCartRm = [...newCartRm, action.product]
+      }else{
+        newCartRm = [...newCartRm, state.cart[k]]
+      }
+    }
+    return Object.assign({}, state, {
+      cart: newCartRm
     });
   }
   return state;
