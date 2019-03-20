@@ -11,6 +11,7 @@ import SuccessRegistration from './components/presentational/SuccessRegistration
 import VATManager from './components/presentational/VATManager';
 import TransactionsManager from './components/presentational/TransactionsManager';
 import ProductsManager from './components/presentational/ProductsManager';
+import Checkout from './components/presentational/Checkout';
 
 export const history = createBrowserHistory();
 
@@ -29,6 +30,7 @@ class App extends Component {
           <Route path="/vatmanager" component={VATManager} />
           <Route path="/transactionsmanager" component={TransactionsManager} />
           <Route path="/productsmanager" component={ProductsManager} />
+          <Route path="/checkout" component={Checkout} />
           <Footer />
         </div>
       </Router>

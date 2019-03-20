@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
 import React, {Component} from 'react';
@@ -14,7 +15,7 @@ class Product extends Component {
           {/* <img src="..." className="card-img-top" alt="..." /> */}
           <div className="card-body">
             <h5 className="card-title">{props.title}</h5>
-            <h6 className="card-price">{props.price}</h6>
+            <h6 className="card-price">CC {props.price}</h6>
             {/*gross price*/}
             <p className="card-text">{props.description}</p>
             <div className="form-group col-sm-12">
