@@ -32,24 +32,26 @@ export function rootReducer(state = initialState, action) {
     });
   }
   if (action.type === ADDTOCART) {
-    /*var newCart1 = []
+    var newCart1 = []
     if(state.cart.length===0){
-      newCart1 = [...newCart1, action.product]
+      newCart1 = [action.product]
     }else{
-      for(var i=0; i<state.cart.length; i++){
-        if(state.cart[i].title===action.product.title){
-          newCart1 = [...newCart1, [action.product.title, state.cart[i].quantity+action.product.quantity, action.product.price]]
+      for(var z=0; z<state.cart.length; z++){
+        if(state.cart[z].title===action.product.title){
+          action.product.quantity = +state.cart[z].quantity + +action.product.quantity
         }else{
-          newCart1 = [...newCart1, action.product]
+          newCart1 = [...newCart1, state.cart[z]]
         }
       }
+      newCart1 = [...newCart1, action.product]
     }
     return Object.assign({}, state, {
       cart: newCart1
-    });*/
+    });
+    /*
     return Object.assign({}, state, {
       cart: [...state.cart, action.product]
-    });
+    });*/
   }
   if (action.type === REMOVEFROMCART) {
     var newCart = []
