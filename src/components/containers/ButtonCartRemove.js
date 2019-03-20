@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
-import ButtonArgs from '../presentational/ButtonArgs';
+import Button from '../presentational/Button';
 import { decreaseQuantity } from '../../actions/cart';
 
 const mapDispatchToProps = (dispatch) => {
@@ -11,6 +11,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ButtonCartRemove = connect(null, mapDispatchToProps)(ButtonArgs);
+const ButtonCartRemove = connect(null, mapDispatchToProps)(Button);
 
 export default ButtonCartRemove;

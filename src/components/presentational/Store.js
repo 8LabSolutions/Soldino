@@ -5,7 +5,7 @@ import SearchContainer from '../containers/SearchContainer';
 
 function printProduct(product) {
   return(
-    <Product title={product[0]} price={product[1]} description={product[2]} />
+    <Product key={product[0]} title={product[0]} price={product[1]} description={product[2]} />
   )
 }
 
@@ -28,7 +28,6 @@ class Store extends Component {
         productArray[i] = product;
       }
     }
-    console.log("nuovo render")
     return (
       <div>
         <h1>Store</h1>

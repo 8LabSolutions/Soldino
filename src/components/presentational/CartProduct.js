@@ -2,9 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
 import React, {Component} from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import ButtonCart from '../containers/ButtonCart'
-import Button from './Button'
 import ButtonCartRemove from '../containers/ButtonCartRemove';
 import ButtonCartAdd from '../containers/ButtonCartAdd';
 
@@ -16,7 +15,7 @@ function enableRemove(title, quantity, price) {
 
 function disableRemove() {
   return (
-    <NavLink className="nav-item nav-link" to="/cart"><Button text="-" /></NavLink>
+    <NavLink className="nav-item nav-link" to="/cart"><button type="button" className="btn btn-light" disabled>-</button></NavLink>
   )
 }
 

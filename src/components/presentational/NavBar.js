@@ -8,6 +8,7 @@ import { store } from "../../store/index";
 
 class NavBar extends Component {
   render() {
+    let products = store.getState().cart.length;
     let authText;
     let navLinks
     if (store.getState().logged === true && store.getState().userType === "Govern"){
@@ -23,6 +24,7 @@ class NavBar extends Component {
                     <NavLink className="nav-item nav-link" to="/">Store</NavLink>
                     <NavLink className="nav-item nav-link" to="/vatmanager">VAT Manager</NavLink>
                     <NavLink className="nav-item nav-link material-icons" to="/cart">shopping_cart</NavLink>
+                    <span className="badge badge-light">{products}</span>
                   </div>
     }else if (store.getState().logged === true && store.getState().userType === "Business"){
       authText = 'Logout'
@@ -32,6 +34,7 @@ class NavBar extends Component {
                     <NavLink className="nav-item nav-link" to="/productsmanager">Products Manager</NavLink>
                     <NavLink className="nav-item nav-link" to="/transactionsmanager">Transactions Manager</NavLink>
                     <NavLink className="nav-item nav-link material-icons" to="/cart">shopping_cart</NavLink>
+                    <span className="badge badge-light">{products}</span>
                   </div>
     }else{
       authText = 'Login'

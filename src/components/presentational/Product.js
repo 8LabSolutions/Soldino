@@ -1,7 +1,9 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
 import React, {Component} from 'react';
+import { NavLink } from 'react-router-dom';
 import ButtonProduct from '../containers/ButtonProduct';
 
 class Product extends Component {
@@ -31,9 +33,11 @@ class Product extends Component {
             <p className="card-text">{props.description}</p>
             <div className="form-group col-sm-12">
               <label htmlFor="InputQuantity">Quantity</label>
-              <input className="form-control" id="InputQuantity" value={this.state.value} onChange={this.handleChange} placeholder="Enter quantity" defaultValue="1" type="number" min="1" max={maxQuantity} />
+              <input className="form-control" id="InputQuantity" value={this.state.value} onChange={this.handleChange} placeholder="Enter quantity" type="number" min="1" max={maxQuantity} />
             </div>
-            <ButtonProduct text="Add to cart" args1={props.title} args2={this.state.value} args3={props.price} />
+            <NavLink className="nav-item nav-link" to="/">
+              <ButtonProduct text="Add to cart" args1={props.title} args2={this.state.value} args3={props.price} />
+            </NavLink>  
           </div>
         </div>
         <br />

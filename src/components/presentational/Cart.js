@@ -9,7 +9,7 @@ import Button from './Button';
 
 function printProduct(product) {
   return(
-    <CartProduct title={product[0]} quantity={product[1]} price={product[2]} />
+    <CartProduct key={product[0]} title={product[0]} quantity={product[1]} price={product[2]} />
   )
 }
 

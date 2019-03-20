@@ -1,14 +1,15 @@
+/* eslint-disable no-unused-vars */
 // src/js/actions/index.js
 import { LOGIN, LOGOUT, BUSINESS, GOVERN, CITIZEN } from "../constants/actionTypes";
 
-export function logIn() {
+export function logIn(arg1, arg2, arg3) {
   return {
     type: LOGIN,
     par: true
   };
 }
 
-export function logOut() {
+export function logOut(arg1, arg2, arg3) {
   return {
     type: LOGOUT,
     par: false,

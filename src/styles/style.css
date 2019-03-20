@@ -6,3 +6,22 @@ Footer {
   width: 100%;
   overflow: hidden;
 }
+
+.badge {
+  background: grey;
+  position: relative;
+  top: -2px;
+  left: -17px;
+  height: 18px;
+  color: white;
+}
+
+.navbar {
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+}
+
+.container { 
+  margin-top: 25px;
+}
