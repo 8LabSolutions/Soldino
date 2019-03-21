@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
-import Button from './Button';
+import ButtonGeneric from '../containers/ButtonGeneric';
 
 function printBusiness(business) {
   if(business[2] !== "await refund"){ //check payment status
@@ -21,7 +21,7 @@ function printBusiness(business) {
         <strong>VAT number: </strong>{business[1]}<br />
         <strong>Payment status: </strong>{business[2]}<br />
         <strong>Balance: </strong>{business[3]}<br />
-        <Button text="Refund" />
+        <ButtonGeneric text="Refund" />
       </li>
     )
   }

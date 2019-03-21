@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
-import Button from './Button';
+import ButtonGeneric from '../containers/ButtonGeneric';
 
 function printUser(user) {
   if(user[0] === "Citizen"){  //check type of user
@@ -13,7 +13,7 @@ function printUser(user) {
         <strong>Surname: </strong>{user[2]}<br />
         <strong>Email: </strong>{user[3]}<br />
         <strong>Address: </strong>{user[4]}<br />
-        <Button text="Disable" />
+        <ButtonGeneric text="Disable" />
       </li>
     )
   }else{
@@ -24,7 +24,7 @@ function printUser(user) {
         <strong>VAT number: </strong>{user[2]}<br />
         <strong>Headquarters: </strong>{user[3]}<br />
         <strong>Email: </strong>{user[4]}<br />
-        <Button text="Disable" />
+        <ButtonGeneric text="Disable" />
       </li>
     )
   }

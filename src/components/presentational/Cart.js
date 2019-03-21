@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import NavBar from './NavBar'
 import { store } from "../../store/index";
 import CartProduct from './CartProduct';
-import Button from './Button';
+import ButtonGeneric from '../containers/ButtonGeneric';
 
 
 function printProduct(product) {
@@ -43,7 +43,7 @@ class Cart extends Component {
               <p>Total price: CC {totalPrice}</p>
             </div>
             <div className="col-sm-12">
-              <NavLink className="nav-item nav-link" to="/checkout"><Button text="Checkout" /></NavLink>  
+              <NavLink className="nav-item nav-link" to="/checkout"><ButtonGeneric text="Checkout" /></NavLink>  
             </div>
             {productArray.map(i => printProduct(i))}
           </div>

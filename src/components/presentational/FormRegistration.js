@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Button from './Button';
+import ButtonGeneric from '../containers/ButtonGeneric';
 import Guide from './Guide';
 
 function citizenFormMaker() {
@@ -109,7 +109,7 @@ class FormRegistration extends Component {
               </div>
               { userType==="CITIZEN" ? citizenFormMaker() : businessFormMaker() }
               <div className="col-sm-12 text-center">
-                <Button text="Sign Up" />
+                <ButtonGeneric text="Sign Up" />
               </div>
             </div>
             {/* <div className="col-sm-12">

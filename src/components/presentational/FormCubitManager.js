@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {Component} from 'react';
-import Button from './Button'
+import ButtonGeneric from '../containers/ButtonGeneric'
 
 class FormCubitManager extends Component {
   render() {
@@ -28,10 +28,10 @@ class FormCubitManager extends Component {
               <input className="form-control" id="InputAddress" placeholder="Enter address" />
             </div>
             <div class="col-sm-6 text-center">
-              <Button text="Mint" />
+              <ButtonGeneric text="Mint" />
             </div>
             <div class="col-sm-6 text-center">
-              <Button text="Distribute" />
+              <ButtonGeneric text="Distribute" />
             </div>
           </div>
         </div>

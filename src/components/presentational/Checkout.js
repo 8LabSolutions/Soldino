@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom'
 import NavBar from './NavBar';
-import Button from './Button';
+import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from '../../store';
 
 /* take elements from contracts(address) */
@@ -134,10 +134,10 @@ class Checkout extends Component {
               <div className="container">
                 <div className="row">
                   <div className="col-sm-6">
-                    <NavLink className="nav-item nav-link" to="/cart"><Button text="Cancel" /></NavLink>
+                    <NavLink className="nav-item nav-link" to="/cart"><ButtonGeneric text="Cancel" /></NavLink>
                   </div>
                   <div className="col-sm-6">
-                    <Button text="Confirm and pay" />
+                    <ButtonGeneric text="Confirm and pay" />
                   </div>
                 </div>
               </div>
