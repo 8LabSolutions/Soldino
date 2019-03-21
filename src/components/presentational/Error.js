@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import NavBar from "./NavBar";
 
-class SuccessRegistration extends Component {
+class Error extends Component {
   render() {
+    let props = this.props
     return (
       <div>
         <NavBar />
@@ -10,11 +11,11 @@ class SuccessRegistration extends Component {
           <div className="row">
             <div className="col-sm-12">
               <br />
-              <div className="alert alert-success">
-                <strong>Success!</strong>
-                <p>Registration completed.</p>
+              <div className="alert alert-danger">
+                <strong>Erorr!</strong>
+                <p>{props.errorMessage}</p>
               </div>
-              <p>Login and start using Soldino.</p>
+              <p>{props.nextMessage}</p>
             </div>
           </div>
         </div>
@@ -23,4 +24,4 @@ class SuccessRegistration extends Component {
   }
 }
 
-export default SuccessRegistration;
+export default Error;

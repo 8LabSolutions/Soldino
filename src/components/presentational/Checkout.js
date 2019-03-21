@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import NavBar from './NavBar';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from '../../store';
+import ButtonCheckout from '../containers/ButtonCheckout';
 
 /* take elements from contracts(address) */
 function oldShipment() {
@@ -137,7 +138,9 @@ class Checkout extends Component {
                     <NavLink className="nav-item nav-link" to="/cart"><ButtonGeneric text="Cancel" /></NavLink>
                   </div>
                   <div className="col-sm-6">
-                    <ButtonGeneric text="Confirm and pay" />
+                    <NavLink className="nav-item nav-link" to="/purchasesconfirmation">
+                      <ButtonCheckout text="Confirm and pay" args1={store.getState().cart} args2={null} args3={null} />
+                    </NavLink>
                   </div>
                 </div>
               </div>

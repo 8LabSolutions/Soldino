@@ -22,7 +22,8 @@ class NavBar extends Component {
       authText = 'Logout'
       navLinks =  <div className="navbar-nav">
                     <NavLink className="nav-item nav-link" to="/">Store</NavLink>
-                    <NavLink className="nav-item nav-link" to="/vatmanager">VAT Manager</NavLink>
+                    <NavLink className="nav-item nav-link" to="/orders">Orders</NavLink>
+                    <NavLink className="nav-item nav-link" to="/purchasesconfirmation">Purchases confirmation</NavLink>
                     <NavLink className="nav-item nav-link material-icons" to="/cart">shopping_cart</NavLink>
                     <span className="badge badge-light">{products}</span>
                   </div>
@@ -30,7 +31,8 @@ class NavBar extends Component {
       authText = 'Logout'
       navLinks =  <div className="navbar-nav">
                     <NavLink className="nav-item nav-link" to="/">Store</NavLink>
-                    <NavLink className="nav-item nav-link" to="/vatmanager">VAT Manager</NavLink>
+                    <NavLink className="nav-item nav-link" to="/orders">Orders</NavLink>
+                    <NavLink className="nav-item nav-link" to="/purchasesconfirmation">Purchases confirmation</NavLink>
                     <NavLink className="nav-item nav-link" to="/productsmanager">Products Manager</NavLink>
                     <NavLink className="nav-item nav-link" to="/transactionsmanager">Transactions Manager</NavLink>
                     <NavLink className="nav-item nav-link material-icons" to="/cart">shopping_cart</NavLink>

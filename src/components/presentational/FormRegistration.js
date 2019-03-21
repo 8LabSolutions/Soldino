@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { NavLink } from 'react-router-dom';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import Guide from './Guide';
 
@@ -109,7 +110,9 @@ class FormRegistration extends Component {
               </div>
               { userType==="CITIZEN" ? citizenFormMaker() : businessFormMaker() }
               <div className="col-sm-12 text-center">
-                <ButtonGeneric text="Sign Up" />
+                <NavLink className="nav-item nav-link" to="/successregistration">
+                  <ButtonGeneric text="Sign Up" />
+                </NavLink>
               </div>
             </div>
             {/* <div className="col-sm-12">

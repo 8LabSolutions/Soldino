@@ -19,7 +19,7 @@ function disableRemove() {
   )
 }
 
-class Product extends Component {
+class CartProduct extends Component {
   render() {
     let props = this.props;
     return (
@@ -56,4 +56,4 @@ class Product extends Component {
   }
 }
 
-export default Product;
+export default CartProduct;

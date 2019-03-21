@@ -11,6 +11,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ButtonProduct = connect(null, mapDispatchToProps)(Button);
+const ButtonCart = connect(null, mapDispatchToProps)(Button);
 
-export default ButtonProduct;
+export default ButtonCart;

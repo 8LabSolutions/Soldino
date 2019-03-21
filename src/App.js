@@ -7,11 +7,13 @@ import UsersList from './components/presentational/UsersList';
 import VATRefund from './components/presentational/VATRefund';
 import Cart from './components/presentational/Cart';
 import Footer from './components/presentational/Footer'
-import SuccessRegistration from './components/presentational/SuccessRegistration';
-import VATManager from './components/presentational/VATManager';
+import Success from './components/presentational/Success';
+import Error from './components/presentational/Error';
+import Orders from './components/presentational/Orders';
 import TransactionsManager from './components/presentational/TransactionsManager';
 import ProductsManager from './components/presentational/ProductsManager';
 import Checkout from './components/presentational/Checkout';
+import PurchasesConfirmation from './components/presentational/PurchasesConfirmation';
 
 export const history = createBrowserHistory();
 
@@ -26,8 +28,13 @@ class App extends Component {
           <Route path="/userslist" component={UsersList} />
           <Route path="/vatrefund" component={VATRefund} />
           <Route path="/cart" component={Cart} />
-          <Route path="/success" component={SuccessRegistration} />
-          <Route path="/vatmanager" component={VATManager} />
+          <Route path="/successregistration" render={()=><Success successMessage="Registration completed." nextMessage="Now you can login and start using Soldino." />} />
+          <Route path="/errorcheckout" render={()=><Error errorMessage="Empty cart." nextMessage="You should add something to your cart before doing this action." />} />
+          <Route path="/erroruserdisabled" render={()=><Error errorMessage="User disabled." nextMessage="You have been disabled, you can't enjoy Soldino right now." />} />
+          <Route path="/errorkey" render={()=><Error errorMessage="User already registered." nextMessage="You should log in." />} />
+          <Route path="/errorpayment" render={()=><Error errorMessage="Payment failed." nextMessage="Something has gone wrong during the payment." />} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/purchasesconfirmation" component={PurchasesConfirmation} />
           <Route path="/transactionsmanager" component={TransactionsManager} />
           <Route path="/productsmanager" component={ProductsManager} />
           <Route path="/checkout" component={Checkout} />

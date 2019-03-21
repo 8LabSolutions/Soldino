@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
 import CartProduct from './CartProduct';
@@ -43,7 +43,7 @@ class Cart extends Component {
               <p>Total price: CC {totalPrice}</p>
             </div>
             <div className="col-sm-12">
-              <NavLink className="nav-item nav-link" to="/checkout"><ButtonGeneric text="Checkout" /></NavLink>  
+              { totalProducts===0 ? <NavLink className="nav-item nav-link" to="/errorcheckout"><ButtonGeneric text="Checkout" /></NavLink> : <NavLink className="nav-item nav-link" to="/checkout"><ButtonGeneric text="Checkout" /></NavLink> }
             </div>
             {productArray.map(i => printProduct(i))}
           </div>
