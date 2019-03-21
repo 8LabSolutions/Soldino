@@ -15,11 +15,16 @@ function printProduct(product) {
 }
 
 function printOrder(order) {
+  let orderCost = 0
+  {order.map (i => orderCost += (i.price*i.quantity))}
   return(
     <div>
       <ul className="list-group">
         <div className="col-sm-12">
           {order.map (i => printProduct(i))}
+          <li className="list-group-item">
+            <div className="col-sm-12">Total: CC {orderCost}</div>
+          </li>
           <li className="list-group-item">
             <div className="container">
               <div className="row">

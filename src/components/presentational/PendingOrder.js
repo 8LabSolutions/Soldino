@@ -9,15 +9,9 @@ class PendingOrder extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-sm-4">
-            <h5 className="card-title">{props.title}</h5>
-          </div>
-          <div className="col-sm-4">
-            <h6 className="card-quantity">{props.quantity}</h6>
-          </div>
-          <div className="col-sm-4">
-            <h5 className="card-price">CC {props.price}</h5>
-          </div>
+          <div className="col-sm-4">{props.title}</div>
+          <div className="col-sm-4">{props.quantity}</div>
+          <div className="col-sm-4">CC {props.price}</div>
         </div>
       </div>
     )
