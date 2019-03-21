@@ -29,7 +29,7 @@ class App extends Component {
           <Route path="/vatrefund" component={VATRefund} />
           <Route path="/cart" component={Cart} />
           <Route path="/successregistration" render={()=><Success successMessage="Registration completed." nextMessage="Now you can login and start using Soldino." />} />
-          <Route path="/errorcheckout" render={()=><Error errorMessage="Empty cart." nextMessage="You should add something to your cart before doing this action." />} />
+          <Route path="/errorcheckout" render={()=><Error errorMessage="Empty cart." nextMessage="You should add something to your cart before performing this action." />} />
           <Route path="/erroruserdisabled" render={()=><Error errorMessage="User disabled." nextMessage="You have been disabled, you can't enjoy Soldino right now." />} />
           <Route path="/errorkey" render={()=><Error errorMessage="User already registered." nextMessage="You should log in." />} />
           <Route path="/errorpayment" render={()=><Error errorMessage="Payment failed." nextMessage="Something has gone wrong during the payment." />} />
