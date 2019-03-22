@@ -19,11 +19,18 @@ footer {
   color: white;
 }
 
-/*.navbar {
+.navbar {
   position: fixed;
-  z-index: 999;
   width: 100%;
-}*/
+  top: 0;
+  z-index: 999;
+  opacity: 0.9;
+  transition: 0.5s;
+}
+
+.navbar:hover {
+  opacity: 1;
+}
 
 /*.container { 
   margin-top: 25px;
@@ -31,6 +38,7 @@ footer {
 
 body {
   background-color: #f1f1f1;
+  padding-top: 30px;
 }
 
 nav {
@@ -40,4 +48,8 @@ nav {
 
 .bg-light {
   background-color: #fff !important;
+}
+
+nav button {
+  margin-right: 21px;
 }

@@ -18,6 +18,7 @@ class Home extends Component {
     return (
       <div>
         <NavBar />
+        <h1>Welcome to Soldino</h1>
         {dynamicHome}
       </div>
     )
