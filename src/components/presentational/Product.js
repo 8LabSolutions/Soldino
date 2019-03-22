@@ -23,7 +23,7 @@ class Product extends Component {
     let props = this.props;
     let maxQuantity = 50;
     return (
-      <div className="col-sm-4">
+      <div className="col-sm-3">
         <div className="card">
           {/* <img src="..." className="card-img-top" alt="..." /> */}
           <div className="card-body">

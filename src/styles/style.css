@@ -1,10 +1,13 @@
 Footer {
-  background: #fff;
   left: 0;
   bottom: 0;
   height: 100px;
   width: 100%;
   overflow: hidden;
+}
+
+footer {
+  background-color: #f1f1f1;
 }
 
 .badge {
@@ -27,5 +30,14 @@ Footer {
 }*/
 
 body {
-  background: #f1f1f1;
+  background-color: #f1f1f1;
+}
+
+nav {
+  border-bottom: 1px solid rgba(0,0,0,.125) !important;
+  border-radius: 0 !important;
+}
+
+.bg-light {
+  background-color: #fff !important;
 }
