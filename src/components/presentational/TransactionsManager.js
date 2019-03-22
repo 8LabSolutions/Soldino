@@ -8,7 +8,7 @@ class TransactionsManager extends Component {
     return (
       <div>
         <NavBar />
-        <h1>TransactionsManager</h1>
+        <h3>Transactions Manager</h3>
       </div>
     )
   }

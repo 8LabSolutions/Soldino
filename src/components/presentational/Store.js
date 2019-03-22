@@ -30,7 +30,7 @@ class Store extends Component {
     }
     return (
       <div>
-        <h1>Store</h1>
+        <h3>Store</h3>
         <div className="container">
           <div className="row">
             <SearchContainer />

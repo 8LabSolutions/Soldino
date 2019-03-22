@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import ButtonGeneric from '../containers/ButtonGeneric';
@@ -81,33 +83,35 @@ class FormRegistration extends Component {
   }
 
   handleOptionChange(event){
-    this.setState({
-      userType: event.target.value
-    });
+    (event.target.checked===false ? this.setState({userType: "CITIZEN"}) : this.setState({userType: "BUSINESS"}))
   }
 
   render() {
     const { userType } = this.state;
     return (
       <form>
+        <h3>Welcome to Soldino</h3>
         <div className="container">
           <div className="row">
-            <div className="col-sm-6">
-              <Guide />
-              <a href="https://metamask.io">Install MetaMask</a>
+            <div className="col-sm-12" onChange={this.handleOptionChange}>
+              <span>Citizen</span>
+              <label htmlFor="userSwitch" className="switch">
+                <input type="checkbox" id="userSwitch" />
+                <span className="slider" />
+              </label>
+              <span>Business</span>
             </div>
             <div className="col-sm-6">
-              <div className="col-sm-12" onChange={this.handleOptionChange}>
-                <label htmlFor="businessRadio">
-                  <input type="radio" name="userType" value="BUSINESS" id="businessRadio" />
-                  <span>Business</span>
-                </label>
-                <br />
-                <label htmlFor="citizenRadio">
-                  <input type="radio" name="userType" defaultChecked="checked" value="CITIZEN" id="citizenRadio" />
-                  <span>Citizen</span>
-                </label>
-              </div>
+              <label className="col-sm-12">
+                <span>Guide</span>
+                <Guide />
+              </label>
+              <br />
+              <a href="https://metamask.io">
+                <ButtonGeneric text="Install MetaMask" />
+              </a>
+            </div>
+            <div className="col-sm-6">
               { userType==="CITIZEN" ? citizenFormMaker() : businessFormMaker() }
               <div className="col-sm-12 text-center">
                 <NavLink className="nav-item nav-link" to="/successregistration">

@@ -8,7 +8,7 @@ class ProductsManager extends Component {
     return (
       <div>
         <NavBar />
-        <h1>ProductsManager</h1>
+        <h3>Products Manager</h3>
       </div>
     )
   }
