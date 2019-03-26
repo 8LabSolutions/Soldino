@@ -3,14 +3,12 @@ import Product from './Product';
 import SearchContainer from '../containers/SearchContainer';
 
 
-function printProduct(product) {
-  return(
-    <Product key={product[0]} title={product[0]} price={product[1]} description={product[2]} />
-  )
-}
-
-
 class Store extends Component {
+  printProduct(product) {
+    return(
+      <Product key={product[0]} title={product[0]} price={product[1]} description={product[2]} />
+    )
+  }
   render() {
     let props = this.props
     let totalProducts = 50
@@ -34,7 +32,7 @@ class Store extends Component {
         <div className="container">
           <div className="row">
             <SearchContainer />
-            {productArray.map(i => printProduct(i))}
+            {productArray.map(i => this.printProduct(i))}
           </div>
         </div>
       </div>

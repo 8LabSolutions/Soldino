@@ -7,19 +7,18 @@ import ButtonCart from '../containers/ButtonCart'
 import ButtonCartRemove from '../containers/ButtonCartRemove';
 import ButtonCartAdd from '../containers/ButtonCartAdd';
 
-function enableRemove(title, quantity, price) {
-  return (
-    <NavLink className="nav-item nav-link" to="/cart"><ButtonCartRemove text="-" args1={title} args2={quantity} args3={price} /></NavLink>  
-  )
-}
-
-function disableRemove() {
-  return (
-    <NavLink className="nav-item nav-link" to="/cart"><button type="button" className="btn btn-light" disabled>-</button></NavLink>
-  )
-}
 
 class CartProduct extends Component {
+  enableRemove(title, quantity, price) {
+    return (
+      <NavLink className="nav-item nav-link" to="/cart"><ButtonCartRemove text="-" args1={title} args2={quantity} args3={price} /></NavLink>  
+    )
+  }
+  disableRemove() {
+    return (
+      <NavLink className="nav-item nav-link" to="/cart"><button type="button" className="btn btn-light" disabled>-</button></NavLink>
+    )
+  }
   render() {
     let props = this.props;
     return (
@@ -32,7 +31,7 @@ class CartProduct extends Component {
                   <h5 className="card-title">{props.title}</h5>
                 </div>
                 <div className="col-sm-4">
-                  { props.quantity<="1" ? disableRemove() : enableRemove(props.title, +props.quantity-1, props.price) }
+                  { props.quantity<="1" ? this.disableRemove() : this.enableRemove(props.title, +props.quantity-1, props.price) }
                 </div>
                 <div className="col-sm-4">
                   <h6 className="card-quantity">{props.quantity}</h6>

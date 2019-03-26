@@ -6,74 +6,53 @@ import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
 
-function printProduct(product) {
-  return(
-    <li className="list-group-item">
-      <PendingOrder title={product.title} quantity={product.quantity} price={product.price} />
-    </li>
-  )
-}
+class PurchasesConfirmation extends Component {
 
-function printOrder(order) {
-  let orderCost = 0
-  {order.map (i => orderCost += (i.price*i.quantity))}
-  return(
-    <div>
-      <ul className="list-group">
-        <div className="col-sm-12">
-          {order.map (i => printProduct(i))}
-          <li className="list-group-item">
-            <div className="col-sm-12">Total: CC {orderCost}</div>
-          </li>
-          <li className="list-group-item">
-            <div className="container">
-              <div className="row">
-                <div className="col-sm-6">
-                  <NavLink className="nav-item nav-link" to="/purchasesconfirmation">
-                    <ButtonGeneric text="Reject" />
-                  </NavLink>  
-                </div>
-                <div className="col-sm-6">
-                  <NavLink className="nav-item nav-link" to="/purchasesconfirmation">
-                    <ButtonGeneric text="Approve" />
-                  </NavLink>  
+  printProduct(product) {
+    return(
+      <li className="list-group-item">
+        <PendingOrder title={product.title} quantity={product.quantity} price={product.price} />
+      </li>
+    )
+  }
+  
+  printOrder(order) {
+    let orderCost = 0
+    {order.map (i => orderCost += (i.price*i.quantity))}
+    return(
+      <div>
+        <ul className="list-group">
+          <div className="col-sm-12">
+            {order.map (i => this.printProduct(i))}
+            <li className="list-group-item">
+              <div className="col-sm-12">Total: CC {orderCost}</div>
+            </li>
+            <li className="list-group-item">
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm-6">
+                    <NavLink className="nav-item nav-link" to="/purchasesconfirmation">
+                      <ButtonGeneric text="Reject" />
+                    </NavLink>  
+                  </div>
+                  <div className="col-sm-6">
+                    <NavLink className="nav-item nav-link" to="/purchasesconfirmation">
+                      <ButtonGeneric text="Approve" />
+                    </NavLink>  
+                  </div>
                 </div>
               </div>
-            </div>
-          </li>
-        </div>
-      </ul>
-      <br />
-    </div>
-  )
-}
-
-class PurchasesConfirmation extends Component {
+            </li>
+          </div>
+        </ul>
+        <br />
+      </div>
+    )
+  }
 
   render() {
     let ordersList = store.getState().pending;
     let totalOrders = ordersList.length
-    /*let totalProducts
-    let numberOfProducts = 0
-    let title
-    let quantity
-    let price
-    let product
-    let productArray = []
-    let totalPrice = 0
-    if(store.getState().logged === false){window.location.href = "/"}
-    for(var j=0; j<totalOrders; j++){
-      totalProducts = ordersList[j].length
-      for(var i=0; i<totalProducts; i++){
-        title = ordersList[j][i].title
-        quantity = ordersList[j][i].quantity
-        price = ordersList[j][i].price
-        totalPrice += price*quantity
-        product = [title, quantity, price]
-        productArray[i+numberOfProducts] = product;
-      }
-      numberOfProducts += totalProducts
-    }*/
     return (
       <div>
         <NavBar />
@@ -81,7 +60,7 @@ class PurchasesConfirmation extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
-              { totalOrders===0 ? <p>Nothing here</p> : ordersList.map(i => printOrder(i)) }
+              { totalOrders===0 ? <p>Nothing here</p> : ordersList.map(i => this.printOrder(i)) }
             </div>
           </div>
         </div>
