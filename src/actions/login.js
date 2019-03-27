@@ -2,14 +2,14 @@
 // src/js/actions/index.js
 import { LOGIN, LOGOUT, BUSINESS, GOVERN, CITIZEN } from "../constants/actionTypes";
 
-export function logIn(arg1, arg2, arg3) {
+export function logIn() {
   return {
     type: LOGIN,
     par: true
   };
 }
 
-export function logOut(arg1, arg2, arg3) {
+export function logOut() {
   return {
     type: LOGOUT,
     par: false,

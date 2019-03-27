@@ -137,8 +137,8 @@ class Checkout extends Component {
                     <NavLink className="nav-item nav-link" to="/cart"><ButtonGeneric text="Cancel" /></NavLink>
                   </div>
                   <div className="col-sm-6">
-                    <NavLink className="nav-item nav-link" to="/purchasesconfirmation">
-                      <ButtonCheckout text="Confirm and pay" args1={store.getState().cart} args2={null} args3={null} />
+                    <NavLink className="nav-item nav-link" to="/orders">
+                      <ButtonCheckout text="Confirm and pay" args1={store.getState().cart} />
                     </NavLink>
                   </div>
                 </div>

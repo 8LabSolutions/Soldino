@@ -22,21 +22,23 @@ class Product extends Component {
   render() {
     let props = this.props;
     let maxQuantity = 50;
+    let product = []
     return (
       <div className="col-sm-3">
         <div className="card">
           {/* <img src="..." className="card-img-top" alt="..." /> */}
           <div className="card-body">
-            <h5 className="card-title">{props.title}</h5>
-            <h6 className="card-price">CC {props.price}</h6>
+            <h5 className="card-title">{ product[0] = props.title }</h5>
+            <h6 className="card-price">CC { product[2] = props.price }</h6>
             {/*gross price*/}
             <p className="card-text">{props.description}</p>
             <div className="form-group col-sm-12">
               <label htmlFor="InputQuantity">Quantity</label>
-              <input className="form-control" id="InputQuantity" value={this.state.value} onChange={this.handleChange} placeholder="Enter quantity" type="number" min="1" max={maxQuantity} />
+              <input className="form-control" id="InputQuantity" value={product[1] = this.state.value} onChange={this.handleChange} placeholder="Enter quantity" type="number" min="1" max={maxQuantity} />
             </div>
             <NavLink className="nav-item nav-link" to="/">
-              <ButtonProduct text="Add to cart" args1={props.title} args2={this.state.value} args3={props.price} />
+              {console.log(product)}
+              <ButtonProduct text="Add to cart" args1={product} />
             </NavLink>  
           </div>
         </div>

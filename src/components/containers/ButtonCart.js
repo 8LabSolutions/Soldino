@@ -5,8 +5,8 @@ import { removeFromCart } from '../../actions/cart';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    action: (title, quantity, price) => {
-      dispatch(removeFromCart(title, quantity, price))
+    action: (product) => {
+      dispatch(removeFromCart(product))
     }
   }
 }

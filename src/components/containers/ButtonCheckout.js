@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import Button from '../presentational/Button';
-import { cartToPending } from '../../actions/purchasesConfirmation';
+import { cartToOrders } from '../../actions/cart';
 
 const mapDispatchToProps = (dispatch) => {
   return {
     action: (cart) => {
-      dispatch(cartToPending(cart, null, null))
+      //dispatch(cartToPending(cart))
+      dispatch(cartToOrders(cart))
     }
   }
 }

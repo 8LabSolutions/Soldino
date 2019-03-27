@@ -5,8 +5,8 @@ import { increaseQuantity } from '../../actions/cart';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    action: (title, quantity, price) => {
-      dispatch(increaseQuantity(title, quantity, price))
+    action: (product) => {
+      dispatch(increaseQuantity(product))
     }
   }
 }

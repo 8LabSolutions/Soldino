@@ -1,46 +1,55 @@
+/* eslint-disable no-unused-vars */
 // src/js/actions/index.js
-import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY } from "../constants/actionTypes";
+import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOORDERS } from "../constants/actionTypes";
 
-export function addToCart(title, quantity, price) {
+{/*args: title, quantity, price*/}
+export function addToCart(product) {
   return {
     type: ADDTOCART,
       product: {
-          title, 
-          quantity, 
-          price
+          title: product[0], 
+          quantity: product[1], 
+          price: product[2]
       }
   };
 }
 
-export function removeFromCart(title, quantity, price) {
+export function removeFromCart(product) {
   return {
     type: REMOVEFROMCART,
       product: {
-        title, 
-        quantity, 
-        price
+        title: product[0], 
+        quantity: product[1], 
+        price: product[2]
     }
   };
 }
 
-export function increaseQuantity(title, quantity, price) {
+export function increaseQuantity(product) {
   return {
     type: INCREASEQUANTITY,
       product: {
-        title, 
-        quantity, 
-        price
+        title: product[0], 
+        quantity: +product[1]+1, 
+        price: product[2]
     }
   };
 }
 
-export function decreaseQuantity(title, quantity, price) {
+export function decreaseQuantity(product) {
   return {
     type: DECREASEQUANTITY,
       product: {
-        title, 
-        quantity, 
-        price
+        title: product[0], 
+        quantity: product[1], 
+        price: product[2]
     }
+  };
+}
+
+export function cartToOrders(cart) {
+  return {
+    type: CARTTOORDERS,
+      cart
   };
 }

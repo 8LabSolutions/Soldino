@@ -1,13 +1,14 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING } from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS } from "../constants/actionTypes";
 
 const initialState = {
   logged: false,
   userType: null,
   searchProduct: "",
   cart: [],
-  pending: []
+  pending: [],
+  orders: []
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === LOGIN) {
@@ -93,6 +94,12 @@ export function rootReducer(state = initialState, action) {
   if (action.type === CARTTOPENDING) {
     return Object.assign({}, state, {
       pending: [...state.pending, action.cart],
+      cart: []
+    });
+  }
+  if (action.type === CARTTOORDERS) {
+    return Object.assign({}, state, {
+      orders: [...state.orders, action.cart],
       cart: []
     });
   }

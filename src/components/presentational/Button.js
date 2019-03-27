@@ -15,7 +15,8 @@ class Button extends Component {
   render() {
     let props = this.props;
     return (
-      <button type="button" className="btn btn-light" onClick={() => props.action(props.args1, props.args2, props.args3)}>{props.text}</button>
+      /*}, props.args2, props.args3*/
+      <button type="button" className="btn btn-light" onClick={() => props.action(props.args1)}>{props.text}</button>
     )
   }
 }
