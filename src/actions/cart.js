@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 // src/js/actions/index.js
 import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOORDERS } from "../constants/actionTypes";
+import { getTodayDate } from "../auxiliaryFunctions";
 
 {/*args: title, quantity, price*/}
 export function addToCart(product) {
@@ -50,6 +51,7 @@ export function decreaseQuantity(product) {
 export function cartToOrders(cart) {
   return {
     type: CARTTOORDERS,
-      cart
+    cart,
+    date: getTodayDate()
   };
 }

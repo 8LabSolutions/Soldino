@@ -8,7 +8,7 @@ const initialState = {
   searchProduct: "",
   cart: [],
   pending: [],
-  orders: []
+  ordersList: []
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === LOGIN) {
@@ -99,7 +99,13 @@ export function rootReducer(state = initialState, action) {
   }
   if (action.type === CARTTOORDERS) {
     return Object.assign({}, state, {
-      orders: [...state.orders, action.cart],
+      ordersList: 
+        [...state.ordersList,
+        {
+          products: action.cart, 
+          date: action.date
+        }]
+      ,
       cart: []
     });
   }
