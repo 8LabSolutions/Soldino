@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
+import { printShipment } from '../../auxiliaryFunctions';
 
 class Orders extends Component {
 
@@ -25,15 +26,22 @@ class Orders extends Component {
             <li className="list-group-item">
               <div className="container">
                 <div className="row">
-                  <div className="col-sm-6">Order #{/*order.number*/}</div>
-                  <div className="col-sm-6">{order.date}</div>
+                  <div className="col-sm-3">Order #{order.number}</div>
+                  <div className="col-sm-2">{order.date}</div>
+                  <div className="col-sm-7">{printShipment(order.address)}</div>
                 </div>
               </div>
             </li>
 
             {order.products.map (i => this.printProduct(i))}
             <li className="list-group-item">
-              <div className="col-sm-12">Total: CC {orderCost}</div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm-4">VAT Price: CC {order.VAT}</div>
+                  <div className="col-sm-4">Net Price: CC {order.net}</div>
+                  <div className="col-sm-4"><strong>Total Price: CC {orderCost}</strong></div>
+                </div>
+              </div>
             </li>
           </div>
         </ul>

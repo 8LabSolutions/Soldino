@@ -40,7 +40,7 @@ class Cart extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
-              <p>Total price: CC {totalPrice}</p>
+              <p>Total price: CC {(Math.round(totalPrice * 100) / 100)}</p>
             </div>
             <div className="col-sm-12">
               { totalProducts===0 ? <NavLink className="nav-item nav-link" to="/errorcheckout"><ButtonGeneric text="Checkout" /></NavLink> : <NavLink className="nav-item nav-link" to="/checkout"><ButtonGeneric text="Checkout" /></NavLink> }

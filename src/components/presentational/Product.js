@@ -23,6 +23,7 @@ class Product extends Component {
     let props = this.props;
     let maxQuantity = 50;
     let product = []
+    product[3] = props.VAT
     return (
       <div className="col-sm-3">
         <div className="card">

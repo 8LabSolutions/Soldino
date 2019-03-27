@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/sort-comp */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom'
@@ -11,7 +13,11 @@ class Checkout extends Component {
   constructor(props) {
     super(props);
     this.handleOptionChange = this.handleOptionChange.bind(this);
-    this.state = { shipType: "OLD" };
+    this.handleInput1Change = this.handleInput1Change.bind(this);
+    this.handleInput2Change = this.handleInput2Change.bind(this);
+    this.handleInput3Change = this.handleInput3Change.bind(this);
+    this.handleInput4Change = this.handleInput4Change.bind(this);
+    this.state = { shipType: "OLD", address1: "", address2: "", address3: "", address4: "" };
   }
 
   /* take elements from contracts(address) */
@@ -63,19 +69,19 @@ class Checkout extends Component {
     return(
       <div className="col-sm-12">
         <div className="col-sm-6 offset-sm-3">
-          <input className="form-control" id="shipmentbar1" type="text" placeholder="Address" aria-label="Address" />
+          <input className="form-control" id="shipmentbar1" type="text" placeholder="Address" aria-label="Address" value={this.state.address1} onChange={this.handleInput1Change} />
           <br />
         </div>
         <div className="col-sm-6 offset-sm-3">
-          <input className="form-control" id="shipmentbar2" type="text" placeholder="House Number" aria-label="HouseNumber" />
+          <input className="form-control" id="shipmentbar2" type="text" placeholder="House Number" aria-label="HouseNumber" value={this.state.address2} onChange={this.handleInput2Change} />
           <br />
         </div>
         <div className="col-sm-6 offset-sm-3">
-          <input className="form-control" id="shipmentbar3" type="text" placeholder="District" aria-label="District" />
+          <input className="form-control" id="shipmentbar3" type="text" placeholder="District" aria-label="District" value={this.state.address3} onChange={this.handleInput3Change} />
           <br />
         </div>
         <div className="col-sm-6 offset-sm-3">
-          <input className="form-control" id="shipmentbar4" type="text" placeholder="Postcode" aria-label="Postcode" />
+          <input className="form-control" id="shipmentbar4" type="text" placeholder="Postcode" aria-label="Postcode" value={this.state.address4} onChange={this.handleInput4Change} />
           <br />
         </div>
       </div>
@@ -83,28 +89,64 @@ class Checkout extends Component {
     else return(
       <div className="col-sm-12">
         <div className="col-sm-6 offset-sm-3">
-          <input className="form-control" id="shipmentbar1" type="text" placeholder="Headquarter" aria-label="Headquarter" />
+          <input className="form-control" id="shipmentbar1" type="text" placeholder="Headquarter" aria-label="Headquarter" value={this.state.address1} onChange={this.handleInput1Change} />
           <br />
         </div>
         <div className="col-sm-6 offset-sm-3">
-          <input className="form-control" id="shipmentbar2" type="text" placeholder="Headquarter Number" aria-label="HeadquarterNumber" />
+          <input className="form-control" id="shipmentbar2" type="text" placeholder="Headquarter Number" aria-label="HeadquarterNumber" value={this.state.address2} onChange={this.handleInput2Change} />
           <br />
         </div>
         <div className="col-sm-6 offset-sm-3">
-          <input className="form-control" id="shipmentbar3" type="text" placeholder="District" aria-label="District" />
+          <input className="form-control" id="shipmentbar3" type="text" placeholder="District" aria-label="District" value={this.state.address3} onChange={this.handleInput3Change} />
           <br />
         </div>
         <div className="col-sm-6 offset-sm-3">
-          <input className="form-control" id="shipmentbar4" type="text" placeholder="Postcode" aria-label="Postcode" />
+          <input className="form-control" id="shipmentbar4" type="text" placeholder="Postcode" aria-label="Postcode" value={this.state.address4} onChange={this.handleInput4Change} />
           <br />
         </div>
       </div>
     )
   }
 
+  getAddress() {
+    const { shipType } = this.state;
+    if(shipType==="OLD"){
+      return (["1", "2", "3", "4"]) //retreive data from ipfs (registration address)
+    }else{  
+      return(
+        [
+          this.state.address1,
+          this.state.address2,
+          this.state.address3,
+          this.state.address4
+        ]
+      )
+    }
+  }
+
   handleOptionChange(event){
     this.setState({
       shipType: event.target.value
+    });
+  }
+  handleInput1Change(event) {
+    this.setState({
+      address1: event.target.value
+    });
+  }
+  handleInput2Change(event) {
+    this.setState({
+      address2: event.target.value
+    });
+  }
+  handleInput3Change(event) {
+    this.setState({
+      address3: event.target.value
+    });
+  }
+  handleInput4Change(event) {
+    this.setState({
+      address4: event.target.value
     });
   }
   render() {
@@ -138,7 +180,7 @@ class Checkout extends Component {
                   </div>
                   <div className="col-sm-6">
                     <NavLink className="nav-item nav-link" to="/orders">
-                      <ButtonCheckout text="Confirm and pay" args1={store.getState().cart} />
+                      <ButtonCheckout text="Confirm and pay" args1={[store.getState().cart, this.getAddress()]} />
                     </NavLink>
                   </div>
                 </div>
