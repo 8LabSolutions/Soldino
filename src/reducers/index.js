@@ -107,7 +107,9 @@ export function rootReducer(state = initialState, action) {
           number: action.number,
           VAT: action.VAT,
           net: action.net,
-          address: action.address
+          address: action.address,
+          buyerName: action.buyerName,
+          buyerDetails: action.buyerDetails
         }]
       ,
       cart: []
@@ -118,7 +120,7 @@ export function rootReducer(state = initialState, action) {
 export const persistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['searchProduct', 'ordersList']
+  blacklist: ['searchProduct']
 };
 
 export default persistReducer(persistConfig, rootReducer);

@@ -28,3 +28,18 @@ export function printShipment(address) {
     address[0]+" "+address[1]+", "+address[2]+", "+address[3]
   );
 }
+
+export function getName() {
+  //should get name from IPFS
+  return(
+    "Giorgio"
+  );
+}
+
+export function getDetails() {
+  //should get details from IPFS
+  //if citizen == surname, if business == VATNumber
+  return(
+    "Rossi"
+  );
+}

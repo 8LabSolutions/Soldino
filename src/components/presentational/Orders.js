@@ -6,17 +6,38 @@ import PendingOrder from './PendingOrder';
 import { printShipment } from '../../auxiliaryFunctions';
 
 class Orders extends Component {
+  lastSeller = "";
 
+
+  /* */
   printProduct(product) {
     return(
-      <li className="list-group-item">
-        <PendingOrder title={product.title} quantity={product.quantity} price={product.price} />
-      </li>
+      <div>
+        {(this.lastSeller!==product.sellerName) ? (
+          <li className="list-group-item">
+            <div className="container">
+              <div className="row">
+                <div className="col-sm-6">Seller: {this.lastSeller = product.sellerName}</div>
+                <div className="col-sm-6">VAT Number: {product.sellerVATNumber}</div>
+              </div>
+              <hr />
+              <PendingOrder title={product.title} quantity={product.quantity} price={product.price} />
+            </div>
+          </li>
+        ) : (
+          <div className="container">
+            <hr />
+            <PendingOrder title={product.title} quantity={product.quantity} price={product.price} />
+          </div>
+        )}
+      </div>
     )
   }
   
   printOrder(order) {
     let orderCost = 0
+    //ordinamento per seller
+    order.products.sort((a, b) => (a.sellerName > b.sellerName) ? 1 : (a.sellerName === b.sellerName) ? ((a.sellerName > b.sellerName) ? 1 : -1) : -1 )
     {order.products.map (i => orderCost += (i.price*i.quantity))}
     if(store.getState().logged === false){window.location.href = "/"}
     return(
@@ -32,8 +53,9 @@ class Orders extends Component {
                 </div>
               </div>
             </li>
-
-            {order.products.map (i => this.printProduct(i))}
+            <li className="list-group-item">
+              {order.products.map (i => this.printProduct(i))}
+            </li>
             <li className="list-group-item">
               <div className="container">
                 <div className="row">

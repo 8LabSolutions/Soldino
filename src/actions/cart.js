@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // src/js/actions/index.js
 import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOORDERS } from "../constants/actionTypes";
-import { getTodayDate, getVAT, getNet } from "../auxiliaryFunctions";
+import { getTodayDate, getVAT, getNet, getDetails, getName } from "../auxiliaryFunctions";
 
 {/*args: title, quantity, price*/}
 export function addToCart(product) {
@@ -11,7 +11,9 @@ export function addToCart(product) {
           title: product[0], 
           quantity: product[1], 
           price: (Math.round(product[2] * 100) / 100),
-          VAT: product[3]
+          VAT: product[3],
+          sellerName: product[4],
+          sellerVATNumber: product[5]
       }
   };
 }
@@ -23,7 +25,9 @@ export function removeFromCart(product) {
         title: product[0], 
         quantity: product[1], 
         price: product[2],
-        VAT: product[3]
+        VAT: product[3],
+        sellerName: product[4],
+        sellerVATNumber: product[5]
     }
   };
 }
@@ -35,7 +39,9 @@ export function increaseQuantity(product) {
         title: product[0], 
         quantity: +product[1]+1, 
         price: product[2],
-        VAT: product[3]
+        VAT: product[3],
+        sellerName: product[4],
+        sellerVATNumber: product[5]
     }
   };
 }
@@ -47,7 +53,9 @@ export function decreaseQuantity(product) {
         title: product[0], 
         quantity: product[1], 
         price: product[2],
-        VAT: product[3]
+        VAT: product[3],
+        sellerName: product[4],
+        sellerVATNumber: product[5]
     }
   };
 }
@@ -60,6 +68,8 @@ export function cartToOrders(cart, address) {
     number: 1, //progressive
     VAT: getVAT(cart),
     net: getNet(cart),
-    address
+    address,
+    buyerName: getName(), 
+    buyerDetails: getDetails(), //if citizen == surname, if business == VATNumber
   };
 }

@@ -11,9 +11,9 @@ import Success from './components/presentational/Success';
 import Error from './components/presentational/Error';
 import Orders from './components/presentational/Orders';
 import TransactionsManager from './components/presentational/TransactionsManager';
-import ProductsManager from './components/presentational/ProductsManager';
 import Checkout from './components/presentational/Checkout';
 import PurchasesConfirmation from './components/presentational/PurchasesConfirmation';
+import ProductsManager from './components/presentational/ProductsManager';
 
 export const history = createBrowserHistory();
 

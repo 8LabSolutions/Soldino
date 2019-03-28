@@ -1,14 +1,39 @@
 import React, {Component} from 'react';
-import NavBar from './NavBar'
-import { store } from "../../store/index";
+import BusinessProduct from './BusinessProduct';
+import NavBar from './NavBar';
+
 
 class ProductsManager extends Component {
+  printProduct(product) {
+    return(
+      <BusinessProduct key={product[0]} title={product[0]} price={product[1]} description={product[2]} VAT={product[3]} />
+    )
+  }
   render() {
-    if(store.getState().logged === false){window.location.href = "/"}
+    let totalProducts = 10
+    let name
+    let totalPrice
+    let VAT
+    let description
+    var product
+    var productArray = []
+    for(var i=0; i<totalProducts; i++){
+      name = "Product #"+ i
+      totalPrice = 9.99; { /*(Math.random() * (100 - 0.20) + 0.0200).toFixed(2) */}
+      VAT = 22 //in %
+      description = "description"
+      product = [name, totalPrice, description, VAT]
+      productArray[i] = product;
+    }
     return (
       <div>
         <NavBar />
-        <h3>Products Manager</h3>
+        <h3>ProductsManager</h3>
+        <div className="container">
+          <div className="row">
+            {productArray.map(i => this.printProduct(i))}
+          </div>
+        </div>
       </div>
     )
   }
