@@ -8,33 +8,38 @@ import { printShipment } from '../../auxiliaryFunctions';
 class Orders extends Component {
   lastSeller = "";
 
+  printSeller(product) {
+    
+    return(
+      <div>
+        {(this.lastSeller!=="") ? <hr /> : null}
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-6"><small>Seller</small></div>
+            <div className="col-sm-6"><small>VAT Number</small></div>
+            <div className="col-sm-6">{this.lastSeller = product.sellerName}</div>
+            <div className="col-sm-6">{product.sellerVATNumber}</div>
+            <div className="col-sm-4"><small>Products</small></div>
+            <div className="col-sm-4"><small>Quantity</small></div>
+            <div className="col-sm-4"><small>Unit price</small></div>
+          </div>
+        </div>
+        {this.printProduct(product)}
+      </div>
+    )
+  }
+    
 
-  /* */
   printProduct(product) {
     return(
       <div>
-        {(this.lastSeller!==product.sellerName) ? (
-          <li className="list-group-item">
-            <div className="container">
-              <div className="row">
-                <div className="col-sm-6">Seller: {this.lastSeller = product.sellerName}</div>
-                <div className="col-sm-6">VAT Number: {product.sellerVATNumber}</div>
-              </div>
-              <hr />
-              <PendingOrder title={product.title} quantity={product.quantity} price={product.price} />
-            </div>
-          </li>
-        ) : (
-          <div className="container">
-            <hr />
-            <PendingOrder title={product.title} quantity={product.quantity} price={product.price} />
-          </div>
-        )}
+        <PendingOrder title={product.title} quantity={product.quantity} price={product.price} />
       </div>
     )
   }
   
   printOrder(order) {
+    this.lastSeller = "";
     let orderCost = 0
     //ordinamento per seller
     order.products.sort((a, b) => (a.sellerName > b.sellerName) ? 1 : (a.sellerName === b.sellerName) ? ((a.sellerName > b.sellerName) ? 1 : -1) : -1 )
@@ -54,7 +59,13 @@ class Orders extends Component {
               </div>
             </li>
             <li className="list-group-item">
-              {order.products.map (i => this.printProduct(i))}
+              {order.products.map (i => (
+                (this.lastSeller!==i.sellerName) ? (
+                  this.printSeller(i)
+                ) : (
+                  this.printProduct(i)
+                )
+              ))}
             </li>
             <li className="list-group-item">
               <div className="container">
