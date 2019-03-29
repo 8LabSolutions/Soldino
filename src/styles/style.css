@@ -55,12 +55,6 @@ nav button {
   border-radius: 6px !important;
 }
 
-
-
-
-
-
-/****************************************/
 .switch input { 
   display:none;
 }
@@ -103,4 +97,11 @@ input:checked + .slider:before {
 }
 input:checked + .slider {
   box-shadow:0 0 0 2px #bdc3c7,0 0 2px #bdc3c7;
+}
+
+.btn-light:focus {
+  color: #212529;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+  transition: .4s;
 }

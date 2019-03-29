@@ -6,6 +6,7 @@ export const BUSINESS = "BUSINESS";
 export const GOVERN = "GOVERN";
 export const SEARCH = "SEARCH";
 export const ADDTOCART = "ADDTOCART";
+export const ADDTOSELLING = "ADDTOSELLING";
 export const REMOVEFROMCART = "REMOVEFROMCART";
 export const INCREASEQUANTITY = "INCREASEQUANTITY";
 export const DECREASEQUANTITY = "DECREASEQUANTITY";

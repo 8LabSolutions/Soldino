@@ -9,7 +9,7 @@ import ButtonGeneric from '../containers/ButtonGeneric';
 
 function printProduct(product) {
   return(
-    <CartProduct key={product[0]} title={product[0]} quantity={product[1]} price={product[2]} />
+    <CartProduct key={product[0]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} />
   )
 }
 
@@ -21,6 +21,9 @@ class Cart extends Component {
     let title
     let quantity
     let price
+    let VAT
+    let sellerName
+    let sellerVATNumber
     let product
     let productArray = []
     let totalPrice = 0
@@ -29,8 +32,11 @@ class Cart extends Component {
       title = productsList[i].title
       quantity = productsList[i].quantity
       price = productsList[i].price
+      VAT = productsList[i].VAT
+      sellerName = productsList[i].sellerName
+      sellerVATNumber = productsList[i].sellerVATNumber
       totalPrice += price*quantity
-      product = [title, quantity, price]
+      product = [title, quantity, price, VAT, sellerName, sellerVATNumber]
       productArray[i] = product;
     }
     return (

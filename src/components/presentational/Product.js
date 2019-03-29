@@ -40,7 +40,6 @@ class Product extends Component {
               <input className="form-control" id="InputQuantity" value={product[1] = this.state.value} onChange={this.handleChange} placeholder="Enter quantity" type="number" min="1" max={maxQuantity} />
             </div>
             <NavLink className="nav-item nav-link" to="/">
-              {console.log(product)}
               <ButtonProduct text="Add to cart" args1={product} />
             </NavLink>  
           </div>

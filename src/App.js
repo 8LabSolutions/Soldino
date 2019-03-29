@@ -14,6 +14,8 @@ import TransactionsManager from './components/presentational/TransactionsManager
 import Checkout from './components/presentational/Checkout';
 import PurchasesConfirmation from './components/presentational/PurchasesConfirmation';
 import ProductsManager from './components/presentational/ProductsManager';
+import EditProductsManager from './components/presentational/EditProductsManager';
+import AddProductsManager from './components/presentational/AddProductsManager';
 
 export const history = createBrowserHistory();
 
@@ -37,6 +39,8 @@ class App extends Component {
           <Route path="/purchasesconfirmation" component={PurchasesConfirmation} />
           <Route path="/transactionsmanager" component={TransactionsManager} />
           <Route path="/productsmanager" component={ProductsManager} />
+          <Route path="/editproductsmanager" component={EditProductsManager} />
+          <Route path="/addproductsmanager" component={AddProductsManager} />
           <Route path="/checkout" component={Checkout} />
           <Footer />
         </div>

@@ -7,6 +7,7 @@ import NavBar from './NavBar';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from '../../store';
 import ButtonCheckout from '../containers/ButtonCheckout';
+import { getRegistrationAddress } from '../../auxiliaryFunctions';
 
 
 class Checkout extends Component {
@@ -111,7 +112,7 @@ class Checkout extends Component {
   getAddress() {
     const { shipType } = this.state;
     if(shipType==="OLD"){
-      return (["1", "2", "3", "4"]) //retreive data from ipfs (registration address)
+      return getRegistrationAddress()
     }else{  
       return(
         [

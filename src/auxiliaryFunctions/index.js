@@ -43,3 +43,8 @@ export function getDetails() {
     "Rossi"
   );
 }
+
+export function getRegistrationAddress() {
+  //get address used during registration from ipfs in array [$1, $2, $3, $4]
+  return (["Via Rossi", "12", "Padova", "12345"])
+}
