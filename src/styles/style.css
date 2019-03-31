@@ -42,8 +42,9 @@ nav {
   border-radius: 0 !important;
 }
 
-.bg-light {
-  background-color: #fff !important;
+.bg-light, .btn-primary {
+  background-color: #f8f9fa !important;
+  color: #212529 !important;
 }
 
 nav button {
@@ -104,4 +105,16 @@ input:checked + .slider {
   background-color: #f8f9fa;
   border-color: #f8f9fa;
   transition: .4s;
+}
+
+.green {
+  color: #00ad56;
+}
+
+.red {
+  color: #af1400;
+}
+
+.close {
+  border: 0px !important;
 }

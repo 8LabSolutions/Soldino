@@ -56,7 +56,7 @@ class AddProductsManager extends Component {
                   </div>
                   <div className="col-sm-6">
                     <NavLink className="nav-item nav-link" to="/productsmanager">
-                      <ButtonBusinessProduct text="Add" args1={null} />
+                      <ButtonBusinessProduct text="Confirm" args1={null} />
                     </NavLink>
                   </div>
                 </div>
