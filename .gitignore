@@ -10,7 +10,7 @@
 
 # production
 /build
-/src/contracts_build
+/src/contracts_build/*
 
 # misc
 .DS_Store
@@ -29,3 +29,5 @@ doxygen.log
 CMakeLists.txt.user
 .directory
 *.kdev4
+
+coverage\.json

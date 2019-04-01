@@ -1,36 +1,18 @@
-pragma solidity >=0.4.22 <0.6.0;
+pragma solidity ^0.5.0;
 
+
+
+import "../Owned.sol";
 
 //Le interfacce sono simili a contratti astratti ma non posso implementare funzioni
-interface tokenRecipient {
-    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external;
-}
-
-// Questo contratto serve a creare un amministratore centralizzato del token
-contract owned {
-    address public owner;
-
-    constructor() public{
-        owner = msg.sender;
-    }
-
-    // i modificatori modificano la sintassi delle funzioni in cui sono inseriti
-    // posso accettare parametri
-    // se il require risulta true allora "_;" indica di proseguire con la funzione,
-    //cioè esegue la funzione
-    modifier onlyOwner {
-        require(msg.sender == owner);
-        _;
-    }
-
-    //nella firma della funzione viene usato il modifier
-    function transferOwnership(address newOwner) onlyOwner public {
-        owner = newOwner;
-    }
+contract tokenRecipient {
+    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata) external;
 }
 
 
-contract TokenERC20 is owned {
+
+
+contract TokenERC20 is Owned {
     // Public variables of the token
     string public name;
     string public symbol;
@@ -65,7 +47,7 @@ contract TokenERC20 is owned {
     /**
      * Constructor function
      *
-     * Initializes contract with initial supply tokens to the creator of the contract
+     * Initializes contract with initial sOwnedupply tokens to the creator of the contract
      */
      /* Ci sono 2 tipi di "memoria" (in verità 3, contando "calldata" ma è da approfondire):
         *   -Storage:   memoria persistente appartentente ad ogni contratto, un contratto non
@@ -86,7 +68,7 @@ contract TokenERC20 is owned {
         string memory tokenSymbol,
         address centralMinter)
         public {
-        if(centralMinter != address(0x0)) //controllo che l'indirizzo non sia invalido
+        if(centralMinter != address(0)) //controllo che l'indirizzo non sia invalido
             owner = centralMinter;
 
         totalSupply = initialSupply;
@@ -99,8 +81,8 @@ contract TokenERC20 is owned {
      * Internal transfer, only can be called by this contract
      */
     function _transfer(address _from, address _to, uint _value) internal {
-        // Prevent transfer to 0x0 address.
-        require(_to != address(0x0), "Invalid address");
+        // Prevent transfer to address(0).
+        require(_to != address(0), "Invalid address");
         // Check if the sender has enough
         require(balanceOf[_from] >= _value, "Not enough funds");
         // Check for overflows
@@ -129,6 +111,9 @@ contract TokenERC20 is owned {
         return true;
     }
 
+    function getOwner() public view returns (address) {
+      return owner;
+    }
     /**
      * Transfer tokens from other address
      *
@@ -223,8 +208,7 @@ contract TokenERC20 is owned {
     function mintToken(address target, uint256 mintedAmount) onlyOwner public {
         balanceOf[target] += mintedAmount;
         totalSupply += mintedAmount;
-        emit Transfer(address(0x0), owner, mintedAmount);
+        emit Transfer(address(0), owner, mintedAmount);
         emit Transfer(owner, target, mintedAmount);
     }
 }
-

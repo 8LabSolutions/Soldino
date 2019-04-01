@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 var Migrations = artifacts.require("./Migrations.sol");
 
 module.exports = function(deployer) {
