@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function getTodayDate() {
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -103,7 +101,7 @@ export function getQuarters() {
   return quarterList.reverse()
 }
 
-export function getVATStatus(quarter) {
+export function getVATStatus(/*quarter*/) {
   //retreive data from ipfs
   let status = -321.23;
   return(status);
