@@ -54,22 +54,22 @@ export function getRegistrationAddress() {
   return (["Via Rossi", "12", "Padova", "12345"])
 }
 
-Date.isLeapYear = function (year) { 
-  return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)); 
+Date.isLeapYear = function (year) {
+  return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
 }
 
 Date.getDaysInMonth = function (year, month) {
   return [31, (Date.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
 }
-
-Date.prototype.isLeapYear = function () { 
-  return Date.isLeapYear(this.getFullYear()); 
+// eslint-disable-next-line
+Date.prototype.isLeapYear = function () {
+  return Date.isLeapYear(this.getFullYear());
 }
-
-Date.prototype.getDaysInMonth = function () { 
+// eslint-disable-next-line
+Date.prototype.getDaysInMonth = function () {
   return Date.getDaysInMonth(this.getFullYear(), this.getMonth());
 }
-
+// eslint-disable-next-line
 Date.prototype.addMonths = function (value) {
   var n = this.getDate();
   this.setDate(1);
@@ -81,7 +81,7 @@ Date.prototype.addMonths = function (value) {
 export function getQuarters() {
   //get first transaction (purchase or sell) made by business and based on its date
   //getQuarters should calculate the quarters
-  //example: 
+  //example:
   //  firstTransaction.date == 2018/08/28
   //  returned array == ['2018/08 - 2018/10', '2018/11 - 2019/01', '2019/02 - 2019/04']
   let quarterList = []
@@ -108,9 +108,9 @@ export function quarterToInvoices(quarter) {
   //let endDate = new Date(quarter.substr(10,7))
   let invoicesList = []
   let name = "Product #1"
-  let totalPrice = 10; 
+  let totalPrice = 10;
   let VAT = 22 //in %
-  let netPrice = totalPrice-((VAT/100)*totalPrice); 
+  let netPrice = totalPrice-((VAT/100)*totalPrice);
   let description = "some description"
   let quantity = 2
   let product = [name, totalPrice, netPrice, VAT, description, quantity] //UC10 + net + VAT
@@ -153,7 +153,7 @@ export function ExportPDF(invoices, quarter) {
   console.log(invoices)
   console.log(quarter)
   //+invoices.map(i => {return(i.number)})+
-  var returnRootComponent = 
+  var returnRootComponent =
   "<h2>"+quarter+" resume</h2><br />"+
   "<h3>VAT status: "+getVATStatus(quarter)+" CC</h2><br/>"+
   "<p>_____________________________________________________________</p><br />"+
