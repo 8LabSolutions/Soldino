@@ -16,7 +16,18 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "@material-ui/lab": "^3.0.0-alpha.30",
+    "@types/node": "^11.11.6",
+    "@types/react-text-mask": "^5.4.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "commondir": "^1.0.1",
     "history": "^4.7.2",
+    "ipfs-mini": "^1.1.5",
+    "nyc": "^13.3.0",
+    "prop-types": "^15.7.2",
     "jspdf": "^1.5.3",
     "material-design-icons": "^3.0.1",
     "react": "^16.8.3",
@@ -29,16 +40,23 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "^2.1.8",
     "redux": "^4.0.1",
-    "redux-persist": "^5.10.0",
-    "web3": "^1.0.0-beta.46"
+    "truffle": "^5.0.10",
+    "web3": "1.0.0-beta.37",
+    "redux-persist": "^5.10.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "coveralls": "^3.0.3",
     "eslint": "5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eth-gas-reporter": "^0.1.12",
     "pre-commit": "^1.2.2",
+    "solidity-coverage": "^0.5.11",
     "truffle-contract": "^4.0.6"
   },
   "scripts": {
@@ -46,6 +64,8 @@
     "build": "react-scripts build",
     "lint": "./node_modules/.bin/eslint src/",
     "test": "react-scripts test",
+    "solidity-test": "truffle test",
+    "coverage": "./node_modules/.bin/solidity-coverage",
     "eject": "react-scripts eject"
   },
   "pre-commit": "lint",
