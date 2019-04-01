@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import Guide from './Guide';
+import ButtonSignUp from '../containers/ButtonSignUp';
 
 class FormRegistration extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class FormRegistration extends Component {
       </div>
     )
   }
-  
+
   businessFormMaker() {
     return (
       <div className="col-sm-12">
@@ -86,6 +87,7 @@ class FormRegistration extends Component {
     (event.target.checked===false ? this.setState({userType: "CITIZEN"}) : this.setState({userType: "BUSINESS"}))
   }
 
+
   render() {
     const { userType } = this.state;
     return (
@@ -115,7 +117,7 @@ class FormRegistration extends Component {
               { userType==="CITIZEN" ? this.citizenFormMaker() : this.businessFormMaker() }
               <div className="col-sm-12 text-center">
                 <NavLink className="nav-item nav-link" to="/successregistration">
-                  <ButtonGeneric text="Sign Up" />
+                  <ButtonSignUp text="Sign Up" args1={[document.getElementById("userSwitch").checked]} />
                 </NavLink>
               </div>
             </div>
