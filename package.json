@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "history": "^4.7.2",
+    "jspdf": "^1.5.3",
     "material-design-icons": "^3.0.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",

@@ -1,3 +1,4 @@
+import React from 'react';
 
 export function getTodayDate() {
   var today = new Date();
@@ -102,7 +103,7 @@ export function getQuarters() {
   return quarterList.reverse()
 }
 
-export function getVATStatus() {
+export function getVATStatus(quarter) {
   //retreive data from ipfs
   let status = -321.23;
   return(status);
@@ -154,3 +155,39 @@ export function quarterToInvoices(quarter) {
   return(invoicesList);
 }
 
+export function ExportPDF(invoices, quarter) {
+  console.log(invoices)
+  console.log(quarter)
+  //+invoices.map(i => {return(i.number)})+
+  var returnRootComponent = 
+  "<h2>"+quarter+" resume</h2><br />"+
+  "<h3>VAT status: "+getVATStatus(quarter)+" CC</h2><br/>"+
+  "<p>_____________________________________________________________</p><br />"+
+  invoices.map(i => {
+    return(
+      "<p>Invoice Number: "+i.number+"</p><br />"+
+      "<p>Invoice Date: "+printDate(i.date)+"</p><br />"+
+      "<p>Order Date: "+printDate(i.orderDate)+"</p><br />"+
+      "<p>Order Number: "+i.orderNumber+"</p><br />"+
+      i.products.map(j => {
+        return(
+          "<p>Product: "+j[0]+"</p><br />"+
+          "<p>Total Price: CC "+j[1]+"</p><br />"+
+          "<p>Net Price: CC "+j[2]+"</p><br />"+
+          "<p>VAT %: "+j[3]+"</p><br />"+
+          "<p>Description: "+j[4]+"</p><br />"+
+          "<p>Quantity: "+j[5]+"</p><br />"
+        )
+      })+
+      "<p>Total VAT: CC "+i.totalVAT+"</p><br />"+
+      "<p>Total Price: CC "+i.totalCC+"</p><br />"+
+      "<p>Seller: "+i.sellerName+" "+i.sellerVATNumber+"</p><br />"+
+      "<p>Buyer: "+i.buyerName+" "+i.buyerDetails+"</p><br />"+
+      "<p>Shipment: "+i.shipment+"</p><br />"+
+      "<p>_____________________________________________________________</p><br />"
+    )}
+  )
+  return(
+    returnRootComponent
+  )
+}

@@ -1,15 +1,18 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
+import jsPDF from 'jspdf';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
-import { getQuarters, getVATStatus, quarterToInvoices, printDate, getDetails } from '../../auxiliaryFunctions/index'
+import { getQuarters, getVATStatus, quarterToInvoices, printDate, getDetails, ExportPDF } from '../../auxiliaryFunctions/index'
 import ButtonGeneric from '../containers/ButtonGeneric';
+
 
 class TransactionsManager extends Component {
   quarterList  = getQuarters()
-  VATstatus = getVATStatus()
-  lastQuarter = this.quarterList[this.quarterList.length-1]
+  lastQuarter = this.quarterList[0]
+  selectedQuarter = this.lastQuarter
+  VATstatus = getVATStatus(this.selectedQuarter)
  
   constructor(props) {
     super(props);
@@ -19,6 +22,14 @@ class TransactionsManager extends Component {
     };
   }
 
+  downloadPDF() {
+    var doc = new jsPDF()
+    doc.fromHTML(ExportPDF(this.state.invoices, this.selectedQuarter) , 1, 1)
+    return(
+      doc.save("invoices "+this.selectedQuarter+".pdf")
+    )
+  }
+
   printQuarters(quarter) {
     return(
       <option>{quarter}</option>
@@ -26,8 +37,10 @@ class TransactionsManager extends Component {
   }
 
   handleChange(event){
+    this.selectedQuarter = event.target.value
     let obj = quarterToInvoices(event.target.value)
     this.setState({invoices: obj})
+    console.log(this.selectedQuarter)
   }
   
   printDebitButtons() {
@@ -105,7 +118,8 @@ class TransactionsManager extends Component {
                 <p>Total VAT</p>
               </div>
               <div className="col-sm-2">
-                <ButtonGeneric text="Download PDF" />
+                {/*<ButtonGeneric text="Download PDF" />*/}
+                <button type="button" className="btn btn-light" onClick={() => this.downloadPDF()}>Download PDF</button>
               </div>
             </div>
           </div>
