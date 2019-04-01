@@ -18,7 +18,7 @@ class PurchasesConfirmation extends Component {
   
   printOrder(order) {
     let orderCost = 0
-    {order.map (i => orderCost += (i.price*i.quantity))}
+    order.map (i => orderCost += (i.price*i.quantity))
     return(
       <div>
         <ul className="list-group">

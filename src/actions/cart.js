@@ -3,7 +3,7 @@
 import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOORDERS } from "../constants/actionTypes";
 import { getTodayDate, getVAT, getNet, getDetails, getName } from "../auxiliaryFunctions";
 
-{/*args: title, quantity, price*/}
+/*args: title, quantity, price*/
 export function addToCart(product) {
   return {
     type: ADDTOCART,

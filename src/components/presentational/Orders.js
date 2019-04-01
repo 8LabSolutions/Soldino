@@ -43,7 +43,7 @@ class Orders extends Component {
     let orderCost = 0
     //ordinamento per seller
     order.products.sort((a, b) => (a.sellerName > b.sellerName) ? 1 : (a.sellerName === b.sellerName) ? ((a.sellerName > b.sellerName) ? 1 : -1) : -1 )
-    {order.products.map (i => orderCost += (i.price*i.quantity))}
+    order.products.map (i => orderCost += (i.price*i.quantity))
     if(store.getState().logged === false){window.location.href = "/"}
     return(
       <div>

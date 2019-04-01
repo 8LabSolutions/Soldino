@@ -28,7 +28,7 @@ class Store extends Component {
     let randomfakeSeller; //remove it
     for(var i=0; i<totalProducts; i++){
       name = "Product #"+ i
-      totalPrice = 9.99; { /*(Math.random() * (100 - 0.20) + 0.0200).toFixed(2) */}
+      totalPrice = 9.99;
       VAT = 22 //in %
       randomfakeSeller = Math.floor(Math.random()*fakeSellerNames.length); //remove it
       sellerName = fakeSellerNames[randomfakeSeller]

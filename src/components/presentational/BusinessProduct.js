@@ -7,11 +7,6 @@ import { NavLink } from 'react-router-dom';
 import ButtonBusinessProduct from '../containers/ButtonBusinessProduct';
 
 class BusinessProduct extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let props = this.props;
     return (

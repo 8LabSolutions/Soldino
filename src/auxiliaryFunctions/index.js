@@ -18,17 +18,13 @@ export function printDate(date) {
 
 export function getVAT(cart) {
   let totalVAT = 0;
-  {cart.map (i => {
-    totalVAT += i.price*(i.VAT/100)
-  })}
+  cart.map (i => {totalVAT += i.price*(i.VAT/100); return totalVAT})
   return(totalVAT);
 }
 
 export function getNet(cart) {
   let totalNet = 0;
-  {cart.map (i => {
-    totalNet += i.price*(1-(i.VAT/100))
-  })}
+  cart.map (i => {totalNet += i.price*(1-(i.VAT/100)); return totalNet})
   return(totalNet);
 }
 

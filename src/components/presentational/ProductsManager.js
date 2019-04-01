@@ -21,7 +21,7 @@ class ProductsManager extends Component {
     var productArray = []
     for(var i=0; i<totalProducts; i++){
       name = "Product #"+ i
-      totalPrice = 9.99; { /*(Math.random() * (100 - 0.20) + 0.0200).toFixed(2) */}
+      totalPrice = 9.99;
       VAT = 22 //in %
       description = "description"
       product = [name, totalPrice, description, VAT]
