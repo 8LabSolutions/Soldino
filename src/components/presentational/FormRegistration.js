@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {Component} from 'react';
@@ -11,8 +12,8 @@ class FormRegistration extends Component {
     super(props);
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = { 
-      userType: "CITIZEN", 
+    this.state = {
+      userType: "CITIZEN",
       email: "",
       streetName: "",
       streetNumber: "",
@@ -22,7 +23,7 @@ class FormRegistration extends Component {
       details: ""
     };
   }
-  
+
   citizenFormMaker() {
     return (
       <div className="col-sm-12">
@@ -133,6 +134,7 @@ class FormRegistration extends Component {
               { userType==="CITIZEN" ? this.citizenFormMaker() : this.businessFormMaker() }
               <div className="col-sm-12 text-center">
                 <NavLink className="nav-item nav-link" to="/successregistration">
+                  {/*TODO: decontruction */}
                   <ButtonSignUp text="Sign Up" args1={[this.state.userType, this.state.email, this.state.streetName, this.state.streetNumber, this.state.district, this.state.postCode, this.state.name, this.state.details]} />
                 </NavLink>
               </div>
