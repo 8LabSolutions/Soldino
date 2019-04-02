@@ -6,6 +6,7 @@ var UserStorage = artifacts.require("UserStorage")
 var CitizenStorage = artifacts.require("CitizenStorage");
 var BusinessStorage = artifacts.require("BusinessStorage");
 var ProductStorage = artifacts.require("ProductStorage");
+var OrderStorage = artifacts.require("OrderStorage")
 /***  LOGIC CONTRACTS ***/
 var UserLogic = artifacts.require("UserLogic")
 var ProductLogic = artifacts.require("ProductLogic");
@@ -66,6 +67,9 @@ module.exports = function(deployer, network, accounts) {
           ProductStorageInstance.address
         )
       })
+    })
+    .then(() => {
+      return deployer.deploy(OrderStorage)
     })
   })
 }
