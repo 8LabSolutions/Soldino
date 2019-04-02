@@ -2,6 +2,7 @@ const {getWeb3} = require('./helpers')
 
 const ContractManager = artifacts.require("ContractManager");
 const UserLogic = artifacts.require("storage/UserLogic");
+const UserStorage = artifacts.require("storage/UserStorage");
 
 var web3 = getWeb3()
 
@@ -9,20 +10,27 @@ contract("UserStorage", (accounts) => {
 
   var contractManagerInstance;
   var userLogicInstance;
+  var userStorageInstance;
   const CITIZEN = accounts[3];
-  console.log(accounts[9]+'dentro user');
-  before(() => {
+  //console.log(accounts[9]+'dentro user');
+  before(async () => {
     contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
       ContractManager.networks[ContractManager.network_id].address);
-    return contractManagerInstance.methods.getContractAddress("UserLogic").call()
+    await contractManagerInstance.methods.getContractAddress("UserLogic").call()
     .then((_userLogicInstance)=>{
       userLogicInstance = new web3.eth.Contract(UserLogic.abi,
         _userLogicInstance);
     })
+    return contractManagerInstance.methods.getContractAddress("UserStorage").call()
+    .then((_userStorageInstance)=>{
+      userStorageInstance = new web3.eth.Contract(UserStorage.abi,
+        _userStorageInstance);
+    })
+
 
   });
 
-  it("should check if user 9 is registered", function(){
+  it("should check if user 9 (Goverment) is registered", function(){
     return userLogicInstance.methods.login(accounts[9]).call().then(function(type){
       assert.equal(
         type,
@@ -44,5 +52,23 @@ contract("UserStorage", (accounts) => {
     })
   });
 
+  it("should check if an user is already registered", function(){
+    return userStorageInstance.methods.addUser(accounts[0], 1)
+    .send({from: accounts[0], gas: 4712388})
+    .catch(() => {
+      assert.isTrue(true);
+    })
+  });
+
+  it("should check if the user type is correct", function(){
+    return userStorageInstance.methods.getUserType(CITIZEN)
+    .send({from:CITIZEN, gas: 2000000}).then(function(type){
+      type,
+      1,
+      "The user is not a citizen"
+    })
+  })
+
 });
+
 

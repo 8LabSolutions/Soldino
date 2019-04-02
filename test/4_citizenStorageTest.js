@@ -11,7 +11,7 @@ var web3 = getWeb3()
 contract("CitizenStorage", (accounts) => {
   var contractManagerInstance;
   var citizenStorageInstance;
-  const CITIZEN = accounts[3];
+  const CITIZEN = accounts[2];
   const GOVERNMENT = accounts[9];
   var userLogicInstance;
 
@@ -36,8 +36,11 @@ contract("CitizenStorage", (accounts) => {
     var email = "8LabSolutions@gmail.com";
     var deliveryAddress = "Via Esempio, 8, Paese, 12345";
     return userLogicInstance.methods.addCitizen(name, surname, email, deliveryAddress)
-    .send({from: CITIZEN, gas: 4712388}).then(function(){
+    .send({from: CITIZEN, gas: 4712388})
+    .then(function(){
+      console.log("nome cittadino 1");
       return citizenStorageInstance.methods.getName(CITIZEN).call().then((ris) => {
+        console.log("nome cittadino 2");
         assert.equal(
           ris,
           name
