@@ -10,7 +10,7 @@ contract("UserStorage", (accounts) => {
   var contractManagerInstance;
   var userStorageInstance;
   const CITIZEN = accounts[3];
-  //console.log(accounts[9]+'dentro user');
+  //console.log(accounts[9]+'dentro user')
   before(async () => {
     contractManagerInstance = new web3.eth.Contract(
       ContractManager.abi,

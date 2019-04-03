@@ -9,18 +9,22 @@ contract UserStorage is Authorizable {
         uint8 hashFunction;
         address userAddress;
         uint8 userType;
+        bool active;
     }
+
     //the manager from which the contract will get the contracts addresses
     address contractManagerAddress;
+
     //mapping containing all the registered users
     mapping(address => User) addressToUser;
+
     //setting the contractManagerAddress
     constructor (address _contractManagerAddress) public {
         contractManagerAddress = _contractManagerAddress;
     }
+
     //get the userType given an address: 0 => not registred, 1=> citizen,
     // 2=> business, 3=> government
-
     function getUserType(address _userAddress) public view returns (uint8) {
         if(_userAddress == owner)
             return 3;
@@ -42,6 +46,8 @@ contract UserStorage is Authorizable {
         addressToUser[_userAddress].hashSize = _hashSize;
         addressToUser[_userAddress].userType = _userType;
         addressToUser[_userAddress].userAddress = _userAddress;
+        addressToUser[_userAddress].active = true;
+
     }
 
     function getIpfsCid(address _userAddress) public view returns(bytes32, uint8, uint8) {
