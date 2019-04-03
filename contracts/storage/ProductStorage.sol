@@ -17,11 +17,6 @@ contract ProductStorage is Authorizable {
     bytes32[] public productsHash;
     mapping(bytes32 => ProductInfo) public hashToProduct;
 
-
-    constructor(address _owner) public {
-        owner = _owner;
-    }
-
     // Setters
     function setNetPrice(bytes32 _keyHash, uint256 _netPrice) external onlyAuthorized {
         hashToProduct[_keyHash].netPrice = _netPrice;
