@@ -53,7 +53,7 @@ module.exports = {
       port: 9545,            // Standard Ethereum port (default: none)
       network_id: "*",      // Any network (default: none)
       gas: 4712388,         // Block Gas Limit same as latest on Mainnet https://ethstats.net/
-      gasPrice: 20000, // same as latest on Mainnet https://ethstats.net/
+       // same as latest on Mainnet https://ethstats.net/
     },
 
     coverage: {
@@ -95,6 +95,11 @@ module.exports = {
   // Set default mocha options here, use special reporters etc.
   mocha: {
     // timeout: 100000
+    reporter: 'eth-gas-reporter',
+    reporterOptions : {
+      currency: 'EUR',
+      gasPrice: 21
+    }
   },
 
   // Configure your compilers
