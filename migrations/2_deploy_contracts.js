@@ -67,7 +67,7 @@ module.exports = function(deployer, network, accounts) {
           ProductStorageInstance.address
         )
         .then((instancePL) => {
-          return ProductStorageInstance.addAuthorized(instancePL.address)
+          //return ProductStorageInstance.addAuthorized(instancePL.address)
         })
       })
     })
