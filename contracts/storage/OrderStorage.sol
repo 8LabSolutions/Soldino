@@ -39,6 +39,7 @@ contract OrderStorage is Authorizable {
         hashToOrder[_keyHash].buyer = _buyer;
         hashToOrder[_keyHash].seller = _seller;
         hashToOrder[_keyHash].productsHash = _products;
+        emit OrderPlaced(_buyer, _seller, _keyHash, _hashFun, _hashSize);
     }
 
 
