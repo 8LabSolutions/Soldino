@@ -1,4 +1,3 @@
-const IPFS = require('ipfs-mini');
 const { getWeb3 } = require('./helpers')
 
 const ContractManager = artifacts.require("ContractManager");
@@ -101,11 +100,11 @@ contract("ProductStorage", (accounts) => {
       })
     })
   })
-  
+
   it("should set the VAT percentage of a product", async () => {
     var key = "0x7465737400000000000000000000000000000000000000000000000000000000"
     var vat = 22
-    
+
     return productStorageInstance.methods.setVatPercentage(
       key,
       vat
@@ -140,7 +139,7 @@ contract("ProductStorage", (accounts) => {
       })
     })
   })
-  
+
   it("should set the Hash Size of a product", async () => {
     var key = "0x7465737400000000000000000000000000000000000000000000000000000000"
     var size = 2
@@ -158,11 +157,13 @@ contract("ProductStorage", (accounts) => {
 
       })
     })
-  }) 
+  })
 
   it("should set the Hash Function of a product", async () => {
     var key = "0x7465737400000000000000000000000000000000000000000000000000000000"
     var funH = 3
+    var hashSize = 2
+
     return productStorageInstance.methods.setHashFunction(
       key,
       funH
@@ -182,7 +183,7 @@ contract("ProductStorage", (accounts) => {
   it("should set the Latest Hash Ipfs of a product", async () => {
     var key = "0x7465737400000000000000000000000000000000000000000000000000000000"
     var lkey = "0x7475737400000000000000000000000000000000000000000000000000000000"
-  
+
     return productStorageInstance.methods.setLatestHashIpfs(
       key,
       lkey
@@ -197,13 +198,13 @@ contract("ProductStorage", (accounts) => {
       })
     })
   })
-  
+
   it("should update Hash of a product", async () => {
     var key = "0x7475737400000000000000000000000000000000000000000000000000000000"
     var ipfsHash = "0x7473737400000000000000000000000000000000000000000000000000000000"
     var funH = 2;
     var hSize = 1
-  
+
     return productStorageInstance.methods.updateHash(
       key,
       ipfsHash,
@@ -223,7 +224,7 @@ contract("ProductStorage", (accounts) => {
       })
     })
   })
-  
+
   it("should delete a product", async () => {
     var key = "0x7465737400000000000000000000000000000000000000000000000000000000"
     return productStorageInstance.methods.deleteProduct(
