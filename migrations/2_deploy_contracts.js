@@ -3,8 +3,6 @@ var ContractManager = artifacts.require("ContractManager")
 var Government = artifacts.require("Government")
 /***  STORAGE CONTRACTS ***/
 var UserStorage = artifacts.require("UserStorage")
-var CitizenStorage = artifacts.require("CitizenStorage");
-var BusinessStorage = artifacts.require("BusinessStorage");
 var ProductStorage = artifacts.require("ProductStorage");
 var OrderStorage = artifacts.require("OrderStorage")
 /***  LOGIC CONTRACTS ***/
@@ -15,8 +13,6 @@ var ProductLogic = artifacts.require("ProductLogic");
 module.exports = function(deployer, network, accounts) {
   var contractManagerInstance;
   var userStorageInstance;
-  var citizenStorageInstance;
-  var businessStorageInstance;
   var userLogicInstance;
   const GOVERNMENT = accounts[9];
 
@@ -28,23 +24,9 @@ module.exports = function(deployer, network, accounts) {
       return instance.setContractAddress("UserStorage", usInstance.address)
     })
     .then(() => {
-      return deployer.deploy(CitizenStorage, GOVERNMENT).then((csInstance) => {
-        citizenStorageInstance = csInstance
-        return instance.setContractAddress("CitizenStorage", csInstance.address)
-      })
-    })
-    .then(() => {
-      return deployer.deploy(BusinessStorage, GOVERNMENT).then((bsInstance) => {
-        businessStorageInstance = bsInstance
-        return instance.setContractAddress("BusinessStorage", bsInstance.address)
-      })
-    })
-    .then(() => {
       return deployer.deploy(Government, GOVERNMENT).then((govInstace) => {
         //insert the government account into the user storage account
-        return userStorageInstance.addUser(GOVERNMENT, 3).then(()=>{
-          return instance.setContractAddress("Government", govInstace.address)
-        })
+        return instance.setContractAddress("Government", govInstace.address)
       })
     })
     .then(() => {
@@ -54,9 +36,7 @@ module.exports = function(deployer, network, accounts) {
       })
     })
     .then(async () => {
-       userStorageInstance.addAuthorized(userLogicInstance.address);
-       citizenStorageInstance.addAuthorized(userLogicInstance.address);
-      return businessStorageInstance.addAuthorized(userLogicInstance.address);
+       return userStorageInstance.addAuthorized(userLogicInstance.address);
     })
     .then(() => {
       return deployer.deploy(ProductStorage)
