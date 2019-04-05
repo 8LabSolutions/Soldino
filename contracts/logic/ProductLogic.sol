@@ -34,6 +34,11 @@ contract ProductLogic {
         _;
     }
 
+    modifier onlyValidIpfsCid(bytes32 _hashIpfs, uint8 _hashFun, uint8 _hashSize) {
+        require(_hashIpfs[0] != 0 && _hashFun > 0 && _hashSize > 0, "Invalid Ipfs key");
+        _;
+    }
+
     constructor(address _contractManager, address _productStorage) public {
         contractManager = ContractManager(_contractManager);
         productStorage = ProductStorage(_productStorage);
@@ -70,10 +75,9 @@ contract ProductLogic {
         uint256 _netPrice
     )
         public
-        onlyValidKeyHash(_keyHash)
+        onlyValidIpfsCid(_keyHash, _hashFunction, _hashSize)
         onlyProductOwner
     {
-        require(_hashIPFS[0] != 0, "The modified product's hash given is null");
         require(_hashIPFS != _keyHash, "The modified product's hash cannot be the same as the key-hash");
 
         bool modified = false;

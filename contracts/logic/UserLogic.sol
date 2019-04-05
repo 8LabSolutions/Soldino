@@ -2,19 +2,14 @@ pragma solidity ^0.5.0;
 
 import "../ContractManager.sol";
 import "../storage/UserStorage.sol";
-import "../Government.sol";
 
 contract UserLogic {
     ContractManager contractManager;
-
     UserStorage userStorage;
-
-    Government government;
 
     constructor(address _contractManagerAddress) public {
         contractManager = ContractManager(_contractManagerAddress);
         userStorage = UserStorage(contractManager.getContractAddress("UserStorage"));
-        government = Government(contractManager.getContractAddress("Government"));
     }
 
     function addCitizen(bytes32 _hashIpfs, uint8 _hashSize, uint8 _hashFun) public {

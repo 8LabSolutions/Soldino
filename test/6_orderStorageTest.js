@@ -29,23 +29,37 @@ contract("OrderStorage", (accounts) => {
     var products = [
       "0x7415737400000000000000000000000000000000000000000000000000000000",
       "0x7465723740000000000000000000000000000000000000000000000000000000",
-      "0x9999999999999999000000000000000000000000000000000000000000000000"
+      "0x9999999999999999000000000000000000000000000000000000000000000000",
+      "0x9999999999999999000000000000000000000000000000000000000000000000",
+      "0x9999999999999999000000000000000000000000000000000000000000000000",
+      "0x9999999999999999000000000000000000000000000000000000000000000000",
+      "0x9999999999999999000000000000000000000000000000000000000000000000",
+      "0x9999999999999999000000000000000000000000000000000000000000000000",
+      "0x9999999999999999000000000000000000000000000000000000000000000000",
+      "0x9999999999999999000000000000000000000000000000000000000000000000",
     ]
 
-    return orderStorageInstance.methods.addOrder(key, funH, 2, accounts[1], accounts[2], products)
+    return orderStorageInstance.methods.addOrder(key, funH, 2, accounts[1], accounts[2], products, 10020, 2522)
     .send({from: accounts[0], gas: 6000000})
     .then(() => {
       return orderStorageInstance.methods.getOrder(key).call()
       .then((result) => {
-        assert.equal(result[0], key)
-        assert.equal(result[1],3)
-        assert.equal(result[2], 2)
-        assert.equal(result[3], accounts[2])
-        assert.equal(result[4],accounts[1])
-        for(var i = 0; i < 3; ++i) {
-          assert.equal(result[5][i], products[i], "Wrong pruduct returned")
-        }
+        assert.equal(result[0], 10020)
+        assert.equal(result[1],2522)
+        assert.equal(result[2], accounts[2])
+        assert.equal(result[3],accounts[1])
 
+        for(var i = 0; i < 10; ++i) {
+          assert.equal(result[4][i], products[i], "Wrong pruduct returned")
+        }
+      })
+      .then(() => {
+        return orderStorageInstance.methods.getOrderCid(key).call()
+        .then((result) => {
+          assert.equal(result[0], key)
+          assert.equal(result[1], funH)
+          assert.equal(result[2], 2)
+        })
       })
     })
   })

@@ -105,4 +105,24 @@ contract ProductStorage is Authorizable {
             hashToProduct[_keyHash].seller
         );
     }
+
+    function getProductNetPrice(bytes32 _keyHash) external view returns(uint256) {
+        return hashToProduct[_keyHash].netPrice;
+    }
+
+    function getProductVat(bytes32 _keyHash) external view returns(uint8) {
+        return hashToProduct[_keyHash].VATPercentage;
+    }
+
+    function getProductCid(bytes32 _keyHash) external view returns(bytes32,uint8,uint8) {
+        return(
+            hashToProduct[_keyHash].lastestHashIPFS,
+            hashToProduct[_keyHash].hashFunction,
+            hashToProduct[_keyHash].hashSize
+        );
+    }
+
+    function getProductSeller(bytes32 _keyHash) external view returns(address) {
+        return hashToProduct[_keyHash].seller;
+    }
 }

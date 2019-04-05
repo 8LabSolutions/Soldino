@@ -12,7 +12,7 @@ contract tokenRecipient {
 
 
 
-contract TokenERC20 is Owned {
+contract TokenCubit is Owned {
     // Public variables of the token
     string public name;
     string public symbol;
