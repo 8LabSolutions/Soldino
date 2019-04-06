@@ -7,7 +7,7 @@ contract VatLogic {
     ContractManager contractManager;
     VatStorage vatStorage;
 
-    event VatMovementRegistered(address indexed _business, uint8 indexed _date ,bytes32 _key);
+    event VatMovementRegistered(address indexed _business, uint256 indexed _date ,bytes32 _key);
     event VatPaid(address indexed _business, uint8 indexed _paymentDate, uint256 _paidAmount);
     event VatRefundRequest(address indexed _business, bytes32 indexed _key, uint256 indexed _amount);
 
@@ -18,6 +18,11 @@ contract VatLogic {
 
     function createVatKey(address _business, string memory _period, bytes32 _orderHash) public pure returns(bytes32) {
         return keccak256(abi.encodePacked(_business,_orderHash, _period));
+    }
+
+    function registerVat(address _business, uint256 _vatAmount, string calldata _period, bytes32 _orderHash) external {
+        bytes32 key = createVatKey(_business, _period, _orderHash);
+
     }
 }
 

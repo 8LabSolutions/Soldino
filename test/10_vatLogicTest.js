@@ -20,7 +20,7 @@ contract("VatLogic", (accounts) => {
     );
   });
 
-  it("should create a vat key", () =>{
+  it("should create a vat key", () => {
     console.log("test1")
     vatLogicInstance.methods.createVatKey(accounts[1],"2019-04-7", "0x7415737400000000000000000000000000000000000000000000000000000000")
     .call()

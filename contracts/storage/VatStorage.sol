@@ -5,7 +5,7 @@ import "../Authorizable.sol";
 contract VatStorage is Authorizable {
     struct VatData {
         address business;
-        uint8 dateDue;
+        uint256 dateDue;
         uint8 state;
         uint256 amount;
     }
@@ -13,7 +13,7 @@ contract VatStorage is Authorizable {
     mapping(bytes32 => VatData) public keyToVat;
     bytes32[] keysArray;
 
-    function getVatData(bytes32 _key) external view returns(address, uint8, uint8, uint256) {
+    function getVatData(bytes32 _key) external view returns(address, uint256, uint8, uint256) {
         return(
             keyToVat[_key].business,
             keyToVat[_key].dateDue,
@@ -30,7 +30,7 @@ contract VatStorage is Authorizable {
         keyToVat[_key].state = _state;
     }
 
-    function setDateDue(bytes32 _key, uint8 _newDate) external onlyAuthorized {
+    function setDateDue(bytes32 _key, uint256 _newDate) external onlyAuthorized {
         keyToVat[_key].dateDue = _newDate;
     }
 
@@ -38,15 +38,15 @@ contract VatStorage is Authorizable {
         bytes32 _key,
         address _business,
         uint256 _amount,
-        uint8 _dateDue
+        uint256 _dateDue
     )
         external
         onlyAuthorized
     {
-            keyToVat[_key].business = _business;
-            keyToVat[_key].dateDue = _dateDue;
-            keyToVat[_key].state = 1;
-            keyToVat[_key].amount = _amount;
+        keyToVat[_key].business = _business;
+        keyToVat[_key].dateDue = _dateDue;
+        keyToVat[_key].state = 1;
+        keyToVat[_key].amount = _amount;
     }
 
 
