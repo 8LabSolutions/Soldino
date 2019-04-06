@@ -32,13 +32,13 @@ contract("ProductStorage", (accounts) => {
 
   });
 
-  it("should not give authorization to an unregistered address (ProductLogic)", () => {
+  /*it("should not give authorization to an unregistered address (ProductLogic)", () => {
     return productStorageInstance.methods.authorized(productLogicInstance.options.address)
     .call()
     .then((result) => {
       assert.equal(result, false);
     })
-  })
+  })*/
 
   it("should set the ProductLogic contract as authorized contract", () => {
     return productStorageInstance.methods.addAuthorized(productLogicInstance.options.address)

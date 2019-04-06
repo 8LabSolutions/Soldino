@@ -39,9 +39,9 @@ contract ProductLogic {
         _;
     }
 
-    constructor(address _contractManager, address _productStorage) public {
+    constructor(address _contractManager) public {
         contractManager = ContractManager(_contractManager);
-        productStorage = ProductStorage(_productStorage);
+        productStorage = ProductStorage(contractManager.getContractAddress("ProductStorage"));
     }
 
     function addProduct(

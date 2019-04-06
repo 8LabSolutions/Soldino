@@ -15,5 +15,9 @@ contract VatLogic {
         //require(_business == )
         _;
     }
+
+    function createVatKey(address _business, string memory _period, bytes32 _orderHash) public pure returns(bytes32) {
+        return keccak256(abi.encodePacked(_business,_orderHash, _period));
+    }
 }
 
