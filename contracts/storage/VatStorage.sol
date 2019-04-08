@@ -3,21 +3,21 @@ pragma solidity 0.5.6;
 import "../Authorizable.sol";
 
 contract VatStorage is Authorizable {
+    enum VatState{DUE, OVERDUE, PAID, TO_BE_REFUNDED, REFUNDED}
+
     struct VatData {
         address business;
-        uint256 dateDue;
-        uint8 state;
-        uint256 amount;
+        VatState state;
+        int256 amount;
     }
 
     mapping(bytes32 => VatData) public keyToVat;
     bytes32[] keysArray;
 
-    function getVatData(bytes32 _key) external view returns(address, uint256, uint8, uint256) {
+    function getVatData(bytes32 _key) external view returns(address, uint, int256) {
         return(
             keyToVat[_key].business,
-            keyToVat[_key].dateDue,
-            keyToVat[_key].state,
+            uint(keyToVat[_key].state),
             keyToVat[_key].amount
         );
     }
@@ -26,28 +26,28 @@ contract VatStorage is Authorizable {
         return keyToVat[_key].business;
     }
 
-    function setVatState(bytes32 _key, uint8 _state) external onlyAuthorized {
-        keyToVat[_key].state = _state;
+    function getVatAmount(bytes32 _key) external view returns(int256) {
+        return keyToVat[_key].amount;
     }
 
-    function setDateDue(bytes32 _key, uint256 _newDate) external onlyAuthorized {
-        keyToVat[_key].dateDue = _newDate;
+    function getVatState(bytes32 _key) external view returns(uint) {
+        return uint(keyToVat[_key].state);
+    }
+
+    function setVatState(bytes32 _key, uint _state) external onlyAuthorized {
+        keyToVat[_key].state = VatState(_state);
     }
 
     function insertVat(
         bytes32 _key,
         address _business,
-        uint256 _amount,
-        uint256 _dateDue
+        int256 _amount
     )
         external
         onlyAuthorized
     {
         keyToVat[_key].business = _business;
-        keyToVat[_key].dateDue = _dateDue;
-        keyToVat[_key].state = 1;
-        keyToVat[_key].amount = _amount;
+        keyToVat[_key].state = VatState.DUE;
+        keyToVat[_key].amount += _amount;
     }
-
-
 }
