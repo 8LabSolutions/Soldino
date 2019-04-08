@@ -31,3 +31,6 @@ CMakeLists.txt.user
 *.kdev4
 
 coverage\.json
+
+# rompe le palle
+package-lock.json
