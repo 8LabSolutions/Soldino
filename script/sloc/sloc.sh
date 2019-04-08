@@ -3,11 +3,11 @@
 # assegna la somma degli sloc alla variabile ris; stampa ris.
 cd ../../contracts
 sloc_sol=$(find . -type f -name '*.sol' -exec cat {} \; | sed '/^\s*$/d' | wc -l)
-echo $sloc_sol
+
 
 cd ../src
 sloc_js=$(find . -type f -name '*.js' -exec cat {} \; | sed '/^\s*$/d' | wc -l)
-echo $sloc_js
+
 
 ris=$(($sloc_sol + $sloc_js))
 c=,

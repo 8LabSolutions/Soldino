@@ -8,7 +8,7 @@ Queste 4 metriche le riscrive in 4 file .csv, pronti per essere presi e fatti a 
 
 import datetime
 
-with open("../files/coverage_metrics.txt") as cm:
+with open("coverage_metrics.txt") as cm:
 	l = cm.readline()
 	arr = l.split()
 	
@@ -23,14 +23,14 @@ with open("../files/coverage_metrics.txt") as cm:
 	iso_time_and_date = datetime.datetime.now().isoformat()
 	iso_date = iso_time_and_date[:10]
 
-	with open("../files/statement_coverage.csv", 'a' ) as sc:
+	with open("statement_coverage.csv", 'a' ) as sc:
 		sc.write(iso_date+ ","+ statement_coverage +'\n')
 
-	with open("../files/branch_coverage.csv", 'a' ) as bc:
+	with open("branch_coverage.csv", 'a' ) as bc:
 		bc.write(iso_date+ ","+ branch_coverage +'\n')
 
-	with open("../files/function_coverage.csv", 'a' ) as fc:
+	with open("function_coverage.csv", 'a' ) as fc:
 		fc.write(iso_date+ ","+ function_coverage +'\n')
 
-	with open("../files/line_coverage.csv", 'a' ) as lc:
+	with open("line_coverage.csv", 'a' ) as lc:
 		lc.write(iso_date+ ","+ line_coverage +'\n')

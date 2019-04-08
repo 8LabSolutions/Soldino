@@ -11,5 +11,9 @@ cd ccr
 python3 ccr.py
 cd ..
 
+echo "doing coverage"
+cd	coverage
+bash launcher.sh
+cd ..
 
 echo "end"
