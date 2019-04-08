@@ -2,6 +2,10 @@
 //signing-up
 import  getWeb3 from "./web_util";
 
+const ContractManager = artifacts.require("ContractManager");
+const CitizenStorage = artifacts.require("CitizenStorage");
+const UserLogic = artifacts.require("UserLogic");
+
 //return the web3 instance
 var web3 = getWeb3();
 /**
@@ -16,10 +20,28 @@ var web3 = getWeb3();
  * @param {string} details
  * @returns {bool} success
  */
-const registerUser = function(userType/*, email, streetName, streetNumber, district, postCode, name, details*/){
+const registerUser = function(userType, email, streetName, streetNumber, district, postCode, name, details){
   //istantiate the necessary costracts and returns the results
-  alert(userType)
-  alert(web3)
+  var contractManagerInstance;
+  var citizenStorageInstance;
+
+  contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
+    ContractManager.networks[ContractManager.network_id].address);
+  contractManagerInstance.methods.getContractAddress("UserLogic").call()
+  .then((_userLogicAddress)=>{
+    userLogicInstance = new web3.eth.Contract(UserLogic.abi,
+      _userLogicAddress);
+  })
+
+  if (userType == "CITIZEN"){
+    //register the new citizen
+
+  }
+  else if (userType == "BUSINESS"){
+    //register the new business
+    alert(email)
+  }
+
   return true;
   //different registartions based on the userType
 }
