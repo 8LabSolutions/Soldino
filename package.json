@@ -23,6 +23,7 @@
     "@types/react-text-mask": "^5.4.4",
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
+    "bs58": "^4.0.1",
     "commondir": "^1.0.1",
     "history": "^4.7.2",
     "ipfs-mini": "^1.1.5",
@@ -66,7 +67,7 @@
     "lint": "./node_modules/.bin/eslint src/",
     "test": "react-scripts test",
     "solidity-test": "truffle test",
-    "coverage": "./node_modules/.bin/solidity-coverage",
+    "coverage": "cp sol_coverage_patch/parser.js node_modules/solidity-parser-sc/build/ && ./node_modules/.bin/solidity-coverage",
     "eject": "react-scripts eject"
   },
   "pre-commit": "lint",

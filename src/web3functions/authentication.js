@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 //file containing all the functions for logging-in and
 //signing-up
 import  getWeb3 from "./web_util";
@@ -23,14 +24,14 @@ var web3 = getWeb3();
 const registerUser = function(userType, email, streetName, streetNumber, district, postCode, name, details){
   //istantiate the necessary costracts and returns the results
   var contractManagerInstance;
-  var citizenStorageInstance;
+  //var citizenStorageInstance;
 
   contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
     ContractManager.networks[ContractManager.network_id].address);
   contractManagerInstance.methods.getContractAddress("UserLogic").call()
   .then((_userLogicAddress)=>{
-    userLogicInstance = new web3.eth.Contract(UserLogic.abi,
-      _userLogicAddress);
+    //userLogicInstance = new web3.eth.Contract(UserLogic.abi,
+      //_userLogicAddress);
   })
 
   if (userType == "CITIZEN"){

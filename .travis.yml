@@ -22,7 +22,6 @@ jobs:
         - npm run lint
         - ganache-cli -p 9545 > /dev/null &
         - sleep 5
-        - cp sol_coverage_patch/parser.js node_modules/solidity-parser-sc/build/
         - truffle migrate --reset
         - npm run build
         - npm run coverage && cat coverage/lcov.info | coveralls
