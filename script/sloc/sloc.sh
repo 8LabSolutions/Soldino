@@ -17,4 +17,4 @@ a=$(date -I)
 #pwd
 cd ../script/sloc
 echo "$a$c$ris" >> sloc.csv
-cat sloc.csv
+#cat sloc.csv
