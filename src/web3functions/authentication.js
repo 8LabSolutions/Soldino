@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 //file containing all the functions for logging-in and
 //signing-up
-import  getWeb3 from "./web_util";
+import  web3util from "./web_util";
 
 const ContractManager = artifacts.require("ContractManager");
 const CitizenStorage = artifacts.require("CitizenStorage");
 const UserLogic = artifacts.require("UserLogic");
 
 //return the web3 instance
-var web3 = getWeb3();
+var web3 = web3util.getWeb3();
 /**
  * @description Registers the new user if possible, or returns false if something went wrong
  * @param {int} userType
