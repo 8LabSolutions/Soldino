@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import Web3 from 'web3'
 
 var web3util = (function() {
