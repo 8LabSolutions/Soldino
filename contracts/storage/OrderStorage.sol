@@ -103,6 +103,14 @@ contract OrderStorage is Authorizable {
         );
     }
 
+    function getOrderNetTotal(bytes32 _keyHash) public view returns (uint256) {
+        return hashToOrder[_keyHash].netTotal;
+    }
+
+    function getOrderVatTotal(bytes32 _keyHash) public view returns (uint256) {
+        return hashToOrder[_keyHash].vatTotal;
+    }
+
 
 
 }

@@ -11,6 +11,9 @@ import "./VatLogic.sol";
 contract OrderLogic {
     ContractManager contractManager;
     OrderStorage  orderStorage;
+    VatLogic vatLogic;
+    UserStorage userStorage;
+    ProductStorage productStorage;
 
 
     event OrderInserted(address indexed _buyer, address indexed _seller, bytes32 indexed _keyHash);
@@ -42,14 +45,17 @@ contract OrderLogic {
         uint8 _hashFun,
         uint8 _hashSize,
         address _buyer,
-        address _seller,
         string calldata _period,
         bytes32[] calldata _productsHash
+        //uint8[] calldata _productsQtn
     )
         external
         onlyPurchaseContract
         onlyValidIpfsCid(_hashIpfs, _hashFun, _hashSize)
     {
+        setProductStorage();
+        address _seller = productStorage.getProductSeller(_productsHash[0]);
+
         require(_productsHash.length > 0, "OrderLogic: products not provided");
         require(_seller != address(0), "OrderLogic: invalid seller address");
         require(_buyer != address(0), "OrderLogic: invalid buyer address");
@@ -61,13 +67,13 @@ contract OrderLogic {
 
         // Create instance of Vat Logic
         // and register the vat Movement
-        VatLogic vatLogic = setVatLogic();
+        setVatLogic();
         vatLogic.registerVat(_seller, int256(vatTotal), _period);
 
         // if the buyer is a business, the vat movement needs to be registered
         // to do so a UserStorage instance is created and if and only if the buyer
         // is a business, the vat movement is registered
-        UserStorage userStorage = setUserStorage();
+        setUserStorage();
         if(userStorage.getUserType(_buyer) == 2) {
             vatLogic.registerVat(_buyer, (int256(vatTotal)*(-1)), _period);
         }
@@ -75,20 +81,19 @@ contract OrderLogic {
         emit OrderInserted(_buyer, _seller, _hashIpfs);
     }
 
-    function setProductStorage() internal view returns(ProductStorage) {
-       return ProductStorage(contractManager.getContractAddress("ProductStorage"));
+    function setProductStorage() internal {
+       productStorage = ProductStorage(contractManager.getContractAddress("ProductStorage"));
     }
 
-    function setVatLogic() internal view returns(VatLogic) {
-       return VatLogic(contractManager.getContractAddress("VatLogic"));
+    function setVatLogic() internal  {
+       vatLogic = VatLogic(contractManager.getContractAddress("VatLogic"));
     }
 
-    function setUserStorage() internal view returns(UserStorage) {
-       return UserStorage(contractManager.getContractAddress("UserStorage"));
+    function setUserStorage() internal {
+       userStorage = UserStorage(contractManager.getContractAddress("UserStorage"));
     }
 
-    function calculateOrderTotal(bytes32[] memory  _productsHash) internal view returns(uint256, uint256) {
-        ProductStorage productStorage = setProductStorage();
+    function calculateOrderTotal(bytes32[] memory  _productsHash) internal view  returns(uint256, uint256) {
         uint256 total;
         address seller = productStorage.getProductSeller(_productsHash[0]);
         uint256 vatTotal;
@@ -100,5 +105,13 @@ contract OrderLogic {
         }
 
         return(total, vatTotal);
+    }
+
+    function getOrderTotal(bytes32 _orderHash) external view returns(uint256) {
+        return (orderStorage.getOrderNetTotal(_orderHash) + orderStorage.getOrderVatTotal(_orderHash));
+    }
+
+    function getOrderSeller(bytes32 _orderHash) external view returns(address) {
+        return orderStorage.getSeller(_orderHash);
     }
 }

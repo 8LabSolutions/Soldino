@@ -13,7 +13,7 @@ contract VatLogic is tokenRecipient {
     event VatRefunded(address indexed _business, bytes32 indexed _key, uint256  _amount);
 
     modifier onlyGovernment {
-        require(msg.sender == vatStorage.owner(), "VAT Logic: Permissio denied");
+        require(msg.sender == vatStorage.owner(), "VAT Logic: Permission denied");
         _;
     }
 
@@ -40,6 +40,8 @@ contract VatLogic is tokenRecipient {
     * @param _token : Cubit's contract address
     */
     function receiveApproval(address _from, uint256 _value, address _token) external {
+        TokenCubit cubitToken = TokenCubit(_token);
+        require(cubitToken.transferFrom(_from, address(this), _value));
         vatStorage.insertPayment(_from, _value);
     }
 
@@ -57,7 +59,7 @@ contract VatLogic is tokenRecipient {
 
         TokenCubit cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
         // Transfer funds from the business to the government
-        require(cubitToken.transferFrom(_from, vatStorage.owner(), uint256(vatDue)),
+        require(cubitToken.transfer(vatStorage.owner(), uint256(vatDue)),
             "VAT payment: an error occured during the fund transfer to the government");
 
         // Set the state of the VAT to PAID
