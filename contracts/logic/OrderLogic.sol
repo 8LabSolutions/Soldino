@@ -100,6 +100,5 @@ contract OrderLogic {
         }
 
         return(total, vatTotal);
-
     }
 }

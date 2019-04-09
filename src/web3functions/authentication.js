@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 //file containing all the functions for logging-in and
 //signing-up
-import  web3util from "./web_util";
+import web3util from "./web_util";
 
 const ContractManager = artifacts.require("ContractManager");
 const CitizenStorage = artifacts.require("CitizenStorage");
