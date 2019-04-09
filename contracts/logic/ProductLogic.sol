@@ -2,6 +2,7 @@ pragma solidity ^0.5.0;
 
 import "../storage/ProductStorage.sol";
 import "../ContractManager.sol";
+import "../storage/UserStorage.sol";
 
 
 contract ProductLogic {
@@ -18,13 +19,17 @@ contract ProductLogic {
 
     event ProductDeleted(bytes32 indexed _keyHash, address indexed _seller);
 
-    //TODO
+
     modifier onlyBusiness {
+        UserStorage us = UserStorage(contractManager.getContractAddress("UserStorage"));
+        require(us.getUserType(msg.sender) == 2, "You're not a business");
         _;
     }
 
-    //TODO
-    modifier onlyProductOwner {
+
+    modifier onlyProductOwner(bytes32 _keyHash) {
+        require(msg.sender == productStorage.getProductSeller(_keyHash),
+            "This product doesn't belong to you");
         _;
     }
 
@@ -52,6 +57,7 @@ contract ProductLogic {
         uint256 _netPrice
     )
         public
+        onlyValidIpfsCid(_hashIPFS, _hashFunction, _hashSize)
         onlyBusiness
     {
         productStorage.addProduct(
@@ -76,7 +82,7 @@ contract ProductLogic {
     )
         public
         onlyValidIpfsCid(_keyHash, _hashFunction, _hashSize)
-        onlyProductOwner
+        onlyProductOwner(_keyHash)
     {
         require(_hashIPFS != _keyHash, "The modified product's hash cannot be the same as the key-hash");
 
@@ -99,7 +105,7 @@ contract ProductLogic {
 
     }
 
-    function deleteProduct(bytes32 _keyHash) public onlyProductOwner onlyValidKeyHash(_keyHash) {
+    function deleteProduct(bytes32 _keyHash) public onlyValidKeyHash(_keyHash) onlyProductOwner(_keyHash) {
         productStorage.deleteProduct(_keyHash);
         emit ProductDeleted(_keyHash, msg.sender);
     }

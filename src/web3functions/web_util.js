@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import Web3 from 'web3'
 
-class web3util {
+/*class web3util {
   bs58 = require('bs58');
   getWeb3() {
     var web3js;
@@ -9,7 +9,7 @@ class web3util {
       web3js = new Web3(window.web3.currentProvider);
       return window.ethereum.enable();
     } else if(typeof web3 !== 'undefined'){
-      web3js = new Web3(web3.currentProvider);
+      web3js = new Web3(Web3.currentProvider);
     } else{
       web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
     }
@@ -31,9 +31,9 @@ class web3util {
   }
 }
 
-export default web3util
-
-/*var web3util = (function() {
+export default web3util;*/
+var web3util;
+export default web3util = (function() {
   var bs58 = require('bs58');
   return {
     getWeb3: function() {
@@ -42,7 +42,7 @@ export default web3util
         web3js = new Web3(window.web3.currentProvider);
         return window.ethereum.enable();
       } else if(typeof web3 !== 'undefined'){
-        web3js = new Web3(web3.currentProvider);
+        web3js = new Web3(Web3.currentProvider);
       } else{
         web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
       }
@@ -63,6 +63,4 @@ export default web3util
       return bs58.encode(new Buffer(hash, 'hex'))
     }
   }
-}());
-
-exports.default = web3util;*/
+})
