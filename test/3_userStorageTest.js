@@ -44,7 +44,30 @@ contract("UserStorage", (accounts) => {
         )
       })
   });*/
+  it("should add a new User", async () => {
+    var add = CITIZEN
+    var type = 1
+    var funH = 2
+    var sizeH = 2;
+    var ipfsH = "0x7465737400000000000000000000000000000000000000000000000000000000"
+    return userStorageInstance.methods.addUser(
+      add,
+      type,
+      funH,
+      sizeH,
+      ipfsH
+    )
+    .send({from: accounts[0], gas:6000000})
+    .then(() => {
 
+      return userStorageInstance.methods.getUserType(CITIZEN)
+    .send({from:accounts[0], gas: 2000000}).then(function(type){
+      type,
+      1,
+      "The user is not a citizen"
+    })
+    })
+  })
   it("should check if an user is already registered", function(){
     return userStorageInstance.methods.addUser(accounts[0], 1, 9, 9, "0x7465737400000000000000000000000000000000000000000000000000000000" )
     .send({from: accounts[0], gas: 4712388})
