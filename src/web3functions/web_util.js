@@ -32,6 +32,7 @@ import Web3 from 'web3'
 }
 
 export default web3util;*/
+// eslint-disable-next-line no-unused-vars
 var web3util;
 export default web3util = (function() {
   var bs58 = require('bs58');

@@ -15,7 +15,7 @@ contract Escrow is tokenRecipient{
     }
 
     //override
-    function receiveApproval(address _from, uint256 _value, address _token /*, bytes calldata _extraData*/) external {
+    function receiveApproval(address _from, uint256 _value, address _token ) external {
         TokenCubit cubitToken = TokenCubit(_token);
 
         require(cubitToken.transferFrom(_from, address(this), _value));
