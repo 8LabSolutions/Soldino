@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import Button from '../presentational/Button';
-import registerUser from "../../web3functions/authentication"
+import { addUser } from "../../facade/authentication"
 
 
 const mapDispatchToProps = () => {
   return {
     action: (parametersArray) => {
-      let ris = registerUser(...parametersArray);
+      let ris = addUser(...parametersArray);
     }
   }
 }

@@ -1,4 +1,4 @@
-import {Web3} from 'web3';
+import Web3 from 'web3';
 
 const web3util = (function() {
   var bs58 = require('bs58');
@@ -7,7 +7,7 @@ const web3util = (function() {
       var web3js;
       if (typeof web3 !== 'undefined' && typeof window != 'undefined') {
         web3js = new Web3(window.web3.currentProvider);
-        return window.ethereum.enable();
+        window.ethereum.enable();
       } else{
         web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
       }
@@ -28,6 +28,6 @@ const web3util = (function() {
       return bs58.encode(new Buffer(hash, 'hex'))
     }
   }
-})
+}())
 
 export default web3util;
