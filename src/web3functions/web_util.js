@@ -28,6 +28,6 @@ const web3util = (function() {
       return bs58.encode(new Buffer(hash, 'hex'))
     }
   }
-}());
+})
 
 export default web3util;

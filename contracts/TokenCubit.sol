@@ -2,11 +2,11 @@ pragma solidity ^0.5.0;
 
 
 
-import "../Owned.sol";
+import "./Owned.sol";
 
 //Le interfacce sono simili a contratti astratti ma non posso implementare funzioni
 contract tokenRecipient {
-    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata) external;
+    function receiveApproval(address _from, uint256 _value, address _token) external;
 }
 
 
@@ -152,15 +152,13 @@ contract TokenCubit is Owned {
      *
      * @param _spender The address authorized to spend
      * @param _value the max amount they can spend
-     * @param _extraData some extra information to send to the approved contract
      */
-    function approveAndCall(address _spender, uint256 _value,
-        bytes memory _extraData)
+    function approveAndCall(address _spender, uint256 _value)
         public
         returns (bool success) {
         tokenRecipient spender = tokenRecipient(_spender);
         if (approve(_spender, _value)) {
-            spender.receiveApproval(msg.sender, _value, address(this), _extraData);
+            spender.receiveApproval(msg.sender, _value, address(this));
             return true;
         }
     }

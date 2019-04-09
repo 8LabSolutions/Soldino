@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 
-import "./storage/TokenCubit.sol";
+import "./TokenCubit.sol";
 
 contract Escrow is tokenRecipient{
     // accounts who have sent cubit to the contract
@@ -15,10 +15,12 @@ contract Escrow is tokenRecipient{
     }
 
     //override
-    function receiveApproval(address _from, uint256 _value, address _token /*, bytes calldata _extraData*/) external {
-       TokenCubit cubitToken = TokenCubit(_token);
-       require(cubitToken.transferFrom(_from, address(this), _value));
-       registrantsPaid[_from] += _value;
+    function receiveApproval(address _from, uint256 _value, address _token ) external {
+        TokenCubit cubitToken = TokenCubit(_token);
+
+        require(cubitToken.transferFrom(_from, address(this), _value));
+        registrantsPaid[_from] += _value;
+
     }
 
     function confirmBuy(address _seller, uint256 _value) public {
@@ -26,12 +28,4 @@ contract Escrow is tokenRecipient{
         cubitContract.transfer(_seller, _value);
         emit OrderReceived(msg.sender, _seller, _value);
     }
-
-    /*function test(TokenERC20[] memory array) public {
-
-    }*/
 }
-/*
-
-         //nel for
-        */

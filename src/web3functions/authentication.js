@@ -21,6 +21,7 @@ var web3 = web3util.getWeb3();
  * @param {string} details
  * @returns {bool} success
  */
+
 const registerUser = function(userType, email, streetName, streetNumber, district, postCode, name, details){
   //istantiate the necessary costracts and returns the results
   var contractManagerInstance;
