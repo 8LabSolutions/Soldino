@@ -3,9 +3,6 @@
 //signing-up
 import  web3util from "./web_util";
 import ContractManager from "../contracts_build/ContractManager"
-import CitizenStorage from "../contracts_build/CitizenStorage"
-import UserLogic from "../contracts_build/UserLogic"
-
 
 //return the web3 instance
 var web3 = web3util.getWeb3();
