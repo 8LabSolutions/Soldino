@@ -22,6 +22,7 @@ jobs:
         - npm run lint
         - ganache-cli -p 9545 > /dev/null &
         - sleep 5
+        - truffle compile
         - truffle migrate --reset
         - npm run build
         - npm run coverage && cat coverage/lcov.info | coveralls
