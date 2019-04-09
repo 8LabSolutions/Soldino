@@ -12,6 +12,7 @@ contract VatStorage is Authorizable {
     }
 
     mapping(bytes32 => VatData) public keyToVat;
+    mapping(address => uint256) public registrantsPaid;
     bytes32[] keysArray;
 
     function getVatData(bytes32 _key) external view returns(address, uint, int256) {
@@ -38,7 +39,11 @@ contract VatStorage is Authorizable {
         keyToVat[_key].state = VatState(_state);
     }
 
-    function insertVat(
+    function setPayment(address _business, uint256 _value) external onlyAuthorized {
+        registrantsPaid[_business] = _value;
+    }
+
+    function insertVatAndSetState(
         bytes32 _key,
         address _business,
         int256 _amount
@@ -47,7 +52,11 @@ contract VatStorage is Authorizable {
         onlyAuthorized
     {
         keyToVat[_key].business = _business;
-        keyToVat[_key].state = VatState.DUE;
         keyToVat[_key].amount += _amount;
+        if(keyToVat[_key].amount < 0) {
+            keyToVat[_key].state = VatState.TO_BE_REFUNDED;
+        } else {
+            keyToVat[_key].state = VatState.DUE;
+        }
     }
 }

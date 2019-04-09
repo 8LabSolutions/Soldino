@@ -20,7 +20,7 @@ contract VatLogic is tokenRecipient {
     function registerVat(address _business, int256 _vatAmount, string calldata _period) external {
         require(msg.sender == contractManager.getContractAddress("OrderLogic"), "Permission denied, cannot call 'InsertVat'.");
         bytes32 key = createVatKey(_business, _period);
-        vatStorage.insertVat(key, _business, _vatAmount);
+        vatStorage.insertVatAndSetState(key, _business, _vatAmount);
     }
 
     function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external {
@@ -28,5 +28,30 @@ contract VatLogic is tokenRecipient {
         //tranfer, in Cubit, the VAT owned to the Governement
         require(cubitToken.transferFrom(_from, address(this), _value), "Transfer funds: permission denied");
     }
+
+    function payVat(address _from, bytes32 _key) external {
+        // The VAT needs to be paid only from the business which has generated the VAT movement
+        require(_from == vatStorage.getVatBusiness(_key), "VAT payment: invalid VAT key");
+        // The VAT in order to be paid needs to have a DUE state or OVERDUE state
+        require(vatStorage.getVatState(_key) == 0 || vatStorage.getVatState(_key) == 1,
+            "VAT payment: this VAT isn't a debit VAT");
+
+        int256 vatDue = vatStorage.getVatAmount(_key);
+        // In order to pay the VAT the business must have transferred enough funds to this contract
+        require(uint256(vatDue) <= vatStorage.registrantsPaid(_from),
+            "VAT payment: not enough funds transered to the contract in order to pay this VAT");
+
+        TokenCubit cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
+        // Transfer funds from the business to the government
+        require(cubitToken.transferFrom(_from, vatStorage.owner(), uint256(vatDue)),
+            "VAT payment: an error occured during the fund transfer to the government");
+
+        // Set the state of the VAT to PAID
+        vatStorage.setVatState(_key, 2);
+
+        emit VatPaid(_from, _key, vatDue);
+    }
+
+
 }
 
