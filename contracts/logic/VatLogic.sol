@@ -10,7 +10,7 @@ contract VatLogic is tokenRecipient {
 
     event VatMovementRegistered(address indexed _business, bytes32 indexed _key, uint256 _date);
     event VatPaid(address indexed _business, bytes32 indexed _key, int256 _paidAmount);
-    event VatRefundRequest(address indexed _business, bytes32 indexed _key, int256  _amount);
+    event VatRefunded(address indexed _business, bytes32 indexed _key, uint256  _amount);
 
     modifier onlyGovernment {
         require(msg.sender == vatStorage.owner(), "VAT Logic: Permissio denied");
@@ -32,10 +32,14 @@ contract VatLogic is tokenRecipient {
         vatStorage.insertVatAndSetState(key, _business, _vatAmount);
     }
 
-    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external {
-        TokenCubit cubitToken = TokenCubit(_token);
-        //tranfer, in Cubit, the VAT owned to the Governement
-        require(cubitToken.transferFrom(_from, address(this), _value), "Transfer funds: permission denied");
+    /**
+    * When this function is called it means that a business has allowed this contract
+    * to spend _value cubit in his behalf.
+    * @param _from : the address of the business
+    * @param _value : amount of cubit allowed to be spent
+    * @param _token : Cubit's contract address
+    */
+    function receiveApproval(address _from, uint256 _value, address _token) external {
         vatStorage.insertPayment(_from, _value);
     }
 
@@ -58,6 +62,7 @@ contract VatLogic is tokenRecipient {
 
         // Set the state of the VAT to PAID
         vatStorage.setVatState(_key, 2);
+        vatStorage.fulfillPayment(_from, uint256(vatDue));
 
         emit VatPaid(_from, _key, vatDue);
     }
@@ -67,11 +72,18 @@ contract VatLogic is tokenRecipient {
         require(vatStorage.getVatState(_key) == 3, "VAT refund: no need to refund this VAT");
 
         TokenCubit cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
+        address _business = vatStorage.getVatBusiness(_key);
+        uint256 _amount = uint256(vatStorage.getVatAmount(_key)*(-1));
+
         // Transfer funds from the business to the government
-        require(cubitToken.transferFrom(vatStorage.owner(),vatStorage.getVatBusiness(_key),
-             uint256(vatStorage.getVatAmount(_key) * (-1))),
+        require(cubitToken.transferFrom(vatStorage.owner(), _business, _amount),
             "VAT payment: an error occured during the transfer.");
 
+        vatStorage.setVatState(_key, 4);
+
+        vatStorage.fulfillPayment(_business, _amount);
+
+        emit VatRefunded(_business, _key, _amount);
     }
 
 

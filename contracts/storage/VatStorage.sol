@@ -40,7 +40,11 @@ contract VatStorage is Authorizable {
     }
 
     function insertPayment(address _business, uint256 _value) external onlyAuthorized {
-        registrantsPaid[_business] = _value;
+        registrantsPaid[_business] += _value;
+    }
+
+    function fulfillPayment(address _business, uint _value) external onlyAuthorized {
+        registrantsPaid[_business] -= _value;
     }
 
 
