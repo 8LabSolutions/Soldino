@@ -50,7 +50,7 @@ contract("ProductLogic", (accounts) => {
         })
       });
 
-     /* it("should add a new product", () => {
+      it("should add a new product", () => {
         var key = "0x7465737410000000000000000000000000000000000000000000000000000000"
         var size = 2
         var funH = 3
@@ -64,12 +64,91 @@ contract("ProductLogic", (accounts) => {
           vat,
           price
         ).send({from: accounts[4], gas:2000000})
-        .then((result) => {
-          return truffleAssert.eventEmitted(result, 'ProductInserted', (ev) => {
+        .then(() => {
+          
+          /*return truffleAssert.eventEmitted(result, 'ProductInserted', (ev) => {
             return ev._keyHash == "0x7465737410000000000000000000000000000000000000000000000000000000"
             && ev._seller == accounts[4];
+          })*/
+          return productStorageInstance.methods.getProduct(key).call()
+      .then((result) => {
+        assert.equal(result[0],key);
+        assert.equal(result[1],size);
+        assert.equal(result[2],funH);
+        assert.equal(result[3],vat);
+        assert.equal(result[4],price);
+        assert.equal(result[5],accounts[4]);
           })
+
+
         })
 
-      })*/
+      });
+
+      it("should modify a product", () => {
+        var key = "0x7465737410000000000000000000000000000000000000000000000000000000"
+        var ipfsHash = "0x7465737430000000000000000000000000000000000000000000000000000000"
+        var size = 2
+        var funH = 3
+        var vat = 21
+        var price = 110
+
+        return productLogicInstance.methods.modifyProduct(
+          key,
+          ipfsHash,
+          size,
+          funH,
+          vat,
+          price
+        ).send({from: accounts[4], gas:2000000})
+        .then(() => {
+          
+          /*return truffleAssert.eventEmitted(result, 'ProductInserted', (ev) => {
+            return ev._keyHash == "0x7465737410000000000000000000000000000000000000000000000000000000"
+            && ev._seller == accounts[4];
+          })*/
+          return productStorageInstance.methods.getProduct(key).call()
+      .then((result) => {
+        assert.equal(result[0],ipfsHash);
+        assert.equal(result[1],size);
+        assert.equal(result[2],funH);
+        assert.equal(result[3],vat);
+        assert.equal(result[4],price);
+        assert.equal(result[5],accounts[4]);
+          })
+
+
+        })
+
+      });
+
+      it("should delete a product", () => {
+        var key = "0x7465737410000000000000000000000000000000000000000000000000000000"
+
+        return productLogicInstance.methods.deleteProduct(
+          key,
+          
+        ).send({from: accounts[4], gas:2000000})
+        .then(() => {
+          
+          /*return truffleAssert.eventEmitted(result, 'ProductInserted', (ev) => {
+            return ev._keyHash == "0x7465737410000000000000000000000000000000000000000000000000000000"
+            && ev._seller == accounts[4];
+          })*/
+          return productStorageInstance.methods.getProduct(key).call()
+      .then((result) => {
+        assert.equal(result[0],0x0000000000000000000000000000000000000000000000000000000000000000);
+        assert.equal(result[1],0);
+        assert.equal(result[2],0);
+        assert.equal(result[3],0);
+        assert.equal(result[4],0);
+        assert.equal(result[5],0x0000000000000000000000000000000000000000000000000000000000000000);
+          })
+
+
+        })
+
+      });
+
+
 })
