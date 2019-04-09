@@ -39,9 +39,11 @@ contract VatStorage is Authorizable {
         keyToVat[_key].state = VatState(_state);
     }
 
-    function setPayment(address _business, uint256 _value) external onlyAuthorized {
+    function insertPayment(address _business, uint256 _value) external onlyAuthorized {
         registrantsPaid[_business] = _value;
     }
+
+
 
     function insertVatAndSetState(
         bytes32 _key,

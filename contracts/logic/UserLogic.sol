@@ -7,6 +7,11 @@ contract UserLogic {
     ContractManager contractManager;
     UserStorage userStorage;
 
+    modifier onlyGovernment {
+        require(msg.sender == userStorage.owner(), "UserLogic: Permission denied");
+        _;
+    }
+
     constructor(address _contractManagerAddress) public {
         contractManager = ContractManager(_contractManagerAddress);
         userStorage = UserStorage(contractManager.getContractAddress("UserStorage"));
@@ -39,6 +44,10 @@ contract UserLogic {
         uint8 userType = userStorage.getUserType(_userAddress);
         require(userType == 1 || userType == 2 || userType == 3, "Something went wrong");
         return userStorage.getIpfsCid(_userAddress);
+
+    }
+
+    function setUserState(address _userAddress) external onlyGovernment {
 
     }
 

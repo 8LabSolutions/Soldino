@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 //file containing all the functions for logging-in and
 //signing-up
-import  web3util from "./web_util";
+import web3util from "./web_util";
 
 const ContractManager = artifacts.require("ContractManager");
 const CitizenStorage = artifacts.require("CitizenStorage");
@@ -21,6 +21,7 @@ var web3 = web3util.getWeb3();
  * @param {string} details
  * @returns {bool} success
  */
+
 const registerUser = function(userType, email, streetName, streetNumber, district, postCode, name, details){
   //istantiate the necessary costracts and returns the results
   var contractManagerInstance;
