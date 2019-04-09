@@ -1,11 +1,8 @@
 /* eslint-disable no-unused-vars */
 //file containing all the functions for logging-in and
 //signing-up
-import web3util from "./web_util";
-
-const ContractManager = artifacts.require("ContractManager");
-const CitizenStorage = artifacts.require("CitizenStorage");
-const UserLogic = artifacts.require("UserLogic");
+import  web3util from "./web_util";
+import ContractManager from "../contracts_build/ContractManager"
 
 //return the web3 instance
 var web3 = web3util.getWeb3();
@@ -35,11 +32,11 @@ const registerUser = function(userType, email, streetName, streetNumber, distric
       //_userLogicAddress);
   })
 
-  if (userType == "CITIZEN"){
+  if (userType === "CITIZEN"){
     //register the new citizen
 
   }
-  else if (userType == "BUSINESS"){
+  else if (userType === "BUSINESS"){
     //register the new business
     alert(email)
   }
