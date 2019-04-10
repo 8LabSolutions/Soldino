@@ -10,6 +10,8 @@ contract("UserStorage", (accounts) => {
   var contractManagerInstance;
   var userStorageInstance;
   const CITIZEN = accounts[3];
+  const BUSINESS1 = accounts[4];
+  const BUSINESS2 = accounts[5];
   //console.log(accounts[9]+'dentro user')
   before(async () => {
     contractManagerInstance = new web3.eth.Contract(
@@ -51,7 +53,7 @@ contract("UserStorage", (accounts) => {
     var sizeH = 2;
     var ipfsH = "0x7465737400000000000000000000000000000000000000000000000000000000"
     return userStorageInstance.methods.addUser(
-      add,
+      accounts[1],
       type,
       funH,
       sizeH,
@@ -61,11 +63,12 @@ contract("UserStorage", (accounts) => {
     .then(() => {
 
       return userStorageInstance.methods.getUserType(CITIZEN)
-    .send({from:accounts[0], gas: 2000000}).then(function(type){
-      type,
-      1,
-      "The user is not a citizen"
-    })
+      .send({from:accounts[0], gas: 2000000})
+      .then(function(type){
+        type,
+        1,
+        "The user is not a citizen"
+      })
     })
   })
   it("should check if an user is already registered", function(){
