@@ -3,7 +3,7 @@ import ContractManager from "../contracts_build/ContractManager"
 import UserLogic from "../contracts_build/UserLogic"
 
 const userHandler = (async function() {
-  var web3 = web3util.getWeb3();
+  var web3 = await web3util.getWeb3();
   var contractManagerInstance;
   var userLogicInstance;
   web3.eth.net.getId().then((id)=>{
@@ -17,15 +17,18 @@ const userHandler = (async function() {
 
   return {
     addCitizen: function(hash) {
-      let hashFun, hashSize, hashIpfs = web3util.splitIPFSHash(hash);
-      return userLogicInstance.addCitizen(hashIpfs, hashSize, hashFun).send({gas: 4712388});
+      let ris = web3util.splitIPFSHash(hash);
+      return web3.eth.getAccounts().then((account)=>{
+        console.log(hash)
+        return userLogicInstance.methods.addCitizen(String(web3.utils.fromAscii((ris[2]))), ris[1], ris[0]).send({from: account[0]});
+      })
     },
     addBusiness: function(hash) {
       let hashFun, hashSize, hashIpfs = web3util.splitIPFSHash(hash);
-      return userLogicInstance.addBusiness(hashIpfs, hashSize, hashFun).send({gas: 4712388});
+      return userLogicInstance.methods.addBusiness(hashIpfs, hashSize, hashFun).send({gas: 4712388});
     },
     getUser: function(address) {
-      return userLogicInstance.getUserInfo(address).call().then((hashIPFS, hashFun, hashSize)=>{
+      return userLogicInstance.methods.getUserInfo(address).call().then((hashIPFS, hashFun, hashSize)=>{
         return web3util.recomposeIPFSHash(hashFun, hashSize, hashIPFS);
       });
     }

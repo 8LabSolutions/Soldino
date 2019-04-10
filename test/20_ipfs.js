@@ -11,10 +11,7 @@ contract("Test IPFS functions", function() {
       sellerVATNumber: "1234567890"
     };
     return ipfsModule.insertJSONintoIPFS(productJSON).then((hash)=>{
-      console.log(hash)
       return ipfsModule.getJSONfromHash(hash).then((ris)=>{
-        console.log(ris.title)
-        console.log(productJSON.title)
         assert.equal(
           productJSON.title,
           ris.title,

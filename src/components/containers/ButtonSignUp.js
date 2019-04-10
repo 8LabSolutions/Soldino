@@ -7,7 +7,13 @@ import { addUser } from "../../facade/authentication"
 const mapDispatchToProps = () => {
   return {
     action: (parametersArray) => {
-      let ris = addUser(...parametersArray);
+      console.log(parametersArray)
+      addUser(...parametersArray).then((ris)=>{
+        window.location = "/successregistration"
+      }).catch(()=>{
+        window.location = "/errorregistration"
+      })
+
     }
   }
 }

@@ -12,7 +12,7 @@ import ipfsModule from "../ipfsCalls/index"
  * @param {*} name
  * @param {*} details
  */
-const addUser = function(userType, email, streetName, streetNumber, district, postCode, name, details){
+const addUser = async function(userType, email, streetName, streetNumber, district, postCode, name, details){
   //istantiate the necessary costracts and returns the results
   if(userType === "CITIZEN") {
     var newCitizenJSON = {
@@ -25,11 +25,19 @@ const addUser = function(userType, email, streetName, streetNumber, district, po
       district: district,
       postCode: postCode
     }
+    var a = false;
     //insert the json into ipfs
-    return ipfsModule.insertJSONintoIPFS(newCitizenJSON).then((hash)=>{
+    await ipfsModule.insertJSONintoIPFS(newCitizenJSON).then(async (hash)=>{
       //splitting the hash in three parts to save them into the blockchain
-      return userHandler.addCitizen(hash);
+      await userHandler.then(async (ris)=>{
+        await ris.addCitizen(hash).then((ee, err)=>{
+          console.log(ee)
+          console.log(err)
+          a = true;
+        });
+      })
     })
+    return a;
   }
 
   else if(userType === "BUSINESS") {
