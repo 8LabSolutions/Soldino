@@ -4,7 +4,7 @@ import "../ContractManager.sol";
 import "../storage/VatStorage.sol";
 import "../TokenCubit.sol";
 
-contract VatLogic is tokenRecipient {
+contract VatLogic {
     ContractManager contractManager;
     VatStorage vatStorage;
 

@@ -4,7 +4,7 @@ import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REM
 
 const initialState = {
   logged: false,
-  userType: null,
+  user: null,
   searchProduct: "",
   cart: [],
   pending: [],
@@ -24,7 +24,7 @@ export function rootReducer(state = initialState, action) {
   }
   if (action.type === CITIZEN || action.type === GOVERN || action.type === BUSINESS) {
     return Object.assign({}, state, {
-      userType: action.user
+      user: action.user
     });
   }
   if (action.type === SEARCH) {
@@ -99,10 +99,10 @@ export function rootReducer(state = initialState, action) {
   }
   if (action.type === CARTTOORDERS) {
     return Object.assign({}, state, {
-      ordersList: 
+      ordersList:
         [...state.ordersList,
         {
-          products: action.cart, 
+          products: action.cart,
           date: action.date,
           number: action.number,
           VAT: action.VAT,

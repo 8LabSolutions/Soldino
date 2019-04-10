@@ -10,7 +10,7 @@ class Home extends Component {
     let dynamicHome
     if(store.getState().logged === false){
       dynamicHome = <FormRegistration />
-    }else if(store.getState().userType === "Govern"){
+    }else if(store.getState().user.userType === "Govern"){
       dynamicHome = <CubitManager />
     }else{
       dynamicHome = <StoreContainer />

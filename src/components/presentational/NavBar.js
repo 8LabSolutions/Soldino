@@ -11,14 +11,14 @@ class NavBar extends Component {
     let products = store.getState().cart.length;
     let authText;
     let navLinks
-    if (store.getState().logged === true && store.getState().userType === "Govern"){
+    if (store.getState().logged === true && store.getState().user.userType === "Govern"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav">
                     <NavLink className="nav-item nav-link" to="/">Cubit Manager</NavLink>
                     <NavLink className="nav-item nav-link" to="/userslist">Users List</NavLink>
                     <NavLink className="nav-item nav-link" to="/vatrefund">VAT Refund</NavLink>
                   </div>
-    }else if (store.getState().logged === true && store.getState().userType === "Citizen"){
+    }else if (store.getState().logged === true && store.getState().user.userType === "Citizen"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav">
                     <NavLink className="nav-item nav-link" to="/">Store</NavLink>
@@ -27,7 +27,7 @@ class NavBar extends Component {
                     <NavLink className="nav-item nav-link material-icons" to="/cart">shopping_cart</NavLink>
                     <span className="badge badge-light">{products}</span>
                   </div>
-    }else if (store.getState().logged === true && store.getState().userType === "Business"){
+    }else if (store.getState().logged === true && store.getState().user.userType === "Business"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav">
                     <NavLink className="nav-item nav-link" to="/">Store</NavLink>

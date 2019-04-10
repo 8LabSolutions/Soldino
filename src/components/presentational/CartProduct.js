@@ -12,7 +12,7 @@ class CartProduct extends Component {
   enableRemove(title, quantity, price, VAT, sellerName, sellerVATNumber) {
     let product = [title, quantity, price, VAT, sellerName, sellerVATNumber]
     return (
-      <NavLink className="nav-item nav-link" to="/cart"><ButtonCartRemove text="-" args1={product} /></NavLink>  
+      <NavLink className="nav-item nav-link" to="/cart"><ButtonCartRemove text="-" args1={product} /></NavLink>
     )
   }
   disableRemove() {
@@ -39,13 +39,13 @@ class CartProduct extends Component {
                   <h6 className="card-quantity">{props.quantity}</h6>
                 </div>
                 <div className="col-sm-4">
-                  <NavLink className="nav-item nav-link" to="/cart"><ButtonCartAdd text="+" args1={product} /></NavLink>  
+                  <NavLink className="nav-item nav-link" to="/cart"><ButtonCartAdd text="+" args1={product} /></NavLink>
                 </div>
                 <div className="col-sm-12">
                   <h5 className="card-price">CC {props.price}</h5>
                 </div>
                 <div className="col-sm-12">
-                  <NavLink className="nav-item nav-link" to="/cart"><ButtonCart text="Remove" args1={product} /></NavLink>  
+                  <NavLink className="nav-item nav-link" to="/cart"><ButtonCart text="Remove" args1={product} /></NavLink>
                 </div>
               </div>
             </div>

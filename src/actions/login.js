@@ -17,24 +17,24 @@ export function logOut() {
   };
 }
 
-export function logCitizen() {
+export function logCitizen(user) {
   return {
     type: CITIZEN,
-    user: "Citizen"
+    user
   };
 }
 
-export function logBusiness() {
+export function logBusiness(user) {
   return {
     type: BUSINESS,
-    user: "Business"
+    user
   };
 }
 
-export function logGovern() {
+export function logGovern(user) {
   return {
     type: GOVERN,
-    user: "Govern"
+    user
   };
 }
 

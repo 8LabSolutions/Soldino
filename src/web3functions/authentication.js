@@ -16,21 +16,27 @@ const userHandler = (async function() {
   })
 
   return {
-    addCitizen: function(hash) {
-      let ris = web3util.splitIPFSHash(hash);
+    addCitizen: async function(hash) {
+      let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash);
       return web3.eth.getAccounts().then((account)=>{
-        console.log(hash)
-        return userLogicInstance.methods.addCitizen(String(web3.utils.fromAscii((ris[2]))), ris[1], ris[0]).send({from: account[0]});
+        return userLogicInstance.methods.addCitizen(hashIpfs, hashSize, hashFun).send({from: account[0]});
       })
     },
-    addBusiness: function(hash) {
-      let hashFun, hashSize, hashIpfs = web3util.splitIPFSHash(hash);
-      return userLogicInstance.methods.addBusiness(hashIpfs, hashSize, hashFun).send({gas: 4712388});
+    addBusiness:async function(hash) {
+      let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash);
+      return web3.eth.getAccounts().then((account)=>{
+        return userLogicInstance.methods.addBusiness(hashIpfs, hashSize, hashFun).send({from: account[0]});
+      })
     },
-    getUser: function(address) {
-      return userLogicInstance.methods.getUserInfo(address).call().then((hashIPFS, hashFun, hashSize)=>{
-        return web3util.recomposeIPFSHash(hashFun, hashSize, hashIPFS);
-      });
+    getUser: function() {
+      return web3.eth.getAccounts().then((account)=>{
+        return userLogicInstance.methods.getUserInfo(account[0]).call().then((ris)=>{
+          var hashIPFS = ris[0];
+          var hashFun = ris[1];
+          var hashSize = ris[2];
+          return web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun);
+        });
+      })
     }
   }
 }());

@@ -29,7 +29,7 @@ class VATRefund extends Component {
   }
 
   render() {
-    if(store.getState().logged === false || store.getState().userType !== "Govern"){window.location.href = "/"}
+    if(store.getState().logged === false || store.getState().user.userType !== "Govern"){window.location.href = "/"}
     //need to check if user type is government, else redirect to home like previous line
     let totalBusiness = 500
     let name
