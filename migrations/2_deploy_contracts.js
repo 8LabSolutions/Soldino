@@ -105,7 +105,7 @@ module.exports = function(deployer, network, accounts) {
       })
     })
     .then(() => {
-      return deployer.deploy(TokenCubit,1000000, "Cubit", "CC", accounts[0])
+      return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", accounts[0])
       .then((tokenInstance) => {
         return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
       })

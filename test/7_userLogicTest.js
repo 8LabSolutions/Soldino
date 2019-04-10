@@ -68,8 +68,6 @@ contract("UserLogic", (accounts) => {
             assert.equal(result[2], 1);
           })
         })
-        .then(() => userLogicInstance.methods.addBusiness(accounts[8],1,1))
-        .send({from: accounts[8]})
       })
 
      /*it("----", () => {

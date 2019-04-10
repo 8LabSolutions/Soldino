@@ -50,7 +50,7 @@ contract Purchase {
 
                 // pay the order
                 setTokenCubit();
-                require(cubitToken.transferFrom(msg.sender, orderLogic.getOrderSeller(prevOrderHash), orderLogic.getOrderTotal(prevOrderHash)));
+                require(cubitToken.transferFrom(msg.sender, orderLogic.getOrderSeller(prevOrderHash), orderLogic.getOrderTotal(prevOrderHash)), "Error during transfer");
                 //set the new orderHash
                 prevOrderHash = _orderHash[i];
 

@@ -30,7 +30,7 @@ contract OrderLogic {
     }
 
     modifier onlyPurchaseContract {
-        require(msg.sender == contractManager.getContractAddress("Purchase"));
+        require(msg.sender == contractManager.getContractAddress("Purchase"), "No permission");
         _;
     }
 
