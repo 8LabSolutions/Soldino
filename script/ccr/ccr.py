@@ -26,6 +26,8 @@ def ccr(filename):
 				if flag == False: # non è un commento multiriga
 					if l[:2] == "//": #commento inline
 						comments += 1
+					elif l[:2] == "/*" and l[-2:]=="*/": #commento multiriga inline
+						comments += 1		
 					elif l[:2] == "/*": # entra in un commento multiriga
 						flag = True
 					else:
@@ -50,14 +52,21 @@ totalCode = 0
 with open ('measurements.csv', "wt") as measurements:
 	files = getFileList(["sol","js"])
 	
+	#rimuovo file scomodi
+	files.remove("../../src/flat-ui/scripts/flat-ui.min.js")
+	files.remove("../../src/flat-ui/scripts/flat-ui.js")
+	files.remove("../../src/flat-ui/scripts/application.js")
+
 	
 	for file in files:
 		comment, code = ccr(file) # QUESTA CAMBIA
 		totalCode += code
 		totalComments += comment
+		'''
 		print(file)
 		print (comment)
 		print (code)
+		'''
 		#print(file)
 		newLine = file.split('/')[-1]+','+str(comment)+','+ str(code)+ '\n'
 		measurements.write(str(newLine))
