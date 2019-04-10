@@ -8,9 +8,9 @@ contract VatLogic is tokenRecipient {
     ContractManager contractManager;
     VatStorage vatStorage;
 
-    event VatRegistered(address indexed _business, bytes32 indexed _key, uint256 _amount);
-    event VatPaid(address indexed _business, bytes32 indexed _key, int256 _paidAmount);
-    event VatRefunded(address indexed _business, bytes32 indexed _key, uint256  _amount);
+    event VatRegistered(address indexed _business, bytes32 indexed _key);
+    event VatPaid(address indexed _business, bytes32 indexed _key);
+    event VatRefunded(address indexed _business, bytes32 indexed _key);
 
     modifier onlyGovernment {
         require(msg.sender == vatStorage.owner(), "VAT Logic: Permission denied");
@@ -28,23 +28,10 @@ contract VatLogic is tokenRecipient {
 
     function registerVat(address _business, int256 _vatAmount, string calldata _period) external {
         require(msg.sender == contractManager.getContractAddress("OrderLogic"), "Permission denied, cannot call 'InsertVat'.");
-        bytes32 key = createVatKey(_business, _period);
-        vatStorage.insertVatAndSetState(key, _business, _vatAmount);
-        emit VatRegistered(_business,key, uint256(_vatAmount));
+        vatStorage.insertVatAndSetState(createVatKey(_business, _period), _business, _vatAmount);
+        emit VatRegistered(_business,createVatKey(_business, _period));
     }
 
-    /**
-    * When this function is called it means that a business has allowed this contract
-    * to spend _value cubit in his behalf.
-    * @param _from : the address of the business
-    * @param _value : amount of cubit allowed to be spent
-    * @param _token : Cubit's contract address
-    */
-    function receiveApproval(address _from, uint256 _value, address _token) external {
-        TokenCubit cubitToken = TokenCubit(_token);
-        require(cubitToken.transferFrom(_from, address(this), _value));
-        vatStorage.insertPayment(_from, _value);
-    }
 
     function payVat(address _from, bytes32 _key) external {
         // The VAT needs to be paid only from the business which has generated the VAT movement
@@ -54,20 +41,15 @@ contract VatLogic is tokenRecipient {
             "VAT payment: this VAT isn't a debit VAT");
 
         int256 vatDue = vatStorage.getVatAmount(_key);
-        // In order to pay the VAT the business must have transferred enough funds to this contract
-        require(uint256(vatDue) <= vatStorage.registrantsPaid(_from),
-            "VAT payment: not enough funds transered to the contract in order to pay this VAT");
-
         TokenCubit cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
         // Transfer funds from the business to the government
-        require(cubitToken.transfer(vatStorage.owner(), uint256(vatDue)),
+        require(cubitToken.transferFrom(vatStorage.getVatBusiness(_key), vatStorage.owner() ,uint256(vatDue)),
             "VAT payment: an error occured during the fund transfer to the government");
 
         // Set the state of the VAT to PAID
         vatStorage.setVatState(_key, 2);
-        vatStorage.fulfillPayment(_from, uint256(vatDue));
 
-        emit VatPaid(_from, _key, vatDue);
+        emit VatPaid(_from, _key);
     }
 
     function refundVat(bytes32 _key) external onlyGovernment {
@@ -84,9 +66,7 @@ contract VatLogic is tokenRecipient {
 
         vatStorage.setVatState(_key, 4);
 
-        vatStorage.fulfillPayment(_business, _amount);
-
-        emit VatRefunded(_business, _key, _amount);
+        emit VatRefunded(_business, _key);
     }
 }
 

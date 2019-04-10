@@ -15,8 +15,8 @@ contract OrderStorage is Authorizable {
     }
 
     mapping(bytes32 => Order) public hashToOrder;
-/*
-     function setHash(bytes32 _keyHash) external onlyAuthorized {
+
+    function setKeyHash(bytes32 _keyHash) external onlyAuthorized {
         hashToOrder[_keyHash].keyHash = _keyHash;
     }
 
@@ -36,6 +36,10 @@ contract OrderStorage is Authorizable {
         hashToOrder[_keyHash].seller = _seller;
     }
 
+    function setProducts(bytes32 _keyHash, bytes32[] calldata _products) external onlyAuthorized {
+        hashToOrder[_keyHash].productsHash = _products;
+    }
+
     function setNetTotal(bytes32 _keyHash, uint256 _amount) external onlyAuthorized {
         hashToOrder[_keyHash].netTotal = _amount;
     }
@@ -43,7 +47,6 @@ contract OrderStorage is Authorizable {
     function setVatTotal(bytes32 _keyHash, uint256 _amount) external onlyAuthorized {
         hashToOrder[_keyHash].vatTotal = _amount;
     }
-*/
 
     function addOrder (
         bytes32 _keyHash,

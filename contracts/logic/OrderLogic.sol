@@ -16,7 +16,8 @@ contract OrderLogic {
     ProductStorage productStorage;
 
 
-    event OrderInserted(address indexed _buyer, address indexed _seller, bytes32 indexed _keyHash);
+    event PurchaseOrderInserted(address indexed _buyer, bytes32 indexed _keyHash);
+    event SellOrderInserted(address indexed _seller, bytes32 indexed _hashIpfs);
 
     modifier onlyBuyerOrSeller(bytes32 _keyHash, address _user) {
         require(_user == orderStorage.getBuyer(_keyHash) || _user == orderStorage.getSeller(_keyHash),
@@ -46,12 +47,11 @@ contract OrderLogic {
         uint8 _hashSize,
         address _buyer,
         string calldata _period,
-        bytes32[] calldata _productsHash
-        //uint8[] calldata _productsQtn
+        bytes32[] calldata _productsHash,
+        uint8[] calldata _productsQtn
     )
         external
         onlyPurchaseContract
-        onlyValidIpfsCid(_hashIpfs, _hashFun, _hashSize)
     {
         setProductStorage();
         address _seller = productStorage.getProductSeller(_productsHash[0]);
@@ -60,25 +60,36 @@ contract OrderLogic {
         require(_seller != address(0), "OrderLogic: invalid seller address");
         require(_buyer != address(0), "OrderLogic: invalid buyer address");
         require(_buyer != _seller, "OrderLogic: cannot buy from yourself");
+        // calculate the netTotal and the VAT Total
+        (uint256 total, uint256 vatTotal) = calculateOrderTotal(_productsHash, _productsQtn);
 
-        (uint256 total, uint256 vatTotal) = calculateOrderTotal(_productsHash);
-
-        orderStorage.addOrder(_hashIpfs,_hashFun, _hashSize, _buyer, _seller, _productsHash, total, vatTotal);
-
+        //register the order
+        orderStorage.addOrder(_hashIpfs, _hashFun, _hashSize, _buyer, _seller, _productsHash, total, vatTotal);
+       /*orderStorage.setKeyHash(_hashIpfs);
+        orderStorage.setHashFunction(_hashIpfs, _hashFun);
+        orderStorage.setHashSize(_hashIpfs, _hashSize);
+        orderStorage.setBuyer(_hashIpfs, _buyer);
+        orderStorage.setSeller(_hashIpfs, _seller);
+        orderStorage.setProducts(_hashIpfs, _productsHash);
+        orderStorage.setNetTotal(_hashIpfs, total);
+        orderStorage.setVatTotal(_hashIpfs, vatTotal);*/
         // Create instance of Vat Logic
-        // and register the vat Movement
         setVatLogic();
-        vatLogic.registerVat(_seller, int256(vatTotal), _period);
 
         // if the buyer is a business, the vat movement needs to be registered
         // to do so a UserStorage instance is created and if and only if the buyer
         // is a business, the vat movement is registered
         setUserStorage();
+        int moltiplier = -1;
         if(userStorage.getUserType(_buyer) == 2) {
-            vatLogic.registerVat(_buyer, (int256(vatTotal)*(-1)), _period);
+            moltiplier = 1;
         }
-
-        emit OrderInserted(_buyer, _seller, _hashIpfs);
+        vatLogic.registerVat(_buyer, (int256(vatTotal)*(moltiplier)), _period);
+        // Using these events it's possible to see the orders history, both purchase and sell
+        //emit the event on the blockchain: the event shows the buyer and the hash of the order
+        emit PurchaseOrderInserted(_buyer, _hashIpfs);
+        //emit the event on the blockchain: the event shows the seller and the hash of the order
+        emit SellOrderInserted(_seller, _hashIpfs);
     }
 
     function setProductStorage() internal {
@@ -93,15 +104,17 @@ contract OrderLogic {
        userStorage = UserStorage(contractManager.getContractAddress("UserStorage"));
     }
 
-    function calculateOrderTotal(bytes32[] memory  _productsHash) internal view  returns(uint256, uint256) {
+    function calculateOrderTotal(bytes32[] memory  _productsHash, uint8[] memory _prodQtn)
+        internal view returns(uint256, uint256)
+    {
         uint256 total;
         address seller = productStorage.getProductSeller(_productsHash[0]);
         uint256 vatTotal;
 
         for(uint i = 0; i < _productsHash.length; ++i) {
             require(productStorage.getProductSeller(_productsHash[i]) == seller, "Invalid product, wrong seller");
-            total += productStorage.getProductNetPrice(_productsHash[i]);
-            vatTotal += productStorage.getProductVat(_productsHash[i]);
+            total += (productStorage.getProductNetPrice(_productsHash[i]) * (_prodQtn[i]));
+            vatTotal += (productStorage.getProductVat(_productsHash[i]) * (_prodQtn[i]));
         }
 
         return(total, vatTotal);
