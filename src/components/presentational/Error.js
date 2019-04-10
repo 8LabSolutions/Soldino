@@ -12,7 +12,7 @@ class Error extends Component {
             <div className="col-sm-12">
               <br />
               <div className="alert alert-danger">
-                <strong>Erorr!</strong>
+                <strong>Error!</strong>
                 <p>{props.errorMessage}</p>
               </div>
               <p>{props.nextMessage}</p>

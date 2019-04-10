@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {Component} from 'react';
-import { NavLink } from 'react-router-dom';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import Guide from './Guide';
 import ButtonSignUp from '../containers/ButtonSignUp';
@@ -37,23 +36,23 @@ class FormRegistration extends Component {
         </label>
         <label htmlFor="HouseNumber" className="form-group col-sm-6">
           <span>House Number</span>
-          <input className="form-control" id="HouseNumber" name="streetNumber" placeholder="Enter House Number" />
+          <input className="form-control" id="HouseNumber" name="streetNumber" placeholder="Enter House Number" onChange={this.handleChange} />
         </label>
         <label htmlFor="District" className="form-group col-sm-6">
           <span>District</span>
-          <input className="form-control" id="District" name="district" placeholder="Enter District" />
+          <input className="form-control" id="District" name="district" placeholder="Enter District" onChange={this.handleChange} />
         </label>
         <label htmlFor="Postcode" className="form-group col-sm-6">
           <span>Postcode</span>
-          <input className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" />
+          <input className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" onChange={this.handleChange} />
         </label>
         <label htmlFor="InputName" className="form-group col-sm-6">
           <span>Name</span>
-          <input className="form-control" id="InputName" name="name" placeholder="Enter Name" />
+          <input className="form-control" id="InputName" name="name" placeholder="Enter Name" onChange={this.handleChange} />
         </label>
         <label htmlFor="InputSurname" className="form-group col-sm-6">
           <span>Surname</span>
-          <input className="form-control" id="InputSurname" name="details" placeholder="Enter Surname" />
+          <input className="form-control" id="InputSurname" name="details" placeholder="Enter Surname" onChange={this.handleChange} />
         </label>
       </div>
     )
@@ -64,31 +63,31 @@ class FormRegistration extends Component {
       <div className="col-sm-12">
         <label htmlFor="InputEmail" className="form-group col-sm-12">
           <span>Email</span>
-          <input type="email" className="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" placeholder="Enter Email" />
+          <input type="email" className="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" placeholder="Enter Email" onChange={this.handleChange}  />
         </label>
         <label htmlFor="InputHeadquarters" className="form-group col-sm-6">
           <span>Headquarter</span>
-          <input className="form-control" id="InputHeadquarter" name="streetName" placeholder="Enter Headquarter" />
+          <input className="form-control" id="InputHeadquarter" name="streetName" placeholder="Enter Headquarter" onChange={this.handleChange}  />
         </label>
         <label htmlFor="HeadquarterNumber" className="form-group col-sm-6">
           <span>Headquarter Number</span>
-          <input className="form-control" id="HeadquarterNumber" name="streetNumber" placeholder="Enter Headquarter Number" />
+          <input className="form-control" id="HeadquarterNumber" name="streetNumber" placeholder="Enter Headquarter Number" onChange={this.handleChange}  />
         </label>
         <label htmlFor="District" className="form-group col-sm-6">
           <span>District</span>
-          <input className="form-control" id="District" name="district" placeholder="Enter District" />
+          <input className="form-control" id="District" name="district" placeholder="Enter District" onChange={this.handleChange}  />
         </label>
         <label htmlFor="Postcode" className="form-group col-sm-6">
           <span>Postcode</span>
-          <input className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" />
+          <input className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" onChange={this.handleChange}  />
         </label>
         <label htmlFor="InputVATNumber" className="form-group col-sm-6">
           <span>VAT Number</span>
-          <input className="form-control" id="InputVATNumber" name="name" placeholder="Enter VAT Number" />
+          <input className="form-control" id="InputVATNumber" name="name" placeholder="Enter VAT Number" onChange={this.handleChange}  />
         </label>
         <label htmlFor="InputCompanyName" className="form-group col-sm-6">
           <span>Company Name</span>
-          <input className="form-control" id="InputCompanyName" name="details" placeholder="Enter Company Name" />
+          <input className="form-control" id="InputCompanyName" name="details" placeholder="Enter Company Name" onChange={this.handleChange}  />
         </label>
       </div>
     )
@@ -133,10 +132,7 @@ class FormRegistration extends Component {
             <div className="col-sm-6">
               { userType==="CITIZEN" ? this.citizenFormMaker() : this.businessFormMaker() }
               <div className="col-sm-12 text-center">
-                <NavLink className="nav-item nav-link" to="/successregistration">
-                  {/*TODO: decontruction */}
-                  <ButtonSignUp text="Sign Up" args1={[this.state.userType, this.state.email, this.state.streetName, this.state.streetNumber, this.state.district, this.state.postCode, this.state.name, this.state.details]} />
-                </NavLink>
+                <ButtonSignUp text="Sign Up" args1={[this.state.userType, this.state.email, this.state.streetName, this.state.streetNumber, this.state.district, this.state.postCode, this.state.name, this.state.details]} />
               </div>
             </div>
             {/* <div className="col-sm-12">
