@@ -11,6 +11,8 @@ var ProductLogic = artifacts.require("ProductLogic");
 var OrderLogic = artifacts.require("OrderLogic")
 var VatLogic = artifacts.require("VatLogic")
 
+var Purchase = artifacts.require("Purchase")
+
 
 module.exports = function(deployer, network, accounts) {
   var contractManagerInstance;
@@ -23,6 +25,7 @@ module.exports = function(deployer, network, accounts) {
   var orderLocicInstance;
   var vatLogicInstance;
   var productLogicInstance;
+
 
   const GOVERNMENT = accounts[9];
 
@@ -91,6 +94,12 @@ module.exports = function(deployer, network, accounts) {
         })
         .then(() => {
           return contractManagerInstance.setContractAddress("VatLogic", vatLogicInstance.address)
+        })
+      })
+      .then(() => {
+        return deployer.deploy(Purchase, contractManagerInstance.address)
+        .then((purchaseInstace) => {
+          return contractManagerInstance.setContractAddress("Purchase", purchaseInstace.address)
         })
       })
     })

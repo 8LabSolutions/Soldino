@@ -109,4 +109,13 @@ contract ProductLogic {
         productStorage.deleteProduct(_keyHash);
         emit ProductDeleted(_keyHash, msg.sender);
     }
+
+    function calculateProductVat(bytes32 _keyHash) public view returns (uint256) {
+        return (productStorage.getProductNetPrice(_keyHash) * productStorage.getProductVat(_keyHash) / 100);
+    }
+
+    function calculateProductGrossPrice(bytes32 _keyHash) public view returns (uint256) {
+        uint256 _netPrice = productStorage.getProductNetPrice(_keyHash);
+        return (_netPrice + (_netPrice * productStorage.getProductVat(_keyHash) / 100));
+    }
 }
