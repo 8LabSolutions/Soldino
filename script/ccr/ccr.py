@@ -55,6 +55,9 @@ with open ('measurements.csv', "wt") as measurements:
 		comment, code = ccr(file) # QUESTA CAMBIA
 		totalCode += code
 		totalComments += comment
+		print(file)
+		print (comment)
+		print (code)
 		#print(file)
 		newLine = file.split('/')[-1]+','+str(comment)+','+ str(code)+ '\n'
 		measurements.write(str(newLine))

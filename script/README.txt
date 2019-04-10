@@ -6,3 +6,7 @@ Uso
 In master_launcher:
 sloc.sh : funziona
 ccr.py : funziona
+coverage : funziona
+
+Da aggiungere:
+sanitizer.py
