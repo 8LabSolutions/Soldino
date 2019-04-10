@@ -8,7 +8,7 @@ contract VatLogic is tokenRecipient {
     ContractManager contractManager;
     VatStorage vatStorage;
 
-    event VatMovementRegistered(address indexed _business, bytes32 indexed _key, uint256 _date);
+    event VatRegistered(address indexed _business, bytes32 indexed _key, uint256 _amount);
     event VatPaid(address indexed _business, bytes32 indexed _key, int256 _paidAmount);
     event VatRefunded(address indexed _business, bytes32 indexed _key, uint256  _amount);
 
@@ -30,6 +30,7 @@ contract VatLogic is tokenRecipient {
         require(msg.sender == contractManager.getContractAddress("OrderLogic"), "Permission denied, cannot call 'InsertVat'.");
         bytes32 key = createVatKey(_business, _period);
         vatStorage.insertVatAndSetState(key, _business, _vatAmount);
+        emit VatRegistered(_business,key, uint256(_vatAmount));
     }
 
     /**
@@ -87,7 +88,5 @@ contract VatLogic is tokenRecipient {
 
         emit VatRefunded(_business, _key, _amount);
     }
-
-
 }
 
