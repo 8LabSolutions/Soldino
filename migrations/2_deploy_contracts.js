@@ -1,5 +1,6 @@
 /*** GENERIC CONTRACTS ***/
 var ContractManager = artifacts.require("ContractManager")
+var TokenCubit = artifacts.require("TokenCubit")
 /***  STORAGE CONTRACTS ***/
 var UserStorage = artifacts.require("UserStorage")
 var ProductStorage = artifacts.require("ProductStorage");
@@ -96,11 +97,17 @@ module.exports = function(deployer, network, accounts) {
           return contractManagerInstance.setContractAddress("VatLogic", vatLogicInstance.address)
         })
       })
-      .then(() => {
-        return deployer.deploy(Purchase, contractManagerInstance.address)
-        .then((purchaseInstace) => {
-          return contractManagerInstance.setContractAddress("Purchase", purchaseInstace.address)
-        })
+    })
+    .then(() => {
+      return deployer.deploy(Purchase, contractManagerInstance.address)
+      .then((purchaseInstace) => {
+        return contractManagerInstance.setContractAddress("Purchase", purchaseInstace.address)
+      })
+    })
+    .then(() => {
+      return deployer.deploy(TokenCubit,1000000, "Cubit", "CC", accounts[0])
+      .then((tokenInstance) => {
+        return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
       })
     })
   })

@@ -11,18 +11,18 @@ contract("UserLogic", (accounts) => {
     var contractManagerInstance;
     var userStorageInstance;
     var userLogicInstance;
-    
+
     before(() => {
         contractManagerInstance = new web3.eth.Contract(
           ContractManager.abi,
           ContractManager.networks[ContractManager.network_id].address
         );
-    
+
         userStorageInstance = new web3.eth.Contract(
           UserStorage.abi,
           UserStorage.networks[ContractManager.network_id].address
         );
-    
+
         userLogicInstance = new web3.eth.Contract(
           UserLogic.abi,
           UserLogic.networks[ContractManager.network_id].address
@@ -68,6 +68,8 @@ contract("UserLogic", (accounts) => {
             assert.equal(result[2], 1);
           })
         })
+        .then(() => userLogicInstance.methods.addBusiness(accounts[8],1,1))
+        .send({from: accounts[8]})
       })
 
      /*it("----", () => {
@@ -75,11 +77,11 @@ contract("UserLogic", (accounts) => {
         .send({from: accounts[8]})
         .then((result) => {
             assert.equal(result, accounts[8])
-          
-    
+
+
         })
       })*/
 
-      
+
 
 })
