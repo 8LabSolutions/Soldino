@@ -30,12 +30,26 @@ module.exports = function(deployer, network, accounts) {
 
   const GOVERNMENT = accounts[9];
 
-  deployer.deploy(ContractManager).then((instance) => {
+  deployer.deploy(ContractManager)
+  .then((instance) => {
     contractManagerInstance = instance
-   return  deployer.deploy(UserStorage, contractManagerInstance.address)
-    .then((usInstance) => {
-      userStorageInstance = usInstance
-      return contractManagerInstance.setContractAddress("UserStorage", usInstance.address)
+
+    return deployer.deploy(Purchase, contractManagerInstance.address)
+    .then((purchaseInstace) => {
+      return contractManagerInstance.setContractAddress("Purchase", purchaseInstace.address)
+    })
+    .then(() => {
+      return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", accounts[0])
+      .then((tokenInstance) => {
+        return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
+      })
+    })
+    .then(() => {
+      return  deployer.deploy(UserStorage, contractManagerInstance.address)
+      .then((usInstance) => {
+        userStorageInstance = usInstance
+        return contractManagerInstance.setContractAddress("UserStorage", usInstance.address)
+      })
     })
     .then(() => {
       return deployer.deploy(UserLogic, contractManagerInstance.address)
@@ -44,8 +58,8 @@ module.exports = function(deployer, network, accounts) {
         return contractManagerInstance.setContractAddress("UserLogic", ulInstace.address)
       })
     })
-    .then(async () => {
-       return userStorageInstance.addAuthorized(userLogicInstance.address);
+    .then(() => {
+      return userStorageInstance.addAuthorized(userLogicInstance.address);
     })
     .then(() => {
       return deployer.deploy(ProductStorage)
@@ -98,18 +112,7 @@ module.exports = function(deployer, network, accounts) {
         })
       })
     })
-    .then(() => {
-      return deployer.deploy(Purchase, contractManagerInstance.address)
-      .then((purchaseInstace) => {
-        return contractManagerInstance.setContractAddress("Purchase", purchaseInstace.address)
-      })
-    })
-    .then(() => {
-      return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", accounts[0])
-      .then((tokenInstance) => {
-        return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
-      })
-    })
+
   })
 }
   //every contract must be costructed with the constractManager address as a parameter
