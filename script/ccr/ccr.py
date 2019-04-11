@@ -53,9 +53,12 @@ with open ('measurements.csv', "wt") as measurements:
 	files = getFileList(["sol","js"])
 	
 	#rimuovo file scomodi
-	files.remove("../../src/flat-ui/scripts/flat-ui.min.js")
-	files.remove("../../src/flat-ui/scripts/flat-ui.js")
-	files.remove("../../src/flat-ui/scripts/application.js")
+	if "../../src/flat-ui/scripts/flat-ui.min.js" in files:
+		files.remove("../../src/flat-ui/scripts/flat-ui.min.js")
+	if "../../src/flat-ui/scripts/flat-ui.js" in files:
+		files.remove("../../src/flat-ui/scripts/flat-ui.js")
+	if "../../src/flat-ui/scripts/application.js" in files:
+		files.remove("../../src/flat-ui/scripts/application.js")
 
 	
 	for file in files:
@@ -75,14 +78,16 @@ with open ('measurements.csv', "wt") as measurements:
 		#vuol dire che il file non esiste
 		
 		with open ('ccrStatistics.csv', 'at') as ccr:
-			line = str(datetime.datetime.now().isoformat()[:10])+','+str(round(float(totalComments)/float(totalCode), 2))+'\n'
+			val = (float(totalComments)/float(totalCode)) * 100
+			line = str(datetime.datetime.now().isoformat()[:10])+','+str(round(val, 2))+'\n'
 			ccr.write(line)
 	else:
 		#il file esiste già, appendo alla fine
 		print('OCIO, creo il nuovo file ccrStatistics.csv')
 		with open ('ccrStatistics.csv', 'wt') as ccr:
 			header = 'data,valore\n'
-			line = str(datetime.datetime.now().isoformat()[:10])+','+str(round(float(totalComments)/float(totalCode), 2))+'\n'
+			val = (float(totalComments)/float(totalCode)) * 100
+			line = str(datetime.datetime.now().isoformat()[:10])+','+str(round(val, 2))+'\n'
 			ccr.write(header)
 			ccr.write(line)
 
