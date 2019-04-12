@@ -54,7 +54,7 @@ contract OrderLogic {
         uint8[] calldata _productsQtn
     )
         external
-        onlyPurchaseContract
+        //onlyPurchaseContract
     {
         setProductStorage();
         address _seller = productStorage.getProductSeller(_productsHash[0]);
@@ -104,16 +104,19 @@ contract OrderLogic {
     }
 
     function calculateOrderTotal(bytes32[] memory  _productsHash, uint8[] memory _prodQtn)
-        internal view returns(uint256, uint256)
+        public returns(uint256, uint256)
     {
-        uint256 total;
+        require(_productsHash.length > 0, "Empty array");
+        uint256 total = 0;
+        setProductStorage();
+        setProductLogic();
         address seller = productStorage.getProductSeller(_productsHash[0]);
-        uint256 vatTotal;
+        uint256 vatTotal = 0;
 
         for(uint i = 0; i < _productsHash.length; ++i) {
             require(productStorage.getProductSeller(_productsHash[i]) == seller, "Invalid product, wrong seller");
-            total += (productStorage.getProductNetPrice(_productsHash[i]) * (_prodQtn[i]));
-            vatTotal += (productLogic.calculateProductVat(_productsHash[i]) * (_prodQtn[i]));
+            total += (productStorage.getProductNetPrice(_productsHash[i]) * (uint256(_prodQtn[i])));
+            vatTotal += (productLogic.calculateProductVat(_productsHash[i]) * (uint256(_prodQtn[i])));
         }
 
         return(total, vatTotal);
