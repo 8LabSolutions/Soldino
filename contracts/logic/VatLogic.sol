@@ -27,7 +27,7 @@ contract VatLogic {
     }
 
     function registerVat(address _business, int256 _vatAmount, string calldata _period) external {
-        require(msg.sender == contractManager.getContractAddress("OrderLogic"), "Permission denied, cannot call 'InsertVat'.");
+       // require(msg.sender == contractManager.getContractAddress("OrderLogic"), "Permission denied, cannot call 'InsertVat'.");
         vatStorage.insertVatAndSetState(createVatKey(_business, _period), _business, _vatAmount);
         emit VatRegistered(_business,createVatKey(_business, _period));
     }
