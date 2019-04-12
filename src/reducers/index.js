@@ -120,7 +120,7 @@ export function rootReducer(state = initialState, action) {
 export const persistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['searchProduct']
+  blacklist: ['searchProduct', 'logged']
 };
 
 export default persistReducer(persistConfig, rootReducer);

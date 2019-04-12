@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import './styles/App.css';
 import Home from './components/presentational/Home';
 import UsersList from './components/presentational/UsersList';
@@ -16,13 +15,14 @@ import PurchasesConfirmation from './components/presentational/PurchasesConfirma
 import ProductsManager from './components/presentational/ProductsManager';
 import EditProductsManager from './components/presentational/EditProductsManager';
 import AddProductsManager from './components/presentational/AddProductsManager';
-
-export const history = createBrowserHistory();
+import history from './store/history';
 
 //store.dispatch(reset())
 
 class App extends Component {
+
   render() {
+    
     return (
       <Router history={history}>
         <div className="App">

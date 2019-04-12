@@ -2,16 +2,19 @@
 import { connect } from 'react-redux';
 import Button from '../presentational/Button';
 import authentication from "../../facade/authentication"
+import history from '../../store/history'
 
 
 const mapDispatchToProps = () => {
   return {
     action: (parametersArray) => {
       console.log(parametersArray)
-      authentication.addUser(...parametersArray).then((ris)=>{
-        //window.location = "/successregistration"
+      authentication.addUser(...parametersArray).then((ris, err)=>{
+        history.push('/successregistration')
       })
-      .catch(console.log)
+      .catch(()=>{
+        history.push('/errorregistration')
+      })
 
     }
   }
