@@ -9,11 +9,9 @@ const mapDispatchToProps = () => {
     action: (parametersArray) => {
       console.log(parametersArray)
       authentication.addUser(...parametersArray).then((ris)=>{
-        window.location = "/successregistration"
+        //window.location = "/successregistration"
       })
-      /*.catch(()=>{
-        window.location = "/errorregistration"
-      })*/
+      .catch(console.log)
 
     }
   }

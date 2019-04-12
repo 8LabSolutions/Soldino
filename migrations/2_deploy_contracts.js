@@ -30,6 +30,7 @@ module.exports = function(deployer, network, accounts) {
 
   const GOVERNMENT = accounts[9];
 
+
   deployer.deploy(ContractManager)
   .then((instance) => {
     contractManagerInstance = instance

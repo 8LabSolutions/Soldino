@@ -6,13 +6,16 @@ const web3util = (function() {
   return {
     getWeb3: async function() {
       var web3js;
-      if (typeof web3 !== 'undefined' && typeof window != 'undefined') {
+      console.log('getting web3')
+      if(typeof web3 !== 'undefined' && typeof window != 'undefined') {
         await window.ethereum.enable();
         web3js = new Web3(window.web3.currentProvider);
+        return [true, web3js]
       } else{
-        web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+        console.log('MetaMask not found')
+        return [false, 'MetaMask not found']
+        //web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
       }
-      return web3js;
     },
 
     splitIPFSHash: async function(hash){
@@ -34,7 +37,6 @@ const web3util = (function() {
         var buffer = new Buffer(array)
         return bs58.encode(buffer)
     }
-
   }
 }())
 
