@@ -10,7 +10,7 @@ const userHandler = (async function() {
   async function initialize(){
     var ris = await web3util.getWeb3();
     console.log(ris[0])
-    if(ris[0]==true){
+    if(ris[0]=== true){
       web3 = ris[1];
     }
     else{
