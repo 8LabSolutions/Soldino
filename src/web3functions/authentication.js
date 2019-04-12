@@ -7,60 +7,66 @@ const userHandler = (async function() {
   var contractManagerInstance;
   var userLogicInstance;
 
-  async function initialize(){
-    var ris = await web3util.getWeb3();
-    console.log(ris[0])
-    if(ris[0]==true){
-      web3 = ris[1];
-    }
-    else{
-      console.log('errore')
-      console.log(ris[1]);
-      return false;
-    }
-    return web3.eth.net.getId().then((id)=>{
-      contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
-        ContractManager.networks[id].address);
-      return contractManagerInstance.methods.getContractAddress("UserLogic").call()
-      .then((_userLogicAddress)=>{
-        userLogicInstance = new web3.eth.Contract(UserLogic.abi, _userLogicAddress);
-        return true;
-      });
+  function initialize(){
+    return new Promise((resolve, reject) =>{
+      web3util.getWeb3().then((_web3)=>{
+        web3 = _web3;
+        web3.eth.net.getId().then((id)=>{
+          contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
+            ContractManager.networks[id].address);
+          return contractManagerInstance.methods.getContractAddress("UserLogic").call()
+          .then((_userLogicAddress)=>{
+            userLogicInstance = new web3.eth.Contract(UserLogic.abi, _userLogicAddress);
+            resolve();
+          });
+        }).catch(()=>{
+          reject("Not able to find any account in MetaMask");
+        })
+      }).catch((err)=>{
+        reject(err)
+      })
     })
   }
 
   return {
-    addCitizen: async function(hash) {
-      initialize().then(async (ris)=>{
-        if(ris===true){
+    addCitizen: function(hash) {
+      return new Promise((resolve)=>{
+        initialize().then(async () =>{
           let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash);
-          return web3.eth.getAccounts().then((account)=>{
-            return userLogicInstance.methods.addCitizen(hashIpfs, hashSize, hashFun).send({from: account[0]});
+          web3.eth.getAccounts().then((account)=>{
+            userLogicInstance.methods.addCitizen(hashIpfs, hashSize, hashFun).send({from: account[0]})
+            .then(()=>{
+              resolve();
+            })
           })
-        }
-        else{
-          console.log('ritornato falso')
-        }
-
+        })
       })
-
     },
-    addBusiness:async function(hash) {
-      await initialize();
-      let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash);
-      return web3.eth.getAccounts().then((account)=>{
-        return userLogicInstance.methods.addBusiness(hashIpfs, hashSize, hashFun).send({from: account[0]});
+    addBusiness: function(hash) {
+      return new Promise((resolve)=>{
+        initialize().then(async () =>{
+          let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash);
+          web3.eth.getAccounts().then((account)=>{
+            userLogicInstance.methods.addBusiness(hashIpfs, hashSize, hashFun).send({from: account[0]})
+            .then(()=>{
+              resolve();
+            })
+          })
+        })
       })
     },
     getUser: async function() {
-      await initialize();
-      return web3.eth.getAccounts().then((account)=>{
-        return userLogicInstance.methods.getUserInfo(account[0]).call().then((ris)=>{
-          var hashIPFS = ris[0];
-          var hashFun = ris[1];
-          var hashSize = ris[2];
-          return web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun);
-        });
+      return new Promise((resolve)=>{
+        initialize().then(()=>{
+          web3.eth.getAccounts().then((account)=>{
+            userLogicInstance.methods.getUserInfo(account[0]).call().then((ris)=>{
+              var hashIPFS = ris[0];
+              var hashFun = ris[1];
+              var hashSize = ris[2];
+              resolve(web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun));
+            });
+          })
+        })
       })
     }
   }

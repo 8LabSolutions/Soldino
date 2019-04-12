@@ -8,11 +8,12 @@ import history from '../../store/history'
 const mapDispatchToProps = () => {
   return {
     action: (parametersArray) => {
-      console.log(parametersArray)
-      authentication.addUser(...parametersArray).then((ris, err)=>{
+      authentication.addUser(...parametersArray).then(()=>{
         history.push('/successregistration')
       })
-      .catch(()=>{
+      .catch((err)=>{
+        console.log(err)
+        //dispatch the error message
         history.push('/errorregistration')
       })
 
