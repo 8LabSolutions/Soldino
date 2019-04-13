@@ -161,7 +161,7 @@ contract("Purchase", (accounts) => {
         ordersFun,
         ordersSize,
         period
-      ).send({from: accounts[8], gas: 6721975})
+      ).send({from: accounts[8], gas: 10000000})
     })
   })
 })
