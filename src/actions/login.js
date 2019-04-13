@@ -2,10 +2,11 @@
 // src/js/actions/index.js
 import { LOGIN, LOGOUT, BUSINESS, GOVERN, CITIZEN } from "../constants/actionTypes";
 
-export function logIn() {
+export function logIn(user) {
   return {
     type: LOGIN,
-    par: true
+    par: true,
+    user
   };
 }
 

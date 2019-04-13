@@ -1,3 +1,5 @@
+import { store } from '../store/index';
+
 export function getTodayDate() {
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -50,8 +52,15 @@ export function getDetails() {
 }
 
 export function getRegistrationAddress() {
-  //get address used during registration from ipfs in array [$1, $2, $3, $4]
-  return (["Via Rossi", "12", "Padova", "12345"])
+  //get address used during registration from redux store
+  return(
+    [
+      store.getState().user.streetName,
+      store.getState().user.streetNumber,
+      store.getState().user.district,
+      store.getState().user.postCode
+    ]
+  )
 }
 
 Date.isLeapYear = function (year) {
