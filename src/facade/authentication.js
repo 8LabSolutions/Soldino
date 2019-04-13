@@ -1,4 +1,4 @@
-import userHandler from "../web3functions/authentication"
+import web3authentication from "../web3functions/authentication"
 import ipfsModule from "../ipfsCalls/index"
 
 const authentication = (function(){
@@ -31,7 +31,7 @@ const authentication = (function(){
           ipfsModule.insertJSONintoIPFS(newCitizenJSON).then(async (hash)=>{
             //splitting the hash in three parts to save them into the blockchain
             console.log(hash+' inserted')
-            userHandler.then((ris)=>{
+            web3authentication.then((ris)=>{
               ris.addCitizen(hash).then(resolve)
             })
           })
@@ -53,7 +53,7 @@ const authentication = (function(){
         return new Promise((resolve)=>{
           ipfsModule.insertJSONintoIPFS(newBusinessJSON).then(async (hash)=>{
             //splitting the hash in three parts to save them into the blockchain
-            userHandler.then((ris)=>{
+            web3authentication.then((ris)=>{
               ris.addBusiness(hash).then(resolve)
             })
           })
@@ -64,7 +64,7 @@ const authentication = (function(){
 
     userLogin: function() {
       return new Promise((resolve)=>{
-        userHandler.then((ris)=>{
+        web3authentication.then((ris)=>{
           ris.getUser().then((hashIPFS)=>{
             //get the user Info
             ipfsModule.getJSONfromHash(hashIPFS).then(resolve)

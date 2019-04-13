@@ -2,7 +2,7 @@ import web3util from "./web_util";
 import ContractManager from "../contracts_build/ContractManager"
 import UserLogic from "../contracts_build/UserLogic"
 
-const userHandler = (async function() {
+const web3authentication = (async function() {
   var web3;
   var contractManagerInstance;
   var userLogicInstance;
@@ -72,5 +72,5 @@ const userHandler = (async function() {
   }
 }());
 
-export default userHandler;
+export default web3authentication;
 

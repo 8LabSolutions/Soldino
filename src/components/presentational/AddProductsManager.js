@@ -60,7 +60,7 @@ class AddProductsManager extends Component {
                     </NavLink>
                   </div>
                 </div>
-              </div>  
+              </div>
             </div>
           </div>
         </div>
