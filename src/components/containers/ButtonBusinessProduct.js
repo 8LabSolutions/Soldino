@@ -7,6 +7,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     action: (parametersArray) => {
       //business.addProduct(title, description, netPrice, vatPercentage, image)
+      console.log('prodotto, dati: ')
+      console.log(parametersArray)
       business.addProduct(...parametersArray)
       .then(()=>{
         console.log('prodotto inserito')
