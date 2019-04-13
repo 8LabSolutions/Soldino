@@ -94,7 +94,7 @@ contract("OrderLogic", (accounts) => {
       "0x4445737400000000000000000000000000000000000000000000000000000000"
     ]
     var productsQtn = [1,2,3,1]
-    var productsNetPrice = [10000,10000,10000,10000]
+    var productsNetPrice = [100000,198560,100000,100000]
     var productsVat = [22,10,4,10]
     var period = "2019-05-09"
 
@@ -106,6 +106,14 @@ contract("OrderLogic", (accounts) => {
     .then(async () => {
       for(var i = 0; i<4; i++) {
         await productLogicInstance.methods.addProduct(productsKey[i],1,32,productsVat[i],productsNetPrice[i]).send({from: accounts[9], gas:2000000})
+      }
+    })
+    .then(async() => {
+      for(var i = 0; i<4; i++) {
+        await productLogicInstance.methods.calculateProductGrossPrice(productsKey[i]).call()
+        .then(async(res1) => {
+          await console.log("Prezzo tot prod "+i+" : "+ res1+" Qtn: "+productsQtn[i])
+        })
       }
     })
     .then(()=>{

@@ -80,23 +80,6 @@ module.exports = function(deployer, network, accounts) {
       })
     })
     .then(() => {
-      return deployer.deploy(OrderStorage)
-      .then((OrderInstance) => {
-        OrderStorageInstance = OrderInstance
-        return contractManagerInstance.setContractAddress("OrderStorage", OrderInstance.address)
-      })
-      .then(() => {
-        return deployer.deploy(OrderLogic,contractManagerInstance.address)
-        .then((OrderLinstance) => {
-          orderLocicInstance = OrderLinstance
-          return OrderStorageInstance.addAuthorized(instance.address)
-        })
-        .then(() => {
-          return contractManagerInstance.setContractAddress("OrderLogic", orderLocicInstance.address)
-        })
-      })
-    })
-    .then(() => {
       return deployer.deploy(VatStorage)
       .then((VatIns) => {
         vatStorageInstance = VatIns
@@ -110,6 +93,23 @@ module.exports = function(deployer, network, accounts) {
         })
         .then(() => {
           return contractManagerInstance.setContractAddress("VatLogic", vatLogicInstance.address)
+        })
+      })
+    })
+    .then(() => {
+      return deployer.deploy(OrderStorage)
+      .then((OrderInstance) => {
+        OrderStorageInstance = OrderInstance
+        return contractManagerInstance.setContractAddress("OrderStorage", OrderInstance.address)
+      })
+      .then(() => {
+        return deployer.deploy(OrderLogic,contractManagerInstance.address)
+        .then((OrderLinstance) => {
+          orderLocicInstance = OrderLinstance
+          return OrderStorageInstance.addAuthorized(instance.address)
+        })
+        .then(() => {
+          return contractManagerInstance.setContractAddress("OrderLogic", orderLocicInstance.address)
         })
       })
     })
