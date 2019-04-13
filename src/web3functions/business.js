@@ -52,10 +52,25 @@ const web3business = (function(){
       })
     },
 
-    getSenderProducts: function() {
+    getProducts: function(sender=false) {
       return new Promise((resolve)=>{
         initialize().then(async (productLogicInstance) =>{
           web3.eth.getAccounts().then((account)=>{
+            // preparing the query
+            var query;
+            if (sender === true){
+              query = {
+                //filtering by the seller (only sender products)
+                filter: {_seller: account[0]},
+                fromBlock: 0,
+                toBlock: 'latest'
+              }
+            } else {
+              query = {
+                fromBlock: 0,
+                toBlock: 'latest'
+              }
+            }
             //array containing the inserted products
             var products = [];
             //array containing the deleted products
@@ -65,12 +80,7 @@ const web3business = (function(){
             //array containing the new hash of the updated products
             var updatedNewValue = [];
             //firstly get the inserted products from the logs
-            productLogicInstance.getPastEvents('ProductInserted', {
-              //filtering by the seller (only sender products)
-              filter: {_seller: account[0]},
-              fromBlock: 0,
-              toBlock: 'latest'
-            })
+            productLogicInstance.getPastEvents('ProductInserted', query)
             .then((events) => {
                 for (var i =0; i<events.length; i++){
                   //extracting only the hash
@@ -79,11 +89,7 @@ const web3business = (function(){
             })
             .then(()=>{
               //getting the deleted products
-              productLogicInstance.getPastEvents('ProductDeleted', {
-                filter: {_seller: account[0]},
-                fromBlock: 0,
-                toBlock: 'latest'
-              })
+              productLogicInstance.getPastEvents('ProductDeleted', query)
               .then((eventsDeleted) => {
                 for (var i =0; i<eventsDeleted.length; i++){
                   //extracting only the hash
@@ -96,14 +102,9 @@ const web3business = (function(){
                 products = filtered;
               })
               .then(()=>{
-                productLogicInstance.getPastEvents('ProductDeleted', {
-                  filter: {_seller: account[0]},
-                  fromBlock: 0,
-                  toBlock: 'latest'
-                }).then((eventsUpdate)=>{
+                productLogicInstance.getPastEvents('ProductModified', query)
+                .then((eventsUpdate)=>{
                   //getting the updated products
-
-
                   if(eventsUpdate!== undefined){
                     for (let i = 0; i < eventsUpdate.length; i++){
                       //saving the old hash and the new hash
