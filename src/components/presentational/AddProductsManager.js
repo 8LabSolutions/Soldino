@@ -10,14 +10,24 @@ class AddProductsManager extends Component {
   constructor(props){
     super(props)
     this.state = {
-      file: null
+      file: null,
+      title: "",
+      description: "",
+      netPrice: "",
+      vatPercentage: ""
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleChangeField = this.handleChangeField.bind(this)
   }
   handleChange(event) {
     this.setState({
       file: URL.createObjectURL(event.target.files[0])
     })
+  }
+  handleChangeField(e) {
+    this.setState({
+        [e.target.name]: e.target.value
+    });
   }
   render() {
     return (
@@ -29,19 +39,19 @@ class AddProductsManager extends Component {
             <div className="col-sm-6 offset-sm-3">
               <label htmlFor="InputTitle" className="form-group col-sm-12">
                 <span>Title</span>
-                <input className="form-control" id="InputTitle" placeholder="Enter Title" />
+                <input className="form-control" id="InputTitle" placeholder="Enter Title" name="title" onChange={this.handleChangeField} />
               </label>
               <label htmlFor="InputDescription" className="form-group col-sm-12">
                 <span>Description</span>
-                <input className="form-control" id="InputDescription" placeholder="Enter Description" />
+                <input className="form-control" id="InputDescription" placeholder="Enter Description" name="description" onChange={this.handleChangeField} />
               </label>
               <label htmlFor="InputNetPrice" className="form-group col-sm-12">
                 <span>Net Price</span>
-                <input className="form-control" id="InputNetPrice" placeholder="Enter Net Price in CC" />
+                <input className="form-control" id="InputNetPrice" placeholder="Enter Net Price in CC" name="netPrice" onChange={this.handleChangeField}  />
               </label>
               <label htmlFor="InputVAT" className="form-group col-sm-12">
                 <span>VAT</span>
-                <input className="form-control" id="InputVAT" placeholder="Enter VAT in %" />
+                <input className="form-control" id="InputVAT" placeholder="Enter VAT in %" name="vatPercentage" onChange={this.handleChangeField} />
               </label>
               <div>
                 <input type="file" onChange={this.handleChange} />
@@ -56,11 +66,11 @@ class AddProductsManager extends Component {
                   </div>
                   <div className="col-sm-6">
                     <NavLink className="nav-item nav-link" to="/productsmanager">
-                      <ButtonBusinessProduct text="Confirm" args1={null} />
+                      <ButtonBusinessProduct text="Confirm" args1={[this.state.title, this.state.description, this.state.netPrice, this.state.vatPercentage, this.state.file]} />
                     </NavLink>
                   </div>
                 </div>
-              </div>  
+              </div>
             </div>
           </div>
         </div>
