@@ -23,7 +23,7 @@ class Checkout extends Component {
 
   /* take elements from contracts(address) */
   oldShipment() {
-    if(store.getState().userType==="Citizen")
+    if(store.getState().user.userType==="CITIZEN")
     return(
       <div className="col-sm-12">
         <div className="col-sm-6 offset-sm-3">
@@ -45,6 +45,7 @@ class Checkout extends Component {
       </div>
     )
     else return(
+      //user.usertype === 'BUSINESS'
       <div className="col-sm-12">
         <div className="col-sm-6 offset-sm-3">
           <input className="form-control" id="shipmentbar1" type="text" placeholder="Headquarter" aria-label="Headquarter" disabled />

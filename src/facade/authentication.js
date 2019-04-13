@@ -27,17 +27,15 @@ const authentication = (function(){
           district: district,
           postCode: postCode
         }
-        var a = false;
-        //insert the json into ipfs
-        await ipfsModule.insertJSONintoIPFS(newCitizenJSON).then(async (hash)=>{
-          //splitting the hash in three parts to save them into the blockchain
-          await userHandler.then(async (ris)=>{
-            await ris.addCitizen(hash).then(()=>{
-              a = true;
-            });
+        return new Promise((resolve)=>{
+          ipfsModule.insertJSONintoIPFS(newCitizenJSON).then(async (hash)=>{
+            //splitting the hash in three parts to save them into the blockchain
+            console.log(hash+' inserted')
+            userHandler.then((ris)=>{
+              ris.addCitizen(hash).then(resolve)
+            })
           })
         })
-        return a;
       }
 
       else if(userType === "BUSINESS") {
@@ -52,25 +50,24 @@ const authentication = (function(){
           postCode: postCode
         }
         //insert the json into ipfs
-        await ipfsModule.insertJSONintoIPFS(newBusinessJSON).then(async (hash)=>{
-          //splitting the hash in three parts to save them into the blockchain
-          await userHandler.then(async (ris)=>{
-            await ris.addBusiness(hash).then(()=>{
-              a = true;
-            });
+        return new Promise((resolve)=>{
+          ipfsModule.insertJSONintoIPFS(newBusinessJSON).then(async (hash)=>{
+            //splitting the hash in three parts to save them into the blockchain
+            userHandler.then((ris)=>{
+              ris.addBusiness(hash).then(resolve)
+            })
           })
         })
-        return a;
       }
       //different registartions based on the userType
     },
 
     userLogin: function() {
-      return userHandler.then((ris)=>{
-        return ris.getUser().then((hashIPFS)=>{
-          //get the user Info
-          return ipfsModule.getJSONfromHash(hashIPFS).then((user)=>{
-            return user
+      return new Promise((resolve)=>{
+        userHandler.then((ris)=>{
+          ris.getUser().then((hashIPFS)=>{
+            //get the user Info
+            ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
           })
         })
       })

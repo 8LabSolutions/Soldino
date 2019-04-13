@@ -6,6 +6,10 @@ const OrderLogic = artifacts.require("OrderLogic");
 const UserLogic = artifacts.require("UserLogic");
 const Purchase = artifacts.require("Purchase");
 const TokenCubit = artifacts.require("TokenCubit");
+const VatStorage = artifacts.require("VatStorage");
+const VatLogic = artifacts.require("VatLogic");
+const OrderStorage = artifacts.require("OrderStorage");
+
 
 //Per fare un'acquisto servono:
 // 2 utenti di cui uno è un'aziend
@@ -22,6 +26,9 @@ contract("Purchase", (accounts) => {
   var userLogicInstance;
   var purchaseInstance;
   var tokenInstance;
+  var vatStorageInstance;
+  var orderLogicInstance;
+  var orderStorageInstance;
 
   // Utilizzo instanze di contratti di cui è già stato fatto il deploy sulla
   // blockchain
@@ -56,6 +63,35 @@ contract("Purchase", (accounts) => {
       TokenCubit.networks[ContractManager.network_id].address
     );
 
+    vatStorageInstance = new web3.eth.Contract(
+      VatStorage.abi,
+      VatStorage.networks[ContractManager.network_id].address
+    );
+
+    orderStorageInstance = new web3.eth.Contract(
+      OrderStorage.abi,
+      OrderStorage.networks[ContractManager.network_id].address
+    );
+
+  })
+
+  it("should set authorizations", () => {
+    return orderStorageInstance.methods.addAuthorized(OrderLogic.address).send({from: accounts[0], gas:2000000})
+    .then(() => {
+      return orderStorageInstance.methods.authorized(OrderLogic.address).call()
+      .then((result) => {
+        assert.equal(result, true)
+      })
+    })
+    .then(() => {
+      return vatStorageInstance.methods.addAuthorized(VatLogic.address).send({from: accounts[0], gas:2000000})
+      .then(() => {
+        return vatStorageInstance.methods.authorized(VatLogic.address).call()
+        .then((res) => {
+          assert.equal(res,true)
+        })
+      })
+    })
   })
 
   it("should buy some products", () => {

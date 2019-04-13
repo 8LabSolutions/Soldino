@@ -13,13 +13,14 @@ const initialState = {
 export function rootReducer(state = initialState, action) {
   if (action.type === LOGIN) {
     return Object.assign({}, state, {
-      logged: action.par
+      logged: action.par,
+      user: action.user
     });
   }
   if (action.type === LOGOUT || action.type === RESET) {
     return Object.assign({}, state, {
       logged: action.par,
-      userType: action.user
+      user: action.user
     });
   }
   if (action.type === CITIZEN || action.type === GOVERN || action.type === BUSINESS) {
@@ -120,7 +121,7 @@ export function rootReducer(state = initialState, action) {
 export const persistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['searchProduct', 'logged']
+  blacklist: ['searchProduct', 'logged', 'user']
 };
 
 export default persistReducer(persistConfig, rootReducer);
