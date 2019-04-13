@@ -46,8 +46,7 @@ const business = (function(){
     getSenderProduct: function() {
       return new Promise((resolve)=>{
         //scorrere gli eventi per trovare quelli con come seller l'account sender
-        web3business.getSenderProducts().then((ris)=>{
-          console.log(ris)
+        web3business.getSenderProducts().then(()=>{
           resolve()
         })
         //eliminare gli eliminati
