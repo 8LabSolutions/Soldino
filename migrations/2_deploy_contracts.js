@@ -113,7 +113,6 @@ module.exports = function(deployer, network, accounts) {
         })
       })
     })
-
   })
 }
   //every contract must be costructed with the constractManager address as a parameter

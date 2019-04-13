@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import BusinessProduct from './BusinessProduct';
 import NavBar from './NavBar';
-import ButtonBusinessProduct from '../containers/ButtonBusinessProduct';
+import ButtonGeneric from '../containers/ButtonGeneric';
 
 
 class ProductsManager extends Component {
@@ -35,10 +35,10 @@ class ProductsManager extends Component {
           <div className="row">
             <div className="col-sm-12">
               <NavLink className="nav-item nav-link" to="/addproductsmanager">
-                <ButtonBusinessProduct text="Add a product" args1={null} />
+                <ButtonGeneric text="Add a product" args1={null} />
               </NavLink>
               <br />
-            </div> 
+            </div>
             {productArray.map(i => this.printProduct(i))}
           </div>
         </div>
