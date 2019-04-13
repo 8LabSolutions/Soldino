@@ -8,12 +8,13 @@ export function addToCart(product) {
   return {
     type: ADDTOCART,
       product: {
-          title: product[0], 
-          quantity: product[1], 
+          title: product[0],
+          quantity: product[1],
           price: (Math.round(product[2] * 100) / 100),
           VAT: product[3],
           sellerName: product[4],
-          sellerVATNumber: product[5]
+          sellerVATNumber: product[5],
+          id: "0xc53782398236"
       }
   };
 }
@@ -22,8 +23,8 @@ export function removeFromCart(product) {
   return {
     type: REMOVEFROMCART,
       product: {
-        title: product[0], 
-        quantity: product[1], 
+        title: product[0],
+        quantity: product[1],
         price: product[2],
         VAT: product[3],
         sellerName: product[4],
@@ -36,8 +37,8 @@ export function increaseQuantity(product) {
   return {
     type: INCREASEQUANTITY,
       product: {
-        title: product[0], 
-        quantity: +product[1]+1, 
+        title: product[0],
+        quantity: +product[1]+1,
         price: product[2],
         VAT: product[3],
         sellerName: product[4],
@@ -50,8 +51,8 @@ export function decreaseQuantity(product) {
   return {
     type: DECREASEQUANTITY,
       product: {
-        title: product[0], 
-        quantity: product[1], 
+        title: product[0],
+        quantity: product[1],
         price: product[2],
         VAT: product[3],
         sellerName: product[4],
@@ -69,7 +70,7 @@ export function cartToOrders(cart, address) {
     VAT: getVAT(cart),
     net: getNet(cart),
     address,
-    buyerName: getName(), 
+    buyerName: getName(),
     buyerDetails: getDetails(), //if citizen == surname, if business == VATNumber
   };
 }

@@ -41,6 +41,8 @@ const web3business = (function(){
     getProductHash: function(remainingHash){
       return new Promise((resolve)=>{
         initialize().then((productLogicInstance)=>{
+          console.log('questo è il remaining hash')
+          console.log(remainingHash)
           productLogicInstance.methods.getProductCid(remainingHash).call().then((ris)=>{
             var hashIPFS = ris[0];
             var hashFun = ris[1];
@@ -51,7 +53,7 @@ const web3business = (function(){
         })
       })
     },
-
+    //torna gli hash già validi
     getProducts: function(sender=false) {
       return new Promise((resolve)=>{
         initialize().then(async (productLogicInstance) =>{
@@ -124,15 +126,7 @@ const web3business = (function(){
                     var promises = [];
                     // eslint-disable-next-line
                     for(let i = 0; i < products.length; i++){
-                      promises.push(new Promise((resolve)=>{
-                        productLogicInstance.methods.getProductCid(products[i]).call()
-                        .then((ris)=>{
-                          var hashIPFS = ris[0];
-                          var hashFun = ris[1];
-                          var hashSize = ris[2];
-                          resolve(web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun));
-                        });
-                      }))
+                      promises.push(this.getProductHash(products[i]))
                     }
                     //resolves all the products values
                     Promise.all(promises).then(resolve)

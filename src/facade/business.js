@@ -1,5 +1,6 @@
 import web3business from "../web3functions/business"
 import ipfsModule from "../ipfsCalls/index"
+import web3util from "../web3functions/web_util";
 
 const business = (function(){
 
@@ -26,9 +27,24 @@ const business = (function(){
       ris = ris.slice(0, amount)
     var promises = [];
     for (let i = 0; i< ris.length; i++){
-      promises.push(this.getProduct(ris[i]));
+      promises.push(new Promise((resolve)=>{
+        getIPFSProduct(ris[i]).then((middle)=>{
+          web3util.splitIPFSHash(ris[i]).then((pieces)=>{
+            middle.id = pieces[0]
+            resolve(middle);
+          })
+        })
+      }));
     }
     return Promise.all(promises)
+  }
+
+  function getIPFSProduct(hashIPFS) {
+    //only from ipfs
+    return new Promise((resolve)=>{
+      //get the user Info
+      ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
+    })
   }
 
   return{
@@ -67,15 +83,6 @@ const business = (function(){
      * @description return the products CID from a part of it
      * @param {*} remainingHash  the bigger part of the CID (bytes32)
      */
-    getProduct: function(remainingHash) {
-      //only from ipfs
-      return new Promise((resolve)=>{
-        web3business.getProductHash(remainingHash).then((hashIPFS)=>{
-          //get the user Info
-          ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
-        })
-      })
-    },
 
     getSenderProduct: function(amount) {
       return new Promise((resolve)=>{
