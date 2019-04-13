@@ -14,19 +14,6 @@ class ProductsManager extends Component {
     }
   }
 
-  componentWillMount(){
-    business.getSenderProduct(5).then((ris)=>{
-      if (ris === undefined)
-        ris = []
-      console.log('didmount')
-      console.log(ris)
-      this.setState({
-        productsArray: ris
-      })
-    })
-
-  }
-
   printProduct(product) {
     return(
       <BusinessProduct key={product.title} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} />
@@ -34,28 +21,15 @@ class ProductsManager extends Component {
   }
 
   render() {
+    //get data from ipfs
     let {productsArray} = this.state;
+    business.getSenderProduct(5).then((ris)=>{
+      if (ris === undefined){ris = []}
+      this.setState({
+        productsArray: ris
+      })
+    })
 
-    /*
-    let totalProducts = 10
-    let name
-    let totalPrice
-    let VAT
-    let description
-    var product
-    var productArray = []
-    for(var i=0; i<totalProducts; i++){
-      name = "Product #"+ i
-      totalPrice = 9.99;
-      VAT = 22 //in %
-      description = "description"
-      product = [name, totalPrice, description, VAT]
-      productArray[i] = product;
-    }
-    */
-
-
-    console.log('renderizzo')
     return (
       <div>
         <NavBar />
