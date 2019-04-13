@@ -23,7 +23,7 @@ const web3util = (function() {
       });
     },
 
-    splitIPFSHash: async function(hash){
+    splitIPFSHash: function(hash){
       hash = new Buffer(bs58.decode(hash))
       let fun = parseInt(hash[0]);
       let size = parseInt(hash[1]);
