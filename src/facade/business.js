@@ -19,14 +19,14 @@ const business = (function(){
       var newProductJSON = {
         title: title,
         description: description,
-        name: name,
         netPrice: netPrice,
         vatPercentage: vatPercentage,
         totalPrice: +netPrice + +netPrice*(+vatPercentage/100),
         image: image
       }
       return new Promise((resolve)=>{
-        ipfsModule.insertJSONintoIPFS(newProductJSON).then(async (hash)=>{
+        ipfsModule.insertJSONintoIPFS(newProductJSON).then((hash)=>{
+          console.log(hash+' del prodotto nuovo')
           //splitting the hash in three parts to save them into the blockchain
           web3business.addProduct(hash, vatPercentage, netPrice).then(resolve)
         })

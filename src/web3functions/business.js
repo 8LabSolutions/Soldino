@@ -21,6 +21,12 @@ const web3business = (function(){
         initialize().then(async (productLogicInstance) =>{
           let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash)
           web3.eth.getAccounts().then((account)=>{
+            console.log('---parametri---')
+            console.log(hashIpfs)
+            console.log(hashSize)
+            console.log(hashFun)
+            console.log(vatPercentage)
+            console.log(netPrice*100)
             productLogicInstance.methods.addProduct(
               hashIpfs, hashSize, hashFun, vatPercentage, netPrice*100)
             .send({from: account[0]})
@@ -44,7 +50,26 @@ const web3business = (function(){
 
         })
       })
+    },
+
+    getSenderProducts: function() {
+      return new Promise((resolve)=>{
+        initialize().then(async (productLogicInstance) =>{
+          web3.eth.getAccounts().then((account)=>{
+            productLogicInstance.getPastEvents('ProductInserted', {
+              filter: {_seller: account[0]},
+              fromBlock: 0,
+              toBlock: 'latest'
+            })
+            .then((events) => {
+                console.log(events)
+                resolve()
+            });
+          })
+        })
+      })
     }
+
   }
 }());
 
