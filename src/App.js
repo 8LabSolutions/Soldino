@@ -21,10 +21,10 @@ import history from './store/history';
 //store.dispatch(reset())
 
 class App extends Component {
-  
+
   render() {
     let props = this.props
-    //console.log(props.loading)  
+    //console.log(props.loading)
     if(props.loading === false){
       return (
         <Router history={history}>
@@ -54,8 +54,8 @@ class App extends Component {
       return(
         <div>
           <p id="loading">Loading</p>
-          <Particles 
-                params={{
+          <Particles
+            params={{
                   particles: {
                     number: {
                       value: 30,
@@ -124,8 +124,8 @@ class App extends Component {
                     }
                   },
                   retina_detect: true
-                }}
-              />
+              }}
+          />
         </div>
       )
     }
