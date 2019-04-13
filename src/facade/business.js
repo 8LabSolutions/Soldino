@@ -43,11 +43,22 @@ const business = (function(){
       })
     },
 
-    getSenderProduct: function() {
+    getSenderProduct: function(amount) {
       return new Promise((resolve)=>{
         //scorrere gli eventi per trovare quelli con come seller l'account sender
-        web3business.getSenderProducts().then(()=>{
-          resolve()
+        web3business.getSenderProducts().then((ris)=>{
+          //ris contains the array of ipfs hash
+          if(ris.length>amount)
+            ris = ris.slice(0, amount)
+          var promises = [];
+          for (let i = 0; i< ris.length; i++){
+            promises.push(new Promise((resolve)=>{
+              ipfsModule.getJSONfromHash(ris[i]).then(resolve);
+            }))
+          }
+          console.log('dentro la richiesta')
+          Promise.all(promises).then(resolve)
+
         })
         //eliminare gli eliminati
 

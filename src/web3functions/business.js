@@ -76,7 +76,6 @@ const web3business = (function(){
                   //extracting only the hash
                   products.push(events[i].returnValues._keyHash)
                 }
-                console.log(products)
             })
             .then(()=>{
               //getting the deleted products
@@ -119,9 +118,23 @@ const web3business = (function(){
                         }
                       }
                     }
-                    console.log(products)
                     //now products contains only the last version of the seller's products
-                    resolve(products)
+                    //finally, get the products CID from web3 and converting it in base58
+                    var promises = [];
+                    // eslint-disable-next-line
+                    for(let i = 0; i < products.length; i++){
+                      promises.push(new Promise((resolve)=>{
+                        productLogicInstance.methods.getProductCid(products[i]).call()
+                        .then((ris)=>{
+                          var hashIPFS = ris[0];
+                          var hashFun = ris[1];
+                          var hashSize = ris[2];
+                          resolve(web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun));
+                        });
+                      }))
+                    }
+                    //resolves all the products values
+                    Promise.all(promises).then(resolve)
                   }
                 })
               })

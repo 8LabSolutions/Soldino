@@ -13,10 +13,10 @@ import Orders from './components/presentational/Orders';
 import TransactionsManager from './components/presentational/TransactionsManager';
 import Checkout from './components/presentational/Checkout';
 import PurchasesConfirmation from './components/presentational/PurchasesConfirmation';
-import ProductsManager from './components/presentational/ProductsManager';
 import EditProductsManager from './components/presentational/EditProductsManager';
 import AddProductsManager from './components/presentational/AddProductsManager';
 import history from './store/history';
+import ProductsManager from './components/presentational/ProductsManager';
 
 //store.dispatch(reset())
 
