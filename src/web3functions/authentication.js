@@ -1,27 +1,15 @@
 import web3util from "./web_util";
-import ContractManager from "../contracts_build/ContractManager"
 import UserLogic from "../contracts_build/UserLogic"
 
-const web3authentication = (async function() {
+const web3authentication = (function() {
   var web3;
-  var contractManagerInstance;
-  var userLogicInstance;
 
   function initialize(){
     return new Promise((resolve, reject) =>{
       web3util.getWeb3().then((_web3)=>{
         web3 = _web3;
-        web3.eth.net.getId().then((id)=>{
-          contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
-            ContractManager.networks[id].address);
-          return contractManagerInstance.methods.getContractAddress("UserLogic").call()
-          .then((_userLogicAddress)=>{
-            userLogicInstance = new web3.eth.Contract(UserLogic.abi, _userLogicAddress);
-            resolve();
-          });
-        }).catch(()=>{
-          reject("Not able to find any account in MetaMask");
-        })
+        //get the instance of the contratc and resolves it
+        web3util.getContractInstance(web3, UserLogic).then(resolve)
       }).catch((err)=>{
         reject(err)
       })
@@ -31,8 +19,8 @@ const web3authentication = (async function() {
   return {
     addCitizen: function(hash) {
       return new Promise((resolve)=>{
-        initialize().then(async () =>{
-          let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash);
+        initialize().then(async (userLogicInstance) =>{
+          let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash)
           web3.eth.getAccounts().then((account)=>{
             userLogicInstance.methods.addCitizen(hashIpfs, hashSize, hashFun).send({from: account[0]})
             .then(()=>{
@@ -44,7 +32,7 @@ const web3authentication = (async function() {
     },
     addBusiness: function(hash) {
       return new Promise((resolve)=>{
-        initialize().then(async () =>{
+        initialize().then(async (userLogicInstance) =>{
           let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash);
           web3.eth.getAccounts().then((account)=>{
             userLogicInstance.methods.addBusiness(hashIpfs, hashSize, hashFun).send({from: account[0]})
@@ -57,7 +45,7 @@ const web3authentication = (async function() {
     },
     getUser: async function() {
       return new Promise((resolve)=>{
-        initialize().then(()=>{
+        initialize().then((userLogicInstance)=>{
           web3.eth.getAccounts().then((account)=>{
             userLogicInstance.methods.getUserInfo(account[0]).call().then((ris)=>{
               var hashIPFS = ris[0];

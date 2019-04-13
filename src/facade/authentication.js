@@ -30,10 +30,8 @@ const authentication = (function(){
         return new Promise((resolve)=>{
           ipfsModule.insertJSONintoIPFS(newCitizenJSON).then(async (hash)=>{
             //splitting the hash in three parts to save them into the blockchain
-            console.log(hash+' inserted')
-            web3authentication.then((ris)=>{
-              ris.addCitizen(hash).then(resolve)
-            })
+            //console.log(hash+' inserted')
+            web3authentication.addCitizen(hash).then(resolve)
           })
         })
       }
@@ -53,9 +51,7 @@ const authentication = (function(){
         return new Promise((resolve)=>{
           ipfsModule.insertJSONintoIPFS(newBusinessJSON).then(async (hash)=>{
             //splitting the hash in three parts to save them into the blockchain
-            web3authentication.then((ris)=>{
-              ris.addBusiness(hash).then(resolve)
-            })
+            web3authentication.addBusiness(hash).then(resolve)
           })
         })
       }
@@ -64,11 +60,9 @@ const authentication = (function(){
 
     userLogin: function() {
       return new Promise((resolve)=>{
-        web3authentication.then((ris)=>{
-          ris.getUser().then((hashIPFS)=>{
-            //get the user Info
-            ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
-          })
+        web3authentication.getUser().then((hashIPFS)=>{
+          //get the user Info
+          ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
         })
       })
     }

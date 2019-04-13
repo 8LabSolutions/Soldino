@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+import ContractManager from "../contracts_build/ContractManager"
 
 const web3util = (function() {
   var bs58 = require('bs58');
@@ -44,6 +45,23 @@ const web3util = (function() {
         }
         var buffer = new Buffer(array)
         return bs58.encode(buffer)
+    },
+
+    getContractInstance: function(web3, contractJSON){
+      let contractManagerInstance;
+      return new Promise((resolve, reject)=>{
+        web3.eth.net.getId().then((id)=>{
+          contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
+            ContractManager.networks[id].address);
+          return contractManagerInstance.methods.getContractAddress(contractJSON.contractName).call()
+          .then((_contractAddress)=>{
+            resolve(new web3.eth.Contract(contractJSON.abi, _contractAddress));
+
+          });
+        }).catch(()=>{
+          reject("Not able to find any account in MetaMask");
+        })
+      })
     }
   }
 }())
