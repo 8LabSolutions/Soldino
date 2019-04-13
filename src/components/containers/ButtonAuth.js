@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  var action = (store.getState().logged === false) ? logIn() : logOut();
+  
   return {
     action: () => {
 
@@ -21,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
       authentication.userLogin().then((user)=>{
         console.log('user')
         console.log(user)
+        let action = (store.getState().logged === false) ? logIn(user) : logOut();
+        dispatch(action)
+        history.push('/')
       }).catch(console.log)
       //se ris, allora history.push('/')
       //swith sul type dello user (diversi dispatch) : paramentro oggetto JSON
