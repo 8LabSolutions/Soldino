@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 // src/js/actions/index.js
-import { LOGIN, LOGOUT, BUSINESS, GOVERN, CITIZEN } from "../constants/actionTypes";
+import { LOGIN, LOGOUT, BUSINESS, GOVERN, CITIZEN, BEGINLOADING, ENDLOADING } from "../constants/actionTypes";
 
 export function logIn(user) {
   return {
@@ -39,3 +39,16 @@ export function logGovern(user) {
   };
 }
 
+export function beginLoading() {
+  return {
+    type: BEGINLOADING,
+    loading: true
+  };
+}
+
+export function endLoading() {
+  return {
+    type: ENDLOADING,
+    loading: false
+  };
+}
