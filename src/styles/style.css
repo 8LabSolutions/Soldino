@@ -118,3 +118,11 @@ input:checked + .slider {
 .close {
   border: 0px !important;
 }
+
+#loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 50px;
+  transform: translate(-50%, -50%);
+}
