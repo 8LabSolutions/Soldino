@@ -30,9 +30,11 @@ const web3user = (function(){
     tokenTransferApprove: function(amount) {
       return new Promise((resolve)=>{
         initialize(TokenCubit).then((tokenInstance)=>{
+          console.log('TOKENNN')
+          console.log(tokenInstance)
           initialize(Purchase).then((purchaseInstance)=>{
             web3.eth.getAccounts().then((account)=>{
-              tokenInstance.methods.approve(purchaseInstance.address, parseInt((amount+1)*1000))
+              tokenInstance.methods.approve(purchaseInstance.options.address, parseInt((amount+1)*100))
               .send({from: account[0]})
               .then(resolve)
             })
@@ -42,6 +44,9 @@ const web3user = (function(){
     },
 
     purchase: function(products, remainingHash, hashSize, hashFun, productQtn){
+      for (let i = 0; i< products.length; i++){
+        products[i] = products[i].keyProd
+      }
       return new Promise((resolve)=>{
         initialize(Purchase).then((purchaseInstance)=>{
           web3.eth.getAccounts().then((account)=>{

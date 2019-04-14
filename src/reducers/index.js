@@ -118,8 +118,8 @@ export function rootReducer(state = initialState, action) {
           buyerName: action.buyerName,
           buyerDetails: action.buyerDetails
         }]
-      ,
-      cart: []
+      //,
+      //cart: []
     });
   }
   return state;

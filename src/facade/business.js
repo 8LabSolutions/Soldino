@@ -29,10 +29,9 @@ const business = (function(){
     for (let i = 0; i< ris.length; i++){
       promises.push(new Promise((resolve)=>{
         getIPFSProduct(ris[i]).then((middle)=>{
-          web3util.splitIPFSHash(ris[i]).then((pieces)=>{
-            middle.id = pieces[0]
-            resolve(middle);
-          })
+          var pieces = web3util.splitIPFSHash(ris[i])
+          middle.keyProd = pieces[0]
+          resolve(middle);
         })
       }));
     }

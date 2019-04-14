@@ -19,7 +19,7 @@ class Store extends Component {
   printProduct(product) {
     return(
       //CHECK JSON ARGS NAMES
-      <Product key={product.title} title={product.title} price={product.totalPrice} description={product.description} VAT={product.VAT} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
+      <Product keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
     )
   }
 
@@ -40,7 +40,7 @@ class Store extends Component {
           updated: true
         })
       }
-    }) 
+    })
     let renderProducts = []
 
     //render searched products only
@@ -49,7 +49,6 @@ class Store extends Component {
         renderProducts[i] = productsArray[i];
       }
     }
-
     return (
       <div>
         <h3>Store</h3>

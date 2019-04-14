@@ -48,16 +48,19 @@ const user = (function(){
     return sum;
   }
 
+
   return {
     buy: function(cartInfo){
+      console.log(cartInfo)
       return new Promise((resolve)=>{
          //get all the products
-        var products = cartInfo.cart;
+
+        var products = cartInfo.products;
+        console.log(products)
         //cartInfo contains all the information about the order
 
         //sort the products by seller
         products = groupProductsBySeller(products)
-
         var orders = splitInSellerArray(products)
 
         var promises = []
@@ -79,6 +82,7 @@ const user = (function(){
             ipfsModule.insertJSONintoIPFS(order).then(resolve)
           }))
         }
+
         Promise.all(promises).then((results)=>{
           //results: array of IPFS (orders)
           var remainingHash = []
@@ -87,14 +91,17 @@ const user = (function(){
           var productQtn = []
           for(let i = 0; i < results.length; i++){
             for(let j = 0 ; j < orders[i].length; j++){
-              let rH, hS, hF = web3util.splitIPFSHash(results[i]);
+              let [rH, hS, hF] = web3util.splitIPFSHash(results[i]);
+              console.log(rH)
               remainingHash.push(rH);
               hashSize.push(hS);
               hashFun.push(hF);
               productQtn.push(orders[i][j].quantity)
             }
           }
+          console.log(remainingHash)
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
+
             web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
               resolve()
             })

@@ -5,6 +5,8 @@ import { getTodayDate, getVAT, getNet, getDetails, getName } from "../auxiliaryF
 
 /*args: title, quantity, price*/
 export function addToCart(product) {
+  console.log('cart.js')
+  console.log(product)
   return {
     type: ADDTOCART,
       product: {
@@ -14,7 +16,7 @@ export function addToCart(product) {
           VAT: product[3],
           sellerName: product[4],
           sellerVATNumber: product[5],
-          id: "0xc53782398236"
+          keyProd: product[6]
       }
   };
 }
@@ -28,7 +30,8 @@ export function removeFromCart(product) {
         price: product[2],
         VAT: product[3],
         sellerName: product[4],
-        sellerVATNumber: product[5]
+        sellerVATNumber: product[5],
+        keyProd: product[6]
     }
   };
 }
@@ -42,7 +45,8 @@ export function increaseQuantity(product) {
         price: product[2],
         VAT: product[3],
         sellerName: product[4],
-        sellerVATNumber: product[5]
+        sellerVATNumber: product[5],
+        keyProd: product[6]
     }
   };
 }
@@ -56,7 +60,8 @@ export function decreaseQuantity(product) {
         price: product[2],
         VAT: product[3],
         sellerName: product[4],
-        sellerVATNumber: product[5]
+        sellerVATNumber: product[5],
+        keyProd: product[6]
     }
   };
 }
