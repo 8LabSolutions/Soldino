@@ -17,8 +17,8 @@ class Orders extends Component {
           <div className="row">
             <div className="col-sm-6"><small>Seller</small></div>
             <div className="col-sm-6"><small>VAT Number</small></div>
-            <div className="col-sm-6">{this.lastSeller = product.sellerName}</div>
             <div className="col-sm-6">{product.sellerVATNumber}</div>
+            <div className="col-sm-6">{this.lastSeller = product.sellerName}</div>
             <div className="col-sm-4"><small>Products</small></div>
             <div className="col-sm-4"><small>Quantity</small></div>
             <div className="col-sm-4"><small>Unit price</small></div>

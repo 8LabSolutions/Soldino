@@ -58,7 +58,7 @@ const business = (function(){
      * @param {*} name
      * @param {*} details
     */
-    addProduct: function(title, description, netPrice, vatPercentage, image, sellerName="azienda1", sellerVATNumber="provvisorio"){
+    addProduct: function(title, description, netPrice, vatPercentage, image, sellerName/*="azienda1"*/, sellerVATNumber/*="provvisorio"*/){
       //istantiate the necessary costracts and returns the results
       var newProductJSON = {
         title: title,

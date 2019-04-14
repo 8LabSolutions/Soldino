@@ -45,7 +45,7 @@ export function rootReducer(state = initialState, action) {
       newCart1 = [action.product]
     }else{
       for(var z=0; z<state.cart.length; z++){
-        if(state.cart[z].title===action.product.title){
+        if(state.cart[z].keyProd===action.product.keyProd){
           action.product.quantity = +state.cart[z].quantity + +action.product.quantity
         }else{
           newCart1 = [...newCart1, state.cart[z]]
@@ -64,7 +64,7 @@ export function rootReducer(state = initialState, action) {
   if (action.type === REMOVEFROMCART) {
     var newCart = []
     for(var i=0; i<state.cart.length; i++){
-      if(state.cart[i].title!==action.product.title){
+      if(state.cart[i].keyProd!==action.product.keyProd){
         newCart = [...newCart, state.cart[i]]
       }
     }
@@ -75,7 +75,7 @@ export function rootReducer(state = initialState, action) {
   if (action.type === INCREASEQUANTITY) {
     var newCartAdd = []
     for(var j=0; j<state.cart.length; j++){
-      if(state.cart[j].title===action.product.title){
+      if(state.cart[j].keyProd===action.product.keyProd){
         newCartAdd = [...newCartAdd, action.product]
       }else{
         newCartAdd = [...newCartAdd, state.cart[j]]
@@ -88,7 +88,7 @@ export function rootReducer(state = initialState, action) {
   if (action.type === DECREASEQUANTITY) {
     var newCartRm = []
     for(var k=0; k<state.cart.length; k++){
-      if(state.cart[k].title===action.product.title){
+      if(state.cart[k].keyProd===action.product.keyProd){
         newCartRm = [...newCartRm, action.product]
       }else{
         newCartRm = [...newCartRm, state.cart[k]]

@@ -13,7 +13,7 @@ const user = (function(){
     var prevSeller = products[0].seller;
     var result = []
     for(let i = 0; i< products.length; i++){
-      if(products[i].seller != prevSeller){
+      if(products[i].seller !== prevSeller){
         prevSeller = products[i].seller;
         result.push(productAux);
         productAux = [];
