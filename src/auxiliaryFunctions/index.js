@@ -37,18 +37,22 @@ export function printShipment(address) {
 }
 
 export function getName() {
-  //should get name from IPFS
   return(
-    "Giorgio"
+    store.getState().user.name
   );
 }
 
 export function getDetails() {
-  //should get details from IPFS
-  //if citizen == surname, if business == VATNumber
-  return(
-    "Rossi"
-  );
+  if(store.getState().user.userType === "CITIZEN"){
+    return(
+      store.getState().user.surname
+    );
+  }else{
+    return(
+      store.getState().user.VATNumber
+    );
+  }
+
 }
 
 export function getRegistrationAddress() {

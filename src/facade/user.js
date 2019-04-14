@@ -100,10 +100,13 @@ const user = (function(){
             }
           }
           console.log(remainingHash)
+          let something = []
+          for(var i=0; i<products.length; i++){
+            something[i] = products[i]
+          }
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
-
             web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
-              resolve()
+              return resolve()
             })
           })
         })

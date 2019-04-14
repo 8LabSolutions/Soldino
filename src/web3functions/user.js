@@ -47,6 +47,7 @@ const web3user = (function(){
       for (let i = 0; i< products.length; i++){
         products[i] = products[i].keyProd
       }
+
       return new Promise((resolve)=>{
         initialize(Purchase).then((purchaseInstance)=>{
           web3.eth.getAccounts().then((account)=>{
