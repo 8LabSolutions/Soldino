@@ -3,7 +3,6 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import NavBar from './NavBar';
-import ButtonBusinessProduct from '../containers/ButtonBusinessProduct';
 import ButtonGeneric from '../containers/ButtonGeneric';
 /**
  * should load selected product's fields
@@ -58,11 +57,11 @@ class EditProductsManager extends Component {
                   </div>
                   <div className="col-sm-6">
                     <NavLink className="nav-item nav-link" to="/productsmanager">
-                      <ButtonBusinessProduct text="Confirm" args1={null} />
+                      <ButtonGeneric text="Confirm" args1={null} />
                     </NavLink>
                   </div>
                 </div>
-              </div>  
+              </div>
             </div>
           </div>
         </div>

@@ -67,19 +67,7 @@ contract ProductStorage is Authorizable {
 
     }
 
-    function updateHash(
-        bytes32 _keyHash,
-        bytes32 _hashIPFS,
-        uint8 _hashFunction,
-        uint8 _hashSize
-    )
-        external
-        onlyAuthorized
-    {
-        hashToProduct[_keyHash].lastestHashIPFS = _hashIPFS;
-        hashToProduct[_keyHash].hashFunction = _hashFunction;
-        hashToProduct[_keyHash].hashSize = _hashSize;
-    }
+
 
     function deleteProduct(bytes32 _keyHash) external onlyAuthorized {
         delete productsHash[hashToProduct[_keyHash].index];
@@ -114,12 +102,16 @@ contract ProductStorage is Authorizable {
         return hashToProduct[_keyHash].VATPercentage;
     }
 
-    function getProductCid(bytes32 _keyHash) external view returns(bytes32,uint8,uint8) {
-        return(
-            hashToProduct[_keyHash].lastestHashIPFS,
-            hashToProduct[_keyHash].hashFunction,
-            hashToProduct[_keyHash].hashSize
-        );
+    function getLatestHash(bytes32 _keyHash) external view returns(bytes32) {
+        return hashToProduct[_keyHash].lastestHashIPFS;
+    }
+
+    function getHashFunction(bytes32 _keyHash) external view returns(uint8) {
+        return hashToProduct[_keyHash].hashFunction;
+    }
+
+    function getHashSize(bytes32 _keyHash) external view returns(uint8) {
+        return hashToProduct[_keyHash].hashSize;
     }
 
     function getProductSeller(bytes32 _keyHash) external view returns(address) {

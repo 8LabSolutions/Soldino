@@ -2,7 +2,6 @@ pragma solidity 0.5.6;
 
 import "../ContractManager.sol";
 import "../storage/OrderStorage.sol";
-import "../storage/ProductStorage.sol";
 import "../storage/UserStorage.sol";
 import "./VatLogic.sol";
 import "./ProductLogic.sol";
@@ -15,7 +14,6 @@ contract OrderLogic {
 
     VatLogic vatLogic;
     UserStorage userStorage;
-    ProductStorage productStorage;
     ProductLogic productLogic;
 
 
@@ -42,6 +40,9 @@ contract OrderLogic {
     constructor(address _contractManagerAddress) public {
         contractManager = ContractManager(_contractManagerAddress);
         orderStorage = OrderStorage(contractManager.getContractAddress("OrderStorage"));
+        vatLogic = VatLogic(contractManager.getContractAddress("VatLogic"));
+        userStorage = UserStorage(contractManager.getContractAddress("UserStorage"));
+        productLogic = ProductLogic(contractManager.getContractAddress("ProductLogic"));
     }
 
     function registerOrder(
@@ -56,8 +57,10 @@ contract OrderLogic {
         external
         //onlyPurchaseContract
     {
-        setProductStorage();
-        address _seller = productStorage.getProductSeller(_productsHash[0]);
+        setVatLogic();
+        setUserStorage();
+
+        address _seller = productLogic.getProductSeller(_productsHash[0]);
 
         require(_productsHash.length > 0, "OrderLogic: products not provided");
         require(_seller != address(0), "OrderLogic: invalid seller address");
@@ -69,26 +72,20 @@ contract OrderLogic {
         //register the order
         orderStorage.addOrder(_hashIpfs, _hashFun, _hashSize, _buyer, _seller, _productsHash, total, vatTotal);
         // Create instance of Vat Logic
-        setVatLogic();
 
         // if the buyer is a business, the vat movement needs to be registered
         // to do so a UserStorage instance is created and if and only if the buyer
         // is a business, the vat movement is registered
-        setUserStorage();
-        int moltiplier = -1;
         if(userStorage.getUserType(_buyer) == 2) {
-            moltiplier = 1;
+            vatLogic.registerVat(_buyer, (int256(vatTotal)*(-1)), _period);
         }
-        vatLogic.registerVat(_buyer, (int256(vatTotal)*(moltiplier)), _period);
+        vatLogic.registerVat(_seller, (int256(vatTotal)), _period);
+
         // Using these events it's possible to see the orders history, both purchase and sell
         //emit the event on the blockchain: the event shows the buyer and the hash of the order
         emit PurchaseOrderInserted(_buyer, _hashIpfs);
         //emit the event on the blockchain: the event shows the seller and the hash of the order
         emit SellOrderInserted(_seller, _hashIpfs);
-    }
-
-    function setProductStorage() internal {
-       productStorage = ProductStorage(contractManager.getContractAddress("ProductStorage"));
     }
 
     function setVatLogic() internal  {
@@ -104,19 +101,17 @@ contract OrderLogic {
     }
 
     function calculateOrderTotal(bytes32[] memory  _productsHash, uint8[] memory _prodQtn)
-        public returns(uint256, uint256)
+        public view returns(uint256, uint256)
     {
         require(_productsHash.length > 0, "Empty array");
         uint256 total = 0;
-        setProductStorage();
-        setProductLogic();
-        address seller = productStorage.getProductSeller(_productsHash[0]);
+        address seller = productLogic.getProductSeller(_productsHash[0]);
         uint256 vatTotal = 0;
 
         for(uint i = 0; i < _productsHash.length; ++i) {
-            require(productStorage.getProductSeller(_productsHash[i]) == seller, "Invalid product, wrong seller");
-            total += (productStorage.getProductNetPrice(_productsHash[i]) * (uint256(_prodQtn[i])));
-            vatTotal += (productLogic.calculateProductVat(_productsHash[i]) * (uint256(_prodQtn[i])));
+            require(productLogic.getProductSeller(_productsHash[i]) == seller, "Invalid product, wrong seller");
+            total += ((productLogic.getProductNetPrice(_productsHash[i])) * (_prodQtn[i]));
+            vatTotal += ((productLogic.calculateProductVat(_productsHash[i])) * (_prodQtn[i]));
         }
 
         return(total, vatTotal);

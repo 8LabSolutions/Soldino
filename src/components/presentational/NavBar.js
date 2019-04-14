@@ -42,6 +42,7 @@ class NavBar extends Component {
       authText = 'Login'
       navLinks = null;
     }
+    
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <span className="navbar-brand">Soldino</span>

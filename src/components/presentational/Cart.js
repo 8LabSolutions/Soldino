@@ -9,7 +9,7 @@ import ButtonGeneric from '../containers/ButtonGeneric';
 
 function printProduct(product) {
   return(
-    <CartProduct key={product[0]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} />
+    <CartProduct keyProd={product[6]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} />
   )
 }
 
