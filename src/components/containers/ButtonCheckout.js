@@ -15,6 +15,7 @@ const mapDispatchToProps = (dispatch) => {
       //order[1]: address
       //console.log('----!!!----')
       //console.log(order[0])
+      //console.log([...order[0]])
       //console.log('----!!!----')
       var cart = {
         products: [...order[0]],

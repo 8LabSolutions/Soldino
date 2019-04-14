@@ -16,8 +16,8 @@ class BusinessProduct extends Component {
           <div className="card-body">
             <h5 className="card-title">{props.title}</h5>
             <p className="card-text">{props.description}</p> 
-            <p className="card-text">CC {props.price - (props.price * (props.VAT/100))}</p> {/*net price*/}
-            <p className="card-text">CC {(props.price * (props.VAT/100))} ~ {props.VAT}%</p>  
+            <p className="card-text">CC {props.price}</p> {/*lordo*/}
+            <p className="card-text">CC {props.price - ((props.price * 100)/(+100 + +props.VAT))} ~ {props.VAT}%</p>  
             <NavLink className="nav-item nav-link" to="/editproductsmanager">
               <ButtonBusinessProduct text="Edit" args1={null} />
             </NavLink> 

@@ -65,7 +65,7 @@ const business = (function(){
         description: description,
         netPrice: netPrice,
         vatPercentage: vatPercentage,
-        totalPrice: +netPrice + +netPrice*(+vatPercentage/100),
+        totalPrice: +netPrice + +netPrice*(+vatPercentage/100), //lordo
         sellerName: sellerName,
         sellerVATNumber: sellerVATNumber,
         image: image
