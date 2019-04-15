@@ -126,3 +126,21 @@ input:checked + .slider {
   font-size: 50px;
   transform: translate(-50%, -50%);
 }
+
+@-webkit-keyframes slide {
+  0%{
+      top: 2px;
+  }
+  50%{
+     top: 15px;
+  }
+  100%{
+    top: 2px;
+}
+}
+
+#arrow{
+  position: absolute;
+  right: 40px;
+  -webkit-animation: slide 2s linear infinite;
+}

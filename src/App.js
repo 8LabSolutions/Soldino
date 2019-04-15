@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
 import Particles from 'react-particles-js';
@@ -53,6 +55,7 @@ class App extends Component {
     }else{
       return(
         <div>
+          <img id="arrow" src="arrow.png" />
           <p id="loading">Loading</p>
           <Particles
             params={{
