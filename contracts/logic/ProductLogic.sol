@@ -80,7 +80,7 @@ contract ProductLogic {
 
     function modifyProduct(
         bytes32 _keyHash,
-        bytes32 _hashIPFS,
+        bytes32 _hashIpfs,
         uint8 _hashSize,
         uint8 _hashFunction,
         uint8 _vatPercentage,
@@ -90,7 +90,7 @@ contract ProductLogic {
         onlyValidIpfsCid(_keyHash, _hashFunction, _hashSize)
         onlyProductOwner(_keyHash)
     {
-        require(_hashIPFS != _keyHash, "The modified product's hash cannot be the same as the key-hash");
+        require(_hashIpfs != _keyHash, "The modified product's hash cannot be the same as the key-hash");
 
         bool modified = false;
 
@@ -105,8 +105,10 @@ contract ProductLogic {
         }
 
         if (modified == true) {
-            productStorage.updateHash(_keyHash, _hashIPFS, _hashFunction, _hashSize);
-            emit ProductModified(_keyHash, msg.sender, _hashIPFS);
+            productStorage.setLatestHashIpfs(_keyHash, _hashIpfs);
+            productStorage.setHashFunction(_keyHash, _hashFunction);
+            productStorage.setHashSize(_keyHash, _hashSize);
+            emit ProductModified(_keyHash, msg.sender, _hashIpfs);
         }
 
     }
@@ -120,8 +122,24 @@ contract ProductLogic {
         return (productStorage.getProductNetPrice(_keyHash) * productStorage.getProductVat(_keyHash) / 100);
     }
 
-    function calculateProductGrossPrice(bytes32 _keyHash) public view returns (uint256) {
-        uint256 _netPrice = productStorage.getProductNetPrice(_keyHash);
+    function calculateProductGrossPrice(bytes32 _keyHash) public view returns (uint) {
+        uint _netPrice = productStorage.getProductNetPrice(_keyHash);
         return (_netPrice + (_netPrice * productStorage.getProductVat(_keyHash) / 100));
+    }
+
+    function getProductCid(bytes32 _keyHash) external view returns(bytes32,uint8,uint8) {
+        return(
+            productStorage.getLatestHash(_keyHash),
+            productStorage.getHashFunction(_keyHash),
+            productStorage.getHashSize(_keyHash)
+        );
+    }
+
+    function getProductSeller(bytes32 _keyHash) external view returns(address) {
+        return productStorage.getProductSeller(_keyHash);
+    }
+
+    function getProductNetPrice(bytes32 _keyHash) external view returns(uint256) {
+        return productStorage.getProductNetPrice(_keyHash);
     }
 }

@@ -20,12 +20,17 @@ class Product extends Component {
   }
 
   render() {
+
     let props = this.props;
     let maxQuantity = 50;
     let product = []
     product[3] = props.VAT
     product[4] = props.sellerName
     product[5] = props.sellerVATNumber
+    console.log('LE PROPSS')
+    console.log(props)
+    console.log(props.keyProd)
+    product[6] = props.keyProd
     return (
       <div className="col-sm-3">
         <div className="card">
@@ -41,7 +46,7 @@ class Product extends Component {
             </div>
             <NavLink className="nav-item nav-link" to="/">
               <ButtonProduct text="Add to cart" args1={product} />
-            </NavLink>  
+            </NavLink>
           </div>
         </div>
         <br />

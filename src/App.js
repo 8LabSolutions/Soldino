@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
 import Particles from 'react-particles-js';
@@ -13,10 +15,10 @@ import Orders from './components/presentational/Orders';
 import TransactionsManager from './components/presentational/TransactionsManager';
 import Checkout from './components/presentational/Checkout';
 import PurchasesConfirmation from './components/presentational/PurchasesConfirmation';
-import ProductsManager from './components/presentational/ProductsManager';
 import EditProductsManager from './components/presentational/EditProductsManager';
 import AddProductsManager from './components/presentational/AddProductsManager';
 import history from './store/history';
+import ProductsManager from './components/presentational/ProductsManager';
 
 //store.dispatch(reset())
 
@@ -53,78 +55,79 @@ class App extends Component {
     }else{
       return(
         <div>
+          <img id="arrow" src="arrow.png" />
           <p id="loading">Loading</p>
           <Particles
             params={{
-                  particles: {
-                    number: {
-                      value: 30,
-                      density: {
-                        enable: true,
-                        value_area: 800
-                      }
-                    },
-                    color: {
-                      value: '#000000'
-                    },
-                    shape: {
-                      type: 'circle',
-                      stroke: {
-                        width: 0,
-                        color: '#000000'
-                      },
-                      polygon: {
-                        nb_sides: 5
-                      },
-                      image: {
-                        width: 100,
-                        height: 100
-                      }
-                    },
-                    opacity: {
-                      value: 0.5,
-                      random: false,
-                      anim: {
-                        enable: false,
-                        speed: 200,
-                        opacity_min: 0.1,
-                        sync: false
-                      }
-                    },
-                    size: {
-                      value: 3,
-                      random: true,
-                      anim: {
-                        enable: false,
-                        speed: 3,
-                        size_min: 0.1,
-                        sync: false
-                      }
-                    },
-                    line_linked: {
-                      enable: true,
-                      distance: 300,
-                      color: '#000000',
-                      opacity: 0.4,
-                      width: 2
-                    },
-                    move: {
-                      enable: true,
-                      speed: 1,
-                      direction: 'none',
-                      random: false,
-                      straight: false,
-                      out_mode: 'out',
-                      bounce: false,
-                      attract: {
-                        enable: false,
-                        rotateX: 600,
-                        rotateY: 1200
-                      }
-                    }
+              particles: {
+                number: {
+                  value: 30,
+                  density: {
+                    enable: true,
+                    value_area: 800
+                  }
+                },
+                color: {
+                  value: '#000000'
+                },
+                shape: {
+                  type: 'circle',
+                  stroke: {
+                    width: 0,
+                    color: '#000000'
                   },
-                  retina_detect: true
-                }}
+                  polygon: {
+                    nb_sides: 5
+                  },
+                  image: {
+                    width: 100,
+                    height: 100
+                  }
+                },
+                opacity: {
+                  value: 0.5,
+                  random: false,
+                  anim: {
+                    enable: false,
+                    speed: 200,
+                    opacity_min: 0.1,
+                    sync: false
+                  }
+                },
+                size: {
+                  value: 3,
+                  random: true,
+                  anim: {
+                    enable: false,
+                    speed: 3,
+                    size_min: 0.1,
+                    sync: false
+                  }
+                },
+                line_linked: {
+                  enable: true,
+                  distance: 300,
+                  color: '#000000',
+                  opacity: 0.4,
+                  width: 2
+                },
+                move: {
+                  enable: true,
+                  speed: 1,
+                  direction: 'none',
+                  random: false,
+                  straight: false,
+                  out_mode: 'out',
+                  bounce: false,
+                  attract: {
+                    enable: false,
+                    rotateX: 600,
+                    rotateY: 1200
+                  }
+                }
+              },
+              retina_detect: true
+            }}
           />
         </div>
       )

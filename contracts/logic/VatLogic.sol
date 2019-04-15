@@ -24,9 +24,10 @@ contract VatLogic {
         emit VatRegistered(_business, createVatKey(_business, _period));
     }
 
-    function payVat(address _from, bytes32 _key) external {
+
+    function payVat(bytes32 _key) external {
         // The VAT needs to be paid only from the business which has generated the VAT movement
-        require(_from == vatStorage.getVatBusiness(_key), "VAT payment: invalid VAT key");
+        require(msg.sender == vatStorage.getVatBusiness(_key), "VAT payment: invalid VAT key");
         // The VAT in order to be paid needs to have a DUE state or OVERDUE state
         require(vatStorage.getVatState(_key) == 0 || vatStorage.getVatState(_key) == 1,
             "VAT payment: this VAT isn't a debit VAT");
@@ -34,16 +35,17 @@ contract VatLogic {
         int256 vatDue = vatStorage.getVatAmount(_key);
         TokenCubit cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
         // Transfer funds from the business to the government
-        require(cubitToken.transferFrom(vatStorage.getVatBusiness(_key), vatStorage.owner(), uint256(vatDue)),
+        require(cubitToken.transferFrom(msg.sender, vatStorage.owner() ,uint256(vatDue)),
             "VAT payment: an error occured during the fund transfer to the government");
 
         // Set the state of the VAT to PAID
         vatStorage.setVatState(_key, 2);
 
-        emit VatPaid(_from, _key);
+        emit VatPaid(msg.sender, _key);
     }
 
     function refundVat(bytes32 _key) external onlyGovernment {
+        require(msg.sender == vatStorage.owner(), "This function can be called only by the government");
         // The VAT movement needs to be in TO_BE_REFUNDED state in order to be refunded
         require(vatStorage.getVatState(_key) == 3, "VAT refund: no need to refund this VAT");
 

@@ -68,19 +68,7 @@ contract ProductStorage is Authorizable {
 
     }
 
-    function updateHash(
-        bytes32 _keyHash,
-        bytes32 _hashIPFS,
-        uint8 _hashFunction,
-        uint8 _hashSize
-    )
-        external
-        onlyAuthorized
-    {
-        hashToProduct[_keyHash].lastestHashIPFS = _hashIPFS;
-        hashToProduct[_keyHash].hashFunction = _hashFunction;
-        hashToProduct[_keyHash].hashSize = _hashSize;
-    }
+
 
     function deleteProduct(bytes32 _keyHash) external onlyAuthorized {
         delete productsHash[hashToProduct[_keyHash].index];

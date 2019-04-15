@@ -23,7 +23,7 @@ const web3util = (function() {
       });
     },
 
-    splitIPFSHash: async function(hash){
+    splitIPFSHash: function(hash){
       hash = new Buffer(bs58.decode(hash))
       let fun = parseInt(hash[0]);
       let size = parseInt(hash[1]);
@@ -51,16 +51,18 @@ const web3util = (function() {
       let contractManagerInstance;
       return new Promise((resolve, reject)=>{
         web3.eth.net.getId().then((id)=>{
+          console.log(id)
           contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
             ContractManager.networks[id].address);
-          return contractManagerInstance.methods.getContractAddress(contractJSON.contractName).call()
+          console.log(contractJSON.contractName)
+          contractManagerInstance.methods.getContractAddress(contractJSON.contractName).call()
           .then((_contractAddress)=>{
-            resolve(new web3.eth.Contract(contractJSON.abi, _contractAddress));
+            console.log(_contractAddress)
+            var instance = new web3.eth.Contract(contractJSON.abi, _contractAddress);
+            resolve(instance)
 
           });
-        }).catch(()=>{
-          reject("Not able to find any account in MetaMask");
-        })
+        }).catch(reject)
       })
     }
   }

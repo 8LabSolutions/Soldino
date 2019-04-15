@@ -9,8 +9,8 @@ import ButtonCartAdd from '../containers/ButtonCartAdd';
 
 
 class CartProduct extends Component {
-  enableRemove(title, quantity, price, VAT, sellerName, sellerVATNumber) {
-    let product = [title, quantity, price, VAT, sellerName, sellerVATNumber]
+  enableRemove(title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd) {
+    let product = [title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd]
     return (
       <NavLink className="nav-item nav-link" to="/cart"><ButtonCartRemove text="-" args1={product} /></NavLink>
     )
@@ -22,7 +22,9 @@ class CartProduct extends Component {
   }
   render() {
     let props = this.props;
-    let product = [props.title, props.quantity, props.price, props.VAT, props.sellerName, props.sellerVATNumber]
+    console.log("RENDER PRODOTTO NEL CARRELLO")
+    console.log(props)
+    let product = [props.title, props.quantity, props.price, props.VAT, props.sellerName, props.sellerVATNumber, props.keyProd]
     return (
       <div className="col-sm-4">
         <div className="card">
@@ -33,7 +35,7 @@ class CartProduct extends Component {
                   <h5 className="card-title">{props.title}</h5>
                 </div>
                 <div className="col-sm-4">
-                  { props.quantity<="1" ? this.disableRemove() : this.enableRemove(props.title, +props.quantity-1, props.price, props.VAT, props.sellerName, props.sellerVATNumber) }
+                  { props.quantity<="1" ? this.disableRemove() : this.enableRemove(props.title, +props.quantity-1, props.price, props.VAT, props.sellerName, props.sellerVATNumber, props.keyProd) }
                 </div>
                 <div className="col-sm-4">
                   <h6 className="card-quantity">{props.quantity}</h6>
