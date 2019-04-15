@@ -21,7 +21,7 @@ App.js,2,129
 actionTypes.js,0,16
 index.js,0,16
 business.js,24,68
-user.js,4,97
+user.js,6,97
 authentication.js,16,50
 index.js,2,14
 FormCubitManager.js,4,37
@@ -29,7 +29,7 @@ Orders.js,2,95
 FormRegistration.js,3,138
 Home.js,0,25
 Button.js,9,10
-AddProductsManager.js,2,78
+AddProductsManager.js,2,79
 UsersList.js,2,61
 Success.js,0,25
 PendingOrder.js,3,16
@@ -37,7 +37,7 @@ Guide.js,0,11
 TransactionsManager.js,2,299
 Store.js,3,51
 Product.js,4,47
-Cart.js,1,56
+Cart.js,1,60
 Footer.js,1,11
 VATRefund.js,2,55
 ProductsManager.js,1,46
@@ -45,7 +45,7 @@ PurchasesConfirmation.js,1,66
 Checkout.js,5,187
 CubitManager.js,1,12
 NavBar.js,2,52
-CartProduct.js,3,54
+CartProduct.js,3,56
 BusinessProduct.js,4,29
 Search.js,4,22
 Error.js,0,25
@@ -61,9 +61,9 @@ ButtonProduct.js,1,14
 SearchContainer.js,1,18
 ButtonBusinessProduct.js,2,20
 ButtonCartAdd.js,1,12
-ButtonCheckout.js,3,29
-index.js,4,125
-index.js,16,166
+ButtonCheckout.js,7,29
+index.js,2,127
+index.js,13,172
 searchaction.js,2,7
 business.js,3,13
 cart.js,3,73
