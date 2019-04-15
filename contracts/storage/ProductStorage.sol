@@ -3,6 +3,7 @@ pragma solidity ^0.5.0;
 
 import "../Authorizable.sol";
 
+
 contract ProductStorage is Authorizable {
     struct ProductInfo {
         uint256 netPrice;

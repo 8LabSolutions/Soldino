@@ -1,6 +1,8 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.5.6;
+
 import "../ContractManager.sol";
 import "../Authorizable.sol";
+
 
 contract UserStorage is Authorizable {
     struct User {
@@ -13,10 +15,10 @@ contract UserStorage is Authorizable {
     }
 
     //the manager from which the contract will get the contracts addresses
-    address contractManagerAddress;
+    address internal contractManagerAddress;
 
     //mapping containing all the registered users
-    mapping(address => User) addressToUser;
+    mapping(address => User) internal addressToUser;
 
     //setting the contractManagerAddress
     constructor (address _contractManagerAddress) public {
@@ -26,7 +28,7 @@ contract UserStorage is Authorizable {
     //get the userType given an address: 0 => not registred, 1=> citizen,
     // 2=> business, 3=> government
     function getUserType(address _userAddress) public view returns (uint8) {
-        if(_userAddress == owner)
+        if (_userAddress == owner)
             return 3;
         return addressToUser[_userAddress].userType;
     }
@@ -57,6 +59,4 @@ contract UserStorage is Authorizable {
             addressToUser[_userAddress].hashSize
         );
     }
-
-
 }

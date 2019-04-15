@@ -62,41 +62,22 @@ contract TokenCubit is Owned {
         *               In questo caso tokenName e tokenSymbol sono puntatori a stringhe che sono salvate
         *               nell'area di memoria che viene allocata durante la call del costruttore
         */
-     constructor (
+    constructor (
         uint256 initialSupply,
         string memory tokenName,
         string memory tokenSymbol,
         address centralMinter)
         public {
-        if(centralMinter != address(0)) //controllo che l'indirizzo non sia invalido
-            owner = centralMinter;
+            if (centralMinter != address(0)) //controllo che l'indirizzo non sia invalido
+                owner = centralMinter;
 
-        totalSupply = initialSupply;
-        balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens
-        name = tokenName;                                   // Set the name for display purposes
-        symbol = tokenSymbol;                               // Set the symbol for display purposes
+            totalSupply = initialSupply;
+            balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens
+            name = tokenName;                                   // Set the name for display purposes
+            symbol = tokenSymbol;                               // Set the symbol for display purposes
     }
 
-    /**
-     * Internal transfer, only can be called by this contract
-     */
-    function _transfer(address _from, address _to, uint _value) internal {
-        // Prevent transfer to address(0).
-        require(_to != address(0), "Invalid address");
-        // Check if the sender has enough
-        require(balanceOf[_from] >= _value, "Not enough funds");
-        // Check for overflows
-        require(balanceOf[_to] + _value >= balanceOf[_to], "Reciver overflow");
-        // Save this for an assertion in the future
-        uint previousBalances = balanceOf[_from] + balanceOf[_to];
-        // Subtract from the sender
-        balanceOf[_from] -= _value;
-        // Add the same to the recipient
-        balanceOf[_to] += _value;
-        emit Transfer(_from, _to, _value);
-        // Asserts are used to use static analysis to find bugs in your code. They should never fail
-        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
-    }
+
 
     /**
      * Transfer tokens
@@ -112,8 +93,24 @@ contract TokenCubit is Owned {
     }
 
     function getOwner() public view returns (address) {
-      return owner;
+        return owner;
     }
+
+    /**
+     * Set allowance for other address
+     *
+     * Allows `_spender` to spend no more than `_value` tokens on your behalf
+     *
+     * @param _spender The address authorized to spend
+     * @param _value the max amount they can spend
+     */
+    function approve(address _spender, uint256 _value) public
+        returns (bool success) {
+            allowance[msg.sender][_spender] = _value;
+            emit Approval(msg.sender, _spender, _value);
+            return true;
+    }
+
     /**
      * Transfer tokens from other address
      *
@@ -131,21 +128,6 @@ contract TokenCubit is Owned {
     }
 
     /**
-     * Set allowance for other address
-     *
-     * Allows `_spender` to spend no more than `_value` tokens on your behalf
-     *
-     * @param _spender The address authorized to spend
-     * @param _value the max amount they can spend
-     */
-    function approve(address _spender, uint256 _value) public
-        returns (bool success) {
-        allowance[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
-        return true;
-    }
-
-    /**
      * Set allowance for other address and notify
      *
      * Allows `_spender` to spend no more than `_value` tokens on your behalf, and then ping the contract about it
@@ -156,12 +138,12 @@ contract TokenCubit is Owned {
     function approveAndCall(address _spender, uint256 _value)
         public
         returns (bool success) {
-        tokenRecipient spender = tokenRecipient(_spender);
-        if (approve(_spender, _value)) {
-            spender.receiveApproval(msg.sender, _value, address(this));
-            return true;
+            tokenRecipient spender = tokenRecipient(_spender);
+            if (approve(_spender, _value)) {
+                spender.receiveApproval(msg.sender, _value, address(this));
+                return true;
+            }
         }
-    }
 
     /**
      * Destroy tokens
@@ -170,7 +152,7 @@ contract TokenCubit is Owned {
      *
      * @param _value the amount of money to burn
      */
-    function burn(uint256 _value) public returns (bool success) {
+    function burnToken(uint256 _value) public returns (bool success) {
         require(balanceOf[msg.sender] >= _value);   // Check if the sender has enough
         balanceOf[msg.sender] -= _value;            // Subtract from the sender
         totalSupply -= _value;                      // Updates totalSupply
@@ -203,10 +185,31 @@ contract TokenCubit is Owned {
     * ram `target` the address of the receiver
     * aram `mintedAmount` the amount of money minted
     */
-    function mintToken(address target, uint256 mintedAmount) onlyOwner public {
+    function mintToken(address target, uint256 mintedAmount) public onlyOwner {
         balanceOf[target] += mintedAmount;
         totalSupply += mintedAmount;
         emit Transfer(address(0), owner, mintedAmount);
         emit Transfer(owner, target, mintedAmount);
+    }
+
+    /**
+     * Internal transfer, only can be called by this contract
+     */
+    function _transfer(address _from, address _to, uint _value) internal {
+        // Prevent transfer to address(0).
+        require(_to != address(0), "Invalid address");
+        // Check if the sender has enough
+        require(balanceOf[_from] >= _value, "Not enough funds");
+        // Check for overflows
+        require(balanceOf[_to] + _value >= balanceOf[_to], "Reciver overflow");
+        // Save this for an assertion in the future
+        uint previousBalances = balanceOf[_from] + balanceOf[_to];
+        // Subtract from the sender
+        balanceOf[_from] -= _value;
+        // Add the same to the recipient
+        balanceOf[_to] += _value;
+        emit Transfer(_from, _to, _value);
+        // Asserts are used to use static analysis to find bugs in your code. They should never fail
+        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
     }
 }

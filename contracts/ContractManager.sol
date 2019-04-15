@@ -3,11 +3,8 @@ import "./Owned.sol";
 
 
 contract ContractManager is Owned {
-
-    mapping (string => address) nameToAddress;
-
+    mapping(string => address) internal nameToAddress;
     string[] public names;
-
 
     function getContractAddress(string memory _contractName) public view returns(address) {
         require(nameToAddress[_contractName] != address(0), "The contract does not exist");
@@ -15,11 +12,7 @@ contract ContractManager is Owned {
     }
 
     function setContractAddress(string memory _contractName, address _deploymentAddress) public onlyOwner {
-       nameToAddress[_contractName] = _deploymentAddress;
-       names.push(_contractName);
-    }
-
-    function getL() public view returns(uint) {
-        return names.length;
+        nameToAddress[_contractName] = _deploymentAddress;
+        names.push(_contractName);
     }
 }

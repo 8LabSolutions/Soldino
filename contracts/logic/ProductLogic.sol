@@ -19,13 +19,11 @@ contract ProductLogic {
 
     event ProductDeleted(bytes32 indexed _keyHash, address indexed _seller);
 
-
     modifier onlyBusiness {
         UserStorage us = UserStorage(contractManager.getContractAddress("UserStorage"));
         require(us.getUserType(msg.sender) == 2, "You're not a business");
         _;
     }
-
 
     modifier onlyProductOwner(bytes32 _keyHash) {
         require(msg.sender == productStorage.getProductSeller(_keyHash),
@@ -47,6 +45,14 @@ contract ProductLogic {
     constructor(address _contractManager) public {
         contractManager = ContractManager(_contractManager);
         productStorage = ProductStorage(contractManager.getContractAddress("ProductStorage"));
+    }
+
+    function getProductCid(bytes32 _keyHash) external view returns(bytes32, uint8, uint8) {
+        return(
+            productStorage.getLatestHash(_keyHash),
+            productStorage.getHashFunction(_keyHash),
+            productStorage.getHashSize(_keyHash)
+        );
     }
 
     function addProduct(
@@ -117,13 +123,5 @@ contract ProductLogic {
     function calculateProductGrossPrice(bytes32 _keyHash) public view returns (uint256) {
         uint256 _netPrice = productStorage.getProductNetPrice(_keyHash);
         return (_netPrice + (_netPrice * productStorage.getProductVat(_keyHash) / 100));
-    }
-
-    function getProductCid(bytes32 _keyHash) external view returns(bytes32,uint8,uint8) {
-        return(
-            productStorage.getLatestHash(_keyHash),
-            productStorage.getHashFunction(_keyHash),
-            productStorage.getHashSize(_keyHash)
-        );
     }
 }

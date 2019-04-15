@@ -2,6 +2,7 @@ pragma solidity 0.5.6;
 
 import "../Authorizable.sol";
 
+
 contract OrderStorage is Authorizable {
     struct Order {
         bytes32 keyHash;
@@ -71,7 +72,6 @@ contract OrderStorage is Authorizable {
         hashToOrder[_keyHash].vatTotal = _vatTotal;
     }
 
-
     function getOrder(bytes32 _keyHash) public view
         returns(
             uint256,
@@ -113,7 +113,4 @@ contract OrderStorage is Authorizable {
     function getOrderVatTotal(bytes32 _keyHash) public view returns (uint256) {
         return hashToOrder[_keyHash].vatTotal;
     }
-
-
-
 }

@@ -6,16 +6,17 @@ import "./ContractManager.sol";
 import "./logic/ProductLogic.sol";
 import "./logic/OrderLogic.sol";
 
+
 contract Purchase {
-    ContractManager contractManager;
-    TokenCubit cubitToken;
-    OrderLogic orderLogic;
+    ContractManager internal contractManager;
+    TokenCubit internal cubitToken;
+    OrderLogic internal orderLogic;
     // These array are used to save the products and their quantity for an order
     bytes32[] internal orderProd;
     uint8[] internal orderProdQtn;
 
     event OrderReceived(address _from, address _to, uint256 _ammount);
-    event debug(uint i);
+
     constructor(address _contractManager) public {
         contractManager = ContractManager(_contractManager);
     }
@@ -30,14 +31,13 @@ contract Purchase {
     )
         external
     {
-        emit debug(0);
         bytes32 prevOrderHash = _orderHash[0];
         orderProd.push(_prodHash[0]);
         orderProdQtn.push(_prodQtn[0]);
 
         setOrderLogic();
-        for(uint i = 0; i < _prodHash.length; i++) {
-            if(_orderHash[i] != prevOrderHash) {
+        for (uint i = 0; i < _prodHash.length; i++) {
+            if (_orderHash[i] != prevOrderHash) {
                 //insert the order
                 orderLogic.registerOrder(
                     prevOrderHash,
@@ -66,7 +66,6 @@ contract Purchase {
             orderProdQtn.push(_prodQtn[i]);
         }
     }
-
 
     function setOrderLogic() internal {
         orderLogic = OrderLogic(contractManager.getContractAddress("OrderLogic"));
