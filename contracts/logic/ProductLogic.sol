@@ -127,14 +127,6 @@ contract ProductLogic {
         return (_netPrice + (_netPrice * productStorage.getProductVat(_keyHash) / 100));
     }
 
-    function getProductCid(bytes32 _keyHash) external view returns(bytes32,uint8,uint8) {
-        return(
-            productStorage.getLatestHash(_keyHash),
-            productStorage.getHashFunction(_keyHash),
-            productStorage.getHashSize(_keyHash)
-        );
-    }
-
     function getProductSeller(bytes32 _keyHash) external view returns(address) {
         return productStorage.getProductSeller(_keyHash);
     }

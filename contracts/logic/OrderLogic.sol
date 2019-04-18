@@ -98,6 +98,14 @@ contract OrderLogic {
         userStorage = UserStorage(contractManager.getContractAddress("UserStorage"));
     }
 
+    function getOrderSeller(bytes32 _keyHash) public view returns(address) {
+        return orderStorage.getSeller(_keyHash);
+    }
+
+    function getOrderTotal(bytes32 _keyHash) public view returns(uint) {
+        return (orderStorage.getOrderNetTotal(_keyHash) + orderStorage.getOrderVatTotal(_keyHash));
+    }
+
     function calculateOrderTotal(bytes32[] memory  _productsHash, uint8[] memory _prodQtn)
         public view returns(uint256, uint256)
     {
@@ -114,4 +122,6 @@ contract OrderLogic {
 
         return(total, vatTotal);
     }
+
+
 }
