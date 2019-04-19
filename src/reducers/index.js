@@ -127,6 +127,7 @@ export function rootReducer(state = initialState, action) {
 export const persistConfig = {
   key: 'root',
   storage: storage,
+  /** 'cart', 'ordersList' prima della presentazione */
   blacklist: ['searchProduct', 'logged', 'user', 'loading']
 };
 

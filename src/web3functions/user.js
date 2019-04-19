@@ -4,20 +4,10 @@ import TokenCubit from "../contracts_build/TokenCubit"
 
 const web3user = (function(){
 
-  var web3;
+  //initializing web3
+  web3util.init()
 
-  function initialize(contract){
-    return new Promise((resolve, reject) =>{
-      web3util.getWeb3().then((_web3)=>{
-        web3 = _web3;
-        //get the instance of the contratc and resolves it
-        web3util.getContractInstance(web3, contract).then(resolve)
-      }).catch((err)=>{
-        reject(err)
-      })
-    })
-  }
-
+  //return the actual VAT period
   function getVATPeriod(){
     var today = new Date();
     var mm = today.getMonth()+1;
@@ -29,13 +19,11 @@ const web3user = (function(){
   return{
     tokenTransferApprove: function(amount) {
       return new Promise((resolve)=>{
-        initialize(TokenCubit).then((tokenInstance)=>{
-          console.log('TOKENNN')
-          console.log(tokenInstance)
-          initialize(Purchase).then((purchaseInstance)=>{
-            web3.eth.getAccounts().then((account)=>{
+        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
+          web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
+            web3util.getCurrentAccount().then((account)=>{
               tokenInstance.methods.approve(purchaseInstance.options.address, parseInt((amount+1)*100))
-              .send({from: account[0]})
+              .send({from: account})
               .then(resolve)
             })
           })
@@ -49,8 +37,8 @@ const web3user = (function(){
       }
 
       return new Promise((resolve)=>{
-        initialize(Purchase).then((purchaseInstance)=>{
-          web3.eth.getAccounts().then((account)=>{
+        web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
+          web3util.getCurrentAccount().then((account)=>{
             purchaseInstance.methods.saveAndPayOrder(
               products,
               productQtn,
@@ -58,7 +46,7 @@ const web3user = (function(){
               hashFun,
               hashSize,
               getVATPeriod())
-            .send({from: account[0], gas: 2000000})
+            .send({from: account, gas: 2000000})
             .then(resolve)
           })
         })

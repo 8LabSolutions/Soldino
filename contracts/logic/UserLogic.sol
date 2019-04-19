@@ -47,8 +47,8 @@ contract UserLogic {
 
     }
 
-    function setUserState(address _userAddress) external onlyGovernment {
-
+    function setUserState(address _userAddress, bool value) external onlyGovernment {
+        userStorage.setEnable(_userAddress, value);
     }
 
 }

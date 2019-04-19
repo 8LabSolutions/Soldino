@@ -3,10 +3,15 @@ import ContractManager from "../contracts_build/ContractManager"
 
 const web3util = (function() {
   var bs58 = require('bs58');
+  var web3js = undefined;
+
   return {
-    getWeb3: function() {
+    init: function() {
       return new Promise((resolve, reject)=> {
-        var web3js;
+        //if web3 is already been setted
+        if (web3js !== undefined)
+          resolve(web3js)
+        //if web3 isn't already been setted, get an instance connected to MetaMask
         if(typeof web3 !== 'undefined' && typeof window != 'undefined') {
           window.ethereum.enable().then((accounts)=>{
             web3js = new Web3(window.ethereum);
@@ -21,6 +26,18 @@ const web3util = (function() {
           reject("Metamask not found");
         }
       });
+    },
+
+    getCurrentAccount: function(){
+      return new Promise((resolve, reject) =>{
+        //if there is no web3 instance reject with an error
+        if (web3js === undefined)
+          reject("There is no web3 instance available")
+
+        web3js.eth.getAccounts().then((account)=>{
+          resolve(account[0])
+        })
+      })
     },
 
     splitIPFSHash: function(hash){
@@ -47,20 +64,19 @@ const web3util = (function() {
         return bs58.encode(buffer)
     },
 
-    getContractInstance: function(web3, contractJSON){
+    getContractInstance: function(contractJSON){
       let contractManagerInstance;
       return new Promise((resolve, reject)=>{
-        web3.eth.net.getId().then((id)=>{
+        web3js.eth.net.getId().then((id)=>{
           console.log(id)
-          contractManagerInstance = new web3.eth.Contract(ContractManager.abi,
+          contractManagerInstance = new web3js.eth.Contract(ContractManager.abi,
             ContractManager.networks[id].address);
           console.log(contractJSON.contractName)
           contractManagerInstance.methods.getContractAddress(contractJSON.contractName).call()
           .then((_contractAddress)=>{
             console.log(_contractAddress)
-            var instance = new web3.eth.Contract(contractJSON.abi, _contractAddress);
+            var instance = new web3js.eth.Contract(contractJSON.abi, _contractAddress);
             resolve(instance)
-
           });
         }).catch(reject)
       })

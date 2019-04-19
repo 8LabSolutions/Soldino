@@ -59,4 +59,10 @@ contract UserStorage is Authorizable {
             addressToUser[_userAddress].hashSize
         );
     }
+
+    function setEnable(address _userAddress, bool _value) public {
+        addressToUser[_userAddress].active = _value;
+    }
+
+
 }

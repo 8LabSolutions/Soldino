@@ -2,37 +2,20 @@ import web3util from "./web_util";
 import ProductLogic from "../contracts_build/ProductLogic"
 
 const web3business = (function(){
-  var web3;
-  function initialize(){
-    return new Promise((resolve, reject) =>{
-      web3util.getWeb3().then((_web3)=>{
-        web3 = _web3;
-        //get the instance of the contratc and resolves it
-        web3util.getContractInstance(web3, ProductLogic).then(resolve)
-      }).catch((err)=>{
-        reject(err)
-      })
-    })
-  }
+
+  //initializing web3
+  web3util.init()
 
   return {
     addProduct: function(hash, vatPercentage, netPrice) {
       return new Promise((resolve)=>{
-        initialize().then(async (productLogicInstance) =>{
-          let [hashIpfs, hashSize, hashFun] = await web3util.splitIPFSHash(hash)
-          web3.eth.getAccounts().then((account)=>{
-            console.log('---parametri---')
-            console.log(hashIpfs)
-            console.log(hashSize)
-            console.log(hashFun)
-            console.log(vatPercentage)
-            console.log(netPrice*1000)
+        web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
+          let [hashIpfs, hashSize, hashFun] = web3util.splitIPFSHash(hash)
+          web3util.getCurrentAccount().then((account)=>{
             productLogicInstance.methods.addProduct(
               hashIpfs, hashSize, hashFun, vatPercentage, netPrice*1000)
-            .send({from: account[0]})
-            .then(()=>{
-              resolve();
-            })
+            .send({from: account})
+            .then(resolve())
           })
         })
       })
@@ -40,9 +23,7 @@ const web3business = (function(){
 
     getProductHash: function(remainingHash){
       return new Promise((resolve)=>{
-        initialize().then((productLogicInstance)=>{
-          console.log('questo è il remaining hash')
-          console.log(remainingHash)
+        web3util.getContractInstance(ProductLogic).then((productLogicInstance)=>{
           productLogicInstance.methods.getProductCid(remainingHash).call().then((ris)=>{
             var hashIPFS = ris[0];
             var hashFun = ris[1];
@@ -56,14 +37,14 @@ const web3business = (function(){
     //torna gli hash già validi
     getProducts: function(sender=false) {
       return new Promise((resolve)=>{
-        initialize().then(async (productLogicInstance) =>{
-          web3.eth.getAccounts().then((account)=>{
+        web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
+          web3util.getCurrentAccount().then((account)=>{
             // preparing the query
             var query;
             if (sender === true){
               query = {
                 //filtering by the seller (only sender products)
-                filter: {_seller: account[0]},
+                filter: {_seller: account},
                 fromBlock: 0,
                 toBlock: 'latest'
               }
