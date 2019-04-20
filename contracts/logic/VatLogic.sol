@@ -44,6 +44,7 @@ contract VatLogic {
         emit VatPaid(msg.sender, _key);
     }
 
+    //key represents the address+period hashed with kekkak256
     function refundVat(bytes32 _key) external onlyGovernment {
         require(msg.sender == vatStorage.owner(), "This function can be called only by the government");
         // The VAT movement needs to be in TO_BE_REFUNDED state in order to be refunded

@@ -1,6 +1,5 @@
 import web3business from "../web3functions/business"
 import ipfsModule from "../ipfsCalls/index"
-import web3util from "../web3functions/web_util";
 
 const business = (function(){
 
@@ -19,7 +18,7 @@ const business = (function(){
   /**
    * @description The function return an array of promises that will resolve into products' JSON
    *
-   * @param {*} ris the array you want to reduce reduced
+   * @param {*} ris the array o arrays [product-key, product IPFS hash]
    * @param {*} amount the limit of products that will be returned
    */
   function reduceAndGetProducts(ris, amount) {
@@ -28,9 +27,9 @@ const business = (function(){
     var promises = [];
     for (let i = 0; i< ris.length; i++){
       promises.push(new Promise((resolve)=>{
-        getIPFSProduct(ris[i]).then((middle)=>{
-          var pieces = web3util.splitIPFSHash(ris[i])
-          middle.keyProd = pieces[0]
+        console.log(ris)
+        getIPFSProduct(ris[i][1]).then((middle)=>{
+          middle.keyProd = ris[i][0]
           resolve(middle);
         })
       }));
@@ -44,6 +43,20 @@ const business = (function(){
       //get the user Info
       ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
     })
+  }
+
+  function getProductJSONfromFields(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
+    var newProductJSON = {
+      title: title,
+      description: description,
+      netPrice: netPrice,
+      vatPercentage: vatPercentage,
+      totalPrice: +netPrice + +netPrice*(+vatPercentage/100), //lordo
+      sellerName: sellerName,
+      sellerVATNumber: sellerVATNumber,
+      image: image
+    }
+    return newProductJSON;
   }
 
   return{
@@ -60,24 +73,25 @@ const business = (function(){
     */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName/*="azienda1"*/, sellerVATNumber/*="provvisorio"*/){
       //istantiate the necessary costracts and returns the results
-      var newProductJSON = {
-        title: title,
-        description: description,
-        netPrice: netPrice,
-        vatPercentage: vatPercentage,
-        totalPrice: +netPrice + +netPrice*(+vatPercentage/100), //lordo
-        sellerName: sellerName,
-        sellerVATNumber: sellerVATNumber,
-        image: image
-      }
+      var newProductJSON = getProductJSONfromFields(
+        title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
       return new Promise((resolve)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON).then((hash)=>{
-          console.log(hash+' del prodotto nuovo')
-          //splitting the hash in three parts to save them into the blockchain
           web3business.addProduct(hash, vatPercentage, netPrice).then(resolve)
         })
       })
     },
+
+    modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
+      var newProductJSON = getProductJSONfromFields(
+        title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
+      return new Promise((resolve)=>{
+        ipfsModule.insertJSONintoIPFS(newProductJSON).then((hash)=>{
+          web3business.modifyProduct(keyProd, hash).then(resolve)
+        })
+      })
+    },
+
     /**
      * @description return the products CID from a part of it
      * @param {*} remainingHash  the bigger part of the CID (bytes32)

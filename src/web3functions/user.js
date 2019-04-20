@@ -22,7 +22,7 @@ const web3user = (function(){
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
           web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
             web3util.getCurrentAccount().then((account)=>{
-              tokenInstance.methods.approve(purchaseInstance.options.address, parseInt((amount+1)*100))
+              tokenInstance.methods.approve(purchaseInstance.options.address, parseInt(amount*web3util.TOKENMULTIPLIER))
               .send({from: account})
               .then(resolve)
             })

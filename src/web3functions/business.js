@@ -13,7 +13,7 @@ const web3business = (function(){
           let [hashIpfs, hashSize, hashFun] = web3util.splitIPFSHash(hash)
           web3util.getCurrentAccount().then((account)=>{
             productLogicInstance.methods.addProduct(
-              hashIpfs, hashSize, hashFun, vatPercentage, netPrice*1000)
+              hashIpfs, hashSize, hashFun, vatPercentage, netPrice*web3util.TOKENMULTIPLIER)
             .send({from: account})
             .then(resolve())
           })
@@ -21,6 +21,37 @@ const web3business = (function(){
       })
     },
 
+    modifyProduct: function(key, newHash, newVatPercentage, newNetPrice){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
+          let [hashIpfs, hashSize, hashFun] = web3util.splitIPFSHash(newHash)
+          web3util.getCurrentAccount().then((account)=>{
+            productLogicInstance.methods.modifyProduct(
+              key, hashIpfs, hashSize, hashFun, newVatPercentage, newNetPrice*web3util.TOKENMULTIPLIER)
+            .send({from: account})
+            .then(resolve)
+          })
+        })
+      })
+    },
+
+    deleteProduct: function(key){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(ProductLogic).then((productLogicInstance)=>{
+          web3util.getCurrentAccount().then((account)=>{
+            productLogicInstance.methods.deleteProduct(key)
+            .send({from: account})
+            .then(resolve)
+          })
+        })
+      })
+    },
+
+    /**
+     * @description Returns the full IPFS hash starting from the remaining hash
+     * @param {} remainingHash  remaining part of the splitted ipfs hash
+     *
+     */
     getProductHash: function(remainingHash){
       return new Promise((resolve)=>{
         web3util.getContractInstance(ProductLogic).then((productLogicInstance)=>{
@@ -34,7 +65,10 @@ const web3business = (function(){
         })
       })
     },
-    //torna gli hash già validi
+    /**
+     * @description Return an array of array with [0]: key of the product, [1]: hashIPFS of the product
+     * @param {} sender the key of the vendor (ipfs remaining hash)
+     */
     getProducts: function(sender=false) {
       return new Promise((resolve)=>{
         web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
@@ -65,7 +99,7 @@ const web3business = (function(){
             //firstly get the inserted products from the logs
             productLogicInstance.getPastEvents('ProductInserted', query)
             .then((events) => {
-                for (var i =0; i<events.length; i++){
+                for (let i =0; i<events.length; i++){
                   //extracting only the hash
                   products.push(events[i].returnValues._keyHash)
                 }
@@ -74,7 +108,7 @@ const web3business = (function(){
               //getting the deleted products
               productLogicInstance.getPastEvents('ProductDeleted', query)
               .then((eventsDeleted) => {
-                for (var i =0; i<eventsDeleted.length; i++){
+                for (let i =0; i<eventsDeleted.length; i++){
                   //extracting only the hash
                   deleted.push(eventsDeleted[i].returnValues._keyHash)
                 }
@@ -107,10 +141,19 @@ const web3business = (function(){
                     var promises = [];
                     // eslint-disable-next-line
                     for(let i = 0; i < products.length; i++){
-                      promises.push(this.getProductHash(products[i]))
+                      promises.push(
+                        new Promise((resolve)=>{
+                          this.getProductHash(products[i]).then((ipfsHash)=>{
+                          resolve([products[i], ipfsHash])
+                        })
+                      }))
                     }
                     //resolves all the products values
-                    Promise.all(promises).then(resolve)
+                    Promise.all(promises).then((ris)=>{
+                      console.log("---dentro---")
+                      console.log(ris)
+                      resolve(ris)
+                    })
                   }
                 })
               })
@@ -118,7 +161,9 @@ const web3business = (function(){
           })
         })
       })
-    }
+    },
+
+
 
   }
 }());

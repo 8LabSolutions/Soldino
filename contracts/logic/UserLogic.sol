@@ -19,11 +19,13 @@ contract UserLogic {
 
     function addCitizen(bytes32 _hashIpfs, uint8 _hashSize, uint8 _hashFun) public {
         //add the new entry to userstorage
+        require(isRegistered(msg.sender) == false, "User already registered");
         userStorage.addUser(msg.sender, 1, _hashFun, _hashSize, _hashIpfs);
     }
 
     function addBusiness(bytes32 _hashIpfs,uint8 _hashSize,uint8 _hashFun) public {
         //add the new entry to userstorage
+        require(isRegistered(msg.sender)== false, "User already registered");
         userStorage.addUser(msg.sender, 2, _hashFun, _hashSize, _hashIpfs);
     }
 

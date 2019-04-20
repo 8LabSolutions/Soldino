@@ -42,7 +42,6 @@ contract UserStorage is Authorizable {
     )
         public onlyAuthorized
     {
-        //require(getUserType(_userAddress) == 0, "User already registered");
         addressToUser[_userAddress].HashIPFS = _hashIpfs;
         addressToUser[_userAddress].hashFunction = _hashFun;
         addressToUser[_userAddress].hashSize = _hashSize;
