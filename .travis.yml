@@ -24,7 +24,7 @@ jobs:
         - sleep 5
         - truffle compile
         - truffle migrate --reset
-        - npm run build
+        - CI=false npm run build
         - npm run coverage && cat coverage/lcov.info | coveralls
       deploy:
         provider: surge
