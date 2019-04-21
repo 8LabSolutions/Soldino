@@ -59,6 +59,10 @@ contract UserStorage is Authorizable {
         );
     }
 
+    function getUserState(address _userAddress) public view returns(bool) {
+        return (addressToUser[_userAddress].active);
+    }
+
     function setEnable(address _userAddress, bool _value) public {
         addressToUser[_userAddress].active = _value;
     }

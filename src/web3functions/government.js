@@ -33,7 +33,8 @@ const web3government = (function(){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
           web3util.getCurrentAccount().then((account)=>{
-            tokenInstance.methods.mintToken(account, amount).send({from: account})
+            tokenInstance.methods.mintToken(account, amount*web3util.TOKENMULTIPLIER)
+            .send({from: account})
             .then(resolve)
           })
         })
@@ -68,35 +69,48 @@ const web3government = (function(){
       })
     },
     /**
-     * @returns Return a list of <amount> citizens JSON, with the corresponding state
-     *  starting from the <amount*index> th
-     * @param {*} amount the maximum number of citizens returned
-     * @param {*} index the starting (skipping the first amount*index citizens)
-     * @description uses the events emitted by solidity to get the information about the citizens
+     * @returns Return a list of arrays with [address, IPFSHash, state]
+     * @param {*} type the type of user
+     * @param {*} amount the maximum number of users returned
+     * @param {*} index the starting (skipping the first amount*index users)
+     * @description uses the events emitted by solidity to get the information about the users
      */
-    getCitizenList: function(amount, index){
-      console.log('TODO'+amount+index)
-      //collect all the citizen address
-
-      //get the status of the citizen (abled/disabled)
-
-      //get all the infos from IPFS
-    },
-     /**
-     * @returns Return a list of <amount> businesses JSON, with the corresponding state
-     *  starting from the <amount*index> th
-     * @param {*} amount the maximum number of businesses returned
-     * @param {*} index the starting (skipping the first amount*index businesses)
-     * @description uses the events emitted by solidity to get the information about the businesses
-     */
-
-    getBusinessList: function(amount, index){
-      console.log('TODO'+amount+index)
-      //collect all the citizens address
-
-      //get the status of the citizens (abled/disabled)
-
-      //get all the infos from IPFS
+    getUserList: function(type, amount, index=0){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(UserLogic).then((userLogicInstance)=>{
+          web3util.getCurrentAccount().then((account)=>{
+            //*** 1 - getting the addresses ***
+            var users = []
+            userLogicInstance.getPastEvents('UserInserted', {
+              //filtering by the citizen
+              filter: {_userType: type},
+              fromBlock: 0,
+              toBlock: 'latest'
+            })
+            .then((events) => {
+              //take the events from the i-th to
+              let start = index*amount;
+              for (let i = start; i < start + amount && start + i < events.length; i++){
+                //extracting only the hash
+                users.push(events[i].returnValues._userAddress)
+              }
+            })
+            //*** 2 - getting the user info, remaining hash, hashFun, hashSize, state
+            var userInfo =  [];
+            for (let i = 0; i < users.length; i++){
+              userInfo.push(new Promise((resolve)=>{
+                userLogicInstance.methods.getUserInfo(users[i])
+                .call({from: account})
+                .then((infos)=>{
+                  let userIPFSHash = web3util.recomposeIPFSHash(infos[0], infos[2], infos[1]);
+                  resolve([users[i], userIPFSHash, infos[3]]);
+                })
+              }))
+            }
+            Promise.all(userInfo).then(resolve)
+          })
+        })
+      })
     },
      /**
      * @returns Return a list of <amount> businesses JSON, with the corresponding VAT balance
