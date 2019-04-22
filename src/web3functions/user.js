@@ -51,6 +51,20 @@ const web3user = (function(){
           })
         })
       })
+    },
+
+    getBalance: function(){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
+          web3util.getCurrentAccount().then((account)=>{
+            tokenInstance.methods.balanceOf(account).call().then((balance)=>{
+              if(balance!=0)
+                balance/=web3util.TOKENMULTIPLIER;
+              resolve(balance)
+            })
+          })
+        })
+      })
     }
   }
 }());

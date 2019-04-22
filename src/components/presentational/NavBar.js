@@ -11,7 +11,7 @@ class NavBar extends Component {
     let products = store.getState().cart.length;
     let authText;
     let navLinks
-    if (store.getState().logged === true && store.getState().user.userType === "GOVERN"){
+    if (store.getState().logged === true && store.getState().user.userType === "GOVERNMENT"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav">
                     <NavLink className="nav-item nav-link" to="/">Cubit Manager</NavLink>
@@ -42,7 +42,7 @@ class NavBar extends Component {
       authText = 'Login'
       navLinks = null;
     }
-    
+
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <span className="navbar-brand">Soldino</span>

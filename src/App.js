@@ -5,7 +5,7 @@ import { Router, Route } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import './styles/App.css';
 import Home from './components/presentational/Home';
-import UsersList from './components/presentational/UsersList';
+import UsersListContainer from './components/containers/UserListContainer';
 import VATRefund from './components/presentational/VATRefund';
 import Cart from './components/presentational/Cart';
 import Footer from './components/presentational/Footer'
@@ -32,7 +32,7 @@ class App extends Component {
         <Router history={history}>
           <div className="App">
             <Route exact path="/" component={Home} />
-            <Route path="/userslist" component={UsersList} />
+            <Route path="/userslist" component={UsersListContainer} />
             <Route path="/vatrefund" component={VATRefund} />
             <Route path="/cart" component={Cart} />
             <Route path="/errorregistration" render={()=><Error errorMessage="Registration failed." nextMessage="Something went wrong, try checking Metamask or changing email address." />} />

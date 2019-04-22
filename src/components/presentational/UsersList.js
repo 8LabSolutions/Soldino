@@ -5,19 +5,26 @@ import { store } from "../../store/index";
 import ButtonGeneric from '../containers/ButtonGeneric';
 
 class UsersList extends Component {
+
+
+  componentWillMount(){
+    const {getUserList} = this.props;
+    getUserList(50,0);
+  }
+
   printUser(user) {
-    if(user[0] === "Citizen"){  //check type of user
+    //if(user.userType === "CITIZEN"){  //check type of user
       return (
         <li className="list-group-item">
-          <strong>Type: </strong>{user[0]}<br />
-          <strong>Name: </strong>{user[1]}<br />
-          <strong>Surname: </strong>{user[2]}<br />
-          <strong>Email: </strong>{user[3]}<br />
-          <strong>Address: </strong>{user[4]}<br />
+          <strong>Type: </strong>{user.userType}<br />
+          <strong>Name: </strong>{user.name}<br />
+          <strong>Surname: </strong>{user.surname}<br />
+          <strong>Email: </strong>{user.email}<br />
+
           <ButtonGeneric text="Disable" />
         </li>
       )
-    }else{
+    /*}else{
       return (
         <li className="list-group-item">
           <strong>Type: </strong>{user[0]}<br />
@@ -28,36 +35,18 @@ class UsersList extends Component {
           <ButtonGeneric text="Disable" />
         </li>
       )
-    }
+    }*/
   }
 
   render() {
-    if(store.getState().logged === false || store.getState().user.userType !== "Govern"){window.location.href = "/"}
+    if(store.getState().logged === false || store.getState().user.userType !== "GOVERNMENT"){window.location.href = "/"}
     //need to check if user type is government, else redirect to home like previous line
-    let totalUser = 500
-    let name
-    let surname
-    let type
-    let email
-    let address
-    var user
-    var usersArray = []
-    for(var i=0; i<totalUser; i++){
-      name = "userName"
-      surname = "userSurname"
-      type = "Citizen"
-      email = "userEmail"
-      address = "userAddress"
-      user = [type, name, surname, email, address]
-      usersArray[i] = user;
-    }
-
+    var {userList} = this.props;
     return (
       <div>
         <NavBar />
         <ul className="list-group list-group-flush">
-          {usersArray.map(i => this.printUser(i))
-          }
+          {userList.map(i => this.printUser(i))}
         </ul>
       </div>
     )

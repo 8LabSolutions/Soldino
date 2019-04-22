@@ -149,8 +149,6 @@ const web3business = (function(){
                     }
                     //resolves all the products values
                     Promise.all(promises).then((ris)=>{
-                      console.log("---dentro---")
-                      console.log(ris)
                       resolve(ris)
                     })
                   }

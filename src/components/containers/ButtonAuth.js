@@ -9,7 +9,7 @@ import history from '../../store/history'
 
 /**
  * @description map the logged state value into the Button component
- * @param {*} state 
+ * @param {*} state
  */
 const mapStateToProps = (state) => {
   return {
@@ -28,8 +28,6 @@ const mapDispatchToProps = (dispatch) => {
 
       //get the object if user exists
       authentication.userLogin().then((user)=>{
-        console.log('user')
-        console.log(user)
         let action = (store.getState().logged === false) ? logIn(user) : logOut();
         dispatch(action)
         history.push('/')

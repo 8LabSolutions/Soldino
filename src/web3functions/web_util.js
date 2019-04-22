@@ -79,13 +79,10 @@ const web3util = (function() {
       let contractManagerInstance;
       return new Promise((resolve, reject)=>{
         web3js.eth.net.getId().then((id)=>{
-          console.log(id)
           contractManagerInstance = new web3js.eth.Contract(ContractManager.abi,
             ContractManager.networks[id].address);
-          console.log(contractJSON.contractName)
           contractManagerInstance.methods.getContractAddress(contractJSON.contractName).call()
           .then((_contractAddress)=>{
-            console.log(_contractAddress)
             var instance = new web3js.eth.Contract(contractJSON.abi, _contractAddress);
             resolve(instance)
           });

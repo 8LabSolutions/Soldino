@@ -49,13 +49,13 @@ contract UserLogic {
 
     function getUserInfo(address _userAddress)
         public view
-        returns (bytes32, uint8, uint8, bool)
+        returns (bytes32, uint8, uint8, bool, uint8)
     {
         require(isRegistered(_userAddress), "User must be registered");
         uint8 userType = userStorage.getUserType(_userAddress);
         require(userType == 1 || userType == 2 || userType == 3, "Something went wrong");
         (bytes32 a, uint8 b, uint8 c) = userStorage.getIpfsCid(_userAddress);
-        return (a, b, c, userStorage.getUserState(_userAddress));
+        return (a, b, c, userStorage.getUserState(_userAddress), userType);
     }
 
     function setUserState(address _userAddress, bool value) external onlyGovernment {

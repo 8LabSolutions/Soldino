@@ -1,5 +1,5 @@
 import web3util from "./web_util"
-import UserLogic from "../contracts_build/Purchase"
+import UserLogic from "../contracts_build/UserLogic"
 import TokenCubit from "../contracts_build/TokenCubit"
 
 const web3government = (function(){
@@ -45,7 +45,7 @@ const web3government = (function(){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
           web3util.getCurrentAccount().then((account)=>{
-            tokenInstance.methods.mintToken(address, amount*web3util.TOKENMULTIPLIER)
+            tokenInstance.methods.transfer(address, amount*web3util.TOKENMULTIPLIER)
             .send({from: account})
             .then(resolve)
           })
@@ -94,20 +94,21 @@ const web3government = (function(){
                 //extracting only the hash
                 users.push(events[i].returnValues._userAddress)
               }
+
+              //*** 2 - getting the user info, remaining hash, hashFun, hashSize, state
+              var userInfo =  [];
+              for (let i = 0; i < users.length; i++){
+                userInfo.push(new Promise((resolve)=>{
+                  userLogicInstance.methods.getUserInfo(users[i])
+                  .call({from: account})
+                  .then((infos)=>{
+                    let userIPFSHash = web3util.recomposeIPFSHash(infos[0], infos[2], infos[1]);
+                    resolve([users[i], userIPFSHash, infos[3]]);
+                  })
+                }))
+              }
+              Promise.all(userInfo).then(resolve)
             })
-            //*** 2 - getting the user info, remaining hash, hashFun, hashSize, state
-            var userInfo =  [];
-            for (let i = 0; i < users.length; i++){
-              userInfo.push(new Promise((resolve)=>{
-                userLogicInstance.methods.getUserInfo(users[i])
-                .call({from: account})
-                .then((infos)=>{
-                  let userIPFSHash = web3util.recomposeIPFSHash(infos[0], infos[2], infos[1]);
-                  resolve([users[i], userIPFSHash, infos[3]]);
-                })
-              }))
-            }
-            Promise.all(userInfo).then(resolve)
           })
         })
       })
@@ -119,6 +120,22 @@ const web3government = (function(){
      * @param {*} index the starting (skipping the first amount*index businesses)
      * @description uses the events emitted by solidity to get the information about the businesses
      */
+    getTotalCubit: function(){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
+          web3util.getCurrentAccount().then((account)=>{
+            tokenInstance.methods.totalSupply().call({from: account})
+            .then((amount)=>{
+              if(amount!=0)
+                amount/=web3util.TOKENMULTIPLIER;
+              resolve(amount);
+            })
+          })
+
+        })
+      })
+    },
+
     getVATQuarterInfo: function(period){
       console.log('TODO'+period)
 

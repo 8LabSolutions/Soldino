@@ -111,6 +111,12 @@ const user = (function(){
           })
         })
       })
+    },
+
+    getBalance: function(){
+      return new Promise((resolve)=>{
+        web3user.getBalance().then(resolve)
+      })
     }
   }
 }());

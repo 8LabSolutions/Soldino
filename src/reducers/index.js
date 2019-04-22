@@ -1,6 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING } from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETUSERLIST, MINTANDDISTRIBUTE} from "../constants/actionTypes";
 
 const initialState = {
   logged: false,
@@ -9,7 +9,8 @@ const initialState = {
   cart: [],
   pending: [],
   ordersList: [],
-  loading: false
+  loading: false,
+  userList: []
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === BEGINLOADING || action.type === ENDLOADING) {
@@ -122,6 +123,22 @@ export function rootReducer(state = initialState, action) {
       cart: []
     });
   }
+
+  //set the list of the users
+  if(action.type === GETUSERLIST) {
+    return Object.assign({}, state, {
+      userList: action.userList
+    })
+  }
+
+  if(action.type === MINTANDDISTRIBUTE) {
+    return Object.assign({}, state, {
+      totalSupply: action.total,
+      governmentSupply: action.amount
+    })
+  }
+
+
   return state;
 }
 export const persistConfig = {

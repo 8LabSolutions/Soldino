@@ -59,10 +59,25 @@ const authentication = (function(){
     },
 
     userLogin: function() {
-      return new Promise((resolve)=>{
-        web3authentication.getUser().then((hashIPFS)=>{
-          //get the user Info
-          ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
+      return new Promise((resolve, reject)=>{
+        //getUser returns: hashIPFS, state, userType
+        web3authentication.getUser().then(([hashIPFS, state, userType])=>{
+          //drop if the user is disabled
+          if(state === false)
+            reject("the account is disabled, please call the offices to get more infos");
+          //if the government is logging in, there's no need to call IPFS
+          if(userType == 3){
+            var governmentJSON = {
+              userType: "GOVERNMENT",
+              name: "Government",
+              email: "government@soldino.com"
+            }
+            resolve(governmentJSON);
+          }
+          else {
+            //get the user Info
+            ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
+          }
         })
       })
     }

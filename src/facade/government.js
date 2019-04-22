@@ -51,13 +51,13 @@ const government = (function(){
       return new Promise((resolve)=>{
         web3government.getUserList(1, amount, index).then((resultsArray)=>{
           //resultsArray content: array with 0:address, 1: hashIPFS, 2: userState (dis/able)
-
           var citizensJSON = [];
           for(let i = 0; i < resultsArray.length; i++){
             citizensJSON.push(new Promise((resolve)=>{
               ipfsModule.getJSONfromHash(resultsArray[i][1]).then(resolve)
             }))
           }
+
           var citizens = [];
           //get all the citizen JSON
           Promise.all(citizensJSON)
@@ -71,8 +71,8 @@ const government = (function(){
                 state: resultsArray[i][2]
               })
             }
+            resolve(citizens)
           })
-          .then(resolve)
         })
       })
     },
@@ -104,6 +104,12 @@ const government = (function(){
           })
           .then(resolve)
         })
+      })
+    },
+
+    getTotalCubit: function(){
+      return new Promise((resolve)=>{
+        web3government.getTotalCubit().then(resolve)
       })
     }
   }

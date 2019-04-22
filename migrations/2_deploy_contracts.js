@@ -28,7 +28,7 @@ module.exports = function(deployer, network, accounts) {
   var productLogicInstance;
 
 
-  const GOVERNMENT = accounts[9];
+  const GOVERNMENT = accounts[0];
 
 
   deployer.deploy(ContractManager)
@@ -40,7 +40,7 @@ module.exports = function(deployer, network, accounts) {
       return contractManagerInstance.setContractAddress("Purchase", purchaseInstace.address)
     })
     .then(() => {
-      return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", accounts[0])
+      return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", GOVERNMENT)
       .then((tokenInstance) => {
         return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
       })
@@ -51,6 +51,9 @@ module.exports = function(deployer, network, accounts) {
         userStorageInstance = usInstance
         return contractManagerInstance.setContractAddress("UserStorage", usInstance.address)
       })
+    })
+    .then(()=>{
+      return userStorageInstance.addUser(GOVERNMENT, 3, 0, 0, "0x00000000000000000000000000000000");
     })
     .then(() => {
       return deployer.deploy(UserLogic, contractManagerInstance.address)
