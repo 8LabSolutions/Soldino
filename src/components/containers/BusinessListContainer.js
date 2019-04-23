@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state) => {
   return {
-    userList: state.userList
+    userList: state.businessList
   }
 }
 

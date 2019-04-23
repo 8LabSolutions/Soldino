@@ -1,8 +1,7 @@
 import government from "../facade/government"
 import user from "../facade/user"
-import {getUserList, getGovernmentBalanceAndTotalAmount, changeUserState} from "../actions/government"
+import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount} from "../actions/government"
 import {CITIZEN, BUSINESS} from "../constants/actionTypes"
-import { store } from "../store/index";
 
 const governmentActionCreator = (function(){
   return{
@@ -11,7 +10,7 @@ const governmentActionCreator = (function(){
         return new Promise((resolve)=>{
           government.getCitizenList(amount, index).then((results)=>{
             //resolves the getUserListAction
-            resolve(getUserList(results))
+            resolve(getCitizenList(results))
           })
           .catch(()=>{
             //should resolve an error that says "No user found."
@@ -21,7 +20,7 @@ const governmentActionCreator = (function(){
         return new Promise((resolve)=>{
           government.getBusinessList(amount, index).then((results)=>{
             //resolves the getUserListAction
-            resolve(getUserList(results))
+            resolve(getBusinessList(results))
           })
           .catch(()=>{
             //should resolve an error that says "No user found."
@@ -71,16 +70,7 @@ const governmentActionCreator = (function(){
           stateAction = government.disableAccount
         else
           stateAction = government.enableAccount
-        stateAction(address).then(()=>{
-          var newList = store.getState().userList;
-          for (let i = 0; i < newList.length; i++){
-            if(newList[i].address === address){
-              newList[i].state = !state
-            }
-
-          }
-          resolve(changeUserState(newList));
-        })
+        stateAction(address).then(resolve)
       })
 
     }

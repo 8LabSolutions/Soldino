@@ -1,6 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETUSERLIST, MINTANDDISTRIBUTE, CHANGESTATE, GETMYPRODUCTS, GETSTOREPRODUCTS} from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS} from "../constants/actionTypes";
 
 const initialState = {
   logged: false,
@@ -126,9 +126,15 @@ export function rootReducer(state = initialState, action) {
   }
 
   //set the list of the users
-  if(action.type === GETUSERLIST) {
+  if(action.type === GETCITIZENLIST) {
     return Object.assign({}, state, {
-      userList: action.userList
+      citizenList: action.citizenList
+    })
+  }
+
+  if(action.type === GETBUSINESSLIST) {
+    return Object.assign({}, state, {
+      businessList: action.businessList
     })
   }
 
@@ -136,12 +142,6 @@ export function rootReducer(state = initialState, action) {
     return Object.assign({}, state, {
       totalSupply: action.total,
       governmentSupply: action.amount
-    })
-  }
-
-  if(action.type === CHANGESTATE) {
-    return Object.assign({}, state, {
-      userList: action.newList
     })
   }
 
