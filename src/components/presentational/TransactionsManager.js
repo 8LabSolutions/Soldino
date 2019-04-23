@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import jsPDF from 'jspdf';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
-import { getQuarters, getVATStatus, quarterToInvoices, printDate, getDetails, ExportPDF } from '../../auxiliaryFunctions/index'
+import { getQuarters, getVATStatus, quarterToInvoices, printDate, getDetails, ExportPDF, checkBusiness } from '../../auxiliaryFunctions/index'
 import ButtonGeneric from '../containers/ButtonGeneric';
 
 
@@ -282,7 +282,7 @@ class TransactionsManager extends Component {
   }
 
   render() {
-    if(store.getState().logged === false){window.location.href = "/"}
+    if(checkBusiness()===false){window.location.href = "/"}
     return (
       <div>
         <NavBar />

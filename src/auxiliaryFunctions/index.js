@@ -1,4 +1,5 @@
 import { store } from '../store/index';
+import { BUSINESS, CITIZEN, GOVERN } from '../constants/actionTypes';
 
 export function getTodayDate() {
   var today = new Date();
@@ -197,4 +198,17 @@ export function ExportPDF(invoices, quarter) {
   return(
     returnRootComponent
   )
+}
+
+
+export function checkBusiness() {
+  return (store.getState().logged === true || store.getState().user.userType === BUSINESS)
+}
+
+export function checkCitizen() {
+  return (store.getState().logged === true || store.getState().user.userType === CITIZEN)
+}
+
+export function checkGovernment() {
+  return (store.getState().logged === true || store.getState().user.userType === GOVERN)
 }

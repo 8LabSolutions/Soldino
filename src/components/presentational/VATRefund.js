@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import NavBar from './NavBar'
-import { store } from "../../store/index";
 import ButtonGeneric from '../containers/ButtonGeneric';
+import { checkGovernment } from '../../auxiliaryFunctions';
 
 class VATRefund extends Component {
   printBusiness(business) {
@@ -29,7 +29,7 @@ class VATRefund extends Component {
   }
 
   render() {
-    if(store.getState().logged === false || store.getState().user.userType !== "Govern"){window.location.href = "/"}
+    if(checkGovernment()===false){window.location.href = "/"}
     //need to check if user type is government, else redirect to home like previous line
     let totalBusiness = 500
     let name
