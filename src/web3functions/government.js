@@ -113,20 +113,13 @@ const web3government = (function(){
         })
       })
     },
-     /**
-     * @returns Return a list of <amount> businesses JSON, with the corresponding VAT balance
-     *  starting from the <amount*index> th
-     * @param {*} amount the maximum number of businesses returned
-     * @param {*} index the starting (skipping the first amount*index businesses)
-     * @description uses the events emitted by solidity to get the information about the businesses
-     */
     getTotalCubit: function(){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
           web3util.getCurrentAccount().then((account)=>{
             tokenInstance.methods.totalSupply().call({from: account})
             .then((amount)=>{
-              if(amount!=0)
+              if(amount!==0)
                 amount/=web3util.TOKENMULTIPLIER;
               resolve(amount);
             })

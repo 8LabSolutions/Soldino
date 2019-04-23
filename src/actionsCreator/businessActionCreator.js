@@ -1,13 +1,12 @@
 import business from "../facade/business"
-import getMyProducts from "../actions/business"
+import {getMyProducts, getStoreProducts}  from "../actions/business"
 
 const businessActionCreator = (function(){
   return {
-    getProducts: function(amount, index){
-      return new Promise(()=>{
-        business.getStoreProduct(amount).then(()=>{
-          console.log('TODO'+index)
-          //resolve(getStoreProducts(results));
+    getStoreProducts: function(amount, index){
+      return new Promise((resolve)=>{
+        business.getStoreProduct(amount, index).then((results)=>{
+          resolve(getStoreProducts(results));
         })
         .catch(()=>{
           //should resolve with an error message
@@ -17,8 +16,7 @@ const businessActionCreator = (function(){
 
     getMyProducts: function(amount, index){
       return new Promise((resolve)=>{
-        business.getSenderProduct(amount).then((results)=>{
-          console.log('TODO'+index)
+        business.getSenderProduct(amount, index).then((results)=>{
           resolve(getMyProducts(results));
         })
         .catch(()=>{
