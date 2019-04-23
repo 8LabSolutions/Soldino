@@ -28,7 +28,7 @@ contract("ProductStorage", (accounts) => {
       ProductLogic.networks[ContractManager.network_id].address
     );
 
-    productStorageInstance.methods.owner().call().then((result) => {console.log(result)})
+    //productStorageInstance.methods.owner().call().then((result) => {console.log(result)})
 
   });
 
@@ -205,22 +205,19 @@ contract("ProductStorage", (accounts) => {
     var funH = 2;
     var hSize = 1
 
-    return productStorageInstance.methods.updateHash(
-      key,
-      ipfsHash,
-      funH,
-      hSize
-    )
-    .send({from: accounts[0], gas:6000000})
+    return productStorageInstance.methods.setLatestHashIpfs(key, ipfsHash,).send({from: accounts[0], gas:6000000})
     .then(() => {
-
+      return productStorageInstance.methods.setHashFunction(key, funH).send({from: accounts[0], gas:6000000})
+    })
+    .then(() => {
+      return productStorageInstance.methods.setHashSize(key, hSize).send({from: accounts[0], gas:6000000})
+    })
+    .then(() => {
       return productStorageInstance.methods.getProduct(key).call()
       .then((result) => {
         assert.equal(result[0],ipfsHash);
         assert.equal(result[1],hSize);
         assert.equal(result[2],funH);
-
-
       })
     })
   })
@@ -232,7 +229,6 @@ contract("ProductStorage", (accounts) => {
     )
     .send({from: accounts[0], gas:6000000})
     .then(() => {
-
       return productStorageInstance.methods.getProduct(key).call()
       .then((result) => {
         assert.equal(result[0],"0x0000000000000000000000000000000000000000000000000000000000000000");

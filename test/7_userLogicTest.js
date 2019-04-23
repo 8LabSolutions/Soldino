@@ -35,7 +35,7 @@ contract("UserLogic", (accounts) => {
         .then((result) => {
           if(result === false) {
             return userStorageInstance.methods.addAuthorized(userLogicInstance.options.address)
-            .send({from: accounts[0]})
+            .send({from: accounts[0], gas: 2000000})
           }
           return
         })
@@ -50,7 +50,7 @@ contract("UserLogic", (accounts) => {
 
       it("Should add a new Citizen", () => {
         return userLogicInstance.methods.addCitizen(accounts[8],1,1)
-        .send({from: accounts[8]})
+        .send({from: accounts[8], gas: 2000000})
         .then(() => {
             userLogicInstance.methods.isRegistered(accounts[8]).call().then((result) => {
             assert.equal(result, true)
@@ -60,7 +60,7 @@ contract("UserLogic", (accounts) => {
 
       it("Should add a new Business", () => {
         return userLogicInstance.methods.addBusiness(accounts[7],1,1)
-        .send({from: accounts[7]})
+        .send({from: accounts[7], gas: 2000000})
         .then(() => {
             userLogicInstance.methods.getUserInfo(accounts[7]).call().then((result) => {
             assert.equal(result[0], accounts[7]);
