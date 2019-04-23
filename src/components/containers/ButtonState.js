@@ -10,7 +10,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   (ownProps.type===CITIZEN) ? redirectUrl="/userslist" : redirectUrl="/businesslist"
   return {
     action: () => {
-      governmentActionCreator.changeUserState(ownProps.address, ownProps.state)
+      governmentActionCreator.changeUserState(ownProps.address, ownProps.state, ownProps.type)
       .then((action)=>{
         dispatch(action)
         history.push(redirectUrl)

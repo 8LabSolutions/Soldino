@@ -2,6 +2,7 @@ import government from "../facade/government"
 import user from "../facade/user"
 import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount} from "../actions/government"
 import {CITIZEN, BUSINESS} from "../constants/actionTypes"
+import {store} from "../store/index"
 
 const governmentActionCreator = (function(){
   return{
@@ -63,14 +64,33 @@ const governmentActionCreator = (function(){
       })
     },
 
-    changeUserState: function(address, state){
+    changeUserState: function(address, state, type){
       return new Promise((resolve)=>{
         var stateAction;
         if(state === true)
           stateAction = government.disableAccount
         else
           stateAction = government.enableAccount
-        stateAction(address).then(resolve)
+        stateAction(address).then(()=>{
+          if(type === CITIZEN){
+            let newList = store.getState().citizenList;
+            for (let i = 0; i < newList.length; i++){
+              if(newList[i].address === address){
+                newList[i].state = !state
+              }
+            }
+            resolve(getCitizenList(newList));
+          }
+          if(type === BUSINESS){
+            let newList = store.getState().businessList;
+            for (let i = 0; i < newList.length; i++){
+              if(newList[i].address === address){
+                newList[i].state = !state
+              }
+            }
+            resolve(getBusinessList(newList));
+          }
+        })
       })
 
     }
