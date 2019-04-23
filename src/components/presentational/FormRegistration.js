@@ -82,12 +82,12 @@ class FormRegistration extends Component {
           <input className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" onChange={this.handleChange}  />
         </label>
         <label htmlFor="InputVATNumber" className="form-group col-sm-6">
-          <span>VAT Number</span>
-          <input className="form-control" id="InputVATNumber" name="name" placeholder="Enter VAT Number" onChange={this.handleChange}  />
+          <span>Company Name</span>
+          <input className="form-control" id="InputVATNumber" name="name" placeholder="Enter Company Name" onChange={this.handleChange}  />
         </label>
         <label htmlFor="InputCompanyName" className="form-group col-sm-6">
-          <span>Company Name</span>
-          <input className="form-control" id="InputCompanyName" name="details" placeholder="Enter Company Name" onChange={this.handleChange}  />
+          <span>VAT Number</span>
+          <input className="form-control" id="InputCompanyName" name="details" placeholder="Enter VAT Number" onChange={this.handleChange}  />
         </label>
       </div>
     )

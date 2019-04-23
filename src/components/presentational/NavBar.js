@@ -16,6 +16,7 @@ class NavBar extends Component {
       navLinks =  <div className="navbar-nav">
                     <NavLink className="nav-item nav-link" to="/">Cubit Manager</NavLink>
                     <NavLink className="nav-item nav-link" to="/userslist">Users List</NavLink>
+                    <NavLink className="nav-item nav-link" to="/businesslist">Business List</NavLink>
                     <NavLink className="nav-item nav-link" to="/vatrefund">VAT Refund</NavLink>
                   </div>
     }else if (store.getState().logged === true && store.getState().user.userType === "CITIZEN"){

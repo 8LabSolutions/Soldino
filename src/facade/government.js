@@ -101,8 +101,8 @@ const government = (function(){
                 state: resultsArray[i][2]
               })
             }
+            resolve(business)
           })
-          .then(resolve)
         })
       })
     },

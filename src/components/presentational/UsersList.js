@@ -2,51 +2,36 @@
 import React, {Component} from 'react';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
-import ButtonGeneric from '../containers/ButtonGeneric';
 
 class UsersList extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      userList: props.userList
+    }
+  }
 
   componentWillMount(){
     const {getUserList} = this.props;
     getUserList(50,0);
   }
 
-  printUser(user) {
-    //if(user.userType === "CITIZEN"){  //check type of user
-      return (
-        <li className="list-group-item">
-          <strong>Type: </strong>{user.userType}<br />
-          <strong>Name: </strong>{user.name}<br />
-          <strong>Surname: </strong>{user.surname}<br />
-          <strong>Email: </strong>{user.email}<br />
-
-          <ButtonGeneric text="Disable" />
-        </li>
-      )
-    /*}else{
-      return (
-        <li className="list-group-item">
-          <strong>Type: </strong>{user[0]}<br />
-          <strong>Company name: </strong>{user[1]}<br />
-          <strong>VAT number: </strong>{user[2]}<br />
-          <strong>Headquarters: </strong>{user[3]}<br />
-          <strong>Email: </strong>{user[4]}<br />
-          <ButtonGeneric text="Disable" />
-        </li>
-      )
-    }*/
-  }
-
   render() {
+    //da spostare nel container
+
     if(store.getState().logged === false || store.getState().user.userType !== "GOVERNMENT"){window.location.href = "/"}
     //need to check if user type is government, else redirect to home like previous line
-    var {userList} = this.props;
+    var list;
+    var {printUser} = this.props;
+    var {userList} = this.state;
+    if(userList!== undefined && userList.length>0)
+      list = userList.map(i => printUser(i));
     return (
       <div>
         <NavBar />
         <ul className="list-group list-group-flush">
-          {userList.map(i => this.printUser(i))}
+          {list}
         </ul>
       </div>
     )

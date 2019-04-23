@@ -47,6 +47,7 @@ const authentication = (function(){
           district: district,
           postCode: postCode
         }
+        console.log(newBusinessJSON)
         //insert the json into ipfs
         return new Promise((resolve)=>{
           ipfsModule.insertJSONintoIPFS(newBusinessJSON).then(async (hash)=>{

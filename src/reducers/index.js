@@ -1,6 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETUSERLIST, MINTANDDISTRIBUTE} from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETUSERLIST, MINTANDDISTRIBUTE, CHANGESTATE} from "../constants/actionTypes";
 
 const initialState = {
   logged: false,
@@ -135,6 +135,12 @@ export function rootReducer(state = initialState, action) {
     return Object.assign({}, state, {
       totalSupply: action.total,
       governmentSupply: action.amount
+    })
+  }
+
+  if(action.type === CHANGESTATE) {
+    return Object.assign({}, state, {
+      userList: action.newList
     })
   }
 
