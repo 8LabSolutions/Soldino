@@ -3,7 +3,6 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {Component} from 'react';
-import ButtonGeneric from '../containers/ButtonGeneric'
 
 class FormCubitManager extends Component {
 
