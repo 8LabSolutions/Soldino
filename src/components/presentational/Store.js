@@ -6,7 +6,7 @@ import business from '../../facade/business';
 
 class Store extends Component {
 
-  limit = 6
+  limit = 50
 
   constructor(props){
     super(props)
@@ -19,12 +19,9 @@ class Store extends Component {
   printProduct(product) {
     return(
       //CHECK JSON ARGS NAMES
-      <Product keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
+      <Product key={String(product.keyProd)} keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
     )
   }
-
-
-
 
   render() {
     let props = this.props

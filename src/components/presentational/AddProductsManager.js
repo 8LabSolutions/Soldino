@@ -67,7 +67,7 @@ class AddProductsManager extends Component {
                   </div>
                   <div className="col-sm-6">
                     <NavLink className="nav-item nav-link" to="/productsmanager">
-                      <ButtonBusinessProduct text="Confirm" args1={[this.state.title, this.state.description, this.state.netPrice, this.state.vatPercentage, this.state.file, store.getState().user.name, store.getState().user.VATnumber]} />
+                      <ButtonBusinessProduct index="0" amount="50" text="Confirm" args1={[this.state.title, this.state.description, this.state.netPrice, this.state.vatPercentage, this.state.file, store.getState().user.name, store.getState().user.VATnumber]} />
                     </NavLink>
                   </div>
                 </div>

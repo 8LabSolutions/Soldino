@@ -19,7 +19,7 @@ import PurchasesConfirmation from './components/presentational/PurchasesConfirma
 import EditProductsManager from './components/presentational/EditProductsManager';
 import AddProductsManager from './components/presentational/AddProductsManager';
 import history from './store/history';
-import ProductsManager from './components/presentational/ProductsManager';
+import ProductsManagerContainer from './components/containers/ProductManagerContainer';
 
 //store.dispatch(reset())
 
@@ -46,7 +46,7 @@ class App extends Component {
             <Route path="/orders" component={Orders} />
             <Route path="/purchasesconfirmation" component={PurchasesConfirmation} />
             <Route path="/transactionsmanager" component={TransactionsManager} />
-            <Route path="/productsmanager" component={ProductsManager} />
+            <Route path="/productsmanager" component={ProductsManagerContainer} />
             <Route path="/editproductsmanager" component={EditProductsManager} />
             <Route path="/addproductsmanager" component={AddProductsManager} />
             <Route path="/checkout" component={Checkout} />

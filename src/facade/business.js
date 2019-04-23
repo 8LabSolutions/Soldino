@@ -27,7 +27,6 @@ const business = (function(){
     var promises = [];
     for (let i = 0; i< ris.length; i++){
       promises.push(new Promise((resolve)=>{
-        console.log(ris)
         getIPFSProduct(ris[i][1]).then((middle)=>{
           middle.keyProd = ris[i][0]
           resolve(middle);
@@ -91,11 +90,6 @@ const business = (function(){
         })
       })
     },
-
-    /**
-     * @description return the products CID from a part of it
-     * @param {*} remainingHash  the bigger part of the CID (bytes32)
-     */
 
     getSenderProduct: function(amount) {
       return new Promise((resolve)=>{

@@ -15,7 +15,7 @@ const web3business = (function(){
             productLogicInstance.methods.addProduct(
               hashIpfs, hashSize, hashFun, vatPercentage, netPrice*web3util.TOKENMULTIPLIER)
             .send({from: account})
-            .then(resolve())
+            .then(resolve)
           })
         })
       })

@@ -3,33 +3,29 @@ import { NavLink } from 'react-router-dom';
 import BusinessProduct from './BusinessProduct';
 import NavBar from './NavBar';
 import ButtonGeneric from '../containers/ButtonGeneric';
-import business from '../../facade/business'
 
 class ProductsManager extends Component {
 
   constructor(props){
     super(props)
-    this.state = {
-      productsArray: []
-    }
+  }
+
+  componentWillMount(){
+    const {getProductsList} = this.props;
+    getProductsList(50,0);
   }
 
   printProduct(product) {
     return(
-      <BusinessProduct key={product.title} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} />
+      <BusinessProduct key={product.keyProd} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} />
     )
   }
 
   render() {
-    //get data from ipfs
-    let {productsArray} = this.state;
-    business.getSenderProduct(5).then((ris)=>{
-      if (ris === undefined){ris = []}
-      this.setState({
-        productsArray: ris
-      })
-    })
-
+    let {myProductsArray} = this.props;
+    let list;
+    if(myProductsArray!== undefined && myProductsArray.length>0)
+      list = myProductsArray.map(i => this.printProduct(i))
     return (
       <div>
         <NavBar />
@@ -42,7 +38,7 @@ class ProductsManager extends Component {
               </NavLink>
               <br />
             </div>
-            {productsArray.map(i => this.printProduct(i))}
+            {list}
           </div>
         </div>
       </div>

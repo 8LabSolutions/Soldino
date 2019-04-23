@@ -15,6 +15,7 @@ class EditProductsManager extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
   }
+
   handleChange(event) {
     this.setState({
       file: URL.createObjectURL(event.target.files[0])

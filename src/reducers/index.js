@@ -1,6 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETUSERLIST, MINTANDDISTRIBUTE, CHANGESTATE} from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETUSERLIST, MINTANDDISTRIBUTE, CHANGESTATE, GETMYPRODUCTS} from "../constants/actionTypes";
 
 const initialState = {
   logged: false,
@@ -10,7 +10,8 @@ const initialState = {
   pending: [],
   ordersList: [],
   loading: false,
-  userList: []
+  userList: [],
+  myProductsArray: []
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === BEGINLOADING || action.type === ENDLOADING) {
@@ -117,7 +118,7 @@ export function rootReducer(state = initialState, action) {
           net: action.net,
           address: action.address,
           buyerName: action.buyerName,
-          buyerDetails: action.buyerDetails
+          buyerDetails: action.buyerDetails,
         }]
       ,
       cart: []
@@ -144,9 +145,16 @@ export function rootReducer(state = initialState, action) {
     })
   }
 
+  if(action.type === GETMYPRODUCTS) {
+    return Object.assign({}, state, {
+      myProductsArray: action.myProductsArray
+    })
+  }
 
+  //returning the state
   return state;
 }
+
 export const persistConfig = {
   key: 'root',
   storage: storage,
