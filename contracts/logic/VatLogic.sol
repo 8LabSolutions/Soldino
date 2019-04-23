@@ -18,12 +18,16 @@ contract VatLogic {
         _;
     }
 
+    constructor(address _contracManager) public {
+        contractManager = ContractManager(_contracManager);
+        vatStorage = VatStorage(contractManager.getContractAddress("VatStorage"));
+    }
+
     function registerVat(address _business, int256 _vatAmount, string calldata _period) external {
        // require(msg.sender == contractManager.getContractAddress("OrderLogic"), "Permission denied, cannot call 'InsertVat'.");
         vatStorage.insertVatAndSetState(createVatKey(_business, _period), _business, _vatAmount);
         emit VatRegistered(_business, createVatKey(_business, _period));
     }
-
 
     function payVat(bytes32 _key) external {
         // The VAT needs to be paid only from the business which has generated the VAT movement
@@ -61,11 +65,6 @@ contract VatLogic {
         vatStorage.setVatState(_key, 4);
 
         emit VatRefunded(_business, _key);
-    }
-
-    constructor(address _contracManager) public {
-        contractManager = ContractManager(_contracManager);
-        vatStorage = VatStorage(contractManager.getContractAddress("VatStorage"));
     }
 
     function createVatKey(address _business, string memory _period) public pure returns(bytes32) {

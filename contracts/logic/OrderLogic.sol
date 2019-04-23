@@ -74,7 +74,7 @@ contract OrderLogic {
         // if the buyer is a business, the vat movement needs to be registered
         // to do so a UserStorage instance is created and if and only if the buyer
         // is a business, the vat movement is registered
-        if(userStorage.getUserType(_buyer) == 2) {
+        if (userStorage.getUserType(_buyer) == 2) {
             vatLogic.registerVat(_buyer, (int256(vatTotal)*(-1)), _period);
         }
         vatLogic.registerVat(_seller, (int256(vatTotal)), _period);

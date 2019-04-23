@@ -68,8 +68,6 @@ contract ProductStorage is Authorizable {
 
     }
 
-
-
     function deleteProduct(bytes32 _keyHash) external onlyAuthorized {
         delete productsHash[hashToProduct[_keyHash].index];
         delete hashToProduct[_keyHash];

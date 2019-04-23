@@ -6,8 +6,8 @@ import "../storage/UserStorage.sol";
 
 
 contract ProductLogic {
-    ProductStorage productStorage;
-    ContractManager contractManager;
+    ProductStorage internal productStorage;
+    ContractManager internal contractManager;
 
     event ProductInserted(bytes32 indexed _keyHash, address indexed _seller);
 
@@ -53,6 +53,14 @@ contract ProductLogic {
             productStorage.getHashFunction(_keyHash),
             productStorage.getHashSize(_keyHash)
         );
+    }
+
+    function getProductSeller(bytes32 _keyHash) external view returns(address) {
+        return productStorage.getProductSeller(_keyHash);
+    }
+
+    function getProductNetPrice(bytes32 _keyHash) external view returns(uint256) {
+        return productStorage.getProductNetPrice(_keyHash);
     }
 
     function addProduct(
@@ -127,11 +135,5 @@ contract ProductLogic {
         return (_netPrice + (_netPrice * productStorage.getProductVat(_keyHash) / 100));
     }
 
-    function getProductSeller(bytes32 _keyHash) external view returns(address) {
-        return productStorage.getProductSeller(_keyHash);
-    }
 
-    function getProductNetPrice(bytes32 _keyHash) external view returns(uint256) {
-        return productStorage.getProductNetPrice(_keyHash);
-    }
 }

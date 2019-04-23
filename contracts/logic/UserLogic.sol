@@ -3,9 +3,10 @@ pragma solidity ^0.5.0;
 import "../ContractManager.sol";
 import "../storage/UserStorage.sol";
 
+
 contract UserLogic {
-    ContractManager contractManager;
-    UserStorage userStorage;
+    ContractManager internal contractManager;
+    UserStorage internal userStorage;
 
     event UserInserted(
         address _userAddress,
@@ -22,6 +23,10 @@ contract UserLogic {
         userStorage = UserStorage(contractManager.getContractAddress("UserStorage"));
     }
 
+    function setUserState(address _userAddress, bool value) external onlyGovernment {
+        userStorage.setEnable(_userAddress, value);
+    }
+
     function addCitizen(bytes32 _hashIpfs, uint8 _hashSize, uint8 _hashFun) public {
         //add the new entry to userstorage
         require(isRegistered(msg.sender) == false, "User already registered");
@@ -30,9 +35,9 @@ contract UserLogic {
         emit UserInserted(msg.sender, 1);
     }
 
-    function addBusiness(bytes32 _hashIpfs,uint8 _hashSize,uint8 _hashFun) public {
+    function addBusiness(bytes32 _hashIpfs, uint8 _hashSize, uint8 _hashFun) public {
         //add the new entry to userstorage
-        require(isRegistered(msg.sender)== false, "User already registered");
+        require(isRegistered(msg.sender) == false, "User already registered");
         userStorage.addUser(msg.sender, 2, _hashFun, _hashSize, _hashIpfs);
         //emit the inserted event
         emit UserInserted(msg.sender, 2);
@@ -57,9 +62,4 @@ contract UserLogic {
         (bytes32 a, uint8 b, uint8 c) = userStorage.getIpfsCid(_userAddress);
         return (a, b, c, userStorage.getUserState(_userAddress), userType);
     }
-
-    function setUserState(address _userAddress, bool value) external onlyGovernment {
-        userStorage.setEnable(_userAddress, value);
-    }
-
 }

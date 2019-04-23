@@ -6,7 +6,7 @@ import "../Authorizable.sol";
 
 contract UserStorage is Authorizable {
     struct User {
-        bytes32 HashIPFS;
+        bytes32 hashIpfs;
         uint8 hashSize;
         uint8 hashFunction;
         address userAddress;
@@ -42,7 +42,7 @@ contract UserStorage is Authorizable {
     )
         public onlyAuthorized
     {
-        addressToUser[_userAddress].HashIPFS = _hashIpfs;
+        addressToUser[_userAddress].hashIpfs = _hashIpfs;
         addressToUser[_userAddress].hashFunction = _hashFun;
         addressToUser[_userAddress].hashSize = _hashSize;
         addressToUser[_userAddress].userType = _userType;
@@ -53,7 +53,7 @@ contract UserStorage is Authorizable {
 
     function getIpfsCid(address _userAddress) public view returns(bytes32, uint8, uint8) {
         return(
-            addressToUser[_userAddress].HashIPFS,
+            addressToUser[_userAddress].hashIpfs,
             addressToUser[_userAddress].hashFunction,
             addressToUser[_userAddress].hashSize
         );
@@ -66,6 +66,4 @@ contract UserStorage is Authorizable {
     function setEnable(address _userAddress, bool _value) public {
         addressToUser[_userAddress].active = _value;
     }
-
-
 }

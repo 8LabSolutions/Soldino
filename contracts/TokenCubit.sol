@@ -1,15 +1,12 @@
 pragma solidity ^0.5.0;
 
-
-
 import "./Owned.sol";
+
 
 //Le interfacce sono simili a contratti astratti ma non posso implementare funzioni
 contract tokenRecipient {
     function receiveApproval(address _from, uint256 _value, address _token) external;
 }
-
-
 
 
 contract TokenCubit is Owned {
@@ -77,8 +74,6 @@ contract TokenCubit is Owned {
             symbol = tokenSymbol;                               // Set the symbol for display purposes
     }
 
-
-
     /**
      * Transfer tokens
      *
@@ -105,10 +100,11 @@ contract TokenCubit is Owned {
      * @param _value the max amount they can spend
      */
     function approve(address _spender, uint256 _value) public
-        returns (bool success) {
-            allowance[msg.sender][_spender] = _value;
-            emit Approval(msg.sender, _spender, _value);
-            return true;
+        returns (bool success)
+    {
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
     }
 
     /**
@@ -137,13 +133,14 @@ contract TokenCubit is Owned {
      */
     function approveAndCall(address _spender, uint256 _value)
         public
-        returns (bool success) {
-            tokenRecipient spender = tokenRecipient(_spender);
-            if (approve(_spender, _value)) {
-                spender.receiveApproval(msg.sender, _value, address(this));
-                return true;
-            }
+        returns (bool success)
+    {
+        tokenRecipient spender = tokenRecipient(_spender);
+        if (approve(_spender, _value)) {
+            spender.receiveApproval(msg.sender, _value, address(this));
+            return true;
         }
+    }
 
     /**
      * Destroy tokens

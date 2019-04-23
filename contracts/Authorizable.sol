@@ -23,11 +23,11 @@ contract Authorizable is Owned {
     }
 
     function addAuthorized(address _toAdd) onlyOwner public {
-        require(_toAdd != address(0),"Invalid address");
+        require(_toAdd != address(0), "Invalid address");
         authorized[_toAdd] = true;
     }
 
-    function removeAuthorized(address _toRemove) onlyOwner public {
+    function removeAuthorized(address _toRemove) public onlyOwner {
         require(_toRemove != address(0), "Invalid address");
         require(_toRemove != msg.sender, "Cannot remove the address specified");
         authorized[_toRemove] = false;
