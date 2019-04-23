@@ -72,12 +72,10 @@ class FormCubitManager extends Component {
               <input className="form-control" id="address" name="address" placeholder="Enter address" onChange={this.handleChange} />
             </div>
             <div className="col-sm-6 text-center">
-              <ButtonGeneric text="Distribute" />
-              <button type="button" text="Mint" onClick={this.handleMint} />
+              <button type="button" className="btn btn-light" onClick={this.handleMint}>Mint</button>
             </div>
             <div className="col-sm-6 text-center">
-              <ButtonGeneric text="Distribute" />
-              <button type="button" text="Distribute" onClick={this.handleDistribute} />
+              <button type="button" className="btn btn-light" onClick={this.handleDistribute}>Distribute</button>
             </div>
           </div>
         </div>

@@ -17,7 +17,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     printUser: (business)=>{
-      var button = <ButtonState state={business.state} address={business.address} />
+      let dynamicText
+      (business.state===true) ? dynamicText="Disable" : dynamicText="Enable";
+      var button = <ButtonState text={dynamicText} state={business.state} address={business.address} type={BUSINESS} />
 
       const Line = (business) =>(
         <li key={business.address} className="list-group-item">

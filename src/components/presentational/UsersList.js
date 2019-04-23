@@ -8,6 +8,7 @@ class UsersList extends Component {
   componentWillMount(){
     const {getUserList} = this.props;
     getUserList(50,0);
+    //alert("MOUNT")
   }
 
   render() {
@@ -22,7 +23,7 @@ class UsersList extends Component {
     return (
       <div>
         <NavBar />
-        <ul className="list-group list-group-flush">
+        <ul className="list-group list-group-flush top-2rem">
           {list}
         </ul>
       </div>
