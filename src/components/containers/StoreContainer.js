@@ -1,13 +1,27 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import Store from '../presentational/Store';
+import businessActionCreator from '../../actionsCreator/businessActionCreator';
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
+  //should dispatch the action that fills the store with the first 50 users
+  //*!!! maybe only the first time !!!*/
   return {
-    searchProduct: state.searchProduct
+    getStoreProducts: (amount, index)=> {
+      //call the action creator to dispatch the products getter
+      businessActionCreator.getStoreProducts(amount, index).then((action)=>{
+        dispatch(action)
+      })
+    }
   }
 }
 
-const StoreContainer = connect(mapStateToProps, null)(Store);
+const mapStateToProps = (state) => {
+  return {
+    storeProducts: state.storeProducts
+  }
+}
+
+const StoreContainer = connect(mapStateToProps, mapDispatchToProps)(Store);
 
 export default StoreContainer;

@@ -6,10 +6,6 @@ import ButtonGeneric from '../containers/ButtonGeneric';
 
 class ProductsManager extends Component {
 
-  constructor(props){
-    super(props)
-  }
-
   componentWillMount(){
     const {getProductsList} = this.props;
     getProductsList(50,0);

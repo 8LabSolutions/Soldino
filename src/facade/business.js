@@ -21,9 +21,7 @@ const business = (function(){
    * @param {*} ris the array o arrays [product-key, product IPFS hash]
    * @param {*} amount the limit of products that will be returned
    */
-  function reduceAndGetProducts(ris, amount) {
-    if(ris.length>amount)
-      ris = ris.slice(0, amount)
+  function getProducts(ris) {
     var promises = [];
     for (let i = 0; i< ris.length; i++){
       promises.push(new Promise((resolve)=>{
@@ -91,22 +89,28 @@ const business = (function(){
       })
     },
 
-    getSenderProduct: function(amount) {
+    deleteProduct: function(keyProd){
+      return new Promise((resolve)=>{
+        web3business.deleteProduct(keyProd).then(resolve)
+      })
+    },
+
+    getSenderProduct: function(amount, index) {
       return new Promise((resolve)=>{
         //scorrere gli eventi per trovare quelli con come seller l'account sender
-        web3business.getProducts(true).then((ris)=>{
+        web3business.getProducts(amount, index, true).then((ris)=>{
           //ris contains the array of ipfs hash
-          reduceAndGetProducts(ris, amount).then(resolve)
+          getProducts(ris).then(resolve)
         })
       })
     },
 
-    getStoreProduct: function(amount) {
+    getStoreProduct: function(amount, index) {
       return new Promise((resolve)=>{
-        web3business.getProducts().then((ris)=>{
+        web3business.getProducts(amount, index).then((ris)=>{
           //ris contains the array of ipfs hash
           ris = shuffle(ris)
-          reduceAndGetProducts(ris, amount).then(resolve)
+          getProducts(ris).then(resolve)
         })
       })
     }
