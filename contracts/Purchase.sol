@@ -3,7 +3,6 @@ pragma solidity 0.5.6;
 
 import "./TokenCubit.sol";
 import "./ContractManager.sol";
-import "./logic/ProductLogic.sol";
 import "./logic/OrderLogic.sol";
 
 
@@ -19,6 +18,7 @@ contract Purchase {
 
     constructor(address _contractManager) public {
         contractManager = ContractManager(_contractManager);
+        cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
     }
 
     function saveAndPayOrder(
@@ -35,29 +35,12 @@ contract Purchase {
         orderProd.push(_prodHash[0]);
         orderProdQtn.push(_prodQtn[0]);
 
-        setOrderLogic();
         for (uint i = 0; i < _prodHash.length; i++) {
             if (_orderHash[i] != prevOrderHash) {
-                //insert the order
-                orderLogic.registerOrder(
-                    prevOrderHash,
-                    _orderHashFun[i-1],
-                    _orderHashSize[i-1],
-                    msg.sender,
-                    _period,
-                    orderProd,
-                    orderProdQtn
-                );
-
-                // pay the order
-                setTokenCubit();
-                require(cubitToken.transferFrom(
-                    msg.sender, orderLogic.getOrderSeller(prevOrderHash),
-                    orderLogic.getOrderTotal(prevOrderHash)),
-                    "Error during transfer");
+                //insert the order and pay the seller
+                _saveAndPayOrder(prevOrderHash, orderProdQtn, orderProd, _orderHashFun[i-1], _orderHashSize[i-1], msg.sender, _period);
                 //set the new orderHash
                 prevOrderHash = _orderHash[i];
-
                 //empty the product array for the next order
                 delete orderProd;
                 //empty the products' quantity for the next order
@@ -67,14 +50,33 @@ contract Purchase {
             orderProd.push(_prodHash[i]);
             // push the current product's quantity in the quantity array for the current order
             orderProdQtn.push(_prodQtn[i]);
+            if (i == (_prodHash.length - 1)) {
+                _saveAndPayOrder(prevOrderHash, orderProdQtn, orderProd, _orderHashFun[i], _orderHashSize[i], msg.sender, _period);
+            }
         }
+    }
+
+    function _saveAndPayOrder(
+        bytes32 _prodHash,
+        uint8[] memory _prodQtn,
+        bytes32[] memory _orderHash,
+        uint8 _orderHashFun,
+        uint8 _orderHashSize,
+        address _buyer,
+        string memory _period
+        )
+        internal {
+            setOrderLogic();
+            orderLogic.registerOrder(_prodHash, _orderHashFun, _orderHashSize, _buyer, _period, _orderHash, _prodQtn);
+            // pay the order
+            require(cubitToken.transferFrom(
+                _buyer, orderLogic.getOrderSeller(_prodHash),
+                orderLogic.getOrderTotal(_prodHash)),
+                "Error during transfer");
     }
 
     function setOrderLogic() internal {
         orderLogic = OrderLogic(contractManager.getContractAddress("OrderLogic"));
     }
 
-    function setTokenCubit() internal {
-        cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
-    }
 }

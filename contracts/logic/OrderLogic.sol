@@ -56,7 +56,6 @@ contract OrderLogic {
         //onlyPurchaseContract
     {
         setVatLogic();
-        setUserStorage();
 
         address _seller = productLogic.getProductSeller(_productsHash[0]);
 
@@ -86,18 +85,6 @@ contract OrderLogic {
         emit SellOrderInserted(_seller, _hashIpfs);
     }
 
-    function setVatLogic() internal  {
-        vatLogic = VatLogic(contractManager.getContractAddress("VatLogic"));
-    }
-
-    function setProductLogic() internal {
-        productLogic = ProductLogic(contractManager.getContractAddress("ProductLogic"));
-    }
-
-    function setUserStorage() internal {
-        userStorage = UserStorage(contractManager.getContractAddress("UserStorage"));
-    }
-
     function getOrderSeller(bytes32 _keyHash) public view returns(address) {
         return orderStorage.getSeller(_keyHash);
     }
@@ -107,14 +94,14 @@ contract OrderLogic {
     }
 
     function calculateOrderTotal(bytes32[] memory  _productsHash, uint8[] memory _prodQtn)
-        public view returns(uint256, uint256)
+        internal view returns(uint256, uint256)
     {
         require(_productsHash.length > 0, "Empty array");
         uint256 total = 0;
         address seller = productLogic.getProductSeller(_productsHash[0]);
         uint256 vatTotal = 0;
 
-        for(uint i = 0; i < _productsHash.length; ++i) {
+        for (uint i = 0; i < _productsHash.length; ++i) {
             require(productLogic.getProductSeller(_productsHash[i]) == seller, "Invalid product, wrong seller");
             total += ((productLogic.getProductNetPrice(_productsHash[i])) * (_prodQtn[i]));
             vatTotal += ((productLogic.calculateProductVat(_productsHash[i])) * (_prodQtn[i]));
@@ -122,6 +109,15 @@ contract OrderLogic {
 
         return(total, vatTotal);
     }
+
+    function setVatLogic() internal  {
+        vatLogic = VatLogic(contractManager.getContractAddress("VatLogic"));
+    }
+
+    function setProductLogic() internal {
+        productLogic = ProductLogic(contractManager.getContractAddress("ProductLogic"));
+    }
+
 
 
 }

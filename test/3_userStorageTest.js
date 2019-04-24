@@ -1,5 +1,5 @@
 const {getWeb3} = require('./helpers')
-
+const truffleAssert = require('truffle-assertions');
 const ContractManager = artifacts.require("ContractManager");
 const UserStorage = artifacts.require("storage/UserStorage");
 
@@ -70,13 +70,6 @@ contract("UserStorage", (accounts) => {
       })
     })
   })
-  it("should check if an user is already registered", function(){
-    return userStorageInstance.methods.addUser(accounts[0], 1, 9, 9, "0x7465737400000000000000000000000000000000000000000000000000000000" )
-    .send({from: accounts[0], gas: 4712388})
-    .catch(() => {
-      assert.isTrue(true);
-    })
-  });
 
   it("should check if the user type is correct", function(){
     return userStorageInstance.methods.getUserType(CITIZEN)
