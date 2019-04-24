@@ -153,3 +153,12 @@ input:checked + .slider {
   right: 40px;
   -webkit-animation: slide 2s linear infinite;
 }
+
+#logo {
+  max-height: 25px;
+  margin-left: 21px;
+}
+
+.navbar-items {
+  margin: 0 auto;
+}

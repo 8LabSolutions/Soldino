@@ -13,7 +13,7 @@ class NavBar extends Component {
     let navLinks
     if (store.getState().logged === true && store.getState().user.userType === "GOVERNMENT"){
       authText = 'Logout'
-      navLinks =  <div className="navbar-nav">
+      navLinks =  <div className="navbar-nav navbar-items">
                     <NavLink className="nav-item nav-link" to="/">Cubit Manager</NavLink>
                     <NavLink className="nav-item nav-link" to="/userslist">Users List</NavLink>
                     <NavLink className="nav-item nav-link" to="/businesslist">Business List</NavLink>
@@ -21,7 +21,7 @@ class NavBar extends Component {
                   </div>
     }else if (store.getState().logged === true && store.getState().user.userType === "CITIZEN"){
       authText = 'Logout'
-      navLinks =  <div className="navbar-nav">
+      navLinks =  <div className="navbar-nav navbar-items">
                     <NavLink className="nav-item nav-link" to="/">Store</NavLink>
                     <NavLink className="nav-item nav-link" to="/orders">Orders</NavLink>
                     {/*<NavLink className="nav-item nav-link" to="/purchasesconfirmation">Purchases confirmation</NavLink>*/}
@@ -30,7 +30,7 @@ class NavBar extends Component {
                   </div>
     }else if (store.getState().logged === true && store.getState().user.userType === "BUSINESS"){
       authText = 'Logout'
-      navLinks =  <div className="navbar-nav">
+      navLinks =  <div className="navbar-nav navbar-items">
                     <NavLink className="nav-item nav-link" to="/">Store</NavLink>
                     <NavLink className="nav-item nav-link" to="/orders">Orders</NavLink>
                     {/*<NavLink className="nav-item nav-link" to="/purchasesconfirmation">Purchases confirmation</NavLink>*/}
@@ -46,7 +46,7 @@ class NavBar extends Component {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <span className="navbar-brand">Soldino</span>
+        <img alt="Logo" id="logo" src="logo.png" />
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           {navLinks}
         </div>
