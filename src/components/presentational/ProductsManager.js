@@ -14,7 +14,7 @@ class ProductsManager extends Component {
 
   printProduct(product) {
     return(
-      <BusinessProduct key={product.keyProd} title={product.title} price={round(product.totalPrice)} description={product.description} VAT={product.vatPercentage} />
+      <BusinessProduct key={product.keyProd} keyProd={product.keyProd} title={product.title} price={round(product.totalPrice)} description={product.description} VAT={product.vatPercentage} image={product.image} />
     )
   }
 

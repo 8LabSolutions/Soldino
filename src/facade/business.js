@@ -70,6 +70,8 @@ const business = (function(){
     */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName/*="azienda1"*/, sellerVATNumber/*="provvisorio"*/){
       //istantiate the necessary costracts and returns the results
+      console.log("ADDPRODUCT interno")
+      console.log(image)
       var newProductJSON = getProductJSONfromFields(
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
       return new Promise((resolve)=>{

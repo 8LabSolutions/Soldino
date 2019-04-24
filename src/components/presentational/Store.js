@@ -15,7 +15,7 @@ class Store extends Component {
     if(product.title.toLowerCase().includes(searchProduct.toLowerCase())){
       return(
         //CHECK JSON ARGS NAMES
-        <Product key={String(product.keyProd)} keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
+        <Product key={String(product.keyProd)} keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} image={product.image} />
       )
     }
   }

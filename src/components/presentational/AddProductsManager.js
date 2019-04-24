@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/alt-text */
 import React, {Component} from 'react';
@@ -12,6 +15,7 @@ class AddProductsManager extends Component {
     super(props)
     this.state = {
       file: null,
+      url: null,
       title: "",
       description: "",
       netPrice: "",
@@ -22,8 +26,10 @@ class AddProductsManager extends Component {
   }
   handleChange(event) {
     this.setState({
-      file: URL.createObjectURL(event.target.files[0])
+      file: event.target.files,
+      url: URL.createObjectURL(event.target.files[0])
     })
+    console.log(event.target.files)
   }
   handleChangeField(e) {
     this.setState({
@@ -54,9 +60,12 @@ class AddProductsManager extends Component {
                 <span>VAT</span>
                 <input className="form-control" id="InputVAT" placeholder="Enter VAT in %" name="vatPercentage" onChange={this.handleChangeField} />
               </label>
-              <div>
-                <input type="file" onChange={this.handleChange} />
-                <img src={this.state.file} />
+              <div className="form-group col-sm-12">
+                <input type="file" id="imageUploader" onChange={this.handleChange} />
+                <label for="imageUploader">
+                  <span className="btn btn-light" id="spanUploader">Choose an image</span>
+                </label>
+                <img id="uploadedImage" src={this.state.url} />
               </div>
               <div className="container">
                 <div className="row">

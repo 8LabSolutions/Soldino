@@ -8,17 +8,21 @@ import ButtonBusinessProduct from '../containers/ButtonBusinessProduct';
 import { round } from '../../auxiliaryFunctions';
 
 class BusinessProduct extends Component {
+
   render() {
     let props = this.props;
+    let image
+    (props.image===null) ? image = "/default.png" : image = props.image;
     return (
       <div className="col-sm-3">
         <div className="card">
-          {/* <img src="..." className="card-img-top" alt="..." /> */}
           <div className="card-body">
+            <img src={image} alt="product" /> 
             <h5 className="card-title">{props.title}</h5>
             <p className="card-text">{props.description}</p> 
             <p className="card-text">CC {round(props.price)}</p> {/*lordo*/}
             <p className="card-text">CC {round(props.price - ((props.price * 100)/(+100 + +props.VAT)))} ~ {props.VAT}%</p>  
+
             <NavLink className="nav-item nav-link" to="/editproductsmanager">
               <ButtonBusinessProduct text="Edit" args1={null} />
             </NavLink> 

@@ -30,10 +30,12 @@ class Product extends Component {
     product[4] = props.sellerName
     product[5] = props.sellerVATNumber
     product[6] = props.keyProd
+    let image
+    (props.image===null) ? image = "/default.png" : image = props.image;
     return (
       <div className="col-sm-3">
         <div className="card">
-          {/* <img src="..." className="card-img-top" alt="..." /> */}
+          <img src={image} alt="product" /> 
           <div className="card-body">
             <h5 className="card-title">{ product[0] = props.title }</h5>
             <h6 className="card-price">CC { round(props.price) }</h6>
