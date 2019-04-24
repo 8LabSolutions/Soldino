@@ -15,11 +15,11 @@ class BusinessProduct extends Component {
     (props.image===null) ? image = "/default.png" : image = props.image;
     return (
       <div className="col-sm-3">
-        <div className="card">
+        <div className="card card-manager">
+          <img src={image} alt="product" /> 
           <div className="card-body">
-            <img src={image} alt="product" /> 
             <h5 className="card-title">{props.title}</h5>
-            <p className="card-text">{props.description}</p> 
+            <p className="card-text card-description">{props.description}</p> 
             <p className="card-text">CC {round(props.price)}</p> {/*lordo*/}
             <p className="card-text">CC {round(props.price - ((props.price * 100)/(+100 + +props.VAT)))} ~ {props.VAT}%</p>  
 

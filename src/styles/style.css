@@ -162,3 +162,53 @@ input:checked + .slider {
   border: 2px solid #bdc3c7 !important;
   border-radius: 6px !important;
 }
+
+.card {
+  height: 605px !important;
+}
+
+.card-text {
+  max-height: 120px;
+  overflow-y: auto;
+  height: 120px;
+}
+
+.card-cart {
+  height: auto !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bdc3c7; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #f1f1f1; 
+}
+
+.card img {
+  width: 253px !important;
+  height: 165px !important;
+  object-fit: cover;
+}
+
+.card-manager .card-text {
+  height: auto !important;
+}
+
+.card-manager .card-description {
+  max-height: 120px;
+  overflow-y: auto;
+  height: 120px !important;
+}
