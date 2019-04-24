@@ -1,61 +1,37 @@
 import React, {Component} from 'react';
 import Product from './Product';
 import SearchContainer from '../containers/SearchContainer';
-import business from '../../facade/business';
 
 
 class Store extends Component {
 
-  limit = 6
-
-  constructor(props){
-    super(props)
-    this.state = {
-      productsArray: [],
-      updated: false
-    }
+  componentWillMount(){
+    const {getStoreProducts} = this.props;
+    getStoreProducts(50,0);
   }
 
   printProduct(product) {
-    return(
-      //CHECK JSON ARGS NAMES
-      <Product keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
-    )
+    let {searchProduct} = this.props;
+    if(product.title.toLowerCase().includes(searchProduct.toLowerCase())){
+      return(
+        //CHECK JSON ARGS NAMES
+        <Product key={String(product.keyProd)} keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
+      )
+    }
   }
 
-
-
-
   render() {
-    let props = this.props
-
-    //get data from ipfs
-    let {productsArray} = this.state;
-    let {updated} = this.state
-    business.getStoreProduct(this.limit).then((ris)=>{
-      if (ris === undefined){ris = []}
-      if(updated === false) {
-        this.setState({
-          productsArray: ris,
-          updated: true
-        })
-      }
-    })
-    let renderProducts = []
-
-    //render searched products only
-    for(var i=0; i<productsArray.length; i++){
-      if(productsArray[i].title.toUpperCase().includes(props.searchProduct.toUpperCase()) || props.searchProduct === ""){
-        renderProducts[i] = productsArray[i];
-      }
-    }
+    let {storeProducts} = this.props;
+    let list;
+    if(storeProducts!== undefined && storeProducts.length>0)
+      list = storeProducts.map(i => this.printProduct(i))
     return (
       <div>
         <h3>Store</h3>
         <div className="container">
           <div className="row">
             <SearchContainer />
-            {renderProducts.map(i => this.printProduct(i))}
+            {list}
           </div>
         </div>
       </div>

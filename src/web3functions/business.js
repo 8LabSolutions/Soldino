@@ -15,7 +15,7 @@ const web3business = (function(){
             productLogicInstance.methods.addProduct(
               hashIpfs, hashSize, hashFun, vatPercentage, netPrice*web3util.TOKENMULTIPLIER)
             .send({from: account})
-            .then(resolve())
+            .then(resolve)
           })
         })
       })
@@ -66,10 +66,12 @@ const web3business = (function(){
       })
     },
     /**
-     * @description Return an array of array with [0]: key of the product, [1]: hashIPFS of the product
-     * @param {} sender the key of the vendor (ipfs remaining hash)
+     *
+     * @param {*} amount
+     * @param {*} index
+     * @param {*} sender
      */
-    getProducts: function(sender=false) {
+    getProducts: function(amount, index, sender=false) {
       return new Promise((resolve)=>{
         web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
           web3util.getCurrentAccount().then((account)=>{
@@ -99,10 +101,11 @@ const web3business = (function(){
             //firstly get the inserted products from the logs
             productLogicInstance.getPastEvents('ProductInserted', query)
             .then((events) => {
-                for (let i =0; i<events.length; i++){
-                  //extracting only the hash
-                  products.push(events[i].returnValues._keyHash)
-                }
+              let start = index*amount;
+              for (let i = start; i < start + amount && start + i < events.length; i++){
+                //extracting only the hash
+                products.push(events[i].returnValues._keyHash)
+              }
             })
             .then(()=>{
               //getting the deleted products

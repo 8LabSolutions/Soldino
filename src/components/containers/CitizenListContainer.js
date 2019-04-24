@@ -17,6 +17,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     printUser: (citizen)=>{
+      let dynamicText
+      (citizen.state===true) ? dynamicText="Disable" : dynamicText="Enable";
       const Line = (citizen) =>(
         <li key={citizen.address} className="list-group-item">
           <strong>Name: </strong>
@@ -28,7 +30,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           <strong>Email: </strong>
           {citizen.email}
           <br />
-          <ButtonState state={citizen.state} address={citizen.address} />
+          <ButtonState text={dynamicText} state={citizen.state} address={citizen.address} type={CITIZEN} />
         </li>
       )
       return Line(citizen);
@@ -38,7 +40,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state) => {
   return {
-    userList: state.userList
+    userList: state.citizenList
   }
 }
 

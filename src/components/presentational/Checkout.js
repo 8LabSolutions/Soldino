@@ -25,20 +25,20 @@ class Checkout extends Component {
   oldShipment() {
     if(store.getState().user.userType==="CITIZEN")
     return(
-      <div className="col-sm-12">
-        <div className="col-sm-6 offset-sm-3">
+      <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar1" type="text" placeholder="Address" aria-label="Address" disabled />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar2" type="text" placeholder="House Number" aria-label="HouseNumber" disabled />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar3" type="text" placeholder="District" aria-label="District" disabled />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar4" type="text" placeholder="Postcode" aria-label="Postcode" disabled />
           <br />
         </div>
@@ -46,20 +46,20 @@ class Checkout extends Component {
     )
     else return(
       //user.usertype === 'BUSINESS'
-      <div className="col-sm-12">
-        <div className="col-sm-6 offset-sm-3">
+      <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar1" type="text" placeholder="Headquarter" aria-label="Headquarter" disabled />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar2" type="text" placeholder="Headquarter Number" aria-label="HeadquarterNumber" disabled />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar3" type="text" placeholder="District" aria-label="District" disabled />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar4" type="text" placeholder="Postcode" aria-label="Postcode" disabled />
           <br />
         </div>
@@ -69,40 +69,40 @@ class Checkout extends Component {
   newShipment() {
     if(store.getState().userType==="Citizen")
     return(
-      <div className="col-sm-12">
-        <div className="col-sm-6 offset-sm-3">
+      <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar1" type="text" placeholder="Address" aria-label="Address" value={this.state.address1} onChange={this.handleInput1Change} />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar2" type="text" placeholder="House Number" aria-label="HouseNumber" value={this.state.address2} onChange={this.handleInput2Change} />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar3" type="text" placeholder="District" aria-label="District" value={this.state.address3} onChange={this.handleInput3Change} />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar4" type="text" placeholder="Postcode" aria-label="Postcode" value={this.state.address4} onChange={this.handleInput4Change} />
           <br />
         </div>
       </div>
     )
     else return(
-      <div className="col-sm-12">
-        <div className="col-sm-6 offset-sm-3">
+      <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar1" type="text" placeholder="Headquarter" aria-label="Headquarter" value={this.state.address1} onChange={this.handleInput1Change} />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar2" type="text" placeholder="Headquarter Number" aria-label="HeadquarterNumber" value={this.state.address2} onChange={this.handleInput2Change} />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar3" type="text" placeholder="District" aria-label="District" value={this.state.address3} onChange={this.handleInput3Change} />
           <br />
         </div>
-        <div className="col-sm-6 offset-sm-3">
+        <div className="col-sm-12">
           <input className="form-control" id="shipmentbar4" type="text" placeholder="Postcode" aria-label="Postcode" value={this.state.address4} onChange={this.handleInput4Change} />
           <br />
         </div>

@@ -2,13 +2,18 @@
 import { connect } from 'react-redux';
 import Button from '../presentational/Button';
 import governmentActionCreator from "../../actionsCreator/governmentActionCreator"
+import history from '../../store/history'
+import { CITIZEN } from '../../constants/actionTypes';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  let redirectUrl
+  (ownProps.type===CITIZEN) ? redirectUrl="/userslist" : redirectUrl="/businesslist"
   return {
     action: () => {
-      governmentActionCreator.changeUserState(ownProps.address, ownProps.state)
+      governmentActionCreator.changeUserState(ownProps.address, ownProps.state, ownProps.type)
       .then((action)=>{
         dispatch(action)
+        history.push(redirectUrl)
       })
       .catch((err)=>{
         console.log(err)
@@ -17,17 +22,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  var text;
-  if(props.state === true)
-    text = "Disable"
-  else
-    text = "Enable"
-  return {
-    text: props.state.toString()
-  }
-}
-
-const ButtonState = connect(mapStateToProps, mapDispatchToProps)(Button);
+const ButtonState = connect(null, mapDispatchToProps)(Button);
 
 export default ButtonState;

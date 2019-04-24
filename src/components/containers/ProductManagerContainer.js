@@ -1,15 +1,14 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
-import Store from '../presentational/Store';
+import ProductsManager from '../presentational/ProductsManager';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 
 const mapDispatchToProps = (dispatch) => {
   //should dispatch the action that fills the store with the first 50 users
   //*!!! maybe only the first time !!!*/
   return {
-    getStoreProducts: (amount, index)=> {
+    getProductsList: (amount, index)=> {
       //call the action creator to dispatch the products getter
-      businessActionCreator.getStoreProducts(amount, index).then((action)=>{
+      businessActionCreator.getMyProducts(amount, index).then((action)=>{
         dispatch(action)
       })
     }
@@ -18,11 +17,10 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    storeProducts: state.storeProducts,
-    searchProduct: state.searchProduct
+    myProductsArray: state.myProductsArray
   }
 }
 
-const StoreContainer = connect(mapStateToProps, mapDispatchToProps)(Store);
+const ProductManagerContainer = connect(mapStateToProps, mapDispatchToProps)(ProductsManager);
 
-export default StoreContainer;
+export default ProductManagerContainer;

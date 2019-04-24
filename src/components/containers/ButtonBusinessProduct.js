@@ -1,19 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import Button from '../presentational/Button';
-import business from "../../facade/business"
+import businessActionCreator from '../../actionsCreator/businessActionCreator';
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     action: (parametersArray) => {
       //business.addProduct(title, description, netPrice, vatPercentage, image)
-      console.log('prodotto, dati: ')
-      console.log(parametersArray)
-      business.addProduct(...parametersArray)
+      businessActionCreator.addProduct(...parametersArray)
       .then(()=>{
-        console.log('prodotto inserito')
-        setTimeout(5000);
-        business.getSenderProduct().then(console.log).catch(console.log)
+        businessActionCreator.getMyProducts(ownProps.amount, ownProps.index).then((action)=>{
+          console.log('dispatcho')
+          dispatch(action)
+        })
       })
       .catch(console.log)
     }

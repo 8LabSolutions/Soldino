@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
-import { printShipment } from '../../auxiliaryFunctions';
+import { printShipment, round } from '../../auxiliaryFunctions';
 
 class Orders extends Component {
   lastSeller = "";
@@ -17,8 +17,8 @@ class Orders extends Component {
           <div className="row">
             <div className="col-sm-6"><small>Seller</small></div>
             <div className="col-sm-6"><small>VAT Number</small></div>
-            <div className="col-sm-6">{product.sellerVATNumber}</div>
             <div className="col-sm-6">{this.lastSeller = product.sellerName}</div>
+            <div className="col-sm-6">{product.sellerVATNumber}</div>
             <div className="col-sm-4"><small>Products</small></div>
             <div className="col-sm-4"><small>Quantity</small></div>
             <div className="col-sm-4"><small>Unit price</small></div>
@@ -70,9 +70,9 @@ class Orders extends Component {
             <li className="list-group-item">
               <div className="container">
                 <div className="row">
-                  <div className="col-sm-4">VAT Price: CC {order.VAT}</div>
-                  <div className="col-sm-4">Net Price: CC {order.net}</div>
-                  <div className="col-sm-4"><strong>Total Price: CC {orderCost}</strong></div>
+                  <div className="col-sm-4">VAT Price: CC {round(order.VAT)}</div>
+                  <div className="col-sm-4">Net Price: CC {round(order.net)}</div>
+                  <div className="col-sm-4"><strong>Total Price: CC {round(orderCost)}</strong></div>
                 </div>
               </div>
             </li>

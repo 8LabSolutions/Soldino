@@ -1,17 +1,15 @@
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable no-unused-vars */
-// src/js/actions/index.js
-import { ADDTOSELLING } from "../constants/actionTypes";
+import { GETMYPRODUCTS, GETSTOREPRODUCTS } from "../constants/actionTypes";
 
-export function addToSelling(product) {
+export  function getMyProducts(myProductsArray) {
   return {
-    type: ADDTOSELLING,
-      product: {
-          title: product[0], 
-          price: (Math.round(product[2] * 100) / 100),
-          VAT: product[3],
-          sellerName: product[4],
-          sellerVATNumber: product[5]
-      }
+    type: GETMYPRODUCTS,
+    myProductsArray
   };
 }
+export  function getStoreProducts(storeProducts) {
+  return {
+    type: GETSTOREPRODUCTS,
+    storeProducts
+  };
+}
+

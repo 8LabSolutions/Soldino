@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import ButtonCart from '../containers/ButtonCart'
 import ButtonCartRemove from '../containers/ButtonCartRemove';
 import ButtonCartAdd from '../containers/ButtonCartAdd';
+import { round } from '../../auxiliaryFunctions';
 
 
 class CartProduct extends Component {
@@ -44,7 +45,7 @@ class CartProduct extends Component {
                   <NavLink className="nav-item nav-link" to="/cart"><ButtonCartAdd text="+" args1={product} /></NavLink>
                 </div>
                 <div className="col-sm-12">
-                  <h5 className="card-price">CC {props.price}</h5>
+                  <h5 className="card-price">CC {round(props.price)}</h5>
                 </div>
                 <div className="col-sm-12">
                   <NavLink className="nav-item nav-link" to="/cart"><ButtonCart text="Remove" args1={product} /></NavLink>

@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {Component} from 'react';
-import ButtonGeneric from '../containers/ButtonGeneric'
+import { round } from '../../auxiliaryFunctions';
 
 class FormCubitManager extends Component {
 
@@ -53,10 +53,10 @@ class FormCubitManager extends Component {
       <form>
         <div>
           <div className="col-sm-6 top-2rem">
-            <p>Total supply: {totalSupply} CC</p>
+            <p>Total supply: {round(totalSupply)} CC</p>
           </div>
           <div className="col-sm-6 top-2rem">
-            <p>Government supply: {governmentSupply} CC</p>
+            <p>Government supply: {round(governmentSupply)} CC</p>
           </div>
         </div>
 
@@ -72,12 +72,10 @@ class FormCubitManager extends Component {
               <input className="form-control" id="address" name="address" placeholder="Enter address" onChange={this.handleChange} />
             </div>
             <div className="col-sm-6 text-center">
-              <ButtonGeneric text="Distribute" />
-              <button type="button" text="Mint" onClick={this.handleMint} />
+              <button type="button" className="btn btn-light" onClick={this.handleMint}>Mint</button>
             </div>
             <div className="col-sm-6 text-center">
-              <ButtonGeneric text="Distribute" />
-              <button type="button" text="Distribute" onClick={this.handleDistribute} />
+              <button type="button" className="btn btn-light" onClick={this.handleDistribute}>Distribute</button>
             </div>
           </div>
         </div>

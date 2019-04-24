@@ -1,10 +1,17 @@
-import {GETUSERLIST, MINTANDDISTRIBUTE, CHANGESTATE } from "../constants/actionTypes";
+import {GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE } from "../constants/actionTypes";
 
 
-export function getUserList(userList) {
+export function getCitizenList(citizenList) {
   return {
-    type: GETUSERLIST,
-    userList
+    type: GETCITIZENLIST,
+    citizenList
+  };
+}
+
+export function getBusinessList(businessList) {
+  return {
+    type: GETBUSINESSLIST,
+    businessList
   };
 }
 
@@ -14,11 +21,4 @@ export function getGovernmentBalanceAndTotalAmount(amount, total) {
     amount,
     total
   };
-}
-
-export function changeUserState(newList) {
-  return {
-    type: CHANGESTATE,
-    newList
-  }
 }

@@ -1,8 +1,8 @@
 import government from "../facade/government"
 import user from "../facade/user"
-import {getUserList, getGovernmentBalanceAndTotalAmount, changeUserState} from "../actions/government"
+import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount} from "../actions/government"
 import {CITIZEN, BUSINESS} from "../constants/actionTypes"
-import { store } from "../store/index";
+import {store} from "../store/index"
 
 const governmentActionCreator = (function(){
   return{
@@ -11,7 +11,7 @@ const governmentActionCreator = (function(){
         return new Promise((resolve)=>{
           government.getCitizenList(amount, index).then((results)=>{
             //resolves the getUserListAction
-            resolve(getUserList(results))
+            resolve(getCitizenList(results))
           })
           .catch(()=>{
             //should resolve an error that says "No user found."
@@ -21,7 +21,7 @@ const governmentActionCreator = (function(){
         return new Promise((resolve)=>{
           government.getBusinessList(amount, index).then((results)=>{
             //resolves the getUserListAction
-            resolve(getUserList(results))
+            resolve(getBusinessList(results))
           })
           .catch(()=>{
             //should resolve an error that says "No user found."
@@ -64,7 +64,7 @@ const governmentActionCreator = (function(){
       })
     },
 
-    changeUserState: function(address, state){
+    changeUserState: function(address, state, type){
       return new Promise((resolve)=>{
         var stateAction;
         if(state === true)
@@ -72,14 +72,24 @@ const governmentActionCreator = (function(){
         else
           stateAction = government.enableAccount
         stateAction(address).then(()=>{
-          var newList = store.getState().userList;
-          for (let i = 0; i < newList.length; i++){
-            if(newList[i].address === address){
-              newList[i].state = !state
+          if(type === CITIZEN){
+            let newList = store.getState().citizenList;
+            for (let i = 0; i < newList.length; i++){
+              if(newList[i].address === address){
+                newList[i].state = !state
+              }
             }
-
+            resolve(getCitizenList(newList));
           }
-          resolve(changeUserState(newList));
+          if(type === BUSINESS){
+            let newList = store.getState().businessList;
+            for (let i = 0; i < newList.length; i++){
+              if(newList[i].address === address){
+                newList[i].state = !state
+              }
+            }
+            resolve(getBusinessList(newList));
+          }
         })
       })
 
