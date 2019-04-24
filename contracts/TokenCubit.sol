@@ -149,13 +149,13 @@ contract TokenCubit is Owned {
      *
      * @param _value the amount of money to burn
      */
-    function burnToken(uint256 _value) public returns (bool success) {
+    /*function burnToken(uint256 _value) public returns (bool success) {
         require(balanceOf[msg.sender] >= _value);   // Check if the sender has enough
         balanceOf[msg.sender] -= _value;            // Subtract from the sender
         totalSupply -= _value;                      // Updates totalSupply
         emit Burn(msg.sender, _value);
         return true;
-    }
+    }*/
 
     /**
      * Destroy tokens from other account
@@ -165,7 +165,7 @@ contract TokenCubit is Owned {
      * @param _from the address of the sender
      * @param _value the amount of money to burn
      */
-    function burnFrom(address _from, uint256 _value) public returns (bool success) {
+    /*function burnFrom(address _from, uint256 _value) public returns (bool success) {
         require(balanceOf[_from] >= _value);                // Check if the targeted balance is enough
         require(_value <= allowance[_from][msg.sender]);    // Check allowance
         balanceOf[_from] -= _value;                         // Subtract from the targeted balance
@@ -173,7 +173,7 @@ contract TokenCubit is Owned {
         totalSupply -= _value;                              // Update totalSupply
         emit Burn(_from, _value);
         return true;
-    }
+    }*/
 
     /**
     * Mint and distribute token

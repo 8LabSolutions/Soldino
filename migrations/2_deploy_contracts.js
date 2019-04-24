@@ -35,14 +35,14 @@ module.exports = function(deployer, network, accounts) {
   .then((instance) => {
     contractManagerInstance = instance
 
-    return deployer.deploy(Purchase, contractManagerInstance.address)
-    .then((purchaseInstace) => {
-      return contractManagerInstance.setContractAddress("Purchase", purchaseInstace.address)
+    return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", GOVERNMENT)
+    .then((tokenInstance) => {
+      return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
     })
     .then(() => {
-      return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", GOVERNMENT)
-      .then((tokenInstance) => {
-        return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
+      deployer.deploy(Purchase, contractManagerInstance.address)
+      .then((purchaseInstace) => {
+        return contractManagerInstance.setContractAddress("Purchase", purchaseInstace.address)
       })
     })
     .then(() => {

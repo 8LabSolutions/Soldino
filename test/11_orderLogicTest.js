@@ -1,4 +1,5 @@
 const { getWeb3 } = require('./helpers');
+const truffleAssert = require('truffle-assertions');
 
 const ContractManager = artifacts.require("ContractManager");
 const OrderStorage = artifacts.require("OrderStorage");
@@ -51,6 +52,20 @@ contract("OrderLogic", (accounts) => {
     );
   });
 
+  var hashIPFSUsr1 = "0x7465737400000000000000000000000000000000000000000000000000000000"
+  var hashIPFSUSr2 = "0x9995737400000000000000000000000000000000000000000000000000000000"
+  var key = "0x7465737500000000000000000000000000000000000000000000000000000000"
+  var funH = 3
+  var productsKey = [
+    "0x1115737400000000000000000000000000000000000000000000000000000000",
+    "0x2225737400000000000000000000000000000000000000000000000000000000",
+    "0x3335737400000000000000000000000000000000000000000000000000000000",
+    "0x4445737400000000000000000000000000000000000000000000000000000000"
+  ]
+  var productsQtn = [1,2,3,1]
+  var productsNetPrice = [100000,198560,100000,100000]
+  var productsVat = [22,10,4,10]
+  var period = "2019-05-09"
 
     /*.then(() => {
       vatStorageInstance.addAuthorized(OrderLogic.address).send({from: accounts[0], gas:2000000})
@@ -83,20 +98,6 @@ contract("OrderLogic", (accounts) => {
   })
 
   it("should add a new order", () => {
-    var hashIPFSUsr1 = "0x7465737400000000000000000000000000000000000000000000000000000000"
-    var hashIPFSUSr2 = "0x9995737400000000000000000000000000000000000000000000000000000000"
-    var key = "0x7465737500000000000000000000000000000000000000000000000000000000"
-    var funH = 3
-    var productsKey = [
-      "0x1115737400000000000000000000000000000000000000000000000000000000",
-      "0x2225737400000000000000000000000000000000000000000000000000000000",
-      "0x3335737400000000000000000000000000000000000000000000000000000000",
-      "0x4445737400000000000000000000000000000000000000000000000000000000"
-    ]
-    var productsQtn = [1,2,3,1]
-    var productsNetPrice = [100000,198560,100000,100000]
-    var productsVat = [22,10,4,10]
-    var period = "2019-05-09"
 
     return userLogicInstance.methods.addBusiness(hashIPFSUsr1,1,1).send({from:accounts[8] , gas: 200000})
     .then(() => {
@@ -107,21 +108,6 @@ contract("OrderLogic", (accounts) => {
       for(var i = 0; i<4; i++) {
         await productLogicInstance.methods.addProduct(productsKey[i],1,32,productsVat[i],productsNetPrice[i]).send({from: accounts[9], gas:2000000})
       }
-    })
-    .then(async() => {
-      for(var i = 0; i<4; i++) {
-        await productLogicInstance.methods.calculateProductGrossPrice(productsKey[i]).call()
-        .then(async(res1) => {
-          await console.log("Prezzo tot prod "+i+" : "+ res1+" Qtn: "+productsQtn[i])
-        })
-      }
-    })
-    .then(()=>{
-      return orderLogicInstance.methods.calculateOrderTotal(productsKey, productsQtn).call()
-      .then(async (results) =>{
-        await console.log(results[0])
-        await console.log(results[1])
-      })
     })
     .then(() => {
       return orderLogicInstance.methods.registerOrder(
@@ -134,6 +120,17 @@ contract("OrderLogic", (accounts) => {
         productsQtn
       ).send({from: accounts[0], gas: 4000000})
     })
+  })
 
+  it("should revert the order, buyer is the same of the seller", async () => {
+    await truffleAssert.reverts(orderLogicInstance.methods.registerOrder(
+      "0x7465737500000000000000000000000000000000000000000000000000000001",
+      1,
+      1,
+      accounts[9],
+      period,
+      productsKey,
+      productsQtn
+    ).send({from: accounts[9], gas: 4000000}), "OrderLogic: cannot buy from yourself")
   })
 })
