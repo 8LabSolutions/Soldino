@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import NavBar from './NavBar'
 import ButtonGeneric from '../containers/ButtonGeneric';
-import { checkGovernment } from '../../auxiliaryFunctions';
+import { checkGovernment, round } from '../../auxiliaryFunctions';
 
 class VATRefund extends Component {
   printBusiness(business) {
@@ -12,7 +12,7 @@ class VATRefund extends Component {
           <strong>Company name: </strong>{business[0]}<br />
           <strong>VAT number: </strong>{business[1]}<br />
           <strong>Payment status: </strong>{business[2]}<br />
-          <strong>Balance: </strong>{business[3]}<br />
+          <strong>Balance: </strong>{round(business[3])}<br />
         </li>
       )
     }else{
@@ -21,7 +21,7 @@ class VATRefund extends Component {
           <strong>Company name: </strong>{business[0]}<br />
           <strong>VAT number: </strong>{business[1]}<br />
           <strong>Payment status: </strong>{business[2]}<br />
-          <strong>Balance: </strong>{business[3]}<br />
+          <strong>Balance: </strong>{round(business[3])}<br />
           <ButtonGeneric text="Refund" />
         </li>
       )

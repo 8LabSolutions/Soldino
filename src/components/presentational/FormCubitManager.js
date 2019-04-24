@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {Component} from 'react';
+import { round } from '../../auxiliaryFunctions';
 
 class FormCubitManager extends Component {
 
@@ -52,10 +53,10 @@ class FormCubitManager extends Component {
       <form>
         <div>
           <div className="col-sm-6 top-2rem">
-            <p>Total supply: {totalSupply} CC</p>
+            <p>Total supply: {round(totalSupply)} CC</p>
           </div>
           <div className="col-sm-6 top-2rem">
-            <p>Government supply: {governmentSupply} CC</p>
+            <p>Government supply: {round(governmentSupply)} CC</p>
           </div>
         </div>
 

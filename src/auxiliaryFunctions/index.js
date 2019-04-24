@@ -202,13 +202,23 @@ export function ExportPDF(invoices, quarter) {
 
 
 export function checkBusiness() {
-  return (store.getState().logged === true || store.getState().user.userType === BUSINESS)
+  if(store.getState().user !== null){
+    return (store.getState().logged === true && store.getState().user.userType === BUSINESS)
+  }else return false;
 }
 
 export function checkCitizen() {
-  return (store.getState().logged === true || store.getState().user.userType === CITIZEN)
+  if(store.getState().user !== null){
+    return (store.getState().logged === true && store.getState().user.userType === CITIZEN)
+  }else return false;
 }
 
 export function checkGovernment() {
-  return (store.getState().logged === true || store.getState().user.userType === GOVERN)
+  if(store.getState().user !== null){
+    return (store.getState().logged === true && store.getState().user.userType === GOVERN)
+  }else return false;
+}
+
+export function round(numberToRound) {
+  return parseFloat(numberToRound).toFixed(2)
 }

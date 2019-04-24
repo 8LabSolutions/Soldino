@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import ButtonProduct from '../containers/ButtonProduct';
+import { round } from '../../auxiliaryFunctions';
 
 class Product extends Component {
 
@@ -24,12 +25,10 @@ class Product extends Component {
     let props = this.props;
     let maxQuantity = 50;
     let product = []
+    product[2] = props.price 
     product[3] = props.VAT
     product[4] = props.sellerName
     product[5] = props.sellerVATNumber
-    console.log('LE PROPSS')
-    console.log(props)
-    console.log(props.keyProd)
     product[6] = props.keyProd
     return (
       <div className="col-sm-3">
@@ -37,7 +36,7 @@ class Product extends Component {
           {/* <img src="..." className="card-img-top" alt="..." /> */}
           <div className="card-body">
             <h5 className="card-title">{ product[0] = props.title }</h5>
-            <h6 className="card-price">CC { product[2] = props.price }</h6>
+            <h6 className="card-price">CC { round(props.price) }</h6>
             {/*gross price*/}
             <p className="card-text">{props.description}</p>
             <div className="form-group col-sm-12">

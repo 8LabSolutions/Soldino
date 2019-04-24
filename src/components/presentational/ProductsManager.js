@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import BusinessProduct from './BusinessProduct';
 import NavBar from './NavBar';
 import ButtonGeneric from '../containers/ButtonGeneric';
+import { round } from '../../auxiliaryFunctions';
 
 class ProductsManager extends Component {
 
@@ -13,7 +14,7 @@ class ProductsManager extends Component {
 
   printProduct(product) {
     return(
-      <BusinessProduct key={product.keyProd} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} />
+      <BusinessProduct key={product.keyProd} title={product.title} price={round(product.totalPrice)} description={product.description} VAT={product.vatPercentage} />
     )
   }
 

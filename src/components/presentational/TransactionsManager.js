@@ -3,8 +3,7 @@
 import React, {Component} from 'react';
 import jsPDF from 'jspdf';
 import NavBar from './NavBar'
-import { store } from "../../store/index";
-import { getQuarters, getVATStatus, quarterToInvoices, printDate, getDetails, ExportPDF, checkBusiness } from '../../auxiliaryFunctions/index'
+import { getQuarters, getVATStatus, quarterToInvoices, printDate, getDetails, ExportPDF, checkBusiness, round } from '../../auxiliaryFunctions/index'
 import ButtonGeneric from '../containers/ButtonGeneric';
 
 
@@ -140,10 +139,10 @@ class TransactionsManager extends Component {
                       <p>{printDate(i.date)}</p>
                     </div>
                     <div className="col-sm-2">
-                      <p>CC {i.totalCC}</p>
+                      <p>CC {round(i.totalCC)}</p>
                     </div>
                     <div className="col-sm-2">
-                      <p>CC {i.totalVAT}</p>
+                      <p>CC {round(i.totalVAT)}</p>
                     </div>
                     <div className="col-sm-2">
                       <button type="button" className="btn btn-light" data-toggle="modal" data-target={"#invoice"+i.number}>More details</button>
@@ -202,13 +201,13 @@ class TransactionsManager extends Component {
                                       <p>Total Price: </p>
                                     </div>
                                     <div className="col-sm-8">
-                                      <p>CC {j[1]}</p>
+                                      <p>CC {round(j[1])}</p>
                                     </div>
                                     <div className="col-sm-4">
                                       <p>Net Price: </p>
                                     </div>
                                     <div className="col-sm-8">
-                                      <p>CC {j[2]}</p>
+                                      <p>CC {round(j[2])}</p>
                                     </div>
                                     <div className="col-sm-4">
                                       <p>VAT %: </p>
@@ -226,7 +225,7 @@ class TransactionsManager extends Component {
                                       <p>Quantity: </p>
                                     </div>
                                     <div className="col-sm-8">
-                                      <p>CC {j[5]}</p>
+                                      <p>{j[5]}</p>
                                     </div>
                                     <div className="col-sm-12"><hr /></div>
                                   </div>
@@ -239,13 +238,13 @@ class TransactionsManager extends Component {
                             <p>Total VAT: CC </p>
                           </div>
                           <div className="col-sm-8">
-                            <p>{i.totalVAT}</p>
+                            <p>{round(i.totalVAT)}</p>
                           </div>
                           <div className="col-sm-4">
                             <p>Total Price: CC </p>
                           </div>
                           <div className="col-sm-8">
-                            <p>{i.totalCC}</p>
+                            <p>{round(i.totalCC)}</p>
                           </div>
                           <div className="col-sm-4">
                             <p>Seller: </p>

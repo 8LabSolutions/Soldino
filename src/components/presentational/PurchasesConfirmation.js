@@ -5,6 +5,7 @@ import NavBar from './NavBar'
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
+import { round } from '../../auxiliaryFunctions';
 
 class PurchasesConfirmation extends Component {
 
@@ -25,7 +26,7 @@ class PurchasesConfirmation extends Component {
           <div className="col-sm-12">
             {order.map (i => this.printProduct(i))}
             <li className="list-group-item">
-              <div className="col-sm-12">Total: CC {orderCost}</div>
+              <div className="col-sm-12">Total: CC {round(orderCost)}</div>
             </li>
             <li className="list-group-item">
               <div className="container">

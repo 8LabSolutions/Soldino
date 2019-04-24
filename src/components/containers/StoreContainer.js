@@ -18,7 +18,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    storeProducts: state.storeProducts
+    storeProducts: state.storeProducts,
+    searchProduct: state.searchProduct
   }
 }
 

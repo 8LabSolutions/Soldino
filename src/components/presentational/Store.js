@@ -11,10 +11,13 @@ class Store extends Component {
   }
 
   printProduct(product) {
-    return(
-      //CHECK JSON ARGS NAMES
-      <Product key={String(product.keyProd)} keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
-    )
+    let {searchProduct} = this.props;
+    if(product.title.toLowerCase().includes(searchProduct.toLowerCase())){
+      return(
+        //CHECK JSON ARGS NAMES
+        <Product key={String(product.keyProd)} keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} />
+      )
+    }
   }
 
   render() {
