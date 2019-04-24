@@ -61,7 +61,6 @@ contract("UserStorage", (accounts) => {
     )
     .send({from: accounts[0], gas:6000000})
     .then(() => {
-
       return userStorageInstance.methods.getUserType(CITIZEN)
       .send({from:accounts[0], gas: 2000000})
       .then(function(type){
@@ -85,6 +84,16 @@ contract("UserStorage", (accounts) => {
       type,
       1,
       "The user is not a citizen"
+    })
+  })
+
+  it("should ban a user", function() {
+    return userStorageInstance.methods.setEnable(CITIZEN, false).send({from: accounts[0], gas:200000})
+    .then(() => {
+      return userStorageInstance.methods.getUserState(CITIZEN).call()
+      .then((res) => {
+        assert.equal(res,false)
+      })
     })
   })
 
