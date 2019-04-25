@@ -49,12 +49,12 @@ const web3user = (function(){
         web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
           console.log("Chiamata acquisto a: "+purchaseInstance.options.address)
           web3util.getCurrentAccount().then((account)=>{
-          /*  console.log("user.js web3functions-----------------")
+          console.log("user.js web3functions-----------------")
             console.log("prod")
             console.log(products)
             console.log("orders")
             console.log(remainingHash)
-            console.log("user.js web3functions----------------- FIN")*/
+            console.log("user.js web3functions----------------- FIN")
             purchaseInstance.methods.saveAndPayOrder(
               products,
               productQtn,

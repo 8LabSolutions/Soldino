@@ -2,8 +2,8 @@ import web3util from "../web3functions/web_util"
 import ipfsModule from "../ipfsCalls/index"
 import web3user from "../web3functions/user"
 
-import Purchase from "../contracts_build/Purchase"
-import OrderLogic from "../contracts_build/OrderLogic"
+
+import TokenCubit from "../contracts_build/TokenCubit"
 //TODO resolve in buy function
 const user = (function(){
 
@@ -14,6 +14,7 @@ const user = (function(){
   function splitInSellerArray(products){
     var productAux = [];
     var prevSeller = products[0].seller;
+
     var result = []
     for(let i = 0; i< products.length; i++){
       if(products[i].seller !== prevSeller){
@@ -111,34 +112,17 @@ const user = (function(){
           }*/
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
             web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
-              //return resolve()
-              web3util.getContractInstance(Purchase)
+              web3util.getContractInstance(TokenCubit)
               .then((cins) => {
                 web3util.getCurrentAccount().then((account) => {
-                  cins.getPastEvents("Debug", {filter: {_id: 1},
+                  cins.getPastEvents("Transfer", {filter: {_from: account},
                   fromBlock: 0,
                   toBlock: 'latest'})
                   .then((ev) => {
                     console.log("Evento")
                     console.log(ev)
                   })
-                  .then(() => {
-                    web3util.getContractInstance(OrderLogic)
-                    .then((ins) => {
-                      ins.getPastEvents("PurchaseOrderInserted", {filter: {_buyer: account},
-                      fromBlock: 0,
-                      toBlock: 'latest'})
-                      .then((evO) => {
-                        console.log("Evento ordini")
-                        console.log(evO)
-                      })
-                      .then(() => {
-                        ins.methods.getOrderTotal("0x9863dcbac114a781fc621442abcf1103013abbede91242f36c63fdeb1f24db21")
-                        .call()
-                        .then(resolve)
-                      })
-                    })
-                  })
+                  .then(resolve)
                 })
 
               })

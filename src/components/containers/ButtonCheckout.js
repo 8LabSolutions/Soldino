@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => {
         net: getNet([...order[0]]),
         address: order[1],
         buyerName: store.getState().user.name,
-        buyerDetails: store.getState().user.surname,
+        buyerDetails: store.getState().user.surname
       }
       console.log("ButtonCheckout [29], CART")
       console.log(cart)

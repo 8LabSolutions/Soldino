@@ -6,11 +6,10 @@ import React, {Component} from 'react';
 import Product from './Product';
 import SearchContainer from '../containers/SearchContainer';
 import { amountStore } from '../../constants/fixedValues';
-import { checkCitizen, checkBusiness } from '../../auxiliaryFunctions';
 
 
 class Store extends Component {
-  
+
   componentWillMount(){
     const {getStoreProducts} = this.props;
     let {index} = this.props;
@@ -53,7 +52,7 @@ class Store extends Component {
     if(product.title.toLowerCase().includes(searchProduct.toLowerCase())){
       return(
         //CHECK JSON ARGS NAMES
-        <Product key={String(product.keyProd)} keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} image={product.image} />
+        <Product key={String(product.keyProd)} keyProd={String(product.keyProd)} title={product.title} price={product.totalPrice} description={product.description} VAT={product.vatPercentage} sellerName={product.sellerName} sellerVATNumber={product.sellerVATNumber} image={product.image} seller={product.seller} />
       )
     }
   }
