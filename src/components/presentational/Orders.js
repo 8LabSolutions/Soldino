@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import NavBar from './NavBar'
 import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
-import { printShipment, round } from '../../auxiliaryFunctions';
+import { printShipment, round, checkBusiness, checkCitizen } from '../../auxiliaryFunctions';
 
 class Orders extends Component {
   lastSeller = "";
@@ -84,6 +84,7 @@ class Orders extends Component {
   }
 
   render() {
+    if(!(checkCitizen()||checkBusiness())){window.location.href = "/"}
     let ordersList = store.getState().ordersList;
     let totalOrders = ordersList.length
     return (

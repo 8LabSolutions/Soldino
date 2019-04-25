@@ -5,19 +5,21 @@ import NavBar from './NavBar'
 import { store } from "../../store/index";
 import CartProduct from './CartProduct';
 import ButtonGeneric from '../containers/ButtonGeneric';
+import { checkCitizen, checkBusiness } from '../../auxiliaryFunctions';
 
 
 function printProduct(product) {
   console.log("KEYPROD CARRELLO")
   console.log(product[6])
   return(
-    <CartProduct keyProd={product[6]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} />
+    <CartProduct keyProd={product[6]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} seller={product[7]} />
   )
 }
 
 class Cart extends Component {
 
   render() {
+    if(!(checkCitizen()||checkBusiness())){window.location.href = "/"}
     let productsList = store.getState().cart;
     let totalProducts = productsList.length
     let title
@@ -30,6 +32,7 @@ class Cart extends Component {
     let product
     let productArray = []
     let totalPrice = 0
+    let seller
     if(store.getState().logged === false){window.location.href = "/"}
     for(var i=0; i<totalProducts; i++){
       title = productsList[i].title
@@ -39,8 +42,9 @@ class Cart extends Component {
       sellerName = productsList[i].sellerName
       sellerVATNumber = productsList[i].sellerVATNumber
       keyProd = productsList[i].keyProd
+      seller = productsList[i].seller
       totalPrice += price*quantity
-      product = [title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd]
+      product = [title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd, seller]
       productArray[i] = product;
     }
     return (

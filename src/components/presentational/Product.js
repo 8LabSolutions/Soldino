@@ -25,17 +25,18 @@ class Product extends Component {
     let props = this.props;
     let maxQuantity = 50;
     let product = []
-    product[2] = props.price 
+    product[2] = props.price
     product[3] = props.VAT
     product[4] = props.sellerName
     product[5] = props.sellerVATNumber
     product[6] = props.keyProd
+    product[7] = props.seller
     let image
     (props.image===null) ? image = "/default.png" : image = props.image;
     return (
       <div className="col-sm-3">
         <div className="card">
-          <img src={image} alt="product" /> 
+          <img src={image} alt="product" />
           <div className="card-body">
             <div className="cardHeaderWrapper">
               <h5 className="card-title">{ product[0] = props.title }</h5>

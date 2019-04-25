@@ -14,7 +14,7 @@ class NavBar extends Component {
     if (store.getState().logged === true && store.getState().user.userType === "GOVERNMENT"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav navbar-items">
-                    <NavLink className="nav-item nav-link" to="/">Cubit Manager</NavLink>
+                    <NavLink exact className="nav-item nav-link" to="/">Cubit Manager</NavLink>
                     <NavLink className="nav-item nav-link" to="/userslist">Users List</NavLink>
                     <NavLink className="nav-item nav-link" to="/businesslist">Business List</NavLink>
                     <NavLink className="nav-item nav-link" to="/vatrefund">VAT Refund</NavLink>
@@ -22,7 +22,7 @@ class NavBar extends Component {
     }else if (store.getState().logged === true && store.getState().user.userType === "CITIZEN"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav navbar-items">
-                    <NavLink className="nav-item nav-link" to="/">Store</NavLink>
+                    <NavLink exact className="nav-item nav-link" to="/">Store</NavLink>
                     <NavLink className="nav-item nav-link" to="/orders">Orders</NavLink>
                     {/*<NavLink className="nav-item nav-link" to="/purchasesconfirmation">Purchases confirmation</NavLink>*/}
                     <NavLink className="nav-item nav-link material-icons" to="/cart">shopping_cart</NavLink>
@@ -31,7 +31,7 @@ class NavBar extends Component {
     }else if (store.getState().logged === true && store.getState().user.userType === "BUSINESS"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav navbar-items">
-                    <NavLink className="nav-item nav-link" to="/">Store</NavLink>
+                    <NavLink exact className="nav-item nav-link" to="/">Store</NavLink>
                     <NavLink className="nav-item nav-link" to="/orders">Orders</NavLink>
                     {/*<NavLink className="nav-item nav-link" to="/purchasesconfirmation">Purchases confirmation</NavLink>*/}
                     <NavLink className="nav-item nav-link" to="/productsmanager">Products Manager</NavLink>

@@ -16,7 +16,6 @@ const web3business = (function(){
               hashIpfs, hashSize, hashFun, vatPercentage, netPrice*web3util.TOKENMULTIPLIER)
             .send({from: account})
             .then(() => {
-              console.log("business web3 fun: prodotto inserito net e vat")
               productLogicInstance.methods.getProductNetPrice(hashIpfs).call()
               .then(console.log)
               .then(resolve)
@@ -207,9 +206,13 @@ const web3business = (function(){
                     for(let i = 0; i < products.length; i++){
                       promises.push(
                         new Promise((resolve)=>{
-                          this.getProductHash(products[i]).then((ipfsHash)=>{
-                          resolve([products[i], ipfsHash])
-                        })
+                          this.getProductHash(products[i])
+                          .then((ipfsHash)=>{
+                            productLogicInstance.methods.getProductSeller(products[i]).call()
+                            .then((seller) => {
+                              resolve([products[i], ipfsHash, seller])
+                            })
+                         })
                       }))
                     }
                     //resolves all the products values

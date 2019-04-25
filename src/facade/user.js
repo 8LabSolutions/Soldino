@@ -2,7 +2,8 @@ import web3util from "../web3functions/web_util"
 import ipfsModule from "../ipfsCalls/index"
 import web3user from "../web3functions/user"
 
-import OrderLogic from "../contracts_build/OrderLogic"
+
+import TokenCubit from "../contracts_build/TokenCubit"
 //TODO resolve in buy function
 const user = (function(){
 
@@ -13,6 +14,7 @@ const user = (function(){
   function splitInSellerArray(products){
     var productAux = [];
     var prevSeller = products[0].seller;
+
     var result = []
     for(let i = 0; i< products.length; i++){
       if(products[i].seller !== prevSeller){
@@ -110,13 +112,16 @@ const user = (function(){
           }*/
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
             web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
-              //return resolve()
-              web3util.getContractInstance(OrderLogic)
+              web3util.getContractInstance(TokenCubit)
               .then((cins) => {
                 web3util.getCurrentAccount().then((account) => {
-                  cins.getPastEvents("PurchaseOrderInserted", {filter: {_buyer: account},
+                  cins.getPastEvents("Transfer", {filter: {_from: account},
                   fromBlock: 0,
                   toBlock: 'latest'})
+                  .then((ev) => {
+                    console.log("Evento")
+                    console.log(ev)
+                  })
                   .then(resolve)
                 })
 

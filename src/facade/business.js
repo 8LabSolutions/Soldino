@@ -29,6 +29,7 @@ const business = (function(){
       promises.push(new Promise((resolve)=>{
         getIPFSProduct(ris[i][1]).then((middle)=>{
           middle.keyProd = ris[i][0]
+          middle.seller = ris[i][2]
           resolve(middle);
         })
       }));
@@ -53,7 +54,7 @@ const business = (function(){
       totalPrice: +netPrice + +netPrice*(+vatPercentage/100), //lordo
       sellerName: sellerName,
       sellerVATNumber: sellerVATNumber,
-      image: image
+      image: image,
     }
     return newProductJSON;
   }

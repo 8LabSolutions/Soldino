@@ -6,9 +6,6 @@ import { addToCart } from '../../actions/cart';
 const mapDispatchToProps = (dispatch) => {
   return {
     action: (product) => {
-      console.log('PPPPPP')
-      console.log(product)
-
       dispatch(addToCart(product))
     }
   }

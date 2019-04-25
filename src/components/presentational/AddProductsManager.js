@@ -9,6 +9,7 @@ import NavBar from './NavBar';
 import ButtonBusinessProduct from '../containers/ButtonBusinessProduct';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from '../../store';
+import { checkBusiness } from '../../auxiliaryFunctions';
 
 class AddProductsManager extends Component {
   constructor(props){
@@ -37,6 +38,7 @@ class AddProductsManager extends Component {
     });
   }
   render() {
+    if(!checkBusiness()){window.location.href = "/"}
     return (
       <div>
         <NavBar />
@@ -46,7 +48,7 @@ class AddProductsManager extends Component {
             <div className="col-sm-6 offset-sm-3">
               <label htmlFor="InputTitle" className="form-group col-sm-12">
                 <span>Title</span>
-                <input className="form-control" id="InputTitle" placeholder="Enter Title" name="title" onChange={this.handleChangeField} />
+                <input className="form-control" id="InputTitle" placeholder="Enter Title" name="title" onChange={this.handleChangeField} maxlength="28" />
               </label>
               <label htmlFor="InputDescription" className="form-group col-sm-12">
                 <span>Description</span>

@@ -10,8 +10,8 @@ import { round } from '../../auxiliaryFunctions';
 
 
 class CartProduct extends Component {
-  enableRemove(title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd) {
-    let product = [title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd]
+  enableRemove(title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd, seller) {
+    let product = [title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd, seller]
     return (
       <NavLink className="nav-item nav-link" to="/cart"><ButtonCartRemove text="-" args1={product} /></NavLink>
     )
@@ -25,7 +25,7 @@ class CartProduct extends Component {
     let props = this.props;
     console.log("RENDER PRODOTTO NEL CARRELLO")
     console.log(props)
-    let product = [props.title, props.quantity, props.price, props.VAT, props.sellerName, props.sellerVATNumber, props.keyProd]
+    let product = [props.title, props.quantity, props.price, props.VAT, props.sellerName, props.sellerVATNumber, props.keyProd, props.seller]
     return (
       <div className="col-sm-4">
         <div className="card card-cart">
@@ -36,7 +36,7 @@ class CartProduct extends Component {
                   <h5 className="card-title">{props.title}</h5>
                 </div>
                 <div className="col-sm-4">
-                  { props.quantity<="1" ? this.disableRemove() : this.enableRemove(props.title, +props.quantity-1, props.price, props.VAT, props.sellerName, props.sellerVATNumber, props.keyProd) }
+                  { props.quantity<="1" ? this.disableRemove() : this.enableRemove(props.title, +props.quantity-1, props.price, props.VAT, props.sellerName, props.sellerVATNumber, props.keyProd, props.seller) }
                 </div>
                 <div className="col-sm-4">
                   <h6 className="card-quantity">{props.quantity}</h6>

@@ -24,7 +24,6 @@ import ProductsManagerContainer from './components/containers/ProductManagerCont
 //store.dispatch(reset())
 
 class App extends Component {
-
   render() {
     let props = this.props
     //console.log(props.loading)

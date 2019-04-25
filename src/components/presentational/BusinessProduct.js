@@ -4,8 +4,8 @@
 /* eslint-disable jsx-a11y/label-has-for */
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
-import ButtonBusinessProduct from '../containers/ButtonBusinessProduct';
 import { round } from '../../auxiliaryFunctions';
+import ButtonGeneric from '../containers/ButtonGeneric';
 
 class BusinessProduct extends Component {
 
@@ -16,20 +16,20 @@ class BusinessProduct extends Component {
     return (
       <div className="col-sm-3">
         <div className="card card-manager">
-          <img src={image} alt="product" /> 
+          <img src={image} alt="product" />
           <div className="card-body">
             <div className="cardHeaderWrapper">
               <h5 className="card-title">{props.title}</h5>
-              <p className="card-text card-description">{props.description}</p> 
+              <p className="card-text card-description">{props.description}</p>
             </div>
             <p className="card-text">CC {round(props.price)}</p> {/*lordo*/}
-            <p className="card-text">CC {round(props.price - ((props.price * 100)/(+100 + +props.VAT)))} ~ {props.VAT}%</p>  
+            <p className="card-text">CC {round(props.price - ((props.price * 100)/(+100 + +props.VAT)))} ~ {props.VAT}%</p>
 
             <NavLink className="nav-item nav-link" to="/editproductsmanager">
-              <ButtonBusinessProduct text="Edit" args1={null} />
-            </NavLink> 
+              <ButtonGeneric text="Edit" args1={null} />
+            </NavLink>
             <NavLink className="nav-item nav-link" to="/productsmanager">
-              <ButtonBusinessProduct text="Remove" args1={null} />
+              <ButtonGeneric text="Remove" args1={null} />
             </NavLink>
           </div>
         </div>
