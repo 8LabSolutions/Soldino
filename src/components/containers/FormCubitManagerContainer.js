@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import FormCubitManager from '../presentational/FormCubitManager';
 import governmentActionCreator from "../../actionsCreator/governmentActionCreator"
+import { beginLoading, endLoading } from '../../actions/login';
 
 const mapDispatchToProps = (dispatch) => {
   //should dispatch the action that fills the store with the first 50 users
@@ -14,15 +15,19 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     mint: (amount)=> {
+      dispatch(beginLoading())
       governmentActionCreator.mint(amount).then((action)=>{
         console.log(action)
         dispatch(action)
+        dispatch(endLoading())
       })
     },
 
     distribute: (amount, address)=>{
+      dispatch(beginLoading())
       governmentActionCreator.distribute(amount, address).then((action)=>{
         dispatch(action)
+        dispatch(endLoading())
       })
     }
   }

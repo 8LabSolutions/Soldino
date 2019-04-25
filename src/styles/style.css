@@ -236,3 +236,7 @@ input:checked + .slider {
 .card-cart .card-title {
   height: 60px !important;
 }
+
+.cardHeaderWrapper .card-title {
+  height: 60px !important;
+}
