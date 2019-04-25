@@ -1,7 +1,6 @@
 Footer {
   left: 0;
   bottom: 0;
-  height: 100px;
   width: 100%;
   overflow: hidden;
 }
@@ -44,6 +43,7 @@ footer {
 body {
   background-color: #f1f1f1;
   padding-top: 30px;
+  padding-bottom: 40px;
 }
 
 nav {
@@ -239,4 +239,34 @@ input:checked + .slider {
 
 .cardHeaderWrapper .card-title {
   height: 60px !important;
+}
+
+#footer {
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  height:27px;
+  width:100%;
+  padding: 0px !important;
+  border-top: 1px solid rgba(0,0,0,.125) !important;
+  border-radius: 0 !important;
+  z-index: 999;
+  opacity: 0.9;
+  transition: 0.5s;
+  background-color: #f8f9fa !important;
+  color: #9aa4af !important;
+}
+
+.footer-copyright {
+  padding: 0px !important;
+}
+
+/* IE 6 */
+* html #footer {
+  position:absolute;
+  top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
+}
+
+#footer:hover {
+opacity: 1;
 }

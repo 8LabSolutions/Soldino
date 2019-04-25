@@ -58,11 +58,7 @@ class ProductsManager extends Component {
     let {myProductsArray} = this.props;
     let list;
     let {index} = this.props;
-    let {increaseIndex} = this.props;
-    let {decreaseIndex} = this.props;
     let {totalMyProduct} = this.props;
-    let next = ">>"
-    let prev = "<<"
     if(myProductsArray!== undefined && myProductsArray.length>0)
       list = myProductsArray.map(i => this.printProduct(i))
     return (
