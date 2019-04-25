@@ -16,14 +16,26 @@ density = 0.0
 with open ("ratio.txt",'r') as ra:
 	lines = ra.readlines()
 	
-	l0 = lines[0]
-	l1 = lines[1]
-	
-	p = take_number_from_line(l0) # tests passed
-	np = take_number_from_line(l1) # tests not passed
+	if len(lines) == 0:
+		print("Errore inatteso: nessuna riga in ratio.txt")
+	elif len(lines) == 1:
+		l0 = lines[0]
+		l0 = l0.strip()
+		found = str(search_pattern_in_string("[a-z]+",l0))
+		if found == "passing":
+			density = 0.0
+		else: # found == "failing"
+			density = 100.0
 
-	density = round((float(np)/float(p)),2 )
-	print(density)
+	else: # len(lines) == 2
+		l0 = lines[0]
+		l1 = lines[1]
+		
+		p = take_number_from_line(l0) # tests passed
+		np = take_number_from_line(l1) # tests not passed
+
+		density = round((float(np)/float(p)),2 )
+		
 
 with open("densitaerrori.csv",'a') as d:
 	line = str(datetime.datetime.now().isoformat()[:10])+','+str(density)+'\n'
