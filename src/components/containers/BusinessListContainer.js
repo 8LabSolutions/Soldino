@@ -32,6 +32,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           <strong>Email: </strong>
           {business.email}
           <br />
+          <strong>Public address: </strong>
+          {business.address}
+          <br />
           {button}
         </li>
       )

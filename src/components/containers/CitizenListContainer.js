@@ -30,6 +30,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           <strong>Email: </strong>
           {citizen.email}
           <br />
+          <strong>Public address: </strong>
+          {citizen.address}
+          <br />
           <ButtonState text={dynamicText} state={citizen.state} address={citizen.address} type={CITIZEN} />
         </li>
       )
