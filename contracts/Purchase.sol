@@ -16,7 +16,6 @@ contract Purchase {
     //mapping(address => uint256) internal payments;
 
     event OrderReceived(address _from, address _to, uint256 _amount);
-    event Debug(uint8 _id, uint256 _amount);
 
     constructor(address _contractManager) public {
         contractManager = ContractManager(_contractManager);
@@ -35,8 +34,8 @@ contract Purchase {
         external
     {
         bytes32 prevOrderHash = _orderHash[0];
-        orderProd.push(_prodHash[0]);
-        orderProdQtn.push(_prodQtn[0]);
+        /*orderProd.push(_prodHash[0]);
+        orderProdQtn.push(_prodQtn[0]);*/
 
         for (uint i = 0; i < _prodHash.length; i++) {
             if (_orderHash[i] != prevOrderHash) {
@@ -57,12 +56,14 @@ contract Purchase {
                 _saveAndPayOrder(prevOrderHash, orderProdQtn, orderProd, _orderHashFun[i], _orderHashSize[i], msg.sender, _period);
             }
         }
+        delete orderProd;
+        delete orderProdQtn;
     }
 
     function _saveAndPayOrder(
-        bytes32 _prodHash,
+        bytes32 _orderHash,
         uint8[] memory _prodQtn,
-        bytes32[] memory _orderHash,
+        bytes32[] memory _prodHash,
         uint8 _orderHashFun,
         uint8 _orderHashSize,
         address _buyer,
@@ -70,12 +71,11 @@ contract Purchase {
         )
         internal {
             setOrderLogic();
-            orderLogic.registerOrder(_prodHash, _orderHashFun, _orderHashSize, _buyer, _period, _orderHash, _prodQtn);
-            emit Debug(1, orderLogic.getOrderTotal(_prodHash));
+            orderLogic.registerOrder(_orderHash, _orderHashFun, _orderHashSize, _buyer, _period, _prodHash, _prodQtn);
             // pay the order
             require(cubitToken.transferFrom(
-                _buyer, orderLogic.getOrderSeller(_prodHash),
-                orderLogic.getOrderTotal(_prodHash)),
+                _buyer, orderLogic.getOrderSeller(_orderHash),
+                orderLogic.getOrderTotal(_orderHash)),
                 "Error during transfer");
     }
 

@@ -44,7 +44,7 @@ const business = (function(){
     })
   }
 
-  function getProductJSONfromFields(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
+  function getProductJSONfromFields(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber, sellerAddress){
     var newProductJSON = {
       title: title,
       description: description,
@@ -53,7 +53,7 @@ const business = (function(){
       totalPrice: +netPrice + +netPrice*(+vatPercentage/100), //lordo
       sellerName: sellerName,
       sellerVATNumber: sellerVATNumber,
-      image: image
+      image: image,
     }
     return newProductJSON;
   }

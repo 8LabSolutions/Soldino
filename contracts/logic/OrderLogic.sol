@@ -99,6 +99,7 @@ contract OrderLogic {
         require(_productsHash.length > 0, "Empty array");
         uint256 total = 0;
         address seller = productLogic.getProductSeller(_productsHash[0]);
+
         uint256 vatTotal = 0;
 
         for (uint i = 0; i < _productsHash.length; ++i) {
