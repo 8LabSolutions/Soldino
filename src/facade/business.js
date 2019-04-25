@@ -7,6 +7,7 @@ const business = (function(){
    * @description Shuffles array in place
    * @param {Array} a items An array containing the items.
    */
+  /*
   function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -14,6 +15,7 @@ const business = (function(){
     }
     return a;
   }
+  */
 
   /**
    * @description The function return an array of promises that will resolve into products' JSON
@@ -94,6 +96,18 @@ const business = (function(){
     deleteProduct: function(keyProd){
       return new Promise((resolve)=>{
         web3business.deleteProduct(keyProd).then(resolve)
+      })
+    },
+
+    getTotalStoreProduct: function(){
+      return new Promise((resolve)=>{
+        web3business.getTotalProducts().then(resolve)
+      })
+    },
+
+    getTotalMyProduct: function(){
+      return new Promise((resolve)=>{
+        web3business.getTotalProducts(true).then(resolve)
       })
     },
 

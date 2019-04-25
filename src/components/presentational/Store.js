@@ -43,9 +43,9 @@ class Store extends Component {
             <SearchContainer />
             {list}
           </div>
-          <a className="decrease" onClick={decreaseIndex}>{prev}</a>
-          <span>page {+index+1}</span> 
-          <a className="increase" onClick={increaseIndex}>{next}</a>
+          <a className="decrease" onClick={()=>{decreaseIndex()}}>{prev}</a>
+          <span>page {+index+1}</span>
+          <a className="increase" onClick={()=>{increaseIndex()}}>{next}</a>
         </div>
       </div>
     )

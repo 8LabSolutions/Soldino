@@ -67,7 +67,7 @@ const authentication = (function(){
           if(state === false)
             reject("the account is disabled, please call the offices to get more infos");
           //if the government is logging in, there's no need to call IPFS
-          if(userType === 3){
+          if(userType == 3){
             var governmentJSON = {
               userType: "GOVERNMENT",
               name: "Government",
