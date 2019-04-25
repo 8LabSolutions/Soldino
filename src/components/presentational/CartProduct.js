@@ -28,7 +28,7 @@ class CartProduct extends Component {
     let product = [props.title, props.quantity, props.price, props.VAT, props.sellerName, props.sellerVATNumber, props.keyProd]
     return (
       <div className="col-sm-4">
-        <div className="card">
+        <div className="card card-cart">
           <div className="card-body">
             <div className="container">
               <div className="row">

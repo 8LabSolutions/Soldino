@@ -1,5 +1,5 @@
 const {getWeb3} = require('./helpers')
-
+const truffleAssert = require('truffle-assertions');
 const ContractManager = artifacts.require("ContractManager");
 const UserStorage = artifacts.require("storage/UserStorage");
 
@@ -61,7 +61,6 @@ contract("UserStorage", (accounts) => {
     )
     .send({from: accounts[0], gas:6000000})
     .then(() => {
-
       return userStorageInstance.methods.getUserType(CITIZEN)
       .send({from:accounts[0], gas: 2000000})
       .then(function(type){
@@ -71,13 +70,6 @@ contract("UserStorage", (accounts) => {
       })
     })
   })
-  it("should check if an user is already registered", function(){
-    return userStorageInstance.methods.addUser(accounts[0], 1, 9, 9, "0x7465737400000000000000000000000000000000000000000000000000000000" )
-    .send({from: accounts[0], gas: 4712388})
-    .catch(() => {
-      assert.isTrue(true);
-    })
-  });
 
   it("should check if the user type is correct", function(){
     return userStorageInstance.methods.getUserType(CITIZEN)
@@ -85,6 +77,16 @@ contract("UserStorage", (accounts) => {
       type,
       1,
       "The user is not a citizen"
+    })
+  })
+
+  it("should ban a user", function() {
+    return userStorageInstance.methods.setEnable(CITIZEN, false).send({from: accounts[0], gas:200000})
+    .then(() => {
+      return userStorageInstance.methods.getUserState(CITIZEN).call()
+      .then((res) => {
+        assert.equal(res,false)
+      })
     })
   })
 

@@ -148,10 +148,10 @@ contract("Purchase", (accounts) => {
       }
     })
     .then(() => {
-      return tokenInstance.methods.transfer(accounts[8], 2000000).send({from: accounts[0], gas: 2000000})
+      return tokenInstance.methods.transfer(accounts[8], 20000000).send({from: accounts[0], gas: 2000000})
     })
     .then(() => {
-      return tokenInstance.methods.approve(Purchase.address, 2000000).send({from: accounts[8], gas: 2000000})
+      return tokenInstance.methods.approve(Purchase.address, 20000000).send({from: accounts[8], gas: 2000000})
     })
     .then(() => {
       return purchaseInstance.methods.saveAndPayOrder(
@@ -161,7 +161,7 @@ contract("Purchase", (accounts) => {
         ordersFun,
         ordersSize,
         period
-      ).send({from: accounts[8], gas: 6000000})
+      ).send({from: accounts[8], gas: 4000000})
     })
   })
 })

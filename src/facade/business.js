@@ -70,6 +70,8 @@ const business = (function(){
     */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName/*="azienda1"*/, sellerVATNumber/*="provvisorio"*/){
       //istantiate the necessary costracts and returns the results
+      console.log("ADDPRODUCT interno")
+      console.log(image)
       var newProductJSON = getProductJSONfromFields(
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
       return new Promise((resolve)=>{
@@ -109,7 +111,7 @@ const business = (function(){
       return new Promise((resolve)=>{
         web3business.getProducts(amount, index).then((ris)=>{
           //ris contains the array of ipfs hash
-          ris = shuffle(ris)
+          //ris = shuffle(ris)
           getProducts(ris).then(resolve)
         })
       })

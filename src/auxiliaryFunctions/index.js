@@ -222,3 +222,16 @@ export function checkGovernment() {
 export function round(numberToRound) {
   return parseFloat(numberToRound).toFixed(2)
 }
+
+export function getBase64(file) {
+  return new Promise((resolve)=>{
+    var reader = new FileReader();
+    reader.onload = function () {
+      resolve(reader.result)
+    };
+    reader.readAsDataURL(file[0]);
+  })
+  /*reader.onerror = function (error) {
+    console.log('Error: ', error);
+  };*/
+}
