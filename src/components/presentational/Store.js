@@ -6,10 +6,11 @@ import React, {Component} from 'react';
 import Product from './Product';
 import SearchContainer from '../containers/SearchContainer';
 import { amountStore } from '../../constants/fixedValues';
+import { checkCitizen, checkBusiness } from '../../auxiliaryFunctions';
 
 
 class Store extends Component {
-
+  
   componentWillMount(){
     const {getStoreProducts} = this.props;
     let {index} = this.props;

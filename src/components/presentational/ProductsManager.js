@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 import BusinessProduct from './BusinessProduct';
 import NavBar from './NavBar';
 import ButtonGeneric from '../containers/ButtonGeneric';
-import { round } from '../../auxiliaryFunctions';
+import { round, checkBusiness } from '../../auxiliaryFunctions';
 import { defaultIndex, amountStore } from '../../constants/fixedValues';
 
 class ProductsManager extends Component {
@@ -55,6 +55,7 @@ class ProductsManager extends Component {
   }
 
   render() {
+    if(!checkBusiness()){window.location.href = "/"}
     let {myProductsArray} = this.props;
     let list;
     let {index} = this.props;

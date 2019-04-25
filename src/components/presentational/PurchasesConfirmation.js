@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
-import { round } from '../../auxiliaryFunctions';
+import { round, checkCitizen, checkBusiness } from '../../auxiliaryFunctions';
 
 class PurchasesConfirmation extends Component {
 
@@ -52,6 +52,7 @@ class PurchasesConfirmation extends Component {
   }
 
   render() {
+    if(!(checkCitizen()||checkBusiness())){window.location.href = "/"}
     let ordersList = store.getState().pending;
     let totalOrders = ordersList.length
     return (

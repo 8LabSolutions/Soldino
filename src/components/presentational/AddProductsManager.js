@@ -9,6 +9,7 @@ import NavBar from './NavBar';
 import ButtonBusinessProduct from '../containers/ButtonBusinessProduct';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from '../../store';
+import { checkBusiness } from '../../auxiliaryFunctions';
 
 class AddProductsManager extends Component {
   constructor(props){
@@ -37,6 +38,7 @@ class AddProductsManager extends Component {
     });
   }
   render() {
+    if(!checkBusiness()){window.location.href = "/"}
     return (
       <div>
         <NavBar />
