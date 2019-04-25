@@ -135,7 +135,7 @@ const user = (function(){
                       .then(() => {
                         ins.methods.getOrderTotal("0x9863dcbac114a781fc621442abcf1103013abbede91242f36c63fdeb1f24db21")
                         .call()
-                        .then(console.log)
+                        .then(resolve)
                       })
                     })
                   })

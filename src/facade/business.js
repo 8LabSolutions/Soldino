@@ -44,7 +44,7 @@ const business = (function(){
     })
   }
 
-  function getProductJSONfromFields(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber, sellerAddress){
+  function getProductJSONfromFields(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
     var newProductJSON = {
       title: title,
       description: description,
