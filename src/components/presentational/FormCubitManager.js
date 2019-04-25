@@ -51,31 +51,32 @@ class FormCubitManager extends Component {
     let {totalSupply, governmentSupply} = this.props;
     return (
       <form>
-        <div>
-          <div className="col-sm-6 top-2rem">
-            <p>Total supply: {round(totalSupply)} CC</p>
-          </div>
-          <div className="col-sm-6 top-2rem">
-            <p>Government supply: {round(governmentSupply)} CC</p>
-          </div>
-        </div>
-
         <div className="container">
           <div className="row">
-
-            <div className="form-group col-sm-6">
+            <div className="col-sm-6 top-2rem">
+              <p>Total supply: {round(totalSupply)} CC</p>
+            </div>
+            <div className="col-sm-6 top-2rem">
+              <p>Government supply: {round(governmentSupply)} CC</p>
+            </div>
+            <div className="form-group col-sm-6 top-2rem">
               <label htmlFor="InputAmount">Amount</label>
-              <input className="form-control" id="amount" name="amount" placeholder="Enter amount" type="number" min="1" max={governmentSupply} onChange={this.handleChange} />
+              <input className="form-control" id="InputAmount" name="InputAmount" placeholder="Enter amount" type="number" min="1" max={governmentSupply} onChange={this.handleChange} />
             </div>
-            <div className="form-group col-sm-6">
+            <div className="form-group col-sm-6 top-2rem">
               <label htmlFor="InputAddress">Address</label>
-              <input className="form-control" id="address" name="address" placeholder="Enter address" onChange={this.handleChange} />
+              <input className="form-control" id="InputAddress" name="InputAddress" placeholder="Enter address" onChange={this.handleChange} />
             </div>
-            <div className="col-sm-6 text-center">
-              <button type="button" className="btn btn-light" onClick={this.handleMint}>Mint</button>
-            </div>
-            <div className="col-sm-6 text-center">
+            <div className="col-sm-12 text-center">
               <button type="button" className="btn btn-light" onClick={this.handleDistribute}>Distribute</button>
+            </div>
+            <div className="col-sm-12 top-2rem"><hr /></div>
+            <div className="form-group col-sm-6 offset-sm-3 top-2rem">
+              <label htmlFor="InputAmount2">Amount</label>
+              <input className="form-control" id="InputAmount2" name="InputAmount2" placeholder="Enter amount" type="number" min="1" onChange={this.handleChange} />
+            </div>
+            <div className="col-sm-12 text-center">
+              <button type="button" className="btn btn-light" onClick={this.handleMint}>Mint</button>
             </div>
           </div>
         </div>

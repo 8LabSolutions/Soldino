@@ -39,6 +39,7 @@ const web3user = (function(){
     },
 
     purchase: function(products, remainingHash, hashSize, hashFun, productQtn){
+
       for (let i = 0; i< products.length; i++){
         products[i] = products[i].keyProd
       }
