@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -6,14 +7,45 @@ import { NavLink } from 'react-router-dom';
 import BusinessProduct from './BusinessProduct';
 import NavBar from './NavBar';
 import ButtonGeneric from '../containers/ButtonGeneric';
-import { round } from '../../auxiliaryFunctions';
-import { defaultIndex } from '../../constants/fixedValues';
+import { round, checkBusiness } from '../../auxiliaryFunctions';
+import { defaultIndex, amountStore } from '../../constants/fixedValues';
 
 class ProductsManager extends Component {
 
   componentWillMount(){
     const {getProductsList} = this.props;
     getProductsList(defaultIndex);
+  }
+
+  getLeftArrows() {
+    let {decreaseIndex} = this.props;
+    let prev = "<<";
+    let {index} = this.props;
+    if(index > 0){
+      return(
+        <a className="decrease" onClick={()=>{decreaseIndex()}}>{prev}</a>
+      )
+    }else{
+      return(
+        <a className="decrease">{prev}</a>
+      )
+    }
+  }
+
+  getRightArrows() {
+    let {increaseIndex} = this.props;
+    let next = ">>";
+    let {totalMyProduct} = this.props;
+    let {index} = this.props;
+    if(Math.floor(+(totalMyProduct/amountStore)+1) > (+index+1)){
+      return(
+        <a className="increase" onClick={()=>{increaseIndex()}}>{next}</a>
+      )
+    }else{
+      return(
+        <a className="increase">{next}</a>
+      )
+    }
   }
 
   printProduct(product) {
@@ -23,13 +55,11 @@ class ProductsManager extends Component {
   }
 
   render() {
+    if(!checkBusiness()){window.location.href = "/"}
     let {myProductsArray} = this.props;
     let list;
     let {index} = this.props;
-    let {increaseIndex} = this.props;
-    let {decreaseIndex} = this.props;
-    let next = ">>"
-    let prev = "<<"
+    let {totalMyProduct} = this.props;
     if(myProductsArray!== undefined && myProductsArray.length>0)
       list = myProductsArray.map(i => this.printProduct(i))
     return (
@@ -46,12 +76,9 @@ class ProductsManager extends Component {
             </div>
             {list}
           </div>
-          <a className="decrease" onClick={()=>{decreaseIndex()}}>{prev}</a>
-          <span>
-            page
-            {+index+1}
-          </span>
-          <a className="increase" onClick={()=>{increaseIndex()}}>{next}</a>
+          {this.getLeftArrows()}
+          <span>page {+index+1} of {Math.floor(+(totalMyProduct/amountStore)+1)}</span>
+          {this.getRightArrows()}
         </div>
       </div>
     )

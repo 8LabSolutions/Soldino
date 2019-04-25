@@ -7,7 +7,7 @@ import NavBar from './NavBar';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from '../../store';
 import ButtonCheckout from '../containers/ButtonCheckout';
-import { getRegistrationAddress } from '../../auxiliaryFunctions';
+import { getRegistrationAddress, checkCitizen, checkBusiness } from '../../auxiliaryFunctions';
 
 
 class Checkout extends Component {
@@ -152,6 +152,7 @@ class Checkout extends Component {
     });
   }
   render() {
+    if(!(checkCitizen()||checkBusiness())){window.location.href = "/"}
     const { shipType } = this.state;
     return (
       <div>

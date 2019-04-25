@@ -30,6 +30,20 @@ const businessActionCreator = (function(){
         business.addProduct(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber)
         .then(resolve)
       })
+    },
+
+    getTotalStoreProduct: function(){
+      return new Promise((resolve)=>{
+        business.getTotalStoreProduct()
+        .then(resolve)
+      })
+    },
+
+    getTotalMyProduct: function(){
+      return new Promise((resolve)=>{
+        business.getTotalMyProduct()
+        .then(resolve)
+      })
     }
 
   }

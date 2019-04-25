@@ -5,6 +5,7 @@ import NavBar from './NavBar'
 import { store } from "../../store/index";
 import CartProduct from './CartProduct';
 import ButtonGeneric from '../containers/ButtonGeneric';
+import { checkCitizen, checkBusiness } from '../../auxiliaryFunctions';
 
 
 function printProduct(product) {
@@ -18,6 +19,7 @@ function printProduct(product) {
 class Cart extends Component {
 
   render() {
+    if(!(checkCitizen()||checkBusiness())){window.location.href = "/"}
     let productsList = store.getState().cart;
     let totalProducts = productsList.length
     let title

@@ -5,6 +5,7 @@ import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import { increaseIndex, decreaseIndex, resetIndex } from '../../actions/store'
 import { store } from '../../store';
 import { amountStore } from '../../constants/fixedValues';
+import { setTotalNumberOfProducts } from '../../actions/business';
 
 const mapDispatchToProps = (dispatch) => {
   //should dispatch the action that fills the store with the first 50 users
@@ -13,6 +14,7 @@ const mapDispatchToProps = (dispatch) => {
     getStoreProducts: (index) => {
       //call the action creator to dispatch the products getter
       dispatch(resetIndex())
+      businessActionCreator.getTotalStoreProduct().then((total)=>{dispatch(setTotalNumberOfProducts(total))})
       businessActionCreator.getStoreProducts(amountStore, index).then((action)=>{
         dispatch(action)
       })
@@ -36,7 +38,8 @@ const mapStateToProps = (state) => {
   return {
     storeProducts: state.storeProducts,
     searchProduct: state.searchProduct,
-    index: state.index
+    index: state.index,
+    totalStoreProduct: state.totalStoreProduct
   }
 }
 
