@@ -1,3 +1,7 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {Component} from 'react';
 import Product from './Product';
 import SearchContainer from '../containers/SearchContainer';
@@ -7,7 +11,8 @@ class Store extends Component {
 
   componentWillMount(){
     const {getStoreProducts} = this.props;
-    getStoreProducts(50,0);
+    let {index} = this.props;
+    getStoreProducts(index);
   }
 
   printProduct(product) {
@@ -22,6 +27,11 @@ class Store extends Component {
 
   render() {
     let {storeProducts} = this.props;
+    let {index} = this.props;
+    let {increaseIndex} = this.props;
+    let {decreaseIndex} = this.props;
+    let next = ">>"
+    let prev = "<<"
     let list;
     if(storeProducts!== undefined && storeProducts.length>0)
       list = storeProducts.map(i => this.printProduct(i))
@@ -33,6 +43,9 @@ class Store extends Component {
             <SearchContainer />
             {list}
           </div>
+          <a className="decrease" onClick={decreaseIndex}>{prev}</a>
+          <span>page {+index+1}</span> 
+          <a className="increase" onClick={increaseIndex}>{next}</a>
         </div>
       </div>
     )

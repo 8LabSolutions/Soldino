@@ -1,6 +1,7 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS} from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX} from "../constants/actionTypes";
+import { defaultIndex } from '../constants/fixedValues';
 
 const initialState = {
   logged: false,
@@ -11,7 +12,8 @@ const initialState = {
   ordersList: [],
   loading: false,
   userList: [],
-  myProductsArray: []
+  myProductsArray: [],
+  index: defaultIndex
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === BEGINLOADING || action.type === ENDLOADING) {
@@ -157,6 +159,29 @@ export function rootReducer(state = initialState, action) {
     })
   }
 
+  if(action.type === INCREASEINDEX) {
+    return Object.assign({}, state, {
+      index: state.index+1
+    })
+  }
+
+  if(action.type === DECREASEINDEX) {
+    if(state.index > 0){
+      return Object.assign({}, state, {
+        index: state.index-1
+      })
+    }else{
+      return Object.assign({}, state, {
+        index: state.index
+      })
+    }
+  }
+
+  if(action.type === RESETINDEX) {
+    return Object.assign({}, state, {
+      index: 0
+    })
+  }
 
   //returning the state
   return state;
@@ -166,7 +191,7 @@ export const persistConfig = {
   key: 'root',
   storage: storage,
   /** 'cart', 'ordersList' prima della presentazione */
-  blacklist: ['searchProduct', 'logged', 'user', 'loading']
+  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray']
 };
 
 export default persistReducer(persistConfig, rootReducer);

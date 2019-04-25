@@ -111,7 +111,7 @@ const business = (function(){
       return new Promise((resolve)=>{
         web3business.getProducts(amount, index).then((ris)=>{
           //ris contains the array of ipfs hash
-          ris = shuffle(ris)
+          //ris = shuffle(ris)
           getProducts(ris).then(resolve)
         })
       })

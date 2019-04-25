@@ -54,11 +54,11 @@ class AddProductsManager extends Component {
               </label>
               <label htmlFor="InputNetPrice" className="form-group col-sm-12">
                 <span>Net Price</span>
-                <input className="form-control" id="InputNetPrice" placeholder="Enter Net Price in CC" name="netPrice" onChange={this.handleChangeField}  />
+                <input type="number" className="form-control" id="InputNetPrice" placeholder="Enter Net Price in CC" name="netPrice" onChange={this.handleChangeField}  />
               </label>
               <label htmlFor="InputVAT" className="form-group col-sm-12">
                 <span>VAT</span>
-                <input className="form-control" id="InputVAT" placeholder="Enter VAT in %" name="vatPercentage" onChange={this.handleChangeField} />
+                <input type="number" className="form-control" id="InputVAT" placeholder="Enter VAT in %" name="vatPercentage" onChange={this.handleChangeField} />
               </label>
               <div className="form-group col-sm-12">
                 <input type="file" id="imageUploader" onChange={this.handleChange} />

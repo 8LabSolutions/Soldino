@@ -1,15 +1,19 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import BusinessProduct from './BusinessProduct';
 import NavBar from './NavBar';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { round } from '../../auxiliaryFunctions';
+import { defaultIndex } from '../../constants/fixedValues';
 
 class ProductsManager extends Component {
 
   componentWillMount(){
     const {getProductsList} = this.props;
-    getProductsList(50,0);
+    getProductsList(defaultIndex);
   }
 
   printProduct(product) {
@@ -21,6 +25,11 @@ class ProductsManager extends Component {
   render() {
     let {myProductsArray} = this.props;
     let list;
+    let {index} = this.props;
+    let {increaseIndex} = this.props;
+    let {decreaseIndex} = this.props;
+    let next = ">>"
+    let prev = "<<"
     if(myProductsArray!== undefined && myProductsArray.length>0)
       list = myProductsArray.map(i => this.printProduct(i))
     return (
@@ -37,6 +46,9 @@ class ProductsManager extends Component {
             </div>
             {list}
           </div>
+          <a className="decrease" onClick={decreaseIndex}>{prev}</a>
+          <span>page {+index+1}</span> 
+          <a className="increase" onClick={increaseIndex}>{next}</a>
         </div>
       </div>
     )
