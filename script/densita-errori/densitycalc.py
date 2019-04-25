@@ -23,9 +23,9 @@ with open ("ratio.txt",'r') as ra:
 		l0 = l0.strip()
 		found = str(search_pattern_in_string("[a-z]+",l0))
 		if found == "passing":
-			density = 0.0
+			density = 0.0 # no errors
 		else: # found == "failing"
-			density = 100.0
+			density = 100.0 # only errors
 
 	else: # len(lines) == 2
 		l0 = lines[0]
@@ -33,8 +33,9 @@ with open ("ratio.txt",'r') as ra:
 		
 		p = take_number_from_line(l0) # tests passed
 		np = take_number_from_line(l1) # tests not passed
-
-		density = round((float(np)/float(p)),2 )
+		total = p + np # total number of tests
+		
+		density = round((float(np)/float(total)),2 )
 		
 
 with open("densitaerrori.csv",'a') as d:
