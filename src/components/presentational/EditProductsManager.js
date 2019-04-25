@@ -39,11 +39,11 @@ class EditProductsManager extends Component {
               </label>
               <label htmlFor="InputNetPrice" className="form-group col-sm-12">
                 <span>Net Price</span>
-                <input className="form-control" id="InputNetPrice" placeholder="Enter Net Price in CC" />
+                <input type="number" className="form-control" id="InputNetPrice" placeholder="Enter Net Price in CC" />
               </label>
               <label htmlFor="InputVAT" className="form-group col-sm-12">
                 <span>VAT</span>
-                <input className="form-control" id="InputVAT" placeholder="Enter VAT in %" />
+                <input type="number" className="form-control" id="InputVAT" placeholder="Enter VAT in %" />
               </label>
               <div>
                 <input type="file" onChange={this.handleChange} />

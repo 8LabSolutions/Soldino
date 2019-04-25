@@ -57,8 +57,8 @@ class App extends Component {
     }else{
       return(
         <div>
-          <img id="arrow" src="arrow.png" />
           <p id="loading">Loading</p>
+          <span id="loading" className="loading-small">Please check MetaMask</span>
           <Particles
             params={{
               particles: {

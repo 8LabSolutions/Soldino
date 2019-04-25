@@ -76,6 +76,63 @@ const web3business = (function(){
      * @param {*} index
      * @param {*} sender
      */
+
+    getTotalProducts : function(sender=false){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
+          web3util.getCurrentAccount().then((account)=>{
+            // preparing the query
+            var query;
+            if (sender === true){
+              query = {
+                //filtering by the seller (only sender products)
+                filter: {_seller: account},
+                fromBlock: 0,
+                toBlock: 'latest'
+              }
+            } else {
+              query = {
+                fromBlock: 0,
+                toBlock: 'latest'
+              }
+            }
+            //array containing the inserted products
+            var products = [];
+            //array containing the deleted products
+            var deleted = [];
+            //array containing the updated products
+            //firstly get the inserted products from the logs
+            productLogicInstance.getPastEvents('ProductInserted', query)
+            .then((events) => {
+              for (let i = 0; i < events.length; i++){
+                //extracting only the hash
+                products.push(events[i].returnValues._keyHash)
+              }
+            })
+            .then(()=>{
+              //getting the deleted products
+              productLogicInstance.getPastEvents('ProductDeleted', query)
+              .then((eventsDeleted) => {
+                for (let i =0; i<eventsDeleted.length; i++){
+                  //extracting only the hash
+                  deleted.push(eventsDeleted[i].returnValues._keyHash)
+                }
+                // removing the deleted products from the array
+                let filtered = products.filter(function(value){
+                  return !(deleted.includes(value))
+                })
+                products = filtered;
+              })
+              .then(()=>{
+                resolve(products.length)
+              })
+            })
+          })
+        })
+      })
+    },
+
+
     getProducts: function(amount, index, sender=false) {
       return new Promise((resolve)=>{
         web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
@@ -107,7 +164,7 @@ const web3business = (function(){
             productLogicInstance.getPastEvents('ProductInserted', query)
             .then((events) => {
               let start = index*amount;
-              for (let i = start; i < start + amount && start + i < events.length; i++){
+              for (let i = start; i < start + amount && i < events.length; i++){
                 //extracting only the hash
                 products.push(events[i].returnValues._keyHash)
               }

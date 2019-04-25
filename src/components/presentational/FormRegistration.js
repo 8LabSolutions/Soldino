@@ -36,7 +36,7 @@ class FormRegistration extends Component {
         </label>
         <label htmlFor="HouseNumber" className="form-group col-sm-6">
           <span>House Number</span>
-          <input className="form-control" id="HouseNumber" name="streetNumber" placeholder="Enter House Number" onChange={this.handleChange} />
+          <input type="number" className="form-control" id="HouseNumber" name="streetNumber" placeholder="Enter House Number" onChange={this.handleChange} />
         </label>
         <label htmlFor="District" className="form-group col-sm-6">
           <span>District</span>
@@ -44,7 +44,7 @@ class FormRegistration extends Component {
         </label>
         <label htmlFor="Postcode" className="form-group col-sm-6">
           <span>Postcode</span>
-          <input className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" onChange={this.handleChange} />
+          <input type="number" className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" onChange={this.handleChange} />
         </label>
         <label htmlFor="InputName" className="form-group col-sm-6">
           <span>Name</span>
@@ -71,7 +71,7 @@ class FormRegistration extends Component {
         </label>
         <label htmlFor="HeadquarterNumber" className="form-group col-sm-6">
           <span>Headquarter Number</span>
-          <input className="form-control" id="HeadquarterNumber" name="streetNumber" placeholder="Enter Headquarter Number" onChange={this.handleChange}  />
+          <input type="number" className="form-control" id="HeadquarterNumber" name="streetNumber" placeholder="Enter Headquarter Number" onChange={this.handleChange}  />
         </label>
         <label htmlFor="District" className="form-group col-sm-6">
           <span>District</span>
@@ -79,7 +79,7 @@ class FormRegistration extends Component {
         </label>
         <label htmlFor="Postcode" className="form-group col-sm-6">
           <span>Postcode</span>
-          <input className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" onChange={this.handleChange}  />
+          <input type="number" className="form-control" id="Postcode" name="postCode" placeholder="Enter Postcode" onChange={this.handleChange}  />
         </label>
         <label htmlFor="InputVATNumber" className="form-group col-sm-6">
           <span>Company Name</span>
@@ -87,7 +87,7 @@ class FormRegistration extends Component {
         </label>
         <label htmlFor="InputCompanyName" className="form-group col-sm-6">
           <span>VAT Number</span>
-          <input className="form-control" id="InputCompanyName" name="details" placeholder="Enter VAT Number" onChange={this.handleChange}  />
+          <input type="number" className="form-control" id="InputCompanyName" name="details" placeholder="Enter VAT Number" onChange={this.handleChange}  />
         </label>
       </div>
     )

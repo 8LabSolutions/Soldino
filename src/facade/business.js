@@ -7,6 +7,7 @@ const business = (function(){
    * @description Shuffles array in place
    * @param {Array} a items An array containing the items.
    */
+  /*
   function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -14,6 +15,7 @@ const business = (function(){
     }
     return a;
   }
+  */
 
   /**
    * @description The function return an array of promises that will resolve into products' JSON
@@ -70,6 +72,8 @@ const business = (function(){
     */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName/*="azienda1"*/, sellerVATNumber/*="provvisorio"*/){
       //istantiate the necessary costracts and returns the results
+      console.log("ADDPRODUCT interno")
+      console.log(image)
       var newProductJSON = getProductJSONfromFields(
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
       return new Promise((resolve)=>{
@@ -95,6 +99,18 @@ const business = (function(){
       })
     },
 
+    getTotalStoreProduct: function(){
+      return new Promise((resolve)=>{
+        web3business.getTotalProducts().then(resolve)
+      })
+    },
+
+    getTotalMyProduct: function(){
+      return new Promise((resolve)=>{
+        web3business.getTotalProducts(true).then(resolve)
+      })
+    },
+
     getSenderProduct: function(amount, index) {
       return new Promise((resolve)=>{
         //scorrere gli eventi per trovare quelli con come seller l'account sender
@@ -109,7 +125,7 @@ const business = (function(){
       return new Promise((resolve)=>{
         web3business.getProducts(amount, index).then((ris)=>{
           //ris contains the array of ipfs hash
-          ris = shuffle(ris)
+          //ris = shuffle(ris)
           getProducts(ris).then(resolve)
         })
       })

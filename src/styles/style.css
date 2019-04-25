@@ -136,22 +136,9 @@ input:checked + .slider {
   transform: translate(-50%, -50%);
 }
 
-@-webkit-keyframes slide {
-  0%{
-      top: 2px;
-  }
-  50%{
-     top: 15px;
-  }
-  100%{
-    top: 2px;
-}
-}
-
-#arrow{
-  position: absolute;
-  right: 40px;
-  -webkit-animation: slide 2s linear infinite;
+.loading-small {
+  top: 55% !important;
+  font-size: 25px !important;
 }
 
 #logo {
@@ -161,4 +148,91 @@ input:checked + .slider {
 
 .navbar-items {
   margin: 0 auto;
+}
+
+#imageUploader {
+  display: none;
+}
+
+#spanUploader {
+  cursor: pointer;
+}
+
+#uploadedImage, #spanUploader {
+  border: 2px solid #bdc3c7 !important;
+  border-radius: 6px !important;
+}
+
+.card {
+  height: 605px !important;
+  transition: transform .2s;
+  box-shadow: 0 0px 15px 0px rgba(0, 0, 0, 0.25);
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card-text {
+  max-height: 90px;
+  overflow-y: auto;
+  height: 90px;
+}
+
+.card-cart {
+  height: auto !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bdc3c7; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #bdc3c7; 
+}
+
+.card img {
+  width: 253px !important;
+  height: 165px !important;
+  object-fit: cover;
+}
+
+.card-manager .card-text {
+  height: auto !important;
+}
+
+.card-manager .card-description {
+  max-height: 90px;
+  overflow-y: auto;
+  height: 90px !important;
+}
+
+.decrease {
+  cursor: pointer;
+  margin-right: 25px; 
+}
+.increase {
+  cursor: pointer;
+  margin-left: 25px; 
+}
+
+.cardHeaderWrapper {
+  max-height: 162px;
+  height: 162px !important;
+}
+
+.card-cart .card-title {
+  height: 60px !important;
 }
