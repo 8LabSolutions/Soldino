@@ -68,7 +68,11 @@ const government = (function(){
                 surname: results[i].surname,
                 email: results[i].email,
                 address: resultsArray[i][0],
-                state: resultsArray[i][2]
+                state: resultsArray[i][2],
+                district: results[i].district,
+                postCode: results[i].postCode,
+                streetName: results[i].streetName,
+                streetNumber: results[i].streetNumber
               })
             }
             resolve(citizens)
@@ -93,12 +97,17 @@ const government = (function(){
           Promise.all(businessJSON)
           .then((results)=>{
             for(let i = 0; i < results.length; i++){
+              console.log(results[i])
               business.push({
                 name: results[i].name,
                 VATnumber: results[i].VATnumber,
                 email: results[i].email,
                 address: resultsArray[i][0],
-                state: resultsArray[i][2]
+                state: resultsArray[i][2],
+                district: results[i].district,
+                postCode: results[i].postCode,
+                streetName: results[i].streetName,
+                streetNumber: results[i].streetNumber
               })
             }
             resolve(business)

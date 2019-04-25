@@ -5,6 +5,7 @@ import UsersList from '../presentational/UsersList';
 import governmentActionCreator from "../../actionsCreator/governmentActionCreator"
 import {BUSINESS} from "../../constants/actionTypes"
 import ButtonState from './ButtonState';
+import { printShipment } from '../../auxiliaryFunctions';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   //should dispatch the action that fills the store with the first 50 users
@@ -32,8 +33,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           <strong>Email: </strong>
           {business.email}
           <br />
-          <strong>Public address: </strong>
+          <strong>Wallet address: </strong>
           {business.address}
+          <br />
+          <strong>Headquarters: </strong>
+          {printShipment([business.streetName, business.streetNumber, business.postCode, business.district])}
           <br />
           {button}
         </li>

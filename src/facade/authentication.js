@@ -78,7 +78,7 @@ const authentication = (function(){
           else {
             ipfsModule.getJSONfromHash(hashIPFS).then((ris)=>{
               ris.state = state;
-              resolve(state)
+              resolve(ris)
             })
           }
         })

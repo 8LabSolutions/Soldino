@@ -46,7 +46,7 @@ class NavBar extends Component {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <img alt="Logo" id="logo" src="logo.png" />
+        <NavLink className="nav-item nav-link material-icons" to="/"><img alt="Logo" id="logo" src="logo.png" /></NavLink>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           {navLinks}
         </div>

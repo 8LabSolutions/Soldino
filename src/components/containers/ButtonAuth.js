@@ -31,7 +31,10 @@ const mapDispatchToProps = (dispatch) => {
         let action = (store.getState().logged === false) ? logIn(user) : logOut();
         dispatch(action)
         history.push('/')
-      }).catch(console.log)
+      }).catch((log) => {
+        console.log(log)
+        history.push('/erroruserdisabled')
+      })
       //swith sul type dello user (diversi dispatch) : paramentro oggetto JSON
       //dispatch dell'azione di login/logout
 

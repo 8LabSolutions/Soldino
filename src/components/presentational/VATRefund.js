@@ -50,7 +50,7 @@ class VATRefund extends Component {
     return (
       <div>
         <NavBar />
-        <ul className="list-group list-group-flush">
+        <ul className="list-group list-group-flush top-2rem">
           {businessArray.map(i => this.printBusiness(i))}
         </ul>
       </div>
