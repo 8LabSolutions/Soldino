@@ -269,3 +269,42 @@ input:checked + .slider {
 #footer:hover {
 opacity: 1;
 }
+
+.css-1r4vtzz, .css-48ayfv {
+  width: 100% !important;
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.467;
+  padding: 8px 12px;
+  height: 42px;
+  border-radius: 6px;
+  box-shadow: none;
+  transition: border .25s linear, color .25s linear, background-color .25s linear;
+}
+
+.css-1vr111p-option, .css-1qprcsu-option, .css-1jllj6i-control, .css-6y1x9t-control {
+  font-size: 13px !important;
+}
+
+#inputAddressDiv div {
+  width: 100% !important;
+  text-align: left !important;
+}
+
+#inputAddressDiv .css-1jllj6i-control div {
+  width: auto !important;
+}
+
+#inputAddressDiv .css-1jllj6i-control {
+  width: auto !important;
+}
+
+#inputAddressDiv .css-6y1x9t-control div {
+  width: auto !important;
+}
+
+#inputAddressDiv .css-6y1x9t-control {
+  width: auto !important;
+}

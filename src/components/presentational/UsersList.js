@@ -2,12 +2,13 @@
 import React, {Component} from 'react';
 import NavBar from './NavBar'
 import { checkGovernment } from '../../auxiliaryFunctions';
+import { amountUser, defaultIndex } from '../../constants/fixedValues';
 
 class UsersList extends Component {
 
   componentWillMount(){
     const {getUserList} = this.props;
-    getUserList(50,0);
+    getUserList(amountUser, defaultIndex);
     //alert("MOUNT")
   }
 
