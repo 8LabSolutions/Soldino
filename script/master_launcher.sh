@@ -16,4 +16,9 @@ cd	coverage
 bash launcher.sh
 cd ..
 
+echo "doing densità errori"
+cd	densita-errori
+bash launcher.sh
+cd ..
+
 echo "end"
