@@ -20,11 +20,18 @@ const web3user = (function(){
     tokenTransferApprove: function(amount) {
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
+          console.log("Cubit "+tokenInstance.options.address)
           web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
             web3util.getCurrentAccount().then((account)=>{
               tokenInstance.methods.approve(purchaseInstance.options.address, parseInt(amount*web3util.TOKENMULTIPLIER))
               .send({from: account})
-              .then(resolve)
+              .then((txnHash) => {
+                return web3util.init()
+                .then((web3Instance) => {
+                  web3Instance.eth.getTransactionReceipt(txnHash)
+                  .then(resolve)
+                })
+              })
             })
           })
         })
@@ -38,6 +45,7 @@ const web3user = (function(){
 
       return new Promise((resolve)=>{
         web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
+          console.log("Chiamata acquisto a: "+purchaseInstance.options.address)
           web3util.getCurrentAccount().then((account)=>{
             purchaseInstance.methods.saveAndPayOrder(
               products,

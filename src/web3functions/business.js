@@ -15,7 +15,12 @@ const web3business = (function(){
             productLogicInstance.methods.addProduct(
               hashIpfs, hashSize, hashFun, vatPercentage, netPrice*web3util.TOKENMULTIPLIER)
             .send({from: account})
-            .then(resolve)
+            .then(() => {
+              console.log("business web3 fun: prodotto inserito net e vat")
+              productLogicInstance.methods.getProductNetPrice(hashIpfs).call()
+              .then(console.log)
+              .then(resolve)
+            })
           })
         })
       })

@@ -6,6 +6,8 @@ import businessActionCreator from '../../actionsCreator/businessActionCreator';
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     action: (parametersArray) => {
+      console.log("ButtonBusinessProduct [9]")
+      console.log(parametersArray)
       //business.addProduct(title, description, netPrice, vatPercentage, image)
       businessActionCreator.addProduct(...parametersArray)
       .then(()=>{

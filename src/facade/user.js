@@ -2,6 +2,8 @@ import web3util from "../web3functions/web_util"
 import ipfsModule from "../ipfsCalls/index"
 import web3user from "../web3functions/user"
 
+import OrderLogic from "../contracts_build/OrderLogic"
+//TODO resolve in buy function
 const user = (function(){
 
   function groupProductsBySeller(products){
@@ -25,17 +27,17 @@ const user = (function(){
   }
 
   function getTotalVAT(products){
-    var sum = 0;
+    let sum = 0;
     for(let i = 0; i < products.length; i++){
-      sum+= (products[i].totalPrice - products[i].netPrice);
+      sum+= parseInt((products[i].VAT));
     }
     return sum;
   }
 
   function getTotalNet(products){
-    var sum = 0;
+    let sum = 0;
     for(let i = 0; i < products.length; i++){
-      sum+= products[i].netPrice;
+      sum+= (products[i].price*100)/(+100 + +parseInt((products[i].VAT)));
     }
     return sum;
   }
@@ -43,7 +45,7 @@ const user = (function(){
   function getTotal(products){
     var sum = 0;
     for(let i = 0; i < products.length; i++){
-      sum+= products[i].totalPrice;
+      sum+= products[i].price;
     }
     return sum;
   }
@@ -51,7 +53,6 @@ const user = (function(){
 
   return {
     buy: function(cartInfo){
-      console.log(cartInfo)
       return new Promise((resolve)=>{
          //get all the products
 
@@ -61,7 +62,11 @@ const user = (function(){
 
         //sort the products by seller
         products = groupProductsBySeller(products)
+        console.log("PRODOTTI")
+        console.log(products)
         var orders = splitInSellerArray(products)
+        console.log("ORDINI")
+        console.log(orders)
 
         var promises = []
         for(let i = 0; i < orders.length; i++){
@@ -99,14 +104,23 @@ const user = (function(){
               productQtn.push(orders[i][j].quantity)
             }
           }
-          console.log(remainingHash)
           /*let something = []
           for(var i=0; i<products.length; i++){
             something[i] = products[i]
           }*/
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
             web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
-              return resolve()
+              //return resolve()
+              web3util.getContractInstance(OrderLogic)
+              .then((cins) => {
+                web3util.getCurrentAccount().then((account) => {
+                  cins.getPastEvents("PurchaseOrderInserted", {filter: {_buyer: account},
+                  fromBlock: 0,
+                  toBlock: 'latest'})
+                  .then(resolve)
+                })
+
+              })
             })
           })
         })
