@@ -2,6 +2,7 @@ import web3util from "../web3functions/web_util"
 import ipfsModule from "../ipfsCalls/index"
 import web3user from "../web3functions/user"
 
+import Purchase from "../contracts_build/Purchase"
 import OrderLogic from "../contracts_build/OrderLogic"
 //TODO resolve in buy function
 const user = (function(){
@@ -111,13 +112,33 @@ const user = (function(){
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
             web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
               //return resolve()
-              web3util.getContractInstance(OrderLogic)
+              web3util.getContractInstance(Purchase)
               .then((cins) => {
                 web3util.getCurrentAccount().then((account) => {
-                  cins.getPastEvents("PurchaseOrderInserted", {filter: {_buyer: account},
+                  cins.getPastEvents("Debug", {filter: {_id: 1},
                   fromBlock: 0,
                   toBlock: 'latest'})
-                  .then(resolve)
+                  .then((ev) => {
+                    console.log("Evento")
+                    console.log(ev)
+                  })
+                  .then(() => {
+                    web3util.getContractInstance(OrderLogic)
+                    .then((ins) => {
+                      ins.getPastEvents("PurchaseOrderInserted", {filter: {_buyer: account},
+                      fromBlock: 0,
+                      toBlock: 'latest'})
+                      .then((evO) => {
+                        console.log("Evento ordini")
+                        console.log(evO)
+                      })
+                      .then(() => {
+                        ins.methods.getOrderTotal("0x9863dcbac114a781fc621442abcf1103013abbede91242f36c63fdeb1f24db21")
+                        .call()
+                        .then(resolve)
+                      })
+                    })
+                  })
                 })
 
               })

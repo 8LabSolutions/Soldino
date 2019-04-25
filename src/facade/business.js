@@ -53,7 +53,7 @@ const business = (function(){
       totalPrice: +netPrice + +netPrice*(+vatPercentage/100), //lordo
       sellerName: sellerName,
       sellerVATNumber: sellerVATNumber,
-      image: image
+      image: image,
     }
     return newProductJSON;
   }
