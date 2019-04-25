@@ -76,8 +76,10 @@ const authentication = (function(){
             resolve(governmentJSON);
           }
           else {
-            //get the user Info
-            ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
+            ipfsModule.getJSONfromHash(hashIPFS).then((ris)=>{
+              ris.state = state;
+              resolve(state)
+            })
           }
         })
       })
