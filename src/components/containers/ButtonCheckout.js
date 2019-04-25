@@ -26,6 +26,8 @@ const mapDispatchToProps = (dispatch) => {
         buyerName: store.getState().user.name,
         buyerDetails: store.getState().user.surname,
       }
+      console.log("ButtonCheckout [29], CART")
+      console.log(cart)
       user.buy(cart).then(()=>{
         dispatch(cartToOrders([...order[0]], order[1]))
         dispatch(endLoading())

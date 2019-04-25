@@ -37,7 +37,9 @@ module.exports = function(deployer, network, accounts) {
 
     return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", GOVERNMENT)
     .then((tokenInstance) => {
-      return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
+      return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address).then(() => {
+        return tokenInstance.transfer(accounts[3], 200000)
+      })
     })
     .then(() => {
       deployer.deploy(Purchase, contractManagerInstance.address)
@@ -109,7 +111,7 @@ module.exports = function(deployer, network, accounts) {
         return deployer.deploy(OrderLogic,contractManagerInstance.address)
         .then((OrderLinstance) => {
           orderLocicInstance = OrderLinstance
-          return OrderStorageInstance.addAuthorized(instance.address)
+          return OrderStorageInstance.addAuthorized(OrderLinstance.address)
         })
         .then(() => {
           return contractManagerInstance.setContractAddress("OrderLogic", orderLocicInstance.address)

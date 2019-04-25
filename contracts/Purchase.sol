@@ -13,8 +13,10 @@ contract Purchase {
     // These array are used to save the products and their quantity for an order
     bytes32[] internal orderProd;
     uint8[] internal orderProdQtn;
+    //mapping(address => uint256) internal payments;
 
-    event OrderReceived(address _from, address _to, uint256 _ammount);
+    event OrderReceived(address _from, address _to, uint256 _amount);
+    event Debug(uint8 _id, uint256 _amount);
 
     constructor(address _contractManager) public {
         contractManager = ContractManager(_contractManager);
@@ -28,6 +30,7 @@ contract Purchase {
         uint8[] calldata _orderHashFun,
         uint8[] calldata _orderHashSize,
         string calldata _period
+        //uint256 _total
     )
         external
     {
@@ -68,6 +71,7 @@ contract Purchase {
         internal {
             setOrderLogic();
             orderLogic.registerOrder(_prodHash, _orderHashFun, _orderHashSize, _buyer, _period, _orderHash, _prodQtn);
+            emit Debug(1, orderLogic.getOrderTotal(_prodHash));
             // pay the order
             require(cubitToken.transferFrom(
                 _buyer, orderLogic.getOrderSeller(_prodHash),
@@ -78,5 +82,4 @@ contract Purchase {
     function setOrderLogic() internal {
         orderLogic = OrderLogic(contractManager.getContractAddress("OrderLogic"));
     }
-
 }

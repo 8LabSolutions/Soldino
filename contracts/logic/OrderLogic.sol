@@ -94,7 +94,7 @@ contract OrderLogic {
     }
 
     function calculateOrderTotal(bytes32[] memory  _productsHash, uint8[] memory _prodQtn)
-        internal view returns(uint256, uint256)
+        public view returns(uint256, uint256)
     {
         require(_productsHash.length > 0, "Empty array");
         uint256 total = 0;
