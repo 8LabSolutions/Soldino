@@ -13,22 +13,22 @@ const mapDispatchToProps = (dispatch) => {
     getStoreProducts: (index) => {
       //call the action creator to dispatch the products getter
       dispatch(resetIndex())
-      businessActionCreator.getStoreProducts(amountStore, index*amountStore).then((action)=>{
+      businessActionCreator.getStoreProducts(amountStore, index).then((action)=>{
         dispatch(action)
       })
     },
     increaseIndex: () => {
       dispatch(increaseIndex())
-      businessActionCreator.getStoreProducts(amountStore, store.getState().index*amountStore).then((action)=>{
+      businessActionCreator.getStoreProducts(amountStore, store.getState().index).then((action)=>{
         dispatch(action)
       })
     },
     decreaseIndex: () => {
       dispatch(decreaseIndex())
-      businessActionCreator.getStoreProducts(amountStore, store.getState().index*amountStore).then((action)=>{
+      businessActionCreator.getStoreProducts(amountStore, store.getState().index).then((action)=>{
         dispatch(action)
       })
-    } 
+    }
   }
 }
 

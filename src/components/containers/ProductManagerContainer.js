@@ -18,13 +18,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     increaseIndex: () => {
       dispatch(increaseIndex())
-      businessActionCreator.getMyProducts(amountStore, store.getState().index*amountStore).then((action)=>{
+      businessActionCreator.getMyProducts(amountStore, store.getState().index).then((action)=>{
         dispatch(action)
       })
     },
     decreaseIndex: () => {
       dispatch(decreaseIndex())
-      businessActionCreator.getMyProducts(amountStore, store.getState().index*amountStore).then((action)=>{
+      businessActionCreator.getMyProducts(amountStore, store.getState().index).then((action)=>{
         dispatch(action)
       })
     }
