@@ -1,6 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX} from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS} from "../constants/actionTypes";
 import { defaultIndex } from '../constants/fixedValues';
 
 const initialState = {
@@ -13,7 +13,9 @@ const initialState = {
   loading: false,
   userList: [],
   myProductsArray: [],
-  index: defaultIndex
+  index: defaultIndex,
+  totalStoreProduct: 0,
+  totalMyProduct: 0
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === BEGINLOADING || action.type === ENDLOADING) {
@@ -166,20 +168,26 @@ export function rootReducer(state = initialState, action) {
   }
 
   if(action.type === DECREASEINDEX) {
-    if(state.index > 0){
-      return Object.assign({}, state, {
-        index: state.index-1
-      })
-    }else{
-      return Object.assign({}, state, {
-        index: state.index
-      })
-    }
+    return Object.assign({}, state, {
+      index: state.index-1
+    })
   }
 
   if(action.type === RESETINDEX) {
     return Object.assign({}, state, {
       index: 0
+    })
+  }
+
+  if(action.type === SETTOTALNUMBEROFPRODUCTS) {
+    return Object.assign({}, state, {
+      totalStoreProduct: action.value
+    })
+  }
+
+  if(action.type === SETTOTALNUMBEROFMYPRODUCTS) {
+    return Object.assign({}, state, {
+      totalMyProduct: action.value
     })
   }
 
@@ -191,7 +199,7 @@ export const persistConfig = {
   key: 'root',
   storage: storage,
   /** 'cart', 'ordersList' prima della presentazione */
-  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray']
+  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct']
 };
 
 export default persistReducer(persistConfig, rootReducer);
