@@ -37,10 +37,11 @@ class Product extends Component {
         <div className="card">
           <img src={image} alt="product" /> 
           <div className="card-body">
-            <h5 className="card-title">{ product[0] = props.title }</h5>
+            <div className="cardHeaderWrapper">
+              <h5 className="card-title">{ product[0] = props.title }</h5>
+              <p className="card-text">{props.description}</p>
+            </div>
             <h6 className="card-price">CC { round(props.price) }</h6>
-            {/*gross price*/}
-            <p className="card-text">{props.description}</p>
             <div className="form-group col-sm-12">
               <label htmlFor="InputQuantity">Quantity</label>
               <input className="form-control" id="InputQuantity" value={product[1] = this.state.value} onChange={this.handleChange} placeholder="Enter quantity" type="number" min="1" max={maxQuantity} />

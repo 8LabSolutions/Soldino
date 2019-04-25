@@ -174,9 +174,9 @@ input:checked + .slider {
 }
 
 .card-text {
-  max-height: 120px;
+  max-height: 90px;
   overflow-y: auto;
-  height: 120px;
+  height: 90px;
 }
 
 .card-cart {
@@ -200,7 +200,7 @@ input:checked + .slider {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #f1f1f1; 
+  background: #bdc3c7; 
 }
 
 .card img {
@@ -214,9 +214,9 @@ input:checked + .slider {
 }
 
 .card-manager .card-description {
-  max-height: 120px;
+  max-height: 90px;
   overflow-y: auto;
-  height: 120px !important;
+  height: 90px !important;
 }
 
 .decrease {
@@ -226,4 +226,13 @@ input:checked + .slider {
 .increase {
   cursor: pointer;
   margin-left: 25px; 
+}
+
+.cardHeaderWrapper {
+  max-height: 162px;
+  height: 162px !important;
+}
+
+.card-cart .card-title {
+  height: 60px !important;
 }
