@@ -6,14 +6,15 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import NavBar from './NavBar';
-import ButtonBusinessProduct from '../containers/ButtonBusinessProduct';
 import ButtonGeneric from '../containers/ButtonGeneric';
 import { store } from '../../store';
 import { checkBusiness } from '../../auxiliaryFunctions';
+import ButtonEditProduct from '../containers/ButtonEditProduct';
 
 class EditProductsManager extends Component {
   constructor(props){
     super(props)
+    console.log(this.props);
     this.state = {
       file: null,
       url: null,
@@ -78,7 +79,7 @@ class EditProductsManager extends Component {
                   </div>
                   <div className="col-sm-6">
                     <NavLink className="nav-item nav-link" to="/productsmanager">
-                      <ButtonBusinessProduct index="0" amount="50" text="Confirm" args1={[this.state.title, this.state.description, this.state.netPrice, this.state.vatPercentage, this.state.file, store.getState().user.name, store.getState().user.VATnumber]} />
+                      <ButtonEditProduct text="Confirm" args1={[this.state.title, this.state.description, this.state.netPrice, this.state.vatPercentage, this.state.file, store.getState().user.name, store.getState().user.VATnumber]} />
                     </NavLink>
                   </div>
                 </div>

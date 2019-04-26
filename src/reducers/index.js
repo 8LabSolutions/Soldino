@@ -1,6 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS} from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS, PASSKEYPROD} from "../constants/actionTypes";
 import { defaultIndex } from '../constants/fixedValues';
 
 const initialState = {
@@ -15,7 +15,8 @@ const initialState = {
   myProductsArray: [],
   index: defaultIndex,
   totalStoreProduct: 0,
-  totalMyProduct: 0
+  totalMyProduct: 0,
+  editProd: null
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === BEGINLOADING || action.type === ENDLOADING) {
@@ -191,6 +192,12 @@ export function rootReducer(state = initialState, action) {
     })
   }
 
+  if(action.type === PASSKEYPROD) {
+    return Object.assign({}, state, {
+      editProd: action.keyProd
+    })
+  }
+
   //returning the state
   return state;
 }
@@ -199,7 +206,7 @@ export const persistConfig = {
   key: 'root',
   storage: storage,
   /** 'cart', 'ordersList' prima della presentazione */
-  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct', 'storeProducts', 'myProductsArray', 'ordersList', 'businessList', 'citizenList']
+  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct', 'storeProducts', 'myProductsArray', 'ordersList', 'businessList', 'citizenList', 'editProd']
 };
 
 export default persistReducer(persistConfig, rootReducer);

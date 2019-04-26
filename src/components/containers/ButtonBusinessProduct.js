@@ -4,8 +4,9 @@ import Button from '../presentational/Button';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import { getBase64 } from '../../auxiliaryFunctions';
 import { beginLoading, endLoading } from '../../actions/login';
+import { amountStore, defaultIndex } from '../../constants/fixedValues';
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     action: (parametersArray) => {
       dispatch(beginLoading())
@@ -14,7 +15,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           parametersArray[4] = base64Image
           businessActionCreator.addProduct(...parametersArray)
           .then(()=>{
-            businessActionCreator.getMyProducts(ownProps.amount, ownProps.index).then((action)=>{
+            businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
               dispatch(action)
               dispatch(endLoading())
             })
@@ -27,7 +28,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }else{
         businessActionCreator.addProduct(...parametersArray)
         .then(()=>{
-          businessActionCreator.getMyProducts(ownProps.amount, ownProps.index).then((action)=>{
+          businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
             dispatch(action)
             dispatch(endLoading())
           })

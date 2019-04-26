@@ -32,6 +32,20 @@ const businessActionCreator = (function(){
       })
     },
 
+    modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
+      return new Promise((resolve)=>{
+        business.modifyProduct(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber)
+        .then(resolve)
+      })
+    },
+
+    deleteProduct: function(keyProd){
+      return new Promise((resolve)=>{
+        business.deleteProduct(keyProd)
+        .then(resolve)
+      })
+    },
+
     getTotalStoreProduct: function(){
       return new Promise((resolve)=>{
         business.getTotalStoreProduct()

@@ -30,6 +30,9 @@ const web3business = (function(){
         web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
           let [hashIpfs, hashSize, hashFun] = web3util.splitIPFSHash(newHash)
           web3util.getCurrentAccount().then((account)=>{
+            console.log(hashIpfs)
+            console.log(hashSize)
+            console.log(hashFun)
             productLogicInstance.methods.modifyProduct(
               key, hashIpfs, hashSize, hashFun, newVatPercentage, newNetPrice*web3util.TOKENMULTIPLIER)
             .send({from: account})
@@ -162,6 +165,7 @@ const web3business = (function(){
             //firstly get the inserted products from the logs
             productLogicInstance.getPastEvents('ProductInserted', query)
             .then((events) => {
+              console.log(events)
               let start = index*amount;
               for (let i = start; i < start + amount && i < events.length; i++){
                 //extracting only the hash
@@ -185,6 +189,8 @@ const web3business = (function(){
               .then(()=>{
                 productLogicInstance.getPastEvents('ProductModified', query)
                 .then((eventsUpdate)=>{
+                  console.log("evento")
+                  console.log(eventsUpdate)
                   //getting the updated products
                   if(eventsUpdate!== undefined){
                     for (let i = 0; i < eventsUpdate.length; i++){

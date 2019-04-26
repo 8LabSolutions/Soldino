@@ -5,7 +5,8 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import { round } from '../../auxiliaryFunctions';
-import ButtonGeneric from '../containers/ButtonGeneric';
+import ButtonRemoveProduct from '../containers/ButtonRemoveProduct';
+import ButtonPassKeyProd from '../containers/ButtonPassKeyProd';
 
 class BusinessProduct extends Component {
 
@@ -26,10 +27,10 @@ class BusinessProduct extends Component {
             <p className="card-text">CC {round(props.price - ((props.price * 100)/(+100 + +props.VAT)))} ~ {props.VAT}%</p>
 
             <NavLink className="nav-item nav-link" to="/editproductsmanager">
-              <ButtonGeneric text="Edit" args1={null} />
+              <ButtonPassKeyProd text="Edit" args1={[props.keyProd, props.title, props.description, round(props.price - (props.price - ((props.price * 100)/(+100 + +props.VAT)))), props.VAT, image]} />
             </NavLink>
             <NavLink className="nav-item nav-link" to="/productsmanager">
-              <ButtonGeneric text="Remove" args1={null} />
+              <ButtonRemoveProduct text="Remove" args1={props.keyProd} />
             </NavLink>
           </div>
         </div>

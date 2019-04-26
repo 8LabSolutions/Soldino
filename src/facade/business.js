@@ -71,7 +71,7 @@ const business = (function(){
      * @param {*} name
      * @param {*} details
     */
-    addProduct: function(title, description, netPrice, vatPercentage, image, sellerName/*="azienda1"*/, sellerVATNumber/*="provvisorio"*/){
+    addProduct: function(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       //istantiate the necessary costracts and returns the results
       console.log("ADDPRODUCT interno")
       console.log(image)
@@ -89,7 +89,12 @@ const business = (function(){
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
       return new Promise((resolve)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON).then((hash)=>{
-          web3business.modifyProduct(keyProd, hash).then(resolve)
+          console.log(keyProd)
+          console.log(hash)
+          console.log(vatPercentage)
+          console.log(netPrice)
+          console.log("entro in modify")
+          web3business.modifyProduct(keyProd, hash, vatPercentage, netPrice).then(resolve)
         })
       })
     },
