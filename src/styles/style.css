@@ -308,3 +308,15 @@ opacity: 1;
 #inputAddressDiv .css-6y1x9t-control {
   width: auto !important;
 }
+
+.css-1r4vtzz {
+  box-shadow: none !important;
+}
+
+.css-6y1x9t-control, .css-6y1x9t-control:hover {
+  border-color: #1abc9c!important;
+}
+
+.css-6y1x9t-control {
+  box-shadow: 0 0 0 1px #1abc9c!important;
+}
