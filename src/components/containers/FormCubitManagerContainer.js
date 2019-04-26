@@ -30,7 +30,8 @@ const mapDispatchToProps = (dispatch) => {
       //FOR EACH ADDRESS INTO ADDRESSES
       //TO DO
       let address = null
-      if(addresses.length > 0){ address = addresses[0] }
+      console.log(addresses[0].value)
+      if(addresses.length > 0){ address = addresses[0].value }
       governmentActionCreator.distribute(amount, address).then((action)=>{
         dispatch(action)
         dispatch(endLoading())
