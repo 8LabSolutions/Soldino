@@ -7,6 +7,8 @@ const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
 var ipfsModule = (function() {
   return {
     getJSONfromHash: function(hash) {
+      console.log("getttin hash")
+      console.log(hash)
       return ipfs.catJSON(hash)
     },
     insertJSONintoIPFS: function(productJSON) {

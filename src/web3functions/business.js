@@ -66,6 +66,8 @@ const web3business = (function(){
             var hashIPFS = ris[0];
             var hashFun = ris[1];
             var hashSize = ris[2];
+            console.log("hash scomposto ipfs ")
+            console.log(ris)
             resolve(web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun));
           });
 
@@ -185,11 +187,13 @@ const web3business = (function(){
                   return !(deleted.includes(value))
                 })
                 products = filtered;
+                console.log("prodotti da stampare")
+                console.log(products)
               })
               .then(()=>{
                 productLogicInstance.getPastEvents('ProductModified', query)
                 .then((eventsUpdate)=>{
-                  console.log("evento")
+                  console.log("evento modifica")
                   console.log(eventsUpdate)
                   //getting the updated products
                   if(eventsUpdate!== undefined){
@@ -198,14 +202,14 @@ const web3business = (function(){
                       updated.push(eventsUpdate[i].returnValues._keyHash);
                       updatedNewValue.push(eventsUpdate[i].returnValues._newHashIPFS);
                     }
-                    //updating the old products with the new hash
+                    /*//updating the old products with the new hash
                     for (let i = 0; i < updated.length; i++ ){
                       for (let j = 0; j < products.length; j++){
                         if(products[j]===updated[i]){
                           products[j] = updatedNewValue[i];
                         }
                       }
-                    }
+                    }*/
                     //now products contains only the last version of the seller's products
                     //finally, get the products CID from web3 and converting it in base58
                     var promises = [];
@@ -214,6 +218,8 @@ const web3business = (function(){
                         new Promise((resolve)=>{
                           this.getProductHash(products[i])
                           .then((ipfsHash)=>{
+                            console.log("hash ipfs calcolati "+i)
+                            console.log(ipfsHash)
                             productLogicInstance.methods.getProductSeller(products[i]).call()
                             .then((seller) => {
                               resolve([products[i], ipfsHash, seller])
@@ -223,6 +229,7 @@ const web3business = (function(){
                     }
                     //resolves all the products values
                     Promise.all(promises).then((ris)=>{
+                      console.log(ris)
                       resolve(ris)
                     })
                   }
