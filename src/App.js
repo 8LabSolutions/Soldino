@@ -42,6 +42,8 @@ class App extends Component {
             <Route path="/erroruserdisabled" render={()=><Error errorMessage="User disabled." nextMessage="You have been disabled, you can't enjoy Soldino right now." />} />
             <Route path="/errorkey" render={()=><Error errorMessage="User already registered." nextMessage="You should log in." />} />
             <Route path="/errorpayment" render={()=><Error errorMessage="Payment failed." nextMessage="Something has gone wrong during the payment." />} />
+            <Route path="/erroredit" render={()=><Error errorMessage="Edit failed." nextMessage="You should edit at least one field." />} />
+            <Route path="/errorwhileediting" render={()=><Error errorMessage="Edit failed." nextMessage="Something has gone wrong during the edit." />} />
             <Route path="/orders" component={Orders} />
             <Route path="/purchasesconfirmation" component={PurchasesConfirmation} />
             <Route path="/transactionsmanager" component={TransactionsManager} />
