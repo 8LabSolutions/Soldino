@@ -1,6 +1,8 @@
 import re
 import datetime
 
+INPUT_PATH = "../coverage/coverage.txt"
+OUTPUT_PATH = "densitaerrori.csv"
 def search_pattern_in_string(pat,str):
 	ris = re.compile(pat).search(str)
 	return ris.group()
@@ -11,34 +13,34 @@ def take_number_from_line(l):
 	ris = int(search_pattern_in_string('\d+',l))
 	return ris
 
-
+# SCRIPT
 density = 0.0
-with open ("ratio.txt",'r') as ra:
-	lines = ra.readlines()
+with open (INPUT_PATH,'r') as ra:
 	
-	if len(lines) == 0:
-		print("Errore inatteso: nessuna riga in ratio.txt")
-	elif len(lines) == 1:
-		l0 = lines[0]
-		l0 = l0.strip()
-		found = str(search_pattern_in_string("[a-z]+",l0))
-		if found == "passing":
-			density = 0.0 # no errors
-		else: # found == "failing"
-			density = 100.0 # only errors
+	lines = ra.readlines()
+	passed = ''
+	failed = ''
 
-	else: # len(lines) == 2
-		l0 = lines[0]
-		l1 = lines[1]
-		
-		p = take_number_from_line(l0) # tests passed
-		np = take_number_from_line(l1) # tests not passed
+	for line in lines:
+		if 'passing' in line:
+			passed = line
+		if 'failing' in line:
+			failed = line
+
+	if passed == '' and failed != '':
+		density = 100.00 # no passed
+	elif failed == '' and passed != '':
+		density = 0.00 # no failed
+	else:
+		p = take_number_from_line(passed) # tests passed
+		np = take_number_from_line(failed) # tests not passed
 		total = p + np # total number of tests
 		
 		density = round((float(np)/float(total)),2 )
-		
+		#print ('density = ' + str(density))
 
-with open("densitaerrori.csv",'a') as d:
+
+with open(OUTPUT_PATH,'a') as d:
 	line = str(datetime.datetime.now().isoformat()[:10])+','+str(density)+'\n'
 	d.write(line)
 
