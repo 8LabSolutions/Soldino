@@ -28,7 +28,7 @@ cd ..
 
 echo "doing deployment cost"
 cd	deployment-cost
-python3 deployment-cost.py
+python3 deployment_cost.py
 cd ..
 
 echo "end"
