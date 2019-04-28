@@ -13,7 +13,6 @@ class FormCubitManager extends Component {
 
     this.state = {
       amount: null,
-      address: null,
       addresses: []
     }
 
