@@ -131,6 +131,6 @@ contract("OrderLogic", (accounts) => {
       period,
       productsKey,
       productsQtn
-    ).send({from: accounts[9], gas: 4000000}), "OrderLogic: cannot buy from yourself")
+    ).send({from: accounts[9], gas: 4000000}))
   })
 })
