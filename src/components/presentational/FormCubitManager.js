@@ -12,7 +12,8 @@ class FormCubitManager extends Component {
     super(props);
 
     this.state = {
-      amount: null,
+      mintAmount: null,
+      distributeAmount: null,
       addresses: []
     }
 
@@ -47,15 +48,15 @@ class FormCubitManager extends Component {
   handleMint(e){
     e.preventDefault();
     let {mint} = this.props;
-    let {amount} = this.state;
-    mint(amount);
+    let {mintAmount} = this.state;
+    mint(mintAmount);
   }
 
   handleDistribute(e){
     e.preventDefault();
     let {distribute} = this.props;
-    let {amount, addresses} = this.state;
-    distribute(amount, addresses);
+    let {distributeAmount, addresses} = this.state;
+    distribute(distributeAmount, addresses);
   }
 
   render() {
@@ -89,7 +90,7 @@ class FormCubitManager extends Component {
             </div>
             <div className="form-group col-sm-6 offset-sm-3 top-2rem">
               <label htmlFor="InputAmount">Amount</label>
-              <input className="form-control" id="InputAmount" name="InputAmount" placeholder="Enter amount" type="number" min="1" max={governmentSupply} onChange={this.handleChange} />
+              <input className="form-control" id="InputAmount" name="distributeAmount" placeholder="Enter amount" type="number" min="1" max={governmentSupply} onChange={this.handleChange} />
             </div>
             <div className="form-group col-sm-6 offset-sm-3" id="inputAddressDiv">
               <label htmlFor="InputAddress">Address</label>
@@ -101,7 +102,7 @@ class FormCubitManager extends Component {
             <div className="col-sm-12 top-2rem"><hr /></div>
             <div className="form-group col-sm-6 offset-sm-3 top-2rem">
               <label htmlFor="InputAmount2">Amount</label>
-              <input className="form-control" id="InputAmount2" name="InputAmount2" placeholder="Enter amount" type="number" min="1" onChange={this.handleChange} />
+              <input className="form-control" id="InputAmount2" name="mintAmount" placeholder="Enter amount" type="number" min="1" onChange={this.handleChange} />
             </div>
             <div className="col-sm-12 text-center">
               <button type="button" className="btn btn-light" onClick={this.handleMint}>Mint</button>

@@ -112,8 +112,11 @@ const user = (function(){
           }*/
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
             web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
+              console.log("OOOOOOIIII")
               web3util.getContractInstance(TokenCubit)
               .then((cins) => {
+                console.log("!!!token!!!")
+                console.log(cins)
                 web3util.getCurrentAccount().then((account) => {
                   cins.getPastEvents("Transfer", {filter: {_from: account},
                   fromBlock: 0,
