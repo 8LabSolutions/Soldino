@@ -2,8 +2,6 @@ import web3util from "../web3functions/web_util"
 import ipfsModule from "../ipfsCalls/index"
 import web3user from "../web3functions/user"
 
-
-import TokenCubit from "../contracts_build/TokenCubit"
 //TODO resolve in buy function
 const user = (function(){
 
@@ -85,6 +83,7 @@ const user = (function(){
             sellerName: orders[i][0].sellerName,
             sellerVATNumber: orders[i][0].sellerVATNumber
           }
+          console.log(order)
           promises.push(new Promise((resolve)=>{
             ipfsModule.insertJSONintoIPFS(order).then(resolve)
           }))
@@ -111,25 +110,7 @@ const user = (function(){
             something[i] = products[i]
           }*/
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
-            web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
-              console.log("OOOOOOIIII")
-              web3util.getContractInstance(TokenCubit)
-              .then((cins) => {
-                console.log("!!!token!!!")
-                console.log(cins)
-                web3util.getCurrentAccount().then((account) => {
-                  cins.getPastEvents("Transfer", {filter: {_from: account},
-                  fromBlock: 0,
-                  toBlock: 'latest'})
-                  .then((ev) => {
-                    console.log("Evento")
-                    console.log(ev)
-                  })
-                  .then(resolve)
-                })
-
-              })
-            })
+            web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(resolve)
           })
         })
       })
@@ -138,6 +119,23 @@ const user = (function(){
     getBalance: function(){
       return new Promise((resolve)=>{
         web3user.getBalance().then(resolve)
+      })
+    },
+
+    getPurchases: function(){
+      return new Promise((resolve)=>{
+        web3user.getPurchase().then((purchases)=>{
+          //getting the orders JSONs from IPFS
+          let purchaseJSONs = []
+          for(let i = 0; i<purchases.length; i++){
+            purchaseJSONs.push(
+              new Promise((resolve)=>{
+                ipfsModule.getJSONfromHash(purchases[i]).then(resolve)
+              })
+            )
+          }
+          Promise.all(purchaseJSONs).then(resolve)
+        })
       })
     }
   }

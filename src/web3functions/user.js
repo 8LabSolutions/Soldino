@@ -1,6 +1,7 @@
 import web3util from "./web_util";
 import Purchase from "../contracts_build/Purchase"
 import TokenCubit from "../contracts_build/TokenCubit"
+import OrderLogic from "../contracts_build/OrderLogic"
 
 const web3user = (function(){
 
@@ -78,6 +79,26 @@ const web3user = (function(){
               if(balance!==0)
                 balance/=web3util.TOKENMULTIPLIER;
               resolve(balance)
+            })
+          })
+        })
+      })
+    },
+
+    getPurchase: function(){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(OrderLogic)
+        .then((orderLogicInstance) => {
+          web3util.getCurrentAccount().then((account) => {
+            orderLogicInstance.getPastEvents("PurchaseOrderInserted", {filter: {_buyer: account},
+            fromBlock: 0,
+            toBlock: 'latest'})
+            .then((events) => {
+              let orderHashes = []
+              for (let i = 0; i< events.length; i++){
+                orderHashes.push(events[i].returnValues._keyHash)
+              }
+              resolve(orderHashes)
             })
           })
         })
