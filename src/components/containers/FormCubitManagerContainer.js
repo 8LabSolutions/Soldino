@@ -29,6 +29,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(beginLoading())
       //FOR EACH ADDRESS INTO ADDRESSES
       //TO DO
+      //access the addresses by typing addresses[i].value
       let address = null
       console.log(addresses[0].value)
       if(addresses.length > 0){ address = addresses[0].value }
