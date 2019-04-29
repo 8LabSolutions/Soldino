@@ -31,6 +31,7 @@ class Product extends Component {
     product[5] = props.sellerVATNumber
     product[6] = props.keyProd
     product[7] = props.seller
+    product[8] = props.description
     let image
     (props.image===null) ? image = "/default.png" : image = props.image;
     return (
