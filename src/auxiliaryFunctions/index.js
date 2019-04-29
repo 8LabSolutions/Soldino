@@ -200,7 +200,6 @@ export function ExportPDF(invoices, quarter) {
   )
 }
 
-
 export function checkBusiness() {
   if(store.getState().user !== null){
     return (store.getState().logged === true && store.getState().user.userType === BUSINESS)

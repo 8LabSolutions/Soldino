@@ -17,7 +17,8 @@ export function addToCart(product) {
           sellerName: product[4],
           sellerVATNumber: product[5],
           keyProd: product[6],
-          seller: product[7]
+          seller: product[7],
+          description: product[8]
       }
   };
 }
@@ -33,7 +34,8 @@ export function removeFromCart(product) {
         sellerName: product[4],
         sellerVATNumber: product[5],
         keyProd: product[6],
-        seller: product[7]
+        seller: product[7],
+        description: product[8]
     }
   };
 }
@@ -49,7 +51,8 @@ export function increaseQuantity(product) {
         sellerName: product[4],
         sellerVATNumber: product[5],
         keyProd: product[6],
-        seller: product[7]
+        seller: product[7],
+        description: product[8]
     }
   };
 }
@@ -65,7 +68,8 @@ export function decreaseQuantity(product) {
         sellerName: product[4],
         sellerVATNumber: product[5],
         keyProd: product[6],
-        seller: product[7]
+        seller: product[7],
+        description: product[8]
     }
   };
 }

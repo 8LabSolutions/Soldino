@@ -9,10 +9,8 @@ import { checkCitizen, checkBusiness } from '../../auxiliaryFunctions';
 
 
 function printProduct(product) {
-  console.log("KEYPROD CARRELLO")
-  console.log(product[6])
   return(
-    <CartProduct keyProd={product[6]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} seller={product[7]} />
+    <CartProduct keyProd={product[6]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} seller={product[7]} description={product[8]} />
   )
 }
 
@@ -30,6 +28,7 @@ class Cart extends Component {
     let sellerVATNumber
     let keyProd
     let product
+    let description
     let productArray = []
     let totalPrice = 0
     let seller
@@ -44,7 +43,8 @@ class Cart extends Component {
       keyProd = productsList[i].keyProd
       seller = productsList[i].seller
       totalPrice += price*quantity
-      product = [title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd, seller]
+      description = productsList[i].description
+      product = [title, quantity, price, VAT, sellerName, sellerVATNumber, keyProd, seller, description]
       productArray[i] = product;
     }
     return (
