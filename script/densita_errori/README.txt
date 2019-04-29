@@ -1,0 +1,1 @@
+da fixare. Sta metrica in realtà è la percentuale di test falliti.
