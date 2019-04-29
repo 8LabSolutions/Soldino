@@ -98,8 +98,41 @@ const web3user = (function(){
               for (let i = 0; i< events.length; i++){
                 orderHashes.push(events[i].returnValues._keyHash)
               }
-              resolve(orderHashes)
+              //get the full IPFS address
+              let orderIPFS = []
+              for (let i = 0; i< orderHashes.length; i++){
+                orderIPFS.push(
+                  new Promise((resolve)=>{
+                    web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
+                      web3util.getCurrentAccount().then((account)=>{
+                        orderLogicInstance.methods.getOrderCid(orderHashes[i])
+                        .call({from: account})
+                        .then((hashParts)=>{
+                          resolve(web3util.recomposeIPFSHash(hashParts[0], hashParts[2], hashParts[1]))
+                        })
+                      })
+                    })
+                  })
+                )
+              }
+              Promise.all(orderIPFS).then((ris)=>{
+                resolve(ris)
+              })
             })
+          })
+        })
+      })
+    },
+
+    getPurchaseNumber: function(){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(OrderLogic)
+        .then((orderLogicInstance) => {
+          orderLogicInstance.getPastEvents("PurchaseOrderInserted", {
+          fromBlock: 0,
+          toBlock: 'latest'})
+          .then((events) => {
+            resolve(events.length)
           })
         })
       })

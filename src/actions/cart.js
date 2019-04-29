@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 // src/js/actions/index.js
-import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOORDERS } from "../constants/actionTypes";
+import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOORDERS, RESETCART } from "../constants/actionTypes";
 import { getTodayDate, getVAT, getNet, getDetails, getName } from "../auxiliaryFunctions";
 
 /*args: title, quantity, price*/
@@ -85,5 +85,11 @@ export function cartToOrders(cart, address) {
     address,
     buyerName: getName(),
     buyerDetails: getDetails(), //if citizen == surname, if business == VATNumber
+  };
+}
+
+export function resetCart() {
+  return {
+    type: RESETCART
   };
 }

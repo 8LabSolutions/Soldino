@@ -6,10 +6,17 @@ import PendingOrder from './PendingOrder';
 import { printShipment, round, checkBusiness, checkCitizen } from '../../auxiliaryFunctions';
 
 class Orders extends Component {
+
+
   lastSeller = "";
 
+  componentWillMount(){
+    let {getOrdersList} = this.props;
+    getOrdersList();
+  }
+
   printSeller(product) {
-    
+
     return(
       <div>
         {(this.lastSeller!=="") ? <hr /> : null}
@@ -28,7 +35,7 @@ class Orders extends Component {
       </div>
     )
   }
-    
+
 
   printProduct(product) {
     return(
@@ -37,7 +44,7 @@ class Orders extends Component {
       </div>
     )
   }
-  
+
   printOrder(order) {
     this.lastSeller = "";
     let orderCost = 0
@@ -82,6 +89,8 @@ class Orders extends Component {
       </div>
     )
   }
+
+
 
   render() {
     if(!(checkCitizen()||checkBusiness())){window.location.href = "/"}
