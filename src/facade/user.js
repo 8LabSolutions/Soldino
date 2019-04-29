@@ -75,7 +75,7 @@ const user = (function(){
           var order = {
             products: orders[i],
             date: cartInfo.date,
-            number: new Date().getUTCMilliseconds(),
+            number: parseInt(new Date().getUTCMilliseconds()),
             VAT: getTotalVAT(orders[i]),
             net: getTotalNet(orders[i]),
             total: getTotal(orders[i]),
