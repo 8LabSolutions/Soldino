@@ -1,5 +1,7 @@
 import web3util from "./web_util";
 import ProductLogic from "../contracts_build/ProductLogic"
+import OrderLogic from "../contracts_build/OrderLogic"
+import VatLogic from "../contracts_build/VatLogic"
 
 const web3business = (function(){
 
@@ -136,7 +138,6 @@ const web3business = (function(){
       })
     },
 
-
     getProducts: function(amount, index, sender=false) {
       return new Promise((resolve)=>{
         web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
@@ -202,14 +203,6 @@ const web3business = (function(){
                       updated.push(eventsUpdate[i].returnValues._keyHash);
                       updatedNewValue.push(eventsUpdate[i].returnValues._newHashIPFS);
                     }
-                    /*//updating the old products with the new hash
-                    for (let i = 0; i < updated.length; i++ ){
-                      for (let j = 0; j < products.length; j++){
-                        if(products[j]===updated[i]){
-                          products[j] = updatedNewValue[i];
-                        }
-                      }
-                    }*/
                     //now products contains only the last version of the seller's products
                     //finally, get the products CID from web3 and converting it in base58
                     var promises = [];
@@ -240,6 +233,51 @@ const web3business = (function(){
         })
       })
     },
+    /**
+     * @returns An array containing the IPFS Hashes of the Invoices related to the selected period
+     * @param {*} VATPeriod VAT period in the following format
+     */
+    getInvoices: function(VATPeriod) {
+      //must get all the purchase order and the selling order
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
+          web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
+            web3util.getCurrentAccount().then((account)=>{
+              vatLogicInstance.methods.createVatKey(account, VATPeriod).then((key)=>{
+                //filtering by the current account and the key to access the right VAT period
+                let queryPurchase = {
+                  filter: {
+                    _buyer: account,
+                    _key: key
+                  },
+                  fromBlock: 0,
+                  toBlock: 'latest'
+                }
+
+                let querySelling = {
+                  filter: {
+                    _: account,
+                    _key: key
+                  },
+                  fromBlock: 0,
+                  toBlock: 'latest'
+                }
+
+                orderLogicInstance.getPastEvents("PurchaseOrderInserted", queryPurchase)
+                .then((events)=>{
+                   console.log('TODO'+events)
+                })
+                orderLogicInstance.getPastEvents("SellOrderInserted", querySelling)
+                .then((events)=>{
+                  console.log('TODO'+events)
+                })
+                resolve('TODO')
+              })
+            })
+          })
+        })
+      })
+    }
 
 
 

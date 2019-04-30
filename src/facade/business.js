@@ -135,6 +135,22 @@ const business = (function(){
           getProducts(ris).then(resolve)
         })
       })
+    },
+
+    getInvoces: function(VATPeriod) {
+      return new Promise((resolve)=>{
+        web3business.getInvoices(VATPeriod).then((invoicesIPFSHash)=>{
+          var invoicesJSON = []
+          invoicesIPFSHash.forEach(invoceIPFSHash => {
+            invoicesJSON.push(
+              new Promise((resolve)=>{
+                ipfsModule.getJSONfromHash(invoceIPFSHash).then(resolve)
+              })
+            )
+          });
+          Promise.all(invoicesJSON).then(resolve)
+        })
+      })
     }
   }
 }());
