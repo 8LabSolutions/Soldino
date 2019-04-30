@@ -15,8 +15,8 @@ contract OrderLogic {
     UserStorage internal userStorage;
     ProductLogic internal productLogic;
 
-    event PurchaseOrderInserted(address indexed _buyer, bytes32 indexed _keyHash);
-    event SellOrderInserted(address indexed _seller, bytes32 indexed _hashIpfs);
+    event PurchaseOrderInserted(address indexed _buyer, bytes32 indexed _keyHash, bytes32 indexed _vatKey);
+    event SellOrderInserted(address indexed _seller, bytes32 indexed _hashIpfs, bytes32 indexed _vatKey);
 
     modifier onlyBuyerOrSeller(bytes32 _keyHash, address _user) {
         require(_user == orderStorage.getBuyer(_keyHash) || _user == orderStorage.getSeller(_keyHash),
@@ -72,17 +72,23 @@ contract OrderLogic {
 
         // if the buyer is a business, the vat movement needs to be registered
         // to do so a UserStorage instance is created and if and only if the buyer
-        // is a business, the vat movement is registered
+        // is a business, the vat movement is registere
+
         if (userStorage.getUserType(_buyer) == 2) {
             vatLogic.registerVat(_buyer, (int256(vatTotal)*(-1)), _period);
+            emit PurchaseOrderInserted(_buyer, _hashIpfs, vatLogic.createVatKey(_buyer, _period));
+
+        } else {
+            emit PurchaseOrderInserted(_buyer, _hashIpfs, bytes32("0"));
         }
         vatLogic.registerVat(_seller, (int256(vatTotal)), _period);
 
+
         // Using these events it's possible to see the orders history, both purchase and sell
         //emit the event on the blockchain: the event shows the buyer and the hash of the order
-        emit PurchaseOrderInserted(_buyer, _hashIpfs);
+
         //emit the event on the blockchain: the event shows the seller and the hash of the order
-        emit SellOrderInserted(_seller, _hashIpfs);
+        emit SellOrderInserted(_seller, _hashIpfs, vatLogic.createVatKey(_seller, _period));
     }
 
     function getOrderSeller(bytes32 _keyHash) public view returns(address) {
