@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import NavBar from './NavBar'
-//import { store } from "../../store/index";
+import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
 import { printShipment, round, checkBusiness, checkCitizen } from '../../auxiliaryFunctions';
 
@@ -101,8 +101,10 @@ class Orders extends Component {
         thisOrder = orders[i]
         if(prevOrder.number===thisOrder.number){
           //same order, different seller
-          prevOrder.net = (+prevOrder.net) + (+thisOrder.net) //da contare la quantità
           prevOrder.products = [...prevOrder.products, ...thisOrder.products]
+          //prevOrder.net = (+prevOrder.net) + (+thisOrder.net) //da contare la quantità
+          prevOrder.net = 0
+          prevOrder.products.map(i => {prevOrder.net = (+prevOrder.net) + +((((100-i.VAT)/100)*i.price)*i.quantity)})
           prevOrder.total = (+prevOrder.total) + (+thisOrder.total)
           prevOrder.VAT = (prevOrder.total-prevOrder.net)
         }else{

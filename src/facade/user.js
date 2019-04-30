@@ -69,15 +69,14 @@ const user = (function(){
         //sort the products by seller
         products = groupProductsBySeller(products)
         var orders = splitInSellerArray(products)
-
         var promises = []
+        getLastOrderNumber().then((number)=>{
         for(let i = 0; i < orders.length; i++){
           promises.push(new Promise((resolve)=>{
-            getLastOrderNumber().then((number)=>{
               var order = {
                 products: orders[i],
                 date: cartInfo.date,
-                number: number+1,
+                number: +number + +i + +1,
                 VAT: getTotalVAT(orders[i]),
                 net: getTotalNet(orders[i]),
                 total: getTotal(orders[i]),
@@ -88,32 +87,28 @@ const user = (function(){
                 sellerVATNumber: orders[i][0].sellerVATNumber
               }
               ipfsModule.insertJSONintoIPFS(order).then(resolve)
-            })
-          }))
-        }
-
-        Promise.all(promises).then((results)=>{
-          //results: array of IPFS (orders)
-          var remainingHash = []
-          var hashSize = []
-          var hashFun = []
-          var productQtn = []
-          for(let i = 0; i < results.length; i++){
-            for(let j = 0 ; j < orders[i].length; j++){
-              let [rH, hS, hF] = web3util.splitIPFSHash(results[i]);
-              console.log(rH)
-              remainingHash.push(rH);
-              hashSize.push(hS);
-              hashFun.push(hF);
-              productQtn.push(orders[i][j].quantity)
-            }
+            }))
           }
-          /*let something = []
-          for(var i=0; i<products.length; i++){
-            something[i] = products[i]
-          }*/
-          web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
-            web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(resolve)
+
+          Promise.all(promises).then((results)=>{
+            //results: array of IPFS (orders)
+            var remainingHash = []
+            var hashSize = []
+            var hashFun = []
+            var productQtn = []
+            for(let i = 0; i < results.length; i++){
+              for(let j = 0 ; j < orders[i].length; j++){
+                let [rH, hS, hF] = web3util.splitIPFSHash(results[i]);
+                remainingHash.push(rH);
+                hashSize.push(hS);
+                hashFun.push(hF);
+                productQtn.push(orders[i][j].quantity)
+              }
+            }
+            web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
+              console.log([cartInfo.VAT+cartInfo.net, products, remainingHash, hashSize, hashFun, productQtn])
+              web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(resolve)
+            })
           })
         })
       })

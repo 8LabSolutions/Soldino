@@ -132,6 +132,8 @@ const web3user = (function(){
           fromBlock: 0,
           toBlock: 'latest'})
           .then((events) => {
+            console.log(events)
+            console.log(events.length)
             resolve(events.length)
           })
         })
