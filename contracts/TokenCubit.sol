@@ -143,6 +143,52 @@ contract TokenCubit is Owned {
     }
 
     /**
+    * Mint and distribute token
+    *
+    * You could send money to an address different from the owner and increase the amount of money in
+    * ram `target` the address of the receiver
+    * aram `mintedAmount` the amount of money minted
+    */
+    function mintToken(address target, uint256 mintedAmount) public onlyOwner {
+        balanceOf[target] += mintedAmount;
+        totalSupply += mintedAmount;
+        emit Transfer(address(0), owner, mintedAmount);
+        emit Transfer(owner, target, mintedAmount);
+    }
+
+    /**
+    * Mint token and distribute to multiple targets
+    * @param  _addresses  array of address containing targets
+    * @param _mintedAmount amount of token distributed to each target,
+    * the total amount of token minted is `_mintedAmount`*`_addresses.lenght`
+    */
+    function distributeToMultipleAddresses(address[] memory _addresses, uint256 _mintedAmount) public onlyOwner {
+        for (uint i = 0; i < _addresses.length; i++)
+            mintToken(_addresses[i], _mintedAmount);
+    }
+
+    /**
+     * Internal transfer, only can be called by this contract
+     */
+    function _transfer(address _from, address _to, uint _value) internal {
+        // Prevent transfer to address(0).
+        require(_to != address(0), "Invalid address");
+        // Check if the sender has enough
+        require(balanceOf[_from] >= _value, "Not enough funds");
+        // Check for overflows
+        require(balanceOf[_to] + _value >= balanceOf[_to], "Reciver overflow");
+        // Save this for an assertion in the future
+        uint previousBalances = balanceOf[_from] + balanceOf[_to];
+        // Subtract from the sender
+        balanceOf[_from] -= _value;
+        // Add the same to the recipient
+        balanceOf[_to] += _value;
+        emit Transfer(_from, _to, _value);
+        // Asserts are used to use static analysis to find bugs in your code. They should never fail
+        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
+    }
+
+    /**
      * Destroy tokens
      *
      * Remove `_value` tokens from the system irreversibly
@@ -174,39 +220,4 @@ contract TokenCubit is Owned {
         emit Burn(_from, _value);
         return true;
     }*/
-
-    /**
-    * Mint and distribute token
-    *
-    * You could send money to an address different from the owner and increase the amount of money in
-    * ram `target` the address of the receiver
-    * aram `mintedAmount` the amount of money minted
-    */
-    function mintToken(address target, uint256 mintedAmount) public onlyOwner {
-        balanceOf[target] += mintedAmount;
-        totalSupply += mintedAmount;
-        emit Transfer(address(0), owner, mintedAmount);
-        emit Transfer(owner, target, mintedAmount);
-    }
-
-    /**
-     * Internal transfer, only can be called by this contract
-     */
-    function _transfer(address _from, address _to, uint _value) internal {
-        // Prevent transfer to address(0).
-        require(_to != address(0), "Invalid address");
-        // Check if the sender has enough
-        require(balanceOf[_from] >= _value, "Not enough funds");
-        // Check for overflows
-        require(balanceOf[_to] + _value >= balanceOf[_to], "Reciver overflow");
-        // Save this for an assertion in the future
-        uint previousBalances = balanceOf[_from] + balanceOf[_to];
-        // Subtract from the sender
-        balanceOf[_from] -= _value;
-        // Add the same to the recipient
-        balanceOf[_to] += _value;
-        emit Transfer(_from, _to, _value);
-        // Asserts are used to use static analysis to find bugs in your code. They should never fail
-        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
-    }
 }

@@ -1,15 +1,22 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import NavBar from './NavBar'
-import { store } from "../../store/index";
+//import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
 import { printShipment, round, checkBusiness, checkCitizen } from '../../auxiliaryFunctions';
 
 class Orders extends Component {
+
+
   lastSeller = "";
 
+  componentWillMount(){
+    let {getOrdersList} = this.props;
+    getOrdersList();
+  }
+
   printSeller(product) {
-    
+
     return(
       <div>
         {(this.lastSeller!=="") ? <hr /> : null}
@@ -28,7 +35,7 @@ class Orders extends Component {
       </div>
     )
   }
-    
+
 
   printProduct(product) {
     return(
@@ -37,14 +44,13 @@ class Orders extends Component {
       </div>
     )
   }
-  
+
   printOrder(order) {
     this.lastSeller = "";
     let orderCost = 0
     //ordinamento per seller
     order.products.sort((a, b) => (a.sellerName > b.sellerName) ? 1 : (a.sellerName === b.sellerName) ? ((a.sellerName > b.sellerName) ? 1 : -1) : -1 )
     order.products.map (i => orderCost += (i.price*i.quantity))
-    if(store.getState().logged === false){window.location.href = "/"}
     return(
       <div>
         <ul className="list-group">
@@ -83,9 +89,42 @@ class Orders extends Component {
     )
   }
 
+  groupOrders(orders){
+    //need to group orders by order number
+    let groupedOrders = []
+    let prevOrder = null
+    let thisOrder = null
+    for(let i=0; i<orders.length; i++){
+      if(prevOrder===null){
+        prevOrder = orders[i]
+      }else{
+        thisOrder = orders[i]
+        if(prevOrder.number===thisOrder.number){
+          //same order, different seller
+          prevOrder.net = (+prevOrder.net) + (+thisOrder.net) //da contare la quantità
+          prevOrder.products = [...prevOrder.products, ...thisOrder.products]
+          prevOrder.total = (+prevOrder.total) + (+thisOrder.total)
+          prevOrder.VAT = (prevOrder.total-prevOrder.net)
+        }else{
+          //different order
+          groupedOrders.push(prevOrder)
+          prevOrder = thisOrder
+        }
+      }
+    }
+    if(prevOrder!==null){
+      groupedOrders.push(prevOrder)
+    }
+    return groupedOrders
+  }
+
   render() {
     if(!(checkCitizen()||checkBusiness())){window.location.href = "/"}
-    let ordersList = store.getState().ordersList;
+    let { ordersList } = this.props;
+    //group by order number
+    console.log(ordersList)
+    ordersList = this.groupOrders(ordersList)
+    console.log(ordersList)
     let totalOrders = ordersList.length
     return (
       <div>

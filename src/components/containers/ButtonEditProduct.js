@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => {
         parametersArray[5]===null
       ){
         //nothing has changed
-        history.push("/productsmanager")
+        history.push("/erroredit")
       }else{
         //something has changed, need to check what has been changed and change it/them
         dispatch(beginLoading())
@@ -42,11 +42,13 @@ const mapDispatchToProps = (dispatch) => {
               businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
                 dispatch(action)
                 dispatch(endLoading())
+                history.push("/productsmanager")
               })
             })
             .catch((err)=>{
               console.log(err)
               dispatch(endLoading())
+              history.push("/errorwhileediting")
             })
           })
         }else{
@@ -55,11 +57,13 @@ const mapDispatchToProps = (dispatch) => {
             businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
               dispatch(action)
               dispatch(endLoading())
+              history.push("/productsmanager")
             })
           })
           .catch((err)=>{
             console.log(err)
             dispatch(endLoading())
+            history.push("/errorwhileediting")
           })
         }
       }

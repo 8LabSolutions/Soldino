@@ -12,7 +12,6 @@ import Cart from './components/presentational/Cart';
 import Footer from './components/presentational/Footer'
 import Success from './components/presentational/Success';
 import Error from './components/presentational/Error';
-import Orders from './components/presentational/Orders';
 import TransactionsManager from './components/presentational/TransactionsManager';
 import Checkout from './components/presentational/Checkout';
 import PurchasesConfirmation from './components/presentational/PurchasesConfirmation';
@@ -20,6 +19,7 @@ import EditProductsManager from './components/presentational/EditProductsManager
 import AddProductsManager from './components/presentational/AddProductsManager';
 import history from './store/history';
 import ProductsManagerContainer from './components/containers/ProductManagerContainer';
+import OrdersContainer from './components/containers/OrdersContainer';
 
 //store.dispatch(reset())
 
@@ -42,7 +42,9 @@ class App extends Component {
             <Route path="/erroruserdisabled" render={()=><Error errorMessage="User disabled." nextMessage="You have been disabled, you can't enjoy Soldino right now." />} />
             <Route path="/errorkey" render={()=><Error errorMessage="User already registered." nextMessage="You should log in." />} />
             <Route path="/errorpayment" render={()=><Error errorMessage="Payment failed." nextMessage="Something has gone wrong during the payment." />} />
-            <Route path="/orders" component={Orders} />
+            <Route path="/erroredit" render={()=><Error errorMessage="Edit failed." nextMessage="You should edit at least one field." />} />
+            <Route path="/errorwhileediting" render={()=><Error errorMessage="Edit failed." nextMessage="Something has gone wrong during the edit." />} />
+            <Route path="/orders" component={OrdersContainer} />
             <Route path="/purchasesconfirmation" component={PurchasesConfirmation} />
             <Route path="/transactionsmanager" component={TransactionsManager} />
             <Route path="/productsmanager" component={ProductsManagerContainer} />

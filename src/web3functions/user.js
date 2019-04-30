@@ -1,6 +1,7 @@
 import web3util from "./web_util";
 import Purchase from "../contracts_build/Purchase"
 import TokenCubit from "../contracts_build/TokenCubit"
+import OrderLogic from "../contracts_build/OrderLogic"
 
 const web3user = (function(){
 
@@ -79,6 +80,59 @@ const web3user = (function(){
                 balance/=web3util.TOKENMULTIPLIER;
               resolve(balance)
             })
+          })
+        })
+      })
+    },
+
+    getPurchase: function(){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(OrderLogic)
+        .then((orderLogicInstance) => {
+          web3util.getCurrentAccount().then((account) => {
+            orderLogicInstance.getPastEvents("PurchaseOrderInserted", {filter: {_buyer: account},
+            fromBlock: 0,
+            toBlock: 'latest'})
+            .then((events) => {
+              let orderHashes = []
+              for (let i = 0; i< events.length; i++){
+                orderHashes.push(events[i].returnValues._keyHash)
+              }
+              //get the full IPFS address
+              let orderIPFS = []
+              for (let i = 0; i< orderHashes.length; i++){
+                orderIPFS.push(
+                  new Promise((resolve)=>{
+                    web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
+                      web3util.getCurrentAccount().then((account)=>{
+                        orderLogicInstance.methods.getOrderCid(orderHashes[i])
+                        .call({from: account})
+                        .then((hashParts)=>{
+                          resolve(web3util.recomposeIPFSHash(hashParts[0], hashParts[2], hashParts[1]))
+                        })
+                      })
+                    })
+                  })
+                )
+              }
+              Promise.all(orderIPFS).then((ris)=>{
+                resolve(ris)
+              })
+            })
+          })
+        })
+      })
+    },
+
+    getPurchaseNumber: function(){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(OrderLogic)
+        .then((orderLogicInstance) => {
+          orderLogicInstance.getPastEvents("PurchaseOrderInserted", {
+          fromBlock: 0,
+          toBlock: 'latest'})
+          .then((events) => {
+            resolve(events.length)
           })
         })
       })

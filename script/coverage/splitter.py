@@ -8,9 +8,19 @@ Queste 4 metriche le riscrive in 4 file .csv, pronti per essere presi e fatti a 
 
 import datetime
 
-with open("coverage_metrics.txt") as cm:
-	l = cm.readline()
-	arr = l.split()
+INPUT_PATH = "coverage.txt"
+
+
+with open(INPUT_PATH, 'r') as c:
+
+	coverage_line = ''
+	lines = c.readlines()
+	for line in lines:
+		if "All files" in line:
+			coverage_line = line
+			break # trovata la riga interessante, esci.
+
+	arr = coverage_line.split()
 	
 	statement_coverage = arr[3]
 	branch_coverage = arr[5]
@@ -18,10 +28,10 @@ with open("coverage_metrics.txt") as cm:
 	line_coverage = arr[9]
 	
 	coverage_arr = [statement_coverage, branch_coverage, function_coverage, line_coverage]
-	#print (coverage_arr)
 
 	iso_time_and_date = datetime.datetime.now().isoformat()
 	iso_date = iso_time_and_date[:10]
+
 
 	with open("statement_coverage.csv", 'a' ) as sc:
 		sc.write(iso_date+ ","+ statement_coverage +'\n')

@@ -13,12 +13,27 @@ cd ..
 
 echo "doing coverage"
 cd	coverage
-bash launcher.sh
+bash launcher_coverage.sh
+cd ..
+
+echo "splitting coverage"
+cd	coverage
+bash launcher_splitter.sh
 cd ..
 
 echo "doing densità errori"
-cd	densita-errori
+cd	densita_errori
 bash launcher.sh
+cd ..
+
+echo "doing deployment cost"
+cd	deployment_cost
+python3 deployment_cost.py
+cd ..
+
+echo "doing call cost"
+cd	call_cost
+python3 call_cost.py
 cd ..
 
 echo "end"

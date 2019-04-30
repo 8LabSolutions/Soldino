@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 // src/js/actions/index.js
-import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOORDERS } from "../constants/actionTypes";
+import { ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOORDERS, RESETCART } from "../constants/actionTypes";
 import { getTodayDate, getVAT, getNet, getDetails, getName } from "../auxiliaryFunctions";
 
 /*args: title, quantity, price*/
@@ -17,7 +17,8 @@ export function addToCart(product) {
           sellerName: product[4],
           sellerVATNumber: product[5],
           keyProd: product[6],
-          seller: product[7]
+          seller: product[7],
+          description: product[8]
       }
   };
 }
@@ -33,7 +34,8 @@ export function removeFromCart(product) {
         sellerName: product[4],
         sellerVATNumber: product[5],
         keyProd: product[6],
-        seller: product[7]
+        seller: product[7],
+        description: product[8]
     }
   };
 }
@@ -49,7 +51,8 @@ export function increaseQuantity(product) {
         sellerName: product[4],
         sellerVATNumber: product[5],
         keyProd: product[6],
-        seller: product[7]
+        seller: product[7],
+        description: product[8]
     }
   };
 }
@@ -65,7 +68,8 @@ export function decreaseQuantity(product) {
         sellerName: product[4],
         sellerVATNumber: product[5],
         keyProd: product[6],
-        seller: product[7]
+        seller: product[7],
+        description: product[8]
     }
   };
 }
@@ -81,5 +85,11 @@ export function cartToOrders(cart, address) {
     address,
     buyerName: getName(),
     buyerDetails: getDetails(), //if citizen == surname, if business == VATNumber
+  };
+}
+
+export function resetCart() {
+  return {
+    type: RESETCART
   };
 }

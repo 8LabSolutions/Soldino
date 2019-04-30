@@ -2,8 +2,6 @@ import web3util from "../web3functions/web_util"
 import ipfsModule from "../ipfsCalls/index"
 import web3user from "../web3functions/user"
 
-
-import TokenCubit from "../contracts_build/TokenCubit"
 //TODO resolve in buy function
 const user = (function(){
 
@@ -52,6 +50,12 @@ const user = (function(){
     return sum;
   }
 
+  function getLastOrderNumber(){
+    return new Promise((resolve)=>{
+      web3user.getPurchaseNumber().then(resolve)
+    })
+  }
+
 
   return {
     buy: function(cartInfo){
@@ -64,29 +68,27 @@ const user = (function(){
 
         //sort the products by seller
         products = groupProductsBySeller(products)
-        console.log("PRODOTTI")
-        console.log(products)
         var orders = splitInSellerArray(products)
-        console.log("ORDINI")
-        console.log(orders)
 
         var promises = []
         for(let i = 0; i < orders.length; i++){
-          var order = {
-            products: orders[i],
-            date: cartInfo.date,
-            number: new Date().getUTCMilliseconds(),
-            VAT: getTotalVAT(orders[i]),
-            net: getTotalNet(orders[i]),
-            total: getTotal(orders[i]),
-            address: cartInfo.date,
-            buyerName: cartInfo.buyerName,
-            buyerDetails: cartInfo.buyerDetails,
-            sellerName: orders[i][0].sellerName,
-            sellerVATNumber: orders[i][0].sellerVATNumber
-          }
           promises.push(new Promise((resolve)=>{
-            ipfsModule.insertJSONintoIPFS(order).then(resolve)
+            getLastOrderNumber().then((number)=>{
+              var order = {
+                products: orders[i],
+                date: cartInfo.date,
+                number: number+1,
+                VAT: getTotalVAT(orders[i]),
+                net: getTotalNet(orders[i]),
+                total: getTotal(orders[i]),
+                address: cartInfo.address,
+                buyerName: cartInfo.buyerName,
+                buyerDetails: cartInfo.buyerDetails,
+                sellerName: orders[i][0].sellerName,
+                sellerVATNumber: orders[i][0].sellerVATNumber
+              }
+              ipfsModule.insertJSONintoIPFS(order).then(resolve)
+            })
           }))
         }
 
@@ -111,22 +113,7 @@ const user = (function(){
             something[i] = products[i]
           }*/
           web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
-            web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(()=>{
-              web3util.getContractInstance(TokenCubit)
-              .then((cins) => {
-                web3util.getCurrentAccount().then((account) => {
-                  cins.getPastEvents("Transfer", {filter: {_from: account},
-                  fromBlock: 0,
-                  toBlock: 'latest'})
-                  .then((ev) => {
-                    console.log("Evento")
-                    console.log(ev)
-                  })
-                  .then(resolve)
-                })
-
-              })
-            })
+            web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(resolve)
           })
         })
       })
@@ -135,6 +122,25 @@ const user = (function(){
     getBalance: function(){
       return new Promise((resolve)=>{
         web3user.getBalance().then(resolve)
+      })
+    },
+
+    getPurchases: function(){
+      return new Promise((resolve)=>{
+        web3user.getPurchase().then((purchases)=>{
+          console.log('HASH IPFS DEI PRODOTTI')
+          console.log(purchases)
+          //getting the orders JSONs from IPFS
+          let purchaseJSONs = []
+          for(let i = 0; i<purchases.length; i++){
+            purchaseJSONs.push(
+              new Promise((resolve)=>{
+                ipfsModule.getJSONfromHash(purchases[i]).then(resolve)
+              })
+            )
+          }
+          Promise.all(purchaseJSONs).then(resolve)
+        })
       })
     }
   }

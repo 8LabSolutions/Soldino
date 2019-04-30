@@ -119,6 +119,10 @@ contract OrderLogic {
         productLogic = ProductLogic(contractManager.getContractAddress("ProductLogic"));
     }
 
-
+    function getOrderCid(bytes32 _keyHash) external view returns(bytes32, uint8, uint8) {
+        return(
+            orderStorage.getOrderCid(_keyHash)
+        );
+    }
 
 }
