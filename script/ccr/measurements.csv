@@ -6,7 +6,7 @@ Owned.sol,8,14
 ProductLogic.sol,1,111
 VatLogic.sol,8,48
 UserLogic.sol,4,49
-OrderLogic.sol,10,93
+OrderLogic.sol,10,95
 TokenCubit.sol,92,79
 ContractManager.sol,0,14
 Purchase.sol,10,63
@@ -31,7 +31,7 @@ user.js,8,122
 authentication.js,18,66
 index.js,2,15
 FormCubitManager.js,5,102
-Orders.js,2,100
+Orders.js,7,126
 FormRegistration.js,3,138
 Home.js,0,25
 Button.js,9,10
