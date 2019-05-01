@@ -33,8 +33,8 @@ const user = (function(){
     let totalVat = 0;
     let totalVatCC = 0;
     for(let i = 0; i < products.length; i++){
-      netPrice = parseFloat((products[i].price*100)/(+100 + +products[i].VAT));
-      totalVatCC += parseFloat(products[i].price-netPrice);
+      netPrice = (parseFloat((products[i].price*100)/(+100 + +products[i].VAT)))*products[i].quantity;
+      totalVatCC += parseFloat((products[i].price*products[i].quantity)-netPrice);
       sumNetPrice += netPrice;
     }
     totalVat = round(parseFloat((totalVatCC*100)/sumNetPrice));
@@ -44,7 +44,7 @@ const user = (function(){
   function getTotalNet(products){
     let sum = 0;
     for(let i = 0; i < products.length; i++){
-      sum+= ((products[i].price*100)/(+100 + +parseInt((products[i].VAT)))*products[i].quantity);
+      sum+= ((products[i].price*100)/(+100 + +parseFloat((products[i].VAT)))*products[i].quantity);
     }
     return sum;
   }
