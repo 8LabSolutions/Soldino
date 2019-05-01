@@ -70,5 +70,9 @@ contract VatLogic {
     function createVatKey(address _business, string memory _period) public pure returns(bytes32) {
         return keccak256(abi.encodePacked(_business, _period));
     }
+
+    function getVatData(bytes32 _key) public view returns(address, uint, int256){
+        return vatStorage.getVatData(_key);
+    }
 }
 

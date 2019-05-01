@@ -281,13 +281,13 @@ const web3business = (function(){
               orderLogicInstance.getPastEvents("PurchaseOrderInserted", queryPurchase)
               .then((events)=>{
                 for(let i = 0; i < events.length; i++){
-                invoicesKey.push(events[i].returnValues._hashIpfs);
+                  invoicesKey.push(events[i].returnValues._keyHash);
                 }
 
                 orderLogicInstance.getPastEvents("SellOrderInserted", querySelling)
                 .then((events)=>{
                   for(let i = 0; i < events.length; i++){
-                    invoicesKey.push(events[i].returnValues._hashIpfs);
+                    invoicesKey.push(events[i].returnValues._keyHash);
                   }
                   //invoicesKey contains all the 32byte key, getting the IPFS hashes
                   var invoicesIPFS = []
@@ -313,6 +313,26 @@ const web3business = (function(){
           })
         })
       })
+    },
+
+    getVATPeriodInfo: function(period){
+      return new Promise((resolve)=>{
+        web3util.getCurrentAccount().then((account)=>{
+          web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
+            vatLogicInstance.methods.createVatKey(account, period)
+            .call()
+            .then((key)=>{
+              vatLogicInstance.methods.getVatData(key)
+              .call()
+              .then((ris)=>{
+                //arrives in the following order [businessAddress, state, amount]
+                resolve([ris[0], ris[1], ris[2]])
+              })
+            })
+          })
+        })
+      })
+
     }
   }
 }());

@@ -16,7 +16,7 @@ contract OrderLogic {
     ProductLogic internal productLogic;
 
     event PurchaseOrderInserted(address indexed _buyer, bytes32 indexed _keyHash, bytes32 indexed _vatKey);
-    event SellOrderInserted(address indexed _seller, bytes32 indexed _hashIpfs, bytes32 indexed _vatKey);
+    event SellOrderInserted(address indexed _seller, bytes32 indexed _keyHash, bytes32 indexed _vatKey);
 
     modifier onlyBuyerOrSeller(bytes32 _keyHash, address _user) {
         require(_user == orderStorage.getBuyer(_keyHash) || _user == orderStorage.getSeller(_keyHash),

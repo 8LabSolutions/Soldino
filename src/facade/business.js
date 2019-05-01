@@ -153,7 +153,19 @@ const business = (function(){
         })
       })
     },
-
+    /**
+     * @returns the vat period of the business user, like a JSON with the following format:
+     *  var vatJSON = {
+          id: period,
+          amount: amount,
+          deferred: deferred,
+          defereable: defereable,
+          payable: payable,
+          resolved: resolved,
+          outOfLimit: outOfLimit
+        }
+     *
+     */
     getPeriods: function() {
       return new Promise((resolve)=>{
         web3business.getInvoices().then((invoicesIPFSHash)=>{
@@ -167,7 +179,7 @@ const business = (function(){
           });
           Promise.all(invoicesJSON).then((ris)=>{
             //get the date, then the periods
-            console.log(invoicesJSON)
+            console.log(ris)
 
             var dates = []
             ris.forEach(json => {
@@ -181,7 +193,56 @@ const business = (function(){
               periods.push(web3util.getVATPeriod(month, year));
             })
             console.log("periods: "+periods)
-            resolve(periods)
+            var promises = []
+            periods.forEach(period=>{
+              promises.push(new Promise((resolve)=>{
+                web3business.getVATPeriodInfo(period).then(([, state, amount])=>{
+                  //get the state of the period
+                  var deferred = false;
+                  var defereable = false;
+                  var payable = false;
+                  var resolved = false;
+                  var outOfLimit = false;
+                  //enum state {DUE, OVERDUE, PAID, TO_BE_REFUNDED, REFUNDED}
+                  switch (state) {
+                    case 0:
+                    //the business have to pay to the government
+                    //it could pay of defer
+                      defereable = true;
+                      payable = true;
+                      break;
+                    case 1:
+                    //the payment was deferred
+                      deferred = true;
+                      break;
+                    case 2:
+                    //the business paid the vat to government
+                      resolved = true;
+                      break;
+                    case 3:
+                    //the government must pay the vat
+                      break;
+                    case 4:
+                    //the government did the refund
+                      resolved = true;
+                      break;
+
+                  }
+                  var vatJSON = {
+                    id: period,
+                    amount: amount,
+                    deferred: deferred,
+                    defereable: defereable,
+                    payable: payable,
+                    resolved: resolved,
+                    outOfLimit: outOfLimit
+                  }
+
+                  resolve(vatJSON)
+                })
+              }))
+            })
+            Promise.all(promises).then(resolve)
           })
         })
       })

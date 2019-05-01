@@ -24,24 +24,11 @@ class TransactionsManager extends Component {
     const {getInvoices, getBusinessPeriods} = this.props;
     getInvoices(this.lastQuarter)
     getBusinessPeriods();
-    //da togliere **************
-    var periodJSON = {
-      id: "YYYY-Q", //Q da 1 a 4
-      amount: 200,
-      deferred: true, //dilazionato --> data ultima pagamento
-      defereable: false,
-      payable: true,
-      resolved: false,
-      outOfLimit: false
-    }
-    console.log(['REMOVE',periodJSON])
-
-  //*********************** */
   }
 
   downloadPDF() {
     var doc = new jsPDF()
-    doc.fromHTML(ExportPDF(this.state.invoices, this.selectedQuarter) , 1, 1)
+    doc.fromHTML(ExportPDF(this.props.invoices, this.selectedQuarter) , 1, 1)
     return(
       doc.save("invoices "+this.selectedQuarter+".pdf")
     )
@@ -58,6 +45,7 @@ class TransactionsManager extends Component {
     let obj = quarterToInvoices(event.target.value)
     this.setState({invoices: obj})
     console.log(this.selectedQuarter)
+    console.log(this.state.invoices)
   }
 
   printDebitButtons() {
