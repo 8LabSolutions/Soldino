@@ -32,6 +32,20 @@ const web3util = (function() {
 
   return {
     init: init,
+    /**
+     * @returns The corresponding VAT period in the format YYYY-MM
+     *
+     * @param {*} month month in NUMBER(1-12)
+     * @param {*} year year in NUMBER
+     */
+    getVATPeriod: function(month = undefined, year = undefined){
+      var today = new Date();
+      var mm = (month === undefined ? today.getMonth()+1 : month);
+      var yyyy = (year === undefined ? today.getFullYear() : year);
+      var period = parseInt(mm/4) +1;
+      console.log('used period: '+String(yyyy).concat("-").concat(String(period)))
+      return String(yyyy).concat("-").concat(String(period))
+    },
 
     getCurrentAccount: async function(){
       if (web3js === undefined)

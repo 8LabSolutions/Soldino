@@ -19,7 +19,6 @@ const web3business = (function(){
             .send({from: account})
             .then(() => {
               productLogicInstance.methods.getProductNetPrice(hashIpfs).call()
-              .then(console.log)
               .then(resolve)
             })
           })
@@ -32,9 +31,6 @@ const web3business = (function(){
         web3util.getContractInstance(ProductLogic).then((productLogicInstance) =>{
           let [hashIpfs, hashSize, hashFun] = web3util.splitIPFSHash(newHash)
           web3util.getCurrentAccount().then((account)=>{
-            console.log(hashIpfs)
-            console.log(hashSize)
-            console.log(hashFun)
             productLogicInstance.methods.modifyProduct(
               key, hashIpfs, hashSize, hashFun, newVatPercentage, newNetPrice*web3util.TOKENMULTIPLIER)
             .send({from: account})
@@ -68,8 +64,6 @@ const web3business = (function(){
             var hashIPFS = ris[0];
             var hashFun = ris[1];
             var hashSize = ris[2];
-            console.log("hash scomposto ipfs ")
-            console.log(ris)
             resolve(web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun));
           });
 
@@ -168,7 +162,6 @@ const web3business = (function(){
             //firstly get the inserted products from the logs
             productLogicInstance.getPastEvents('ProductInserted', query)
             .then((events) => {
-              console.log(events)
               let start = index*amount;
               for (let i = start; i < start + amount && i < events.length; i++){
                 //extracting only the hash
@@ -188,14 +181,10 @@ const web3business = (function(){
                   return !(deleted.includes(value))
                 })
                 products = filtered;
-                console.log("prodotti da stampare")
-                console.log(products)
               })
               .then(()=>{
                 productLogicInstance.getPastEvents('ProductModified', query)
                 .then((eventsUpdate)=>{
-                  console.log("evento modifica")
-                  console.log(eventsUpdate)
                   //getting the updated products
                   if(eventsUpdate!== undefined){
                     for (let i = 0; i < eventsUpdate.length; i++){
@@ -211,8 +200,6 @@ const web3business = (function(){
                         new Promise((resolve)=>{
                           this.getProductHash(products[i])
                           .then((ipfsHash)=>{
-                            console.log("hash ipfs calcolati "+i)
-                            console.log(ipfsHash)
                             productLogicInstance.methods.getProductSeller(products[i]).call()
                             .then((seller) => {
                               resolve([products[i], ipfsHash, seller])
@@ -222,7 +209,6 @@ const web3business = (function(){
                     }
                     //resolves all the products values
                     Promise.all(promises).then((ris)=>{
-                      console.log(ris)
                       resolve(ris)
                     })
                   }
@@ -235,52 +221,99 @@ const web3business = (function(){
     },
     /**
      * @returns An array containing the IPFS Hashes of the Invoices related to the selected period
+     * along with the invoiec type (selling/purchase)
      * @param {*} VATPeriod VAT period in the following format
      */
-    getInvoices: function(VATPeriod) {
+    getInvoices: function(VATPeriod = undefined) {
       //must get all the purchase order and the selling order
       return new Promise((resolve)=>{
+        console.log('getting invoices')
         web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
           web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
-            web3util.getCurrentAccount().then((account)=>{
-              vatLogicInstance.methods.createVatKey(account, VATPeriod).then((key)=>{
-                //filtering by the current account and the key to access the right VAT period
-                let queryPurchase = {
+            web3util.getCurrentAccount().then(async (account)=>{
+              var queryPurchase;
+              var querySelling;
+
+              if(VATPeriod === undefined){
+                queryPurchase = {
                   filter: {
                     _buyer: account,
-                    _key: key
                   },
                   fromBlock: 0,
                   toBlock: 'latest'
                 }
 
-                let querySelling = {
+                querySelling = {
                   filter: {
-                    _: account,
-                    _key: key
+                    _seller: account,
                   },
                   fromBlock: 0,
                   toBlock: 'latest'
                 }
+              }
+              else{
+                await vatLogicInstance.methods.createVatKey(account, VATPeriod)
+                .call({from: account})
+                .then((key)=>{
+                  //filtering by the current account and the key to access the right VAT period
+                  queryPurchase = {
+                    filter: {
+                      _buyer: account,
+                      _key: key
+                    },
+                    fromBlock: 0,
+                    toBlock: 'latest'
+                  }
 
-                orderLogicInstance.getPastEvents("PurchaseOrderInserted", queryPurchase)
-                .then((events)=>{
-                   console.log('TODO'+events)
+                  querySelling = {
+                    filter: {
+                      _seller: account,
+                      _key: key
+                    },
+                    fromBlock: 0,
+                    toBlock: 'latest'
+                  }
                 })
+              }
+
+              var invoicesKey = []
+
+              orderLogicInstance.getPastEvents("PurchaseOrderInserted", queryPurchase)
+              .then((events)=>{
+                for(let i = 0; i < events.length; i++){
+                invoicesKey.push(events[i].returnValues._hashIpfs);
+                }
+
                 orderLogicInstance.getPastEvents("SellOrderInserted", querySelling)
                 .then((events)=>{
-                  console.log('TODO'+events)
+                  for(let i = 0; i < events.length; i++){
+                    invoicesKey.push(events[i].returnValues._hashIpfs);
+                  }
+                  //invoicesKey contains all the 32byte key, getting the IPFS hashes
+                  var invoicesIPFS = []
+                  for (let j = 0; j < invoicesKey.length; j++){
+                    invoicesIPFS.push(
+                      new Promise((resolve)=>{
+                        web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
+                          web3util.getCurrentAccount().then((account)=>{
+                            orderLogicInstance.methods.getOrderCid(invoicesKey[j])
+                            .call({from: account})
+                            .then((hashParts)=>{
+                              resolve(web3util.recomposeIPFSHash(hashParts[0], hashParts[2], hashParts[1]))
+                            })
+                          })
+                        })
+                      })
+                    )
+                  }
+                  Promise.all(invoicesIPFS).then(resolve)
                 })
-                resolve('TODO')
               })
             })
           })
         })
       })
     }
-
-
-
   }
 }());
 

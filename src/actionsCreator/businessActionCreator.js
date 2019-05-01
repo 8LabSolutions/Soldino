@@ -1,5 +1,5 @@
 import business from "../facade/business"
-import {getMyProducts, getStoreProducts}  from "../actions/business"
+import {getMyProducts, getStoreProducts, setInvoices, setPeriods}  from "../actions/business"
 
 const businessActionCreator = (function(){
   return {
@@ -57,6 +57,24 @@ const businessActionCreator = (function(){
       return new Promise((resolve)=>{
         business.getTotalMyProduct()
         .then(resolve)
+      })
+    },
+
+    getInvoices: function(VATPeriod){
+      return new Promise((resolve)=>{
+        business.getInvoices(VATPeriod)
+        .then((invoices)=>{
+          resolve(setInvoices(invoices));
+        })
+      })
+    },
+
+    getBusinessPeriod: function(){
+      return new Promise((resolve)=>{
+        business.getPeriods()
+        .then((periods)=>{
+          resolve(setPeriods(periods))
+        })
       })
     }
 

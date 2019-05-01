@@ -12,7 +12,7 @@ import Cart from './components/presentational/Cart';
 import Footer from './components/presentational/Footer'
 import Success from './components/presentational/Success';
 import Error from './components/presentational/Error';
-import TransactionsManager from './components/presentational/TransactionsManager';
+import TransactionsManagerContainer from './components/containers/TransactionManagerContainer';
 import Checkout from './components/presentational/Checkout';
 import PurchasesConfirmation from './components/presentational/PurchasesConfirmation';
 import EditProductsManager from './components/presentational/EditProductsManager';
@@ -46,7 +46,7 @@ class App extends Component {
             <Route path="/errorwhileediting" render={()=><Error errorMessage="Edit failed." nextMessage="Something has gone wrong during the edit." />} />
             <Route path="/orders" component={OrdersContainer} />
             <Route path="/purchasesconfirmation" component={PurchasesConfirmation} />
-            <Route path="/transactionsmanager" component={TransactionsManager} />
+            <Route path="/transactionsmanager" component={TransactionsManagerContainer} />
             <Route path="/productsmanager" component={ProductsManagerContainer} />
             <Route path="/editproductsmanager" component={EditProductsManager} />
             <Route path="/addproductsmanager" component={AddProductsManager} />

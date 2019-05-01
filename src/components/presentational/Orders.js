@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import NavBar from './NavBar'
-import { store } from "../../store/index";
 import PendingOrder from './PendingOrder';
 import { printShipment, round, checkBusiness, checkCitizen } from '../../auxiliaryFunctions';
 

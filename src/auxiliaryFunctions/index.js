@@ -50,7 +50,7 @@ export function getDetails() {
     );
   }else{
     return(
-      store.getState().user.VATNumber
+      store.getState().user.VATnumber
     );
   }
 

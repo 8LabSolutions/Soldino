@@ -3,22 +3,40 @@
 import React, {Component} from 'react';
 import jsPDF from 'jspdf';
 import NavBar from './NavBar'
-import { getQuarters, getVATStatus, quarterToInvoices, printDate, getDetails, ExportPDF, checkBusiness, round } from '../../auxiliaryFunctions/index'
+import {getVATStatus, quarterToInvoices, printDate, getDetails, ExportPDF, checkBusiness, round } from '../../auxiliaryFunctions/index'
 import ButtonGeneric from '../containers/ButtonGeneric';
 
 
 class TransactionsManager extends Component {
-  quarterList  = getQuarters()
-  lastQuarter = this.quarterList[0]
+
+  quarterList  = this.props.periods
+  lastQuarter = undefined
   selectedQuarter = this.lastQuarter
   VATstatus = getVATStatus(this.selectedQuarter)
- 
+
+
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = { 
-      invoices: quarterToInvoices(this.lastQuarter) //initialize with last quarter ~ current quarter
-    };
+  }
+
+  componentWillMount(){
+    const {getInvoices, getBusinessPeriods} = this.props;
+    getInvoices(this.lastQuarter)
+    getBusinessPeriods();
+    //da togliere **************
+    var periodJSON = {
+      id: "YYYY-Q", //Q da 1 a 4
+      amount: 200,
+      deferred: true, //dilazionato --> data ultima pagamento
+      defereable: false,
+      payable: true,
+      resolved: false,
+      outOfLimit: false
+    }
+    console.log(['REMOVE',periodJSON])
+
+  //*********************** */
   }
 
   downloadPDF() {
@@ -41,7 +59,7 @@ class TransactionsManager extends Component {
     this.setState({invoices: obj})
     console.log(this.selectedQuarter)
   }
-  
+
   printDebitButtons() {
     return(
       <div className="col-sm-6">
@@ -87,7 +105,7 @@ class TransactionsManager extends Component {
           <div className="row">
             <div className="col-sm-6">
               <p>VAT status for the selected quarter: <span className="red">{this.VATstatus} CC</span></p>
-            </div>              
+            </div>
             {this.printDebitButtons()}
           </div>
         </div>
@@ -96,6 +114,7 @@ class TransactionsManager extends Component {
   }
 
   printInvoices() {
+    console.log(this.props.invoices)
     return(
       <ul className="list-group">
         <li className="list-group-item">
@@ -123,7 +142,7 @@ class TransactionsManager extends Component {
             </div>
           </div>
         </li>
-        {this.state.invoices.map(i => {
+        {this.props.invoices.map(i => {
           return(
             <div key={i.number}>
               <li className="list-group-item">
@@ -150,7 +169,7 @@ class TransactionsManager extends Component {
                   </div>
                 </div>
               </li>
-              
+
 
               <div className="modal fade" id={"invoice"+i.number} tabIndex="-1" role="dialog" aria-labelledby={"invoice"+i.number+"Label"} aria-hidden="true">
                 <div className="modal-dialog" role="document">
@@ -231,7 +250,7 @@ class TransactionsManager extends Component {
                                   </div>
                                 </div>
                               </div>
-                              
+
                             )
                           })}
                           <div className="col-sm-4">
@@ -282,6 +301,10 @@ class TransactionsManager extends Component {
 
   render() {
     if(checkBusiness()===false){window.location.href = "/"}
+
+    var list = []
+    if(this.quarterList !== undefined && this.quarterList.length>0)
+      list = this.quarterList.map(quarter => this.printQuarters(quarter))
     return (
       <div>
         <NavBar />
@@ -294,7 +317,7 @@ class TransactionsManager extends Component {
                   <div className="col-sm-6 offset-sm-3">
                     <div className="form-group">
                       <select className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange}>
-                        {this.quarterList.map(quarter => this.printQuarters(quarter))}
+                        {list}
                       </select>
                     </div>
                   </div>
@@ -303,12 +326,12 @@ class TransactionsManager extends Component {
               <br />
               { this.printStatus() }
               <br />
-              { (this.state.invoices!==null) ? this.printInvoices() : null }
-              
-              
+              { (this.props.invoices!==null) ? this.printInvoices() : null }
+
+
             </div>
           </div>
-        </div>    
+        </div>
       </div>
     )
   }

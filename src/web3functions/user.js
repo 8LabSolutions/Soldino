@@ -9,13 +9,7 @@ const web3user = (function(){
   web3util.init()
 
   //return the actual VAT period
-  function getVATPeriod(){
-    var today = new Date();
-    var mm = today.getMonth()+1;
-    var yyyy = today.getFullYear();
-    var period = parseInt(mm/4) +1
-    return String(yyyy).concat("-").concat(String(period))
-  }
+
 
   return{
     tokenTransferApprove: function(amount) {
@@ -63,7 +57,7 @@ const web3user = (function(){
               remainingHash,
               hashFun,
               hashSize,
-              getVATPeriod())
+              web3util.getVATPeriod())
             .send({from: account, gas: 2000000})
             .then(resolve)
           })
@@ -132,8 +126,6 @@ const web3user = (function(){
           fromBlock: 0,
           toBlock: 'latest'})
           .then((events) => {
-            console.log(events)
-            console.log(events.length)
             resolve(events.length)
           })
         })

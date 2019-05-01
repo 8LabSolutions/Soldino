@@ -1,5 +1,6 @@
 import web3business from "../web3functions/business"
 import ipfsModule from "../ipfsCalls/index"
+import web3util from "../web3functions/web_util";
 
 const business = (function(){
 
@@ -137,7 +138,7 @@ const business = (function(){
       })
     },
 
-    getInvoces: function(VATPeriod) {
+    getInvoices: function(VATPeriod) {
       return new Promise((resolve)=>{
         web3business.getInvoices(VATPeriod).then((invoicesIPFSHash)=>{
           var invoicesJSON = []
@@ -149,6 +150,39 @@ const business = (function(){
             )
           });
           Promise.all(invoicesJSON).then(resolve)
+        })
+      })
+    },
+
+    getPeriods: function() {
+      return new Promise((resolve)=>{
+        web3business.getInvoices().then((invoicesIPFSHash)=>{
+          var invoicesJSON = []
+          invoicesIPFSHash.forEach(invoceIPFSHash => {
+            invoicesJSON.push(
+              new Promise((resolve)=>{
+                ipfsModule.getJSONfromHash(invoceIPFSHash).then(resolve)
+              })
+            )
+          });
+          Promise.all(invoicesJSON).then((ris)=>{
+            //get the date, then the periods
+            console.log(invoicesJSON)
+
+            var dates = []
+            ris.forEach(json => {
+              if(!dates.includes(json.date))
+                dates.push(json.date);
+            });
+
+            var periods = []
+            dates.forEach(date=>{
+              var [year, month,] = date.split("/");
+              periods.push(web3util.getVATPeriod(month, year));
+            })
+            console.log("periods: "+periods)
+            resolve(periods)
+          })
         })
       })
     }
