@@ -157,9 +157,15 @@ input:checked + .slider {
   cursor: pointer;
 }
 
-#uploadedImage, #spanUploader {
+#spanUploader {
   border: 2px solid #bdc3c7 !important;
   border-radius: 6px !important;
+}
+
+#uploadedImage {
+  border-radius: 6px !important;
+  box-shadow: 0 0px 15px 0px rgba(0, 0, 0, 0.25);
+  margin-top: 10px;
 }
 
 .card {
@@ -338,4 +344,9 @@ opacity: 1;
 
 .css-1vr111p-option:hover {
   background: #1abc9c42 !important;
+}
+
+.modal-description {
+  max-height: 85px;
+  overflow-y: scroll;
 }

@@ -16,7 +16,9 @@ const initialState = {
   index: defaultIndex,
   totalStoreProduct: 0,
   totalMyProduct: 0,
-  editProd: null
+  editProd: null,
+  periods: [],
+  invoices: []
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === BEGINLOADING || action.type === ENDLOADING) {
