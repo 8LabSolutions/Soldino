@@ -74,5 +74,13 @@ contract VatLogic {
     function getVatData(bytes32 _key) public view returns(address, uint, int256){
         return vatStorage.getVatData(_key);
     }
+
+    function putOnHold(bytes _key) public view {
+        // The VAT needs to be paid only from the business which has generated the VAT movement
+        require(msg.sender == vatStorage.getVatBusiness(_key), "VAT payment: invalid VAT key");
+        //the VAT key must be DUE
+        require(vatStorage.getVatState(_key) == 0, "The VAT must be in DUE state to be put on hold");
+        vatStorage.setVatState(_key, 1);
+    }
 }
 

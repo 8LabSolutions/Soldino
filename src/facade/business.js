@@ -204,16 +204,42 @@ const business = (function(){
                   var resolved = false;
                   var outOfLimit = false;
                   //enum state {DUE, OVERDUE, PAID, TO_BE_REFUNDED, REFUNDED}
+                  let currentVATPeriod = web3util.getVATPeriod();
+                  let oldVATPeriod = period;
+
+                  let [currYear, currMonth] = currentVATPeriod.split("-");
+                  let [oldYear, oldMonth] = oldVATPeriod.split("-");
+
+                  [currYear, currMonth] = currentVATPeriod.split("-");
+                  [oldYear, oldMonth] = oldVATPeriod.split("-");
+
                   switch (state) {
+
                     case 0:
                     //the business have to pay to the government
                     //it could pay of defer
                       defereable = true;
                       payable = true;
+                      //check if the payment is out ou limit
+                      currentVATPeriod = web3util.getVATPeriod();
+                      oldVATPeriod = period;
+
+                      if(((currYear-oldYear)*4+(currMonth-oldMonth))>1){
+                        outOfLimit = true;
+                        defereable = false;
+                        payable = false;
+                      }
                       break;
                     case 1:
                     //the payment was deferred
                       deferred = true;
+                      //check if the payment is out ou limit
+
+                      if(((currYear-oldYear)*4+(currMonth-oldMonth))>2){
+                        outOfLimit = true;
+                        defereable = false;
+                        payable = false;
+                      }
                       break;
                     case 2:
                     //the business paid the vat to government
