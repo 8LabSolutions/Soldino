@@ -43,9 +43,30 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   console.log('INVOICES')
   console.log(state.invoices);
+  let VATnumber = state.user;
+  (VATnumber===null) ? VATnumber=0 : VATnumber=VATnumber.VATnumber 
   return {
     invoices: state.invoices,
-    periods: state.periods
+    periods: state.periods,
+    periodJSON : [{
+      id: "2018-4", //Q da 1 a 4
+      amount: 200,
+      deferred: false, //dilazionato --> data ultima pagamento
+      defereable: false,
+      payable: false,
+      resolved: true,
+      outOfLimit: false
+    },
+    {
+      id: "2019-1", //Q da 1 a 4
+      amount: -200,
+      deferred: true, //dilazionato --> data ultima pagamento
+      defereable: false,
+      payable: true,
+      resolved: false,
+      outOfLimit: false
+    }],
+    myVATnumber: VATnumber
   }
 }
 

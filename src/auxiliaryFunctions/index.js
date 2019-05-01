@@ -111,12 +111,6 @@ export function getQuarters() {
   return quarterList.reverse()
 }
 
-export function getVATStatus(/*quarter*/) {
-  //retreive data from ipfs
-  let status = -321.23;
-  return(status);
-}
-
 export function quarterToInvoices(quarter) {
   let startDate = new Date(quarter.substr(0, 7))
   //let endDate = new Date(quarter.substr(10,7))
@@ -169,7 +163,7 @@ export function ExportPDF(invoices, quarter) {
   //+invoices.map(i => {return(i.number)})+
   var returnRootComponent =
   "<h2>"+quarter+" resume</h2><br />"+
-  "<h3>VAT status: "+getVATStatus(quarter)+" CC</h2><br/>"+
+  "<h3>VAT status: "+/*getVATStatus(quarter)+*/" CC</h2><br/>"+
   "<p>_____________________________________________________________</p><br />"+
   invoices.map(i => {
     return(

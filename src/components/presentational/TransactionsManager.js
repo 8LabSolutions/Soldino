@@ -3,26 +3,23 @@
 import React, {Component} from 'react';
 import jsPDF from 'jspdf';
 import NavBar from './NavBar'
-import {getVATStatus, quarterToInvoices, printDate, getDetails, ExportPDF, checkBusiness, round } from '../../auxiliaryFunctions/index'
+import { printDate, ExportPDF, checkBusiness, round, printShipment } from '../../auxiliaryFunctions/index'
 import ButtonGeneric from '../containers/ButtonGeneric';
 
 
 class TransactionsManager extends Component {
 
-  quarterList  = this.props.periods
-  lastQuarter = undefined
-  selectedQuarter = this.lastQuarter
-  VATstatus = getVATStatus(this.selectedQuarter)
-
-
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      lastQuarter: '2019-1'
+    };
   }
 
   componentWillMount(){
     const {getInvoices, getBusinessPeriods} = this.props;
-    getInvoices(this.lastQuarter)
+    getInvoices(this.state.lastQuarter)
     getBusinessPeriods();
   }
 
@@ -36,16 +33,19 @@ class TransactionsManager extends Component {
 
   printQuarters(quarter) {
     return(
-      <option>{quarter}</option>
+      <option>{quarter.id}</option>
     )
   }
 
   handleChange(event){
-    this.selectedQuarter = event.target.value
+    this.setState({ lastQuarter: event.target.value })
+    const {getInvoices} = this.props;
+    getInvoices(this.state.lastQuarter)
+    /*this.selectedQuarter = event.target.value
     let obj = quarterToInvoices(event.target.value)
     this.setState({invoices: obj})
     console.log(this.selectedQuarter)
-    console.log(this.state.invoices)
+    console.log(this.state.invoices)*/
   }
 
   printDebitButtons() {
@@ -83,16 +83,17 @@ class TransactionsManager extends Component {
   }
 
   printStatus() {
-    if(this.VATstatus>=0) {
+    let {periodJSON} = this.props
+    if(periodJSON[0].amount>=0) {
       return(
-        <p>VAT status for the selected quarter: <span className="green">+{this.VATstatus} CC</span></p>
+        <p>VAT status for the selected quarter: <span className="green">+{periodJSON[0].amount} CC</span></p>
       )
     }else{
       return(
         <div className="container">
           <div className="row">
             <div className="col-sm-6">
-              <p>VAT status for the selected quarter: <span className="red">{this.VATstatus} CC</span></p>
+              <p>VAT status for the selected quarter: <span className="red">{periodJSON[0].amount} CC</span></p>
             </div>
             {this.printDebitButtons()}
           </div>
@@ -103,6 +104,7 @@ class TransactionsManager extends Component {
 
   printInvoices() {
     console.log(this.props.invoices)
+    let {myVATnumber} = this.props;
     return(
       <ul className="list-group">
         <li className="list-group-item">
@@ -140,16 +142,16 @@ class TransactionsManager extends Component {
                       <p>Invoice #{i.number}</p>
                     </div>
                     <div className="col-sm-2">
-                      {(i.sellerVATNumber===getDetails()) ? <p>Sale</p> : <p>Purchase</p>} {/* if seller === logged user then "sale" else "purchase" */}
+                      {(i.sellerVATNumber===myVATnumber) ? <p>Sale</p> : <p>Purchase</p>} {/* if seller === logged user then "sale" else "purchase" */}
                     </div>
                     <div className="col-sm-2">
                       <p>{printDate(i.date)}</p>
                     </div>
                     <div className="col-sm-2">
-                      <p>CC {round(i.totalCC)}</p>
+                      <p>CC {round((+(i.VAT/100)*i.net)+ +i.net)}</p>
                     </div>
                     <div className="col-sm-2">
-                      <p>CC {round(i.totalVAT)}</p>
+                      <p>CC {round((i.VAT/100)*i.net)}</p>
                     </div>
                     <div className="col-sm-2">
                       <button type="button" className="btn btn-light" data-toggle="modal" data-target={"#invoice"+i.number}>More details</button>
@@ -181,13 +183,13 @@ class TransactionsManager extends Component {
                             <p>Order date: </p>
                           </div>
                           <div className="col-sm-8">
-                            <p>{printDate(i.orderDate)}</p>
+                            <p>{printDate(i.date)}</p>
                           </div>
                           <div className="col-sm-4">
                             <p>Order number: </p>
                           </div>
                           <div className="col-sm-8">
-                            <p>{i.orderNumber}</p>
+                            <p>{i.number}</p>
                           </div>
                           <div className="col-sm-12">
                             <p>Products: </p>
@@ -202,37 +204,37 @@ class TransactionsManager extends Component {
                                       <p>Product: </p>
                                     </div>
                                     <div className="col-sm-8">
-                                      <p>{j[0]}</p>
+                                      <p>{j.title}</p>
                                     </div>
                                     <div className="col-sm-4">
                                       <p>Total Price: </p>
                                     </div>
                                     <div className="col-sm-8">
-                                      <p>CC {round(j[1])}</p>
+                                      <p>CC {round(j.price*j.quantity)}</p>
                                     </div>
                                     <div className="col-sm-4">
                                       <p>Net Price: </p>
                                     </div>
                                     <div className="col-sm-8">
-                                      <p>CC {round(j[2])}</p>
+                                      <p>CC {round(((j.price*100)/(+j.VAT + +100))*j.quantity)}</p>
                                     </div>
                                     <div className="col-sm-4">
                                       <p>VAT %: </p>
                                     </div>
                                     <div className="col-sm-8">
-                                      <p>{j[3]}</p>
+                                      <p>{j.VAT}</p>
                                     </div>
                                     <div className="col-sm-4">
                                       <p>Description: </p>
                                     </div>
-                                    <div className="col-sm-8">
-                                      <p>{j[4]}</p>
+                                    <div className="col-sm-8 modal-description">
+                                      <p>{j.description}</p>
                                     </div>
                                     <div className="col-sm-4">
                                       <p>Quantity: </p>
                                     </div>
                                     <div className="col-sm-8">
-                                      <p>{j[5]}</p>
+                                      <p>{j.quantity}</p>
                                     </div>
                                     <div className="col-sm-12"><hr /></div>
                                   </div>
@@ -245,13 +247,13 @@ class TransactionsManager extends Component {
                             <p>Total VAT: CC </p>
                           </div>
                           <div className="col-sm-8">
-                            <p>{round(i.totalVAT)}</p>
+                            <p>{round((i.VAT/100)*i.net)}</p>
                           </div>
                           <div className="col-sm-4">
                             <p>Total Price: CC </p>
                           </div>
                           <div className="col-sm-8">
-                            <p>{round(i.totalCC)}</p>
+                            <p>{round((+(i.VAT/100)*i.net)+ +i.net)}</p>
                           </div>
                           <div className="col-sm-4">
                             <p>Seller: </p>
@@ -269,7 +271,7 @@ class TransactionsManager extends Component {
                             <p>Shipment: </p>
                           </div>
                           <div className="col-sm-8">
-                            <p>{i.shipment}</p>
+                            <p>{printShipment(i.address)}</p>
                           </div>
                         </div>
                       </div>
@@ -289,10 +291,10 @@ class TransactionsManager extends Component {
 
   render() {
     if(checkBusiness()===false){window.location.href = "/"}
-
+    let {periodJSON} = this.props;
     var list = []
-    if(this.quarterList !== undefined && this.quarterList.length>0)
-      list = this.quarterList.map(quarter => this.printQuarters(quarter))
+    if(periodJSON !== undefined && periodJSON.length>0)
+      list = periodJSON.map(quarter => this.printQuarters(quarter))
     return (
       <div>
         <NavBar />
