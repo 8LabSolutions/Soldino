@@ -320,3 +320,22 @@ opacity: 1;
 .css-6y1x9t-control {
   box-shadow: 0 0 0 1px #1abc9c!important;
 }
+
+::selection {
+  background: #1abc9c;
+  color: #34495e;
+}
+
+::-moz-selection {
+  background: #1abc9c;
+  color: #34495e;
+}
+
+.css-1qprcsu-option {
+  background: #1abc9c !important;
+  color: #f1f1f1 !important;
+}
+
+.css-1vr111p-option:hover {
+  background: #1abc9c42 !important;
+}

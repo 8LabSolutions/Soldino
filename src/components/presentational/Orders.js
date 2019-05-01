@@ -75,7 +75,7 @@ class Orders extends Component {
             <li className="list-group-item">
               <div className="container">
                 <div className="row">
-                  <div className="col-sm-4">VAT Price: CC {round(order.VAT)}</div>
+                  <div className="col-sm-4">VAT: CC {round((order.VAT/100)*order.net)} ~ {round(order.VAT)}%</div>
                   <div className="col-sm-4">Net Price: CC {round(order.net)}</div>
                   <div className="col-sm-4"><strong>Total Price: CC {round(orderCost)}</strong></div>
                 </div>
@@ -88,44 +88,9 @@ class Orders extends Component {
     )
   }
 
-  groupOrders(orders){
-    //need to group orders by order number
-    let groupedOrders = []
-    let prevOrder = null
-    let thisOrder = null
-    for(let i=0; i<orders.length; i++){
-      if(prevOrder===null){
-        prevOrder = orders[i]
-      }else{
-        thisOrder = orders[i]
-        if(prevOrder.number===thisOrder.number){
-          //same order, different seller
-          prevOrder.products = [...prevOrder.products, ...thisOrder.products]
-          //prevOrder.net = (+prevOrder.net) + (+thisOrder.net) //da contare la quantità
-          prevOrder.net = 0
-          prevOrder.products.map(i => {prevOrder.net = (+prevOrder.net) + +((((100-i.VAT)/100)*i.price)*i.quantity)})
-          prevOrder.total = (+prevOrder.total) + (+thisOrder.total)
-          prevOrder.VAT = (prevOrder.total-prevOrder.net)
-        }else{
-          //different order
-          groupedOrders.push(prevOrder)
-          prevOrder = thisOrder
-        }
-      }
-    }
-    if(prevOrder!==null){
-      groupedOrders.push(prevOrder)
-    }
-    return groupedOrders
-  }
-
   render() {
     if(!(checkCitizen()||checkBusiness())){window.location.href = "/"}
     let { ordersList } = this.props;
-    //group by order number
-    console.log(ordersList)
-    ordersList = this.groupOrders(ordersList)
-    console.log(ordersList)
     let totalOrders = ordersList.length
     return (
       <div>

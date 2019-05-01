@@ -1,6 +1,7 @@
 import web3util from "../web3functions/web_util"
 import ipfsModule from "../ipfsCalls/index"
 import web3user from "../web3functions/user"
+import { round } from "../auxiliaryFunctions";
 
 //TODO resolve in buy function
 const user = (function(){
@@ -27,17 +28,23 @@ const user = (function(){
   }
 
   function getTotalVAT(products){
-    let sum = 0;
+    let netPrice = 0;
+    let sumNetPrice = 0;
+    let totalVat = 0;
+    let totalVatCC = 0;
     for(let i = 0; i < products.length; i++){
-      sum+= parseInt((products[i].VAT));
+      netPrice = (parseFloat((products[i].price*100)/(+100 + +products[i].VAT)))*products[i].quantity;
+      totalVatCC += parseFloat((products[i].price*products[i].quantity)-netPrice);
+      sumNetPrice += netPrice;
     }
-    return sum;
+    totalVat = round(parseFloat((totalVatCC*100)/sumNetPrice));
+    return totalVat;
   }
 
   function getTotalNet(products){
     let sum = 0;
     for(let i = 0; i < products.length; i++){
-      sum+= (products[i].price*100)/(+100 + +parseInt((products[i].VAT)));
+      sum+= ((products[i].price*100)/(+100 + +parseFloat((products[i].VAT)))*products[i].quantity);
     }
     return sum;
   }
