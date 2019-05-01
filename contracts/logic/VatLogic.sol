@@ -75,7 +75,7 @@ contract VatLogic {
         return vatStorage.getVatData(_key);
     }
 
-    function putOnHold(bytes _key) public view {
+    function putOnHold(bytes32 _key) public {
         // The VAT needs to be paid only from the business which has generated the VAT movement
         require(msg.sender == vatStorage.getVatBusiness(_key), "VAT payment: invalid VAT key");
         //the VAT key must be DUE

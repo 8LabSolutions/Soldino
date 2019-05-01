@@ -76,8 +76,21 @@ const businessActionCreator = (function(){
           resolve(setPeriods(periods))
         })
       })
-    }
+    },
 
+    payVATPeriod: function(period){
+      return new Promise((resolve)=>{
+        business.payVATPeriod(period)
+        .then(resolve)
+      })
+    },
+
+    putOnHoldVATPeriod: function(period){
+      return new Promise((resolve)=>{
+        business.putOnHoldVATPeriod(period)
+        .then(resolve)
+      })
+    }
   }
 }());
 

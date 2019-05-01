@@ -26,8 +26,6 @@ const government = (function(){
 
     mint: function(amount){
       return new Promise((resolve)=>{
-        console.log('AMOUUUUNT')
-        console.log(amount)
         web3government.mint(amount).then(resolve);
       })
     },

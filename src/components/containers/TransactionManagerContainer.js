@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import TransactionsManager from '../presentational/TransactionsManager';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
+import history from '../../store/history'
+import { beginLoading, endLoading } from '../../actions/login';
 
 const mapDispatchToProps = (dispatch) => {
   //should dispatch the action that fills the store with the first 50 users
@@ -15,6 +17,24 @@ const mapDispatchToProps = (dispatch) => {
     getBusinessPeriods: function(){
       businessActionCreator.getBusinessPeriod().then((action)=>{
         dispatch(action)
+      })
+    },
+
+    payVATPeriod: function(period){
+      dispatch(beginLoading())
+      businessActionCreator.payVATPeriod(period)
+      .then(()=>{
+        dispatch(endLoading())
+        history.push("/transactionsmanager")
+      })
+    },
+
+    putOnHoldVATPeriod: function(period){
+      dispatch(beginLoading())
+      businessActionCreator.putOnHoldVATPeriod(period)
+      .then(()=>{
+        dispatch(endLoading())
+        history.push("/transactionsmanager")
       })
     }
   }

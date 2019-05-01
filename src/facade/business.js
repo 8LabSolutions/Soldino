@@ -252,7 +252,6 @@ const business = (function(){
                     //the government did the refund
                       resolved = true;
                       break;
-
                   }
                   var vatJSON = {
                     id: period,
@@ -272,7 +271,23 @@ const business = (function(){
           })
         })
       })
+    },
+
+    payVATPeriod: function(period) {
+      return new Promise((resolve)=>{
+        web3business.payVATPeriod(period)
+        .then(resolve)
+      })
+
+    },
+
+    putOnHoldVATPeriod: function(period) {
+      return new Promise((resolve)=>{
+        web3business.putOnHoldVATPeriod(period)
+        .then(resolve)
+      })
     }
+
   }
 }());
 

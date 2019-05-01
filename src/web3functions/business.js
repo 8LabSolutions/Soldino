@@ -332,7 +332,38 @@ const web3business = (function(){
           })
         })
       })
+    },
 
+    payVATPeriod: function(period) {
+      return new Promise((resolve)=>{
+        web3util.getCurrentAccount().then((account)=>{
+          web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
+            vatLogicInstance.methods.createVatKey(account, period)
+            .call()
+            .then((key)=>{
+              vatLogicInstance.methods.payVat(key)
+              .send({from: account})
+              .then(resolve)
+            })
+          })
+        })
+      })
+    },
+
+    putOnHoldVATPeriod: function(period) {
+      return new Promise((resolve)=>{
+        web3util.getCurrentAccount().then((account)=>{
+          web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
+            vatLogicInstance.methods.createVatKey(account, period)
+            .call()
+            .then((key)=>{
+              vatLogicInstance.methods.putOnHold(key)
+              .send({from: account})
+              .then(resolve)
+            })
+          })
+        })
+      })
     }
   }
 }());
