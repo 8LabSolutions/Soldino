@@ -43,7 +43,6 @@ const web3util = (function() {
       var mm = (month === undefined ? today.getMonth()+1 : month);
       var yyyy = (year === undefined ? today.getFullYear() : year);
       var period = parseInt(mm/4) +1;
-      console.log('used period: '+String(yyyy).concat("-").concat(String(period)))
       return String(yyyy).concat("-").concat(String(period))
     },
 

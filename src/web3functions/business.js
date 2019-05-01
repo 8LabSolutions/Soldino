@@ -227,7 +227,6 @@ const web3business = (function(){
     getInvoices: function(VATPeriod = undefined) {
       //must get all the purchase order and the selling order
       return new Promise((resolve)=>{
-        console.log('getting invoices')
         web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
           web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
             web3util.getCurrentAccount().then(async (account)=>{
@@ -280,26 +279,22 @@ const web3business = (function(){
 
               orderLogicInstance.getPastEvents("PurchaseOrderInserted", queryPurchase)
               .then((events)=>{
-                console.log(events)
                 for(let i = 0; i < events.length; i++){
                   invoicesKey.push(events[i].returnValues._keyHash);
                 }
 
                 orderLogicInstance.getPastEvents("SellOrderInserted", querySelling)
                 .then((events)=>{
-                  console.log(events)
                   for(let i = 0; i < events.length; i++){
                     invoicesKey.push(events[i].returnValues._keyHash);
                   }
                   //invoicesKey contains all the 32byte key, getting the IPFS hashes
                   var invoicesIPFS = []
-                  console.log(invoicesKey) 
                   for (let j = 0; j < invoicesKey.length; j++){
                     invoicesIPFS.push(
                       new Promise((resolve)=>{
                         web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
                           web3util.getCurrentAccount().then((account)=>{
-                            console.log(invoicesKey[j]) 
                             orderLogicInstance.methods.getOrderCid(invoicesKey[j])
                             .call({from: account})
                             .then((hashParts)=>{
@@ -330,7 +325,7 @@ const web3business = (function(){
               .call()
               .then((ris)=>{
                 //arrives in the following order [businessAddress, state, amount]
-                resolve([ris[0], ris[1], ris[2]])
+                resolve([ris[0], ris[1], ris[2]/web3util.TOKENMULTIPLIER])
               })
             })
           })

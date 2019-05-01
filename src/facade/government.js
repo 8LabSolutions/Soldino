@@ -33,7 +33,6 @@ const government = (function(){
     distribute: function(amount, address){
 
       if(address.length > 1){
-        console.log('è un array')
         return new Promise((resolve)=>{
           web3government.distributeToMultipleAddresses(address, amount).then(resolve);
         })
@@ -106,7 +105,6 @@ const government = (function(){
           Promise.all(businessJSON)
           .then((results)=>{
             for(let i = 0; i < results.length; i++){
-              console.log(results[i])
               business.push({
                 name: results[i].name,
                 VATnumber: results[i].VATnumber,

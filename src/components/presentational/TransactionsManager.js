@@ -103,7 +103,6 @@ class TransactionsManager extends Component {
   }
 
   printInvoices() {
-    console.log(this.props.invoices)
     let {myVATnumber} = this.props;
     return(
       <ul className="list-group">

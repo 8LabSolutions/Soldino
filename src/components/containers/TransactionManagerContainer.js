@@ -41,10 +41,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('INVOICES')
-  console.log(state.invoices);
   let VATnumber = state.user;
-  (VATnumber===null) ? VATnumber=0 : VATnumber=VATnumber.VATnumber 
+  (VATnumber===null) ? VATnumber=0 : VATnumber=VATnumber.VATnumber
   return {
     invoices: state.invoices,
     periods: state.periods,
