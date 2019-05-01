@@ -53,6 +53,18 @@ const web3government = (function(){
       })
     },
 
+    distributeToMultipleAddresses: function (addresses, amount){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
+          web3util.getCurrentAccount().then((account)=>{
+            tokenInstance.methods.distributeToMultipleAddresses(addresses, amount*web3util.TOKENMULTIPLIER)
+            .send({from: account})
+            .then(resolve)
+          })
+        })
+      })
+    },
+
     refundVAT: function(businessAddress, period){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
