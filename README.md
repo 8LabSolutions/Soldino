@@ -58,8 +58,8 @@ The project's folders are organized in this way:
 |      ├── components/
 |      |    ├── containers/
 |      |    └── presentational/
-|  	   ├── constants/
-|  	   ├── contracts_build/
+|      ├── constants/
+|      ├── contracts_build/
 |      ├── facade/
 |      ├── ipfsCalls/
 |      ├── reducers/
