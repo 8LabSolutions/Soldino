@@ -181,7 +181,9 @@ const business = (function(){
             var periods = []
             dates.forEach(date=>{
               var [year, month,] = date.split("/");
-              periods.push(web3util.getVATPeriod(month, year));
+              let newPeriod = web3util.getVATPeriod(month, year);
+              if (!periods.includes(newPeriod))
+                periods.push(newPeriod);
             })
             var promises = []
             periods.forEach(period=>{

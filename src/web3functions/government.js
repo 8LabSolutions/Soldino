@@ -1,6 +1,8 @@
 import web3util from "./web_util"
 import UserLogic from "../contracts_build/UserLogic"
 import TokenCubit from "../contracts_build/TokenCubit"
+import OrderLogic from "../contracts_build/OrderLogic"
+import VatLogic from "../contracts_build/VatLogic"
 
 const web3government = (function(){
   //initialize web3
@@ -140,15 +142,75 @@ const web3government = (function(){
         })
       })
     },
+    /**
+     * @return get all the IPFS addresses of the businesses' invoices
+     */
+    getInvoicesGovernment: function() {
+      //must get all the purchase order and the selling order
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
+          var query;
 
-    getVATQuarterInfo: function(period){
-      console.log('TODO'+period)
+          query = {
+            fromBlock: 0,
+            toBlock: 'latest'
+          }
 
+          var invoicesKey = []
+
+          orderLogicInstance.getPastEvents("PurchaseOrderInserted", query)
+          .then((events)=>{
+            for(let i = 0; i < events.length; i++){
+              invoicesKey.push(events[i].returnValues._keyHash);
+            }
+
+            orderLogicInstance.getPastEvents("SellOrderInserted", query)
+            .then((events)=>{
+              for(let i = 0; i < events.length; i++){
+                invoicesKey.push(events[i].returnValues._keyHash);
+              }
+              //invoicesKey contains all the 32byte key, getting the IPFS hashes
+              var invoicesIPFS = []
+              for (let j = 0; j < invoicesKey.length; j++){
+                invoicesIPFS.push(
+                  new Promise((resolve)=>{
+                    web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
+                      web3util.getCurrentAccount().then((account)=>{
+                        orderLogicInstance.methods.getOrderCid(invoicesKey[j])
+                        .call({from: account})
+                        .then((hashParts)=>{
+                          resolve(web3util.recomposeIPFSHash(hashParts[0], hashParts[2], hashParts[1]))
+                        })
+                      })
+                    })
+                  })
+                )
+              }
+              Promise.all(invoicesIPFS).then(resolve)
+            })
+          })
+        })
+
+      })
+    },
+
+    getVATQuarterInfo: function(period, businessAddress){
+      return new Promise((resolve)=>{
+        web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
+          vatLogicInstance.methods.createVatKey(businessAddress, period)
+          .call()
+          .then((key)=>{
+            vatLogicInstance.methods.getVatData(key)
+            .call()
+            .then((ris)=>{
+              //arrives in the following order [businessAddress, state, amount]
+              resolve([ris[0], ris[1], ris[2]/web3util.TOKENMULTIPLIER])
+            })
+          })
+        })
+      })
     }
-
-
   }
-
 }());
 
 export default web3government;

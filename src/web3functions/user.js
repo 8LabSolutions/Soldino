@@ -2,6 +2,7 @@ import web3util from "./web_util";
 import Purchase from "../contracts_build/Purchase"
 import TokenCubit from "../contracts_build/TokenCubit"
 import OrderLogic from "../contracts_build/OrderLogic"
+import { round } from "../auxiliaryFunctions";
 
 const web3user = (function(){
 
@@ -18,7 +19,9 @@ const web3user = (function(){
           console.log("Cubit "+tokenInstance.options.address)
           web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
             web3util.getCurrentAccount().then((account)=>{
-              tokenInstance.methods.approve(purchaseInstance.options.address, parseInt(amount*web3util.TOKENMULTIPLIER))
+              console.log('AMOUNT PAGATO')
+              console.log(round(amount*web3util.TOKENMULTIPLIER))
+              tokenInstance.methods.approve(purchaseInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
               .send({from: account})
               .then((txnHash) => {
                 return web3util.init()
