@@ -80,12 +80,12 @@ class FormCubitManager extends Component {
     this.options = fullList;
     return (
       <form>
-        <div className="container">
+        <div className="container userlist-margin">
           <div className="row">
-            <div className="col-sm-6 top-2rem">
+            <div className="col-sm-6">
               <p>Total supply: {round(totalSupply)} CC</p>
             </div>
-            <div className="col-sm-6 top-2rem">
+            <div className="col-sm-6">
               <p>Government supply: {round(governmentSupply)} CC</p>
             </div>
             <div className="form-group col-sm-6 offset-sm-3 top-2rem">
