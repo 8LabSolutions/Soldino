@@ -38,16 +38,10 @@ class TransactionsManager extends Component {
   }
 
   handleChange(event){
-    let {periods} = this.props;
-    const {getInvoices} = this.props;
-    if(periods.length>0){
-      for(let i=0; i<periods.length; i++){
-        if(periods[i].id===event.target.value){
-          this.setState({ selectedPeriod: periods[i] })
-          getInvoices(event.target.value)
-        }
-      }
-    }
+    this.selectedQuarter = event.target.value
+    let obj = quarterToInvoices(event.target.value)
+    this.setState({invoices: obj})
+    console.log(this.selectedQuarter)
   }
 
   printDebitButtons() {
@@ -85,20 +79,16 @@ class TransactionsManager extends Component {
   }
 
   printStatus() {
-    let {periods} = this.props
-    if(periods.length>0){
-      if(periods[0].amount>=0) {
-        return(
-          <p>VAT status for the selected quarter: <span className="green">+{periods[0].amount} CC</span></p>
-        )
-      }else{
-        return(
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-6">
-                <p>VAT status for the selected quarter: <span className="red">{periods[0].amount} CC</span></p>
-              </div>
-              {(this.state.selectedPeriod.payable===true) ? this.printDebitButtons() : null}
+    if(this.VATstatus>=0) {
+      return(
+        <p>VAT status for the selected quarter: <span className="green">+{this.VATstatus} CC</span></p>
+      )
+    }else{
+      return(
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-6">
+              <p>VAT status for the selected quarter: <span className="red">{this.VATstatus} CC</span></p>
             </div>
           </div>
         )
@@ -295,10 +285,10 @@ class TransactionsManager extends Component {
 
   render() {
     if(checkBusiness()===false){window.location.href = "/"}
-    let {periods} = this.props;
+
     var list = []
-    if(periods !== undefined && periods.length>0)
-      list = periods.map(quarter => this.printQuarters(quarter))
+    if(this.quarterList !== undefined && this.quarterList.length>0)
+      list = this.quarterList.map(quarter => this.printQuarters(quarter))
     return (
       <div>
         <NavBar />
