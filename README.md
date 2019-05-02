@@ -52,7 +52,7 @@ The project's folders are organized in this way:
 |      └── storage/ (storage contracts)
 ├── migration
 ├── src/ (redux-react, web3 and ipfs folder)
-| 	   ├── actions/
+|      ├── actions/
 |      ├── actionCreators/
 |      ├── auxiliaryFunctions/
 |      ├── components/
