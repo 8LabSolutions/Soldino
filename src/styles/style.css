@@ -351,12 +351,16 @@ input:checked + .slider {
   overflow-y: scroll;
 }
 
-.redInvoice {
+.redInvoice, .redRow {
   background-color: #ff000016;
 }
 
-.greenInvoice {
+.greenInvoice, .greenRow {
   background-color: #1abc3b12;
+}
+
+.yellowRow {
+  background-color: #ffc50017;
 }
 
 .userlist-margin {
@@ -376,4 +380,9 @@ input:checked + .slider {
 
 .customCursor {
   cursor: context-menu;
+}
+
+.itemVAT {
+  height: 45px;
+  line-height: 45px;
 }
