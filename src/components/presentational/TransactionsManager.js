@@ -3,8 +3,7 @@
 import React, {Component} from 'react';
 import jsPDF from 'jspdf';
 import NavBar from './NavBar'
-import { printDate, ExportPDF, checkBusiness, round, printShipment } from '../../auxiliaryFunctions/index'
-import ButtonGeneric from '../containers/ButtonGeneric';
+import { printDate, ExportPDF, checkBusiness, round, printShipment, periodToDate, dateToPeriod } from '../../auxiliaryFunctions/index'
 
 
 class TransactionsManager extends Component {
@@ -15,8 +14,8 @@ class TransactionsManager extends Component {
   }
 
   componentWillMount(){
-    const {/*getInvoices, */getBusinessPeriods} = this.props;
-    //getInvoices(null)
+    const {resetInvoices, getBusinessPeriods} = this.props;
+    resetInvoices();
     getBusinessPeriods();
   }
 
@@ -29,16 +28,22 @@ class TransactionsManager extends Component {
   }
 
   printQuarters(quarter) {
-    return(
-      <option>{quarter.id}</option>
-    )
+    if(quarter.id==="Select a quarter"){
+      return(
+        <option>{quarter.id}</option>
+      )
+    }else{
+      return(
+        <option>{periodToDate(quarter.id)}</option>
+      )
+    }
   }
 
   handleChange(event){
     const {getInvoices} = this.props;
-    getInvoices(event.target.value)
+    getInvoices(dateToPeriod(event.target.value))
     let {selectPeriod} = this.props;
-    selectPeriod(event.target.value)
+    selectPeriod(dateToPeriod(event.target.value))
   }
 
   nextQuarter() {
@@ -66,7 +71,7 @@ class TransactionsManager extends Component {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className="modal-body">The payment will be deferred for three months.<br />You have to pay the debt by {this.nextQuarter()}.</div>
+            <div className="modal-body">The payment will be deferred for a quarter.<br />You have to pay the debt by {periodToDate(this.nextQuarter())}.</div>
             <div className="modal-footer">
               <button type="button" className="btn btn-light" data-dismiss="modal">Cancel</button>
               <button type="button" className="btn btn-light" data-dismiss="modal" onClick={()=>{putOnHoldVATPeriod(selectedPeriod.id)}}>Confirm</button>
@@ -103,6 +108,14 @@ class TransactionsManager extends Component {
     )
   }
 
+  printDeferredDate() {
+    return(
+      <div className="col-sm-6">
+        <p>You have already deferred the payment for {periodToDate(this.nextQuarter())}</p>
+      </div>
+    )
+  }
+
   printStatus() {
     let {selectedPeriod} = this.props
     if(selectedPeriod.amount!==null){
@@ -118,6 +131,7 @@ class TransactionsManager extends Component {
                 <p>VAT status for the selected quarter: <span className="red">{-1*selectedPeriod.amount} CC</span></p>
               </div>
               {(selectedPeriod.payable===true) ? this.printDebitButtons() : null}
+              {(selectedPeriod.payable===true && selectedPeriod.defereable===false) ? this.printDeferredDate() : null}
             </div>
           </div>
         )
@@ -126,7 +140,7 @@ class TransactionsManager extends Component {
   }
 
   printInvoices() {
-    console.log(this.props.invoices)
+    let {selectedPeriod} = this.props;
     let {myVATnumber} = this.props;
     return(
       <ul className="list-group">
@@ -156,157 +170,186 @@ class TransactionsManager extends Component {
           </div>
         </li>
         {this.props.invoices.map(i => {
-          return(
-            <div key={i.number}>
-              <li className="list-group-item">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-sm-2">
-                      <p>Invoice #{i.number}</p>
-                    </div>
-                    <div className="col-sm-2">
-                      {(i.sellerVATNumber===myVATnumber) ? <p>Sale</p> : <p>Purchase</p>} {/* if seller === logged user then "sale" else "purchase" */}
-                    </div>
-                    <div className="col-sm-2">
-                      <p>{printDate(i.date)}</p>
-                    </div>
-                    <div className="col-sm-2">
-                      <p>CC {round((+(i.VAT/100)*i.net)+ +i.net)}</p>
-                    </div>
-                    <div className="col-sm-2">
-                      <p>CC {round((i.VAT/100)*i.net)}</p>
-                    </div>
-                    <div className="col-sm-2">
-                      <button type="button" className="btn btn-light" data-toggle="modal" data-target={"#invoice"+i.number}>More details</button>
+          let invoiceDate = i.date.substring(0, 4)+"-";
+          switch(i.date.substring(5, 7)){
+            case "01":
+            case "02":
+            case "03":
+              invoiceDate += "1"
+            break;
+            case "04":
+            case "05":
+            case "06":
+              invoiceDate += "2"
+            break;
+            case "07":
+            case "08":
+            case "09":
+              invoiceDate += "3"
+            break;
+            case "10":
+            case "11":
+            case "12":
+              invoiceDate += "4"
+            break;
+          }
+          if(selectedPeriod.id===invoiceDate){
+            let classColor;
+            let type;
+            {(i.sellerVATNumber===myVATnumber) ? type = <p>Sale</p> : type = <p>Purchase</p>}
+            {(i.sellerVATNumber===myVATnumber) ? classColor = "list-group-item redInvoice" : classColor = "list-group-item greenInvoice"}
+            return(
+              <div key={i.number}>
+                <li className={classColor}>
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-sm-2">
+                        <p>Invoice #{i.number}</p>
+                      </div>
+                      <div className="col-sm-2">
+                        {type}
+                      </div>
+                      <div className="col-sm-2">
+                        <p>{printDate(i.date)}</p>
+                      </div>
+                      <div className="col-sm-2">
+                        <p>CC {round((+(i.VAT/100)*i.net)+ +i.net)}</p>
+                      </div>
+                      <div className="col-sm-2">
+                        <p>CC {round((i.VAT/100)*i.net)}</p>
+                      </div>
+                      <div className="col-sm-2">
+                        <button type="button" className="btn btn-light" data-toggle="modal" data-target={"#invoice"+i.number}>More details</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
+                </li>
 
 
-              <div className="modal fade" id={"invoice"+i.number} tabIndex="-1" role="dialog" aria-labelledby={"invoice"+i.number+"Label"} aria-hidden="true">
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id={"invoice"+i.number+"Label"}>Invoice #{i.number}</h5>
-                      <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      <div className="container">
-                        <div className="row">
-                          <div className="col-sm-4">
-                            <p>Date: </p>
-                          </div>
-                          <div className="col-sm-8">
-                            <p>{printDate(i.date)}</p>
-                          </div>
-                          <div className="col-sm-4">
-                            <p>Order date: </p>
-                          </div>
-                          <div className="col-sm-8">
-                            <p>{printDate(i.date)}</p>
-                          </div>
-                          <div className="col-sm-4">
-                            <p>Order number: </p>
-                          </div>
-                          <div className="col-sm-8">
-                            <p>{i.number}</p>
-                          </div>
-                          <div className="col-sm-12">
-                            <p>Products: </p>
-                          </div>
-                          <div className="col-sm-12"><hr /></div>
-                          {i.products.map(j => {
-                            return(
-                              <div key="j" className="col-sm-10 offset-sm-1">
-                                <div className="container">
-                                  <div className="row">
-                                    <div className="col-sm-4">
-                                      <p>Product: </p>
+                <div className="modal fade" id={"invoice"+i.number} tabIndex="-1" role="dialog" aria-labelledby={"invoice"+i.number+"Label"} aria-hidden="true">
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id={"invoice"+i.number+"Label"}>Invoice #{i.number}</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <div className="container">
+                          <div className="row">
+                            <div className="col-sm-4">
+                              <p>Date: </p>
+                            </div>
+                            <div className="col-sm-8">
+                              <p>{printDate(i.date)}</p>
+                            </div>
+                            <div className="col-sm-4">
+                              <p>Order date: </p>
+                            </div>
+                            <div className="col-sm-8">
+                              <p>{printDate(i.date)}</p>
+                            </div>
+                            <div className="col-sm-4">
+                              <p>Order number: </p>
+                            </div>
+                            <div className="col-sm-8">
+                              <p>{i.number}</p>
+                            </div>
+                            <div className="col-sm-12">
+                              <p>Products: </p>
+                            </div>
+                            <div className="col-sm-12"><hr /></div>
+                            {i.products.map(j => {
+                              return(
+                                <div key="j" className="col-sm-10 offset-sm-1">
+                                  <div className="container">
+                                    <div className="row">
+                                      <div className="col-sm-4">
+                                        <p>Product: </p>
+                                      </div>
+                                      <div className="col-sm-8">
+                                        <p>{j.title}</p>
+                                      </div>
+                                      <div className="col-sm-4">
+                                        <p>Total Price: </p>
+                                      </div>
+                                      <div className="col-sm-8">
+                                        <p>CC {round(j.price*j.quantity)}</p>
+                                      </div>
+                                      <div className="col-sm-4">
+                                        <p>Net Price: </p>
+                                      </div>
+                                      <div className="col-sm-8">
+                                        <p>CC {round(((j.price*100)/(+j.VAT + +100))*j.quantity)}</p>
+                                      </div>
+                                      <div className="col-sm-4">
+                                        <p>VAT %: </p>
+                                      </div>
+                                      <div className="col-sm-8">
+                                        <p>{j.VAT}</p>
+                                      </div>
+                                      <div className="col-sm-4">
+                                        <p>Description: </p>
+                                      </div>
+                                      <div className="col-sm-8 modal-description">
+                                        <p>{j.description}</p>
+                                      </div>
+                                      <div className="col-sm-4">
+                                        <p>Quantity: </p>
+                                      </div>
+                                      <div className="col-sm-8">
+                                        <p>{j.quantity}</p>
+                                      </div>
+                                      <div className="col-sm-12"><hr /></div>
                                     </div>
-                                    <div className="col-sm-8">
-                                      <p>{j.title}</p>
-                                    </div>
-                                    <div className="col-sm-4">
-                                      <p>Total Price: </p>
-                                    </div>
-                                    <div className="col-sm-8">
-                                      <p>CC {round(j.price*j.quantity)}</p>
-                                    </div>
-                                    <div className="col-sm-4">
-                                      <p>Net Price: </p>
-                                    </div>
-                                    <div className="col-sm-8">
-                                      <p>CC {round(((j.price*100)/(+j.VAT + +100))*j.quantity)}</p>
-                                    </div>
-                                    <div className="col-sm-4">
-                                      <p>VAT %: </p>
-                                    </div>
-                                    <div className="col-sm-8">
-                                      <p>{j.VAT}</p>
-                                    </div>
-                                    <div className="col-sm-4">
-                                      <p>Description: </p>
-                                    </div>
-                                    <div className="col-sm-8 modal-description">
-                                      <p>{j.description}</p>
-                                    </div>
-                                    <div className="col-sm-4">
-                                      <p>Quantity: </p>
-                                    </div>
-                                    <div className="col-sm-8">
-                                      <p>{j.quantity}</p>
-                                    </div>
-                                    <div className="col-sm-12"><hr /></div>
                                   </div>
                                 </div>
-                              </div>
 
-                            )
-                          })}
-                          <div className="col-sm-4">
-                            <p>Total VAT: CC </p>
-                          </div>
-                          <div className="col-sm-8">
-                            <p>{round((i.VAT/100)*i.net)}</p>
-                          </div>
-                          <div className="col-sm-4">
-                            <p>Total Price: CC </p>
-                          </div>
-                          <div className="col-sm-8">
-                            <p>{round((+(i.VAT/100)*i.net)+ +i.net)}</p>
-                          </div>
-                          <div className="col-sm-4">
-                            <p>Seller: </p>
-                          </div>
-                          <div className="col-sm-8">
-                            <p>{i.sellerName} {i.sellerVATNumber}</p>
-                          </div>
-                          <div className="col-sm-4">
-                            <p>Buyer: </p>
-                          </div>
-                          <div className="col-sm-8">
-                            <p>{i.buyerName} {i.buyerDetails}</p>
-                          </div>
-                          <div className="col-sm-4">
-                            <p>Shipment: </p>
-                          </div>
-                          <div className="col-sm-8">
-                            <p>{printShipment(i.address)}</p>
+                              )
+                            })}
+                            <div className="col-sm-4">
+                              <p>Total VAT: CC </p>
+                            </div>
+                            <div className="col-sm-8">
+                              <p>{round((i.VAT/100)*i.net)}</p>
+                            </div>
+                            <div className="col-sm-4">
+                              <p>Total Price: CC </p>
+                            </div>
+                            <div className="col-sm-8">
+                              <p>{round((+(i.VAT/100)*i.net)+ +i.net)}</p>
+                            </div>
+                            <div className="col-sm-4">
+                              <p>Seller: </p>
+                            </div>
+                            <div className="col-sm-8">
+                              <p>{i.sellerName} {i.sellerVATNumber}</p>
+                            </div>
+                            <div className="col-sm-4">
+                              <p>Buyer: </p>
+                            </div>
+                            <div className="col-sm-8">
+                              <p>{i.buyerName} {i.buyerDetails}</p>
+                            </div>
+                            <div className="col-sm-4">
+                              <p>Shipment: </p>
+                            </div>
+                            <div className="col-sm-8">
+                              <p>{printShipment(i.address)}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="modal-footer">
-                      <button type="button" className="btn btn-light" data-dismiss="modal">Close</button>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-light" data-dismiss="modal">Close</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )
+            )
+        }
         })}
       </ul>
     )

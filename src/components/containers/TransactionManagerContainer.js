@@ -3,7 +3,7 @@ import TransactionsManager from '../presentational/TransactionsManager';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import history from '../../store/history'
 import { beginLoading, endLoading } from '../../actions/login';
-import { selectedPeriod } from '../../actions/business';
+import { selectedPeriod, resetInvoices } from '../../actions/business';
 import { store } from '../../store';
 
 const mapDispatchToProps = (dispatch) => {
@@ -39,8 +39,13 @@ const mapDispatchToProps = (dispatch) => {
       .then(()=>{
         dispatch(endLoading())
         getBusinessPeriods()
+        dispatch(resetInvoices())
         history.push("/transactionsmanager")
       })
+    },
+
+    resetInvoices: function(){
+      dispatch(resetInvoices())
     },
 
     selectPeriod: function(period){
