@@ -47,25 +47,7 @@ const mapStateToProps = (state) => {
   (VATnumber===null) ? VATnumber=0 : VATnumber=VATnumber.VATnumber 
   return {
     invoices: state.invoices,
-    periods: state.periods,
-    periodJSON : [{
-      id: "2018-4", //Q da 1 a 4
-      amount: 200,
-      deferred: false, //dilazionato --> data ultima pagamento
-      defereable: false,
-      payable: false,
-      resolved: true,
-      outOfLimit: false
-    },
-    {
-      id: "2019-1", //Q da 1 a 4
-      amount: -200,
-      deferred: true, //dilazionato --> data ultima pagamento
-      defereable: false,
-      payable: true,
-      resolved: false,
-      outOfLimit: false
-    }],
+    periods: [...state.periods, {id: '2019-3', payable: true}],
     myVATnumber: VATnumber
   }
 }

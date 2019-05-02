@@ -13,13 +13,13 @@ class TransactionsManager extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      lastQuarter: '2019-1'
+      selectedPeriod: this.props.periods[0]
     };
   }
 
   componentWillMount(){
-    const {getInvoices, getBusinessPeriods} = this.props;
-    getInvoices(this.state.lastQuarter)
+    const {/*getInvoices, */getBusinessPeriods} = this.props;
+    //getInvoices(this.state.lastQuarter)
     getBusinessPeriods();
   }
 
@@ -38,14 +38,16 @@ class TransactionsManager extends Component {
   }
 
   handleChange(event){
-    this.setState({ lastQuarter: event.target.value })
+    let {periods} = this.props;
     const {getInvoices} = this.props;
-    getInvoices(this.state.lastQuarter)
-    /*this.selectedQuarter = event.target.value
-    let obj = quarterToInvoices(event.target.value)
-    this.setState({invoices: obj})
-    console.log(this.selectedQuarter)
-    console.log(this.state.invoices)*/
+    if(periods.length>0){
+      for(let i=0; i<periods.length; i++){
+        if(periods[i].id===event.target.value){
+          this.setState({ selectedPeriod: periods[i] })
+          getInvoices(event.target.value)
+        }
+      }
+    }
   }
 
   printDebitButtons() {
@@ -83,22 +85,24 @@ class TransactionsManager extends Component {
   }
 
   printStatus() {
-    let {periodJSON} = this.props
-    if(periodJSON[0].amount>=0) {
-      return(
-        <p>VAT status for the selected quarter: <span className="green">+{periodJSON[0].amount} CC</span></p>
-      )
-    }else{
-      return(
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-6">
-              <p>VAT status for the selected quarter: <span className="red">{periodJSON[0].amount} CC</span></p>
+    let {periods} = this.props
+    if(periods.length>0){
+      if(periods[0].amount>=0) {
+        return(
+          <p>VAT status for the selected quarter: <span className="green">+{periods[0].amount} CC</span></p>
+        )
+      }else{
+        return(
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-6">
+                <p>VAT status for the selected quarter: <span className="red">{periods[0].amount} CC</span></p>
+              </div>
+              {(this.state.selectedPeriod.payable===true) ? this.printDebitButtons() : null}
             </div>
-            {this.printDebitButtons()}
           </div>
-        </div>
-      )
+        )
+      }
     }
   }
 
@@ -291,10 +295,10 @@ class TransactionsManager extends Component {
 
   render() {
     if(checkBusiness()===false){window.location.href = "/"}
-    let {periodJSON} = this.props;
+    let {periods} = this.props;
     var list = []
-    if(periodJSON !== undefined && periodJSON.length>0)
-      list = periodJSON.map(quarter => this.printQuarters(quarter))
+    if(periods !== undefined && periods.length>0)
+      list = periods.map(quarter => this.printQuarters(quarter))
     return (
       <div>
         <NavBar />
