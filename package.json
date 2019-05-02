@@ -25,6 +25,7 @@
     "babel-register": "^6.26.0",
     "bs58": "^4.0.1",
     "commondir": "^1.0.1",
+    "ganache-cli": "^6.4.3",
     "history": "^4.7.2",
     "ipfs-mini": "^1.1.5",
     "jspdf": "^1.5.3",

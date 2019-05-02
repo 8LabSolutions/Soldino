@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import jsPDF from 'jspdf';
 import NavBar from './NavBar'
 import { printDate, ExportPDF, checkBusiness, round, printShipment } from '../../auxiliaryFunctions/index'
-import ButtonGeneric from '../containers/ButtonGeneric';
+//import ButtonGeneric from '../containers/ButtonGeneric';
 
 
 class TransactionsManager extends Component {
