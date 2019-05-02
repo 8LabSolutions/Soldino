@@ -31,9 +31,18 @@ const government = (function(){
     },
 
     distribute: function(amount, address){
-      return new Promise((resolve)=>{
-        web3government.distribute(amount, address).then(resolve);
-      })
+
+      if(address.length > 1){
+        console.log('è un array')
+        return new Promise((resolve)=>{
+          web3government.distributeToMultipleAddresses(address, amount).then(resolve);
+        })
+      }
+      else{
+        return new Promise((resolve)=>{
+          web3government.distribute(amount, address[0]).then(resolve);
+        })
+      }
     },
 
     refundVAT: function(businessAddress, period){

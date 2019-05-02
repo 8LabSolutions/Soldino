@@ -26,14 +26,15 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     distribute: (amount, addresses)=>{
+      console.log('address passed')
+      console.log(addresses)
       dispatch(beginLoading())
-      //FOR EACH ADDRESS INTO ADDRESSES
-      //TO DO
-      //access the addresses by typing addresses[i].value
-      let address = null
-      console.log(addresses[0].value)
-      if(addresses.length > 0){ address = addresses[0].value }
-      governmentActionCreator.distribute(amount, address).then((action)=>{
+      var final = []
+      addresses.forEach(address => {
+        final.push(address.value)
+      });
+
+      governmentActionCreator.distribute(amount, final).then((action)=>{
         dispatch(action)
         dispatch(endLoading())
       })
