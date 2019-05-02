@@ -29,7 +29,7 @@ Additional software:
 
 - `Ganache GUI`  if you want an user interface for the local blockchain.
 
-**Note** : *both* `Ganache GUI` *and* `ganache-cli` *(this is provided by default)*   **must**   *be set with port 9545 in order to run Soldino on the develop environment, this port can be set later.*
+**Note** : *both* `Ganache GUI` *and* `ganache-cli` *(this is provided by default)*   **must**   *be set with port 9545 in order to run Soldino on the development environment, this port can be set later.*
 
 ## Installation
 
@@ -42,31 +42,36 @@ Additional software:
 
 ### Windows
 
+1. download or clone (`git clone https://github.com/8LabSolutions/Soldino-PoC.git` ) this repository
+2. run `$ npm install` in the repository folder (`Soldino-PoC` folder)
+   - If you have trouble try this solution: [Microsoft.cpp.default.props not found(first answer)](https://stackoverflow.com/questions/41695251/c-microsoft-cpp-default-props-was-not-found) and retry run `npm install`
+3. done!
+
 ### Content of the repository
 
 The project's folders are organized in this way:
 
 ```
-├── contracts/ (all solidity contracts' file)
+├── contracts/ (all solidity contracts' files)
 |      ├── logic/ (logic contracts)
 |      └── storage/ (storage contracts)
-├── migration
+├── migration (files used to migrate contracts)
 ├── src/ (redux-react, web3 and ipfs folder)
-|      ├── actions/
-|      ├── actionCreators/
-|      ├── auxiliaryFunctions/
+|      ├── actions/ (all redux actions)
+|      ├── actionCreators/ (all redux action creators)
+|      ├── auxiliaryFunctions/ (utils functions for react and redux )
 |      ├── components/
-|      |    ├── containers/
-|      |    └── presentational/
-|      ├── constants/
-|      ├── contracts_build/
-|      ├── facade/
-|      ├── ipfsCalls/
-|      ├── reducers/
-|      ├── store/
-|      ├── styles/
-|      └── web3functions/
-└── test/
+|      |    ├── containers/ (redux containers)
+|      |    └── presentational/ (react presentational components)
+|      ├── constants/ (utils for redux)
+|      ├── contracts_build/ (jsons of contracts)
+|      ├── facade/ (users classes)
+|      ├── ipfsCalls/ (utils functions for connection to ipfs)
+|      ├── reducers/ (all redux reducers)
+|      ├── store/ (redux store)
+|      ├── styles/ (css files)
+|      └── web3functions/ (utils functions for connection to web3)
+└── test/ (classes test system)
 ```
 
 The folders organization separates the back end ad front end. 
@@ -81,7 +86,7 @@ In the `truffle-config.js` you can set all the options for your environment. The
 
 - `coverage`: used for the test coverage environment, port 8545. 
 
-  To use this environment for run `$ npm coverage`, it will not open the web page. 
+  To use this environment for run `$ npm run coverage`, it will not open the web page. 
 
 - `ropsten`: used to migrate contracts onto Ropsten test network.
 
@@ -98,35 +103,27 @@ Otherwise, if you want to use Ganache GUI please follow these steps:
 
 #### Run Soldino on the development environment
 
-Run `$ npm start`. This command will deploy the contracts in `migrations/2_deploy_contracts.js`, Soldino will run on the `develop` environment.
+Run `$ npm start`. This command will deploy the contracts in `migrations/2_deploy_contracts.js`, Soldino will run on the `development` environment.
 
-Soldino will open in your default browser on address:
-
-[localhost:3000]: localhost:3000/
+Soldino will open in your default browser on address: [localhost:3000](http://localhost:3000). 
 
 Metamask will open at the same time. 
 
-On Metamask tab, use option 
+On Metamask tab, use option `Import using account seed phrase`.
 
-```
-Import using account seed phrase
-```
+Copy and paste MNEMONIC phrase that you can find on `Ganache GUI` on top of homepage.
 
-Copy and paste MNEMONIC phrase that you can find on Ganache GUI on top of homepage.
-
-Otherwise, if you use ganache-cli you can find it in terminal where you run `$ ganache-cli -p 9545`.
+Otherwise, if you use `ganache-cli` you can find it in terminal where you run `$ ganache-cli -p 9545`.
 
 Insert new password, confirm it and click "Restore".
 
 When you are logged in on Metamask, click the link on top-right of the tab and select "Custom RPC".
 
-In "New RPC URL" textbox insert 
-
-[http://localhost:9545]: http://localhost:9545
+In "New RPC URL" textbox insert http://localhost:9545. 
 
 and click "Save" button.
 
-Now you can enjoy Soldino!!
+#### Now you can enjoy Soldino!!
 
 
 
