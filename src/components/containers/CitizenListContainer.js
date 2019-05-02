@@ -6,11 +6,16 @@ import governmentActionCreator from "../../actionsCreator/governmentActionCreato
 import {CITIZEN} from "../../constants/actionTypes"
 import ButtonState from './ButtonState';
 import { printShipment } from '../../auxiliaryFunctions';
+import { searchaction } from '../../actions/searchaction';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   //should dispatch the action that fills the store with the first 50 users
   //*!!! maybe only the first time !!!*/
   return {
+    resetSearch: () => {
+      dispatch(searchaction(""))
+    },
+
     getUserList: (amount, index)=> {
       governmentActionCreator.getUserList(amount, index, CITIZEN).then((action)=>{
         dispatch(action);
@@ -21,21 +26,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       let dynamicText
       (citizen.state===true) ? dynamicText="Disable" : dynamicText="Enable";
       const Line = (citizen) =>(
-        <li key={citizen.address} className="list-group-item">
-          <strong>Name: </strong>
-          {citizen.name}
+        <li key={citizen.address} className="list-group-item userlist-item">
+          <strong className="customCursor">Name: </strong>
+          <span className="customCursor">{citizen.name}</span>
           <br />
-          <strong>Surname: </strong>
-          {citizen.surname}
+          <strong className="customCursor">Surname: </strong>
+          <span className="customCursor">{citizen.surname}</span>
           <br />
-          <strong>Email: </strong>
-          {citizen.email}
+          <strong className="customCursor">Email: </strong>
+          <span className="customCursor">{citizen.email}</span>
           <br />
-          <strong>Wallet address: </strong>
-          {citizen.address}
+          <strong className="customCursor">Wallet address: </strong>
+          <span className="customCursor">{citizen.address}</span>
           <br />
-          <strong>Address: </strong>
-          {printShipment([citizen.streetName, citizen.streetNumber, citizen.postCode, citizen.district])}
+          <strong className="customCursor">Address: </strong>
+          <span className="customCursor">{printShipment([citizen.streetName, citizen.streetNumber, citizen.postCode, citizen.district])}</span>
           <br />
           <ButtonState text={dynamicText} state={citizen.state} address={citizen.address} type={CITIZEN} />
         </li>
@@ -47,7 +52,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state) => {
   return {
-    userList: state.citizenList
+    userList: state.citizenList,
+    searchProduct: state.searchProduct
   }
 }
 

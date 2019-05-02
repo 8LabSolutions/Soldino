@@ -273,7 +273,7 @@ input:checked + .slider {
 }
 
 #footer:hover {
-opacity: 1;
+  opacity: 1;
 }
 
 .css-1r4vtzz, .css-48ayfv {
@@ -291,7 +291,7 @@ opacity: 1;
 }
 
 .css-1vr111p-option, .css-1qprcsu-option, .css-1jllj6i-control, .css-6y1x9t-control {
-  font-size: 13px !important;
+  font-size: 12px !important;
 }
 
 #inputAddressDiv div {
@@ -357,4 +357,23 @@ opacity: 1;
 
 .greenInvoice {
   background-color: #1abc3b12;
+}
+
+.userlist-margin {
+  margin-top: 55px;
+}
+
+.userlist-item {
+  transition: transform .2s;
+  z-index: 0;
+}
+
+.userlist-item:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0px 15px 0px rgba(0, 0, 0, 0.25);
+  z-index: 999;
+}
+
+.customCursor {
+  cursor: context-menu;
 }

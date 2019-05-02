@@ -6,11 +6,16 @@ import governmentActionCreator from "../../actionsCreator/governmentActionCreato
 import {BUSINESS} from "../../constants/actionTypes"
 import ButtonState from './ButtonState';
 import { printShipment } from '../../auxiliaryFunctions';
+import { searchaction } from '../../actions/searchaction';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   //should dispatch the action that fills the store with the first 50 users
   //*!!! maybe only the first time !!!*/
   return {
+    resetSearch: () => {
+      dispatch(searchaction(""))
+    },
+
     getUserList: (amount, index)=> {
       governmentActionCreator.getUserList(amount, index, BUSINESS).then((action)=>{
         dispatch(action);
@@ -23,21 +28,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       var button = <ButtonState text={dynamicText} state={business.state} address={business.address} type={BUSINESS} />
 
       const Line = (business) =>(
-        <li key={business.address} className="list-group-item">
-          <strong>Company name: </strong>
-          {business.name}
+        <li key={business.address} className="list-group-item userlist-item">
+          <strong className="customCursor">Company name: </strong>
+          <span className="customCursor">{business.name}</span>
           <br />
-          <strong>VAT number: </strong>
-          {business.VATnumber}
+          <strong className="customCursor">VAT number: </strong>
+          <span className="customCursor">{business.VATnumber}</span>
           <br />
-          <strong>Email: </strong>
-          {business.email}
+          <strong className="customCursor">Email: </strong>
+          <span className="customCursor">{business.email}</span>
           <br />
-          <strong>Wallet address: </strong>
-          {business.address}
+          <strong className="customCursor">Wallet address: </strong>
+          <span className="customCursor">{business.address}</span>
           <br />
-          <strong>Headquarters: </strong>
-          {printShipment([business.streetName, business.streetNumber, business.postCode, business.district])}
+          <strong className="customCursor">Headquarters: </strong>
+          <span className="customCursor">{printShipment([business.streetName, business.streetNumber, business.postCode, business.district])}</span>
           <br />
           {button}
         </li>
@@ -49,7 +54,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state) => {
   return {
-    userList: state.businessList
+    userList: state.businessList,
+    searchProduct: state.searchProduct
   }
 }
 
