@@ -56,7 +56,7 @@ The project's folders are organized in this way:
 |      ├── actionCreators/
 |      ├── auxiliaryFunctions/
 |      ├── components/
-|	     |	  ├── containers/
+|      |    ├── containers/
 |      |    └── presentational/
 |  	   ├── constants/
 |  	   ├── contracts_build/
