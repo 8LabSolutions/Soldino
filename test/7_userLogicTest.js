@@ -11,6 +11,8 @@ contract("UserLogic", (accounts) => {
     var contractManagerInstance;
     var userStorageInstance;
     var userLogicInstance;
+    var ipfsHash = ["0x1115737400000000000000000000000000000000000000000000000000000000",
+                    "0x3315737400000000000000000000000000000000000000000000000000000000"]
 
     before(() => {
         contractManagerInstance = new web3.eth.Contract(
@@ -49,7 +51,7 @@ contract("UserLogic", (accounts) => {
       });
 
       it("Should add a new Citizen", () => {
-        return userLogicInstance.methods.addCitizen(accounts[8],1,1)
+        return userLogicInstance.methods.addCitizen(ipfsHash[0],1,1)
         .send({from: accounts[8], gas: 2000000})
         .then(() => {
             userLogicInstance.methods.isRegistered(accounts[8]).call().then((result) => {
@@ -59,13 +61,15 @@ contract("UserLogic", (accounts) => {
       })
 
       it("Should add a new Business", () => {
-        return userLogicInstance.methods.addBusiness(accounts[7],1,1)
+        return userLogicInstance.methods.addBusiness(ipfsHash[1],1,1)
         .send({from: accounts[7], gas: 2000000})
         .then(() => {
             userLogicInstance.methods.getUserInfo(accounts[7]).call().then((result) => {
-            assert.equal(result[0], accounts[7]);
+            assert.equal(result[0], ipfsHash[1]);
             assert.equal(result[1], 1);
             assert.equal(result[2], 1);
+            assert.equal(result[3], true);
+            assert.equal(result[4], 2);
           })
         })
       })
