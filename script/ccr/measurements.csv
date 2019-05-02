@@ -23,9 +23,9 @@ userActionCreator.js,1,14
 serviceWorker.js,31,92
 App.js,4,134
 fixedValues.js,0,3
-actionTypes.js,0,32
+actionTypes.js,0,33
 index.js,0,16
-business.js,51,206
+business.js,51,210
 government.js,12,106
 user.js,6,129
 authentication.js,18,66
@@ -40,7 +40,7 @@ UsersList.js,3,26
 Success.js,0,25
 PendingOrder.js,3,17
 Guide.js,0,11
-TransactionsManager.js,5,305
+TransactionsManager.js,4,329
 Store.js,5,71
 Product.js,4,51
 Cart.js,1,64
@@ -64,7 +64,7 @@ StoreContainer.js,4,40
 ButtonGeneric.js,1,11
 ButtonAuth.js,9,27
 ProductManagerContainer.js,3,39
-TransactionManagerContainer.js,2,66
+TransactionManagerContainer.js,3,59
 ButtonCart.js,1,12
 ButtonSignUp.js,2,23
 AppContainer.js,4,9
@@ -78,10 +78,10 @@ ButtonBusinessProduct.js,1,43
 CitizenListContainer.js,3,48
 ButtonCartAdd.js,1,12
 ButtonCheckout.js,1,29
-index.js,5,212
+index.js,5,218
 index.js,13,196
 searchaction.js,2,7
-business.js,0,43
+business.js,0,49
 store.js,0,16
 cart.js,3,86
 reset.js,1,8
