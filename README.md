@@ -1,15 +1,20 @@
 [![Build Status](https://travis-ci.com/8LabSolutions/Soldino-PoC.svg?branch=final)](https://travis-ci.com/8LabSolutions/Soldino-PoC)
 [![Coverage Status](https://coveralls.io/repos/github/8LabSolutions/Soldino-PoC/badge.svg?branch=final)](https://coveralls.io/github/8LabSolutions/Soldino-PoC?branch=final)
 # Soldino
-## 8Lab Solutions group
-- [Federico Bicciato](https://github.com/nevepura)
-- [Mattia Bolzonella](https://github.com/KamiShire)
-- [Francesco Donè](https://github.com/francescodone)
-- [Sara Feltrin](https://github.com/BluePerception)
-- [Giacomo Greggio](https://github.com/giacomogreggio)
-- [Samuele Giuliano Piazzetta](https://github.com/piaz97)
-- [Paolo Pozzan](https://github.com/pozza96)
-- [Matteo Santinon](https://github.com/MatteoSantinon)
+
+## Table of contents
+
+- [References](#references)
+- [Getting started](#getting-started)
+- [Installation](#installation)
+  * [Ubuntu](#ubuntu)
+  * [Windows](#windows)
+  * [Content of the repository](#content-of-the-repository)
+  * [Configure Soldino for the local envirorment](#configure-soldino-for-the-local-envirorment)
+    + [Configure Ganache](#configure-ganache)
+    + [Run Soldino on the development environment](#run-soldino-on-the-development-environment)
++ [Authors](#authors)
+
 ## References
 
 https://www.math.unipd.it/~tullio/IS-1/2018/Progetto/C6.pdf
@@ -23,7 +28,7 @@ In order to run Soldino you **must** have:
 - `git`
 - `truffle v5.0.5`  [ see references](https://www.truffleframework.com/docs/truffle/getting-started/installation)
 - `nodejs v8.9.4` or later [see references](https://nodejs.org/en/)
-- `metamask plugin` for `chrome v64 or later` or `firefox v71 or later`
+- `metamask plugin` for `Google Chrome v64 or later` or `Mozilla Firefox v71 or later`
 
 Additional software:
 
@@ -82,7 +87,7 @@ The folders organization separates the back end ad front end.
 
 In the `truffle-config.js` you can set all the options for your environment. There are three default environments configured:
 
-- `develop` : used as local environment it has the 9545 port set.
+- `development` : used as local environment it has the 9545 port set.
 
 - `coverage`: used for the test coverage environment, port 8545. 
 
@@ -123,9 +128,16 @@ In "New RPC URL" textbox insert http://localhost:9545. 
 
 and click "Save" button.
 
-#### Now you can enjoy Soldino!!
+**Now you can enjoy Soldino!!**
 
+## Authors
 
-
-
+- [Federico Bicciato](https://github.com/nevepura)
+- [Mattia Bolzonella](https://github.com/KamiShire)
+- [Francesco Donè](https://github.com/francescodone)
+- [Sara Feltrin](https://github.com/BluePerception)
+- [Giacomo Greggio](https://github.com/giacomogreggio)
+- [Samuele Giuliano Piazzetta](https://github.com/piaz97)
+- [Paolo Pozzan](https://github.com/pozza96)
+- [Matteo Santinon](https://github.com/MatteoSantinon)
 
