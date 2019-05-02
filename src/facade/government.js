@@ -1,7 +1,7 @@
 import web3government from "../web3functions/government"
 import ipfsModule from "../ipfsCalls/index"
 import web3util from "../web3functions/web_util";
-
+import web3authentication from "../web3functions/authentication"
 
 const government = (function(){
 
@@ -38,18 +38,32 @@ const government = (function(){
             //now there are three arrays, invoiceJSON, date and periods
             //getting the businesses' address which have at least a transaction in the given period
             var businessAddresses = []
+            let busAdrPromises = []
+
             for (let i = 0; i < invoicesJSON.length; i++ ){
-              if(periods[i] === period){
-                //the selling business must be inserted
-                let sellerAddress = invoicesJSON.products[0].seller;
-                if (!businessAddresses.includes(sellerAddress))
-                  businessAddresses.push(sellerAddress);
-                //the buyer must be inserted only if it is a business
-                console.log('ACTUNG, finire qua')
-              }
+              busAdrPromises.push(
+                new Promise((resolve)=>{
+                  if(periods[i] === period){
+                    //the selling business must be inserted
+                    let sellerAddress = invoicesJSON.products[0].seller;
+                    if (!businessAddresses.includes(sellerAddress))
+                      businessAddresses.push(sellerAddress);
+                    //the buyer must be inserted only if it is a business
+                    let buyerAddress = invoicesJSON.buyerAddress;
+                    web3authentication.getUser(buyerAddress).then(([,,type])=>{
+                      if(parseInt(type) === 2)
+                        if (!businessAddresses.includes(buyerAddress))
+                          businessAddresses.push(buyerAddress);
+                      resolve()
+                    })
+                  }
+                })
+              )
             }
-            //businessAddresses contains all the useful addresses
-            resolve(businessAddresses)
+            Promise.all(busAdrPromises).then(()=>{
+              //businessAddresses contains all the useful addresses
+              resolve(businessAddresses)
+            })
           })
         })
       })
@@ -239,14 +253,26 @@ const government = (function(){
           }))
         })
         Promise.all(keyPromises).then((businessVATData)=>{
-          //businessVATData is an array of array with the following format [businessAddress, state, amount]
+          //businessVATData is an array of array with the following format
+          //[businessAddress, paymentStatus, amount]
+
+          /*
+          payed --> verde
+          deferred --> yellow
+          paying --> yellow
+          waiting --> yellow
+          late --> red
+          */
+
           console.log('FINISCI QUIIII')
           resolve(businessVATData)
         })
 
       })
+    },
 
-
+    refund: function(period, business){
+      console.log(["riborsare!!!!!!!!!", period, business])
     }
 
   }

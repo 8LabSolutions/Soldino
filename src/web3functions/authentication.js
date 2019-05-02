@@ -28,19 +28,27 @@ const web3authentication = (function() {
         })
       })
     },
-    getUser: async function() {
+    /**
+     * @returns Return the following information about the given address:
+     *  1) IPFShash
+     *  2) state(boolean able disable)
+     *  3) type (0 => not registred, 1=> citizen, 2=> business, 3=> government)
+     * @param {*} address Address you want to know datas
+     */
+    getUser: async function(address = undefined) {
       return new Promise((resolve)=>{
-        web3util.getContractInstance(UserLogic).then((userLogicInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            userLogicInstance.methods.getUserInfo(account).call().then((ris)=>{
-              var hashIPFS = ris[0];
-              var hashFun = ris[1];
-              var hashSize = ris[2];
-              var state = ris[3];
-              var type = ris[4];
-              resolve([web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun), state, type]);
-            });
-          })
+        web3util.getContractInstance(UserLogic).then(async (userLogicInstance)=>{
+          if (address === undefined){
+            address = await web3util.getCurrentAccount()
+          }
+          userLogicInstance.methods.getUserInfo(address).call().then((ris)=>{
+            var hashIPFS = ris[0];
+            var hashFun = ris[1];
+            var hashSize = ris[2];
+            var state = ris[3];
+            var type = ris[4];
+            resolve([web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun), state, type]);
+          });
         })
       })
     }
