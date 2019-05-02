@@ -39,7 +39,7 @@ contract VatLogic {
         int256 vatDue = vatStorage.getVatAmount(_key);
         TokenCubit cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
         // Transfer funds from the business to the government
-        require(cubitToken.transferFrom(msg.sender, vatStorage.owner() ,uint256(vatDue)),
+        require(cubitToken.transfer(vatStorage.owner() ,uint256(vatDue)),
             "VAT payment: an error occured during the fund transfer to the government");
 
         // Set the state of the VAT to PAID

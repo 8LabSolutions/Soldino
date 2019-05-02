@@ -1,4 +1,4 @@
-import { GETMYPRODUCTS, GETSTOREPRODUCTS, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS, PASSKEYPROD, SETINVOICES, SETPERIODS, SELECTEDPERIOD } from "../constants/actionTypes";
+import { GETMYPRODUCTS, GETSTOREPRODUCTS, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS, PASSKEYPROD, SETINVOICES, SETPERIODS, SELECTEDPERIOD, RESETINVOICES } from "../constants/actionTypes";
 
 export  function getMyProducts(myProductsArray) {
   return {
@@ -49,5 +49,11 @@ export function selectedPeriod(period) {
   return {
     type: SELECTEDPERIOD,
     period
+  }
+}
+
+export function resetInvoices() {
+  return {
+    type: RESETINVOICES
   }
 }

@@ -350,3 +350,11 @@ opacity: 1;
   max-height: 85px;
   overflow-y: scroll;
 }
+
+.redInvoice {
+  background-color: #ff000016;
+}
+
+.greenInvoice {
+  background-color: #1abc3b12;
+}

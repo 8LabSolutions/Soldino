@@ -228,3 +228,43 @@ export function getBase64(file) {
     console.log('Error: ', error);
   };*/
 }
+
+export function periodToDate(period) {
+  let month = null;
+  let year = parseInt(period.substring(0, 4));
+  switch (parseInt(period.substring(5,6))){
+    case 1:
+      month = "Jan-Mar"
+    break;
+    case 2:
+      month = "Apr-Jun"
+    break;
+    case 3:
+      month = "Jul-Sep"
+    break;
+    case 4:
+      month = "Oct-Dec"
+    break;
+  }
+  return month+" "+year;
+}
+
+export function dateToPeriod(date) {
+  let month = null;
+  let year = date.substring(8, 12);
+  switch (date.substring(0, 7)){
+    case "Jan-Mar":
+      month = 1
+    break;
+    case "Apr-Jun":
+      month = 2
+    break;
+    case "Jul-Sep":
+      month = 3
+    break;
+    case "Oct-Dec":
+      month = 4
+    break;
+  }
+  return year+"-"+month;
+}
