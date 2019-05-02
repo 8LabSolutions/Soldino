@@ -1,23 +1,31 @@
 # Soldino
+## 8Lab Solutions group
+- [Federico Bicciato](https://github.com/nevepura)
+- [Mattia Bolzonella](https://github.com/KamiShire)
+- [Francesco Donè](https://github.com/francescodone)
+- [Sara Feltrin](https://github.com/BluePerception)
+- [Giacomo Greggio](https://github.com/giacomogreggio)
+- [Samuele Giuliano Piazzetta](https://github.com/piaz97)
+- [Paolo Pozzan](https://github.com/pozza96)
+- [Matteo Santinon](https://github.com/MatteoSantinon)
 ## References
 
 https://www.math.unipd.it/~tullio/IS-1/2018/Progetto/C6.pdf
 
-Software Engineering project class at University of Padua, developed for  [Red Babel](http://redbabel.com/).
+Software Engineering project at University of Padua, developed for [Red Babel](http://redbabel.com/), by 8Lab Solutions.
 
 ## Getting started
 
 In order to run Soldino you **must** have:
 
 - `git`
-
-- `truffle v5.0.5`  [ see refereces](https://www.truffleframework.com/docs/truffle/getting-started/installation)
+- `truffle v5.0.5`  [ see references](https://www.truffleframework.com/docs/truffle/getting-started/installation)
 - `nodejs v8.9.4` or later [see references](https://nodejs.org/en/)
 - `metamask plugin` for `chrome v64 or later` or `firefox v71 or later`
 
 Additional software:
 
-- `Ganache GUI`  if you want an user interface for the local block chain.
+- `Ganache GUI`  if you want an user interface for the local blockchain.
 
 **Note** : *both* `Ganache GUI` *and* `ganache-cli` *(this is provided by default)*   **must**   *be set with port 9545 in order to run Soldino on the develop environment, this port can be set later.*
 
@@ -26,7 +34,7 @@ Additional software:
 ### Ubuntu
 
 1. download or clone (`git clone https://github.com/8LabSolutions/Soldino-PoC.git` ) this repository 
-2. run `npm install` in the repository folder (`Soldino-PoC` folder)
+2. run `$ npm install` in the repository folder (`Soldino-PoC` folder)
    - If you have trouble with `$ npm install` run `$ sudo apt-get install build-essential` and retry run `npm install`
 3. done!
 
@@ -46,7 +54,7 @@ The project's folders are organized in this way:
 |      ├── actionCreators/
 |      ├── auxiliaryFunctions/
 |      ├── components/
-|	   |	├── containers/
+|	     |	  ├── containers/
 |      |    └── presentational/
 |  	   ├── constants/
 |  	   ├── contracts_build/
@@ -77,7 +85,7 @@ In the `truffle-config.js` you can set all the options for your environment. The
 
 #### Configure Ganache
 
-In order to run Soldino DApp you have to open Ganache first. If you want to use `ganache-cli` open a new terminal and run `$ ganache-cli -p 9545` this will open a local block chain on the port 9545. To see other configuration options please visit the [ganache-cli repository](https://github.com/trufflesuite/ganache-cli).
+In order to run Soldino DApp you have to open Ganache first. If you want to use `ganache-cli` open a new terminal and run `$ ganache-cli -p 9545` this will open a local blockchain on the port 9545. To see other configuration options please visit the [ganache-cli repository](https://github.com/trufflesuite/ganache-cli).
 
 Otherwise, if you want to use Ganache GUI please follow these steps:
 
