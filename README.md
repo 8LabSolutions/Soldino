@@ -100,13 +100,33 @@ Otherwise, if you want to use Ganache GUI please follow these steps:
 
 Run `$ npm start`. This command will deploy the contracts in `migrations/2_deploy_contracts.js`, Soldino will run on the `develop` environment.
 
+Soldino will open in your default browser on address:
 
+[localhost:3000]: localhost:3000/
 
+Metamask will open at the same time. 
 
+On Metamask tab, use option 
 
+```
+Import using account seed phrase
+```
 
+Copy and paste MNEMONIC phrase that you can find on Ganache GUI on top of homepage.
 
+Otherwise, if you use ganache-cli you can find it in terminal where you run `$ ganache-cli -p 9545`.
 
+Insert new password, confirm it and click "Restore".
+
+When you are logged in on Metamask, click the link on top-right of the tab and select "Custom RPC".
+
+In "New RPC URL" textbox insert 
+
+[http://localhost:9545]: http://localhost:9545
+
+and click "Save" button.
+
+Now you can enjoy Soldino!!
 
 
 
