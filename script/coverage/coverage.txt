@@ -1,5 +1,830 @@
+travis_fold:start:worker_info
+[0K[33;1mWorker information[0m
+hostname: 4a75d76e-b509-435c-ba26-14be68a8ab14@1.production-1-worker-com-gce-glwh
+version: v6.2.0 https://github.com/travis-ci/worker/tree/5e5476e01646095f48eec13196fdb3faf8f5cbf7
+instance: travis-job-ccd67a7b-4e07-4604-9ef3-3e9b3ea75b1b travis-ci-garnet-trusty-1512502259-986baf0 (via amqp)
+startup: 7.75798624s
+travis_fold:end:worker_info
+[0Ktravis_fold:start:system_info
+[0K[33;1mBuild system information[0m
+Build language: node_js
+Build group: stable
+Build dist: trusty
+Build id: 110272741
+Job id: 196958322
+Runtime kernel version: 4.4.0-101-generic
+travis-build version: 800f14f40
+[34m[1mBuild image provisioning date and time[0m
+Tue Dec  5 19:58:13 UTC 2017
+[34m[1mOperating System Details[0m
+Distributor ID:	Ubuntu
+Description:	Ubuntu 14.04.5 LTS
+Release:	14.04
+Codename:	trusty
+[34m[1mCookbooks Version[0m
+7c2c6a6 https://github.com/travis-ci/travis-cookbooks/tree/7c2c6a6
+[34m[1mgit version[0m
+git version 2.15.1
+[34m[1mbash version[0m
+GNU bash, version 4.3.11(1)-release (x86_64-pc-linux-gnu)
+[34m[1mgcc version[0m
+gcc (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4
+Copyright (C) 2013 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-> soldino@0.1.0 coverage /home/iaito/git/Soldino-PoC
+[34m[1mdocker version[0m
+Client:
+ Version:      17.09.0-ce
+ API version:  1.32
+ Go version:   go1.8.3
+ Git commit:   afdb6d4
+ Built:        Tue Sep 26 22:42:38 2017
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      17.09.0-ce
+ API version:  1.32 (minimum version 1.12)
+ Go version:   go1.8.3
+ Git commit:   afdb6d4
+ Built:        Tue Sep 26 22:41:20 2017
+ OS/Arch:      linux/amd64
+ Experimental: false
+[34m[1mclang version[0m
+clang version 5.0.0 (tags/RELEASE_500/final)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /usr/local/clang-5.0.0/bin
+[34m[1mjq version[0m
+jq-1.5
+[34m[1mbats version[0m
+Bats 0.4.0
+[34m[1mshellcheck version[0m
+0.4.6
+[34m[1mshfmt version[0m
+v2.0.0
+[34m[1mccache version[0m
+ccache version 3.1.9
+
+Copyright (C) 2002-2007 Andrew Tridgell
+Copyright (C) 2009-2011 Joel Rosdahl
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any later
+version.
+[34m[1mcmake version[0m
+cmake version 3.9.2
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+[34m[1mheroku version[0m
+heroku-cli/6.14.39-addc925 (linux-x64) node-v9.2.0
+[34m[1mimagemagick version[0m
+Version: ImageMagick 6.7.7-10 2017-07-31 Q16 http://www.imagemagick.org
+[34m[1mmd5deep version[0m
+4.2
+[34m[1mmercurial version[0m
+Mercurial Distributed SCM (version 4.2.2)
+(see https://mercurial-scm.org for more information)
+
+Copyright (C) 2005-2017 Matt Mackall and others
+This is free software; see the source for copying conditions. There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+[34m[1mmysql version[0m
+mysql  Ver 14.14 Distrib 5.6.33, for debian-linux-gnu (x86_64) using  EditLine wrapper
+[34m[1mopenssl version[0m
+OpenSSL 1.0.1f 6 Jan 2014
+[34m[1mpacker version[0m
+Packer v1.0.2
+
+Your version of Packer is out of date! The latest version
+is 1.1.2. You can update by downloading from www.packer.io
+[34m[1mpostgresql client version[0m
+psql (PostgreSQL) 9.6.6
+[34m[1mragel version[0m
+Ragel State Machine Compiler version 6.8 Feb 2013
+Copyright (c) 2001-2009 by Adrian Thurston
+[34m[1msubversion version[0m
+svn, version 1.8.8 (r1568071)
+   compiled Aug 10 2017, 17:20:39 on x86_64-pc-linux-gnu
+
+Copyright (C) 2013 The Apache Software Foundation.
+This software consists of contributions made by many people;
+see the NOTICE file for more information.
+Subversion is open source software, see http://subversion.apache.org/
+
+The following repository access (RA) modules are available:
+
+* ra_svn : Module for accessing a repository using the svn network protocol.
+  - with Cyrus SASL authentication
+  - handles 'svn' scheme
+* ra_local : Module for accessing a repository on local disk.
+  - handles 'file' scheme
+* ra_serf : Module for accessing a repository via WebDAV protocol using serf.
+  - using serf 1.3.3
+  - handles 'http' scheme
+  - handles 'https' scheme
+
+[34m[1msudo version[0m
+Sudo version 1.8.9p5
+Configure options: --prefix=/usr -v --with-all-insults --with-pam --with-fqdn --with-logging=syslog --with-logfac=authpriv --with-env-editor --with-editor=/usr/bin/editor --with-timeout=15 --with-password-timeout=0 --with-passprompt=[sudo] password for %p:  --without-lecture --with-tty-tickets --disable-root-mailer --enable-admin-flag --with-sendmail=/usr/sbin/sendmail --with-timedir=/var/lib/sudo --mandir=/usr/share/man --libexecdir=/usr/lib/sudo --with-sssd --with-sssd-lib=/usr/lib/x86_64-linux-gnu --with-selinux
+Sudoers policy plugin version 1.8.9p5
+Sudoers file grammar version 43
+
+Sudoers path: /etc/sudoers
+Authentication methods: 'pam'
+Syslog facility if syslog is being used for logging: authpriv
+Syslog priority to use when user authenticates successfully: notice
+Syslog priority to use when user authenticates unsuccessfully: alert
+Send mail if the user is not in sudoers
+Use a separate timestamp for each user/tty combo
+Lecture user the first time they run sudo
+Root may run sudo
+Allow some information gathering to give useful error messages
+Require fully-qualified hostnames in the sudoers file
+Visudo will honor the EDITOR environment variable
+Set the LOGNAME and USER environment variables
+Length at which to wrap log file lines (0 for no wrap): 80
+Authentication timestamp timeout: 15.0 minutes
+Password prompt timeout: 0.0 minutes
+Number of tries to enter a password: 3
+Umask to use or 0777 to use user's: 022
+Path to mail program: /usr/sbin/sendmail
+Flags for mail program: -t
+Address to send mail to: root
+Subject line for mail messages: *** SECURITY information for %h ***
+Incorrect password message: Sorry, try again.
+Path to authentication timestamp dir: /var/lib/sudo
+Default password prompt: [sudo] password for %p: 
+Default user to run commands as: root
+Value to override user's $PATH with: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+Path to the editor for use by visudo: /usr/bin/editor
+When to require a password for 'list' pseudocommand: any
+When to require a password for 'verify' pseudocommand: all
+File descriptors >= 3 will be closed before executing a command
+Environment variables to check for sanity:
+	TZ
+	TERM
+	LINGUAS
+	LC_*
+	LANGUAGE
+	LANG
+	COLORTERM
+Environment variables to remove:
+	RUBYOPT
+	RUBYLIB
+	PYTHONUSERBASE
+	PYTHONINSPECT
+	PYTHONPATH
+	PYTHONHOME
+	TMPPREFIX
+	ZDOTDIR
+	READNULLCMD
+	NULLCMD
+	FPATH
+	PERL5DB
+	PERL5OPT
+	PERL5LIB
+	PERLLIB
+	PERLIO_DEBUG 
+	JAVA_TOOL_OPTIONS
+	SHELLOPTS
+	GLOBIGNORE
+	PS4
+	BASH_ENV
+	ENV
+	TERMCAP
+	TERMPATH
+	TERMINFO_DIRS
+	TERMINFO
+	_RLD*
+	LD_*
+	PATH_LOCALE
+	NLSPATH
+	HOSTALIASES
+	RES_OPTIONS
+	LOCALDOMAIN
+	CDPATH
+	IFS
+Environment variables to preserve:
+	JAVA_HOME
+	TRAVIS
+	CI
+	DEBIAN_FRONTEND
+	XAUTHORIZATION
+	XAUTHORITY
+	PS2
+	PS1
+	PATH
+	LS_COLORS
+	KRB5CCNAME
+	HOSTNAME
+	HOME
+	DISPLAY
+	COLORS
+Locale to use while parsing sudoers: C
+Directory in which to store input/output logs: /var/log/sudo-io
+File in which to store the input/output log: %{seq}
+Add an entry to the utmp/utmpx file when allocating a pty
+PAM service name to use
+PAM service name to use for login shells
+Create a new PAM session for the command to run in
+Maximum I/O log sequence number: 0
+
+Local IP address and netmask pairs:
+	10.240.0.28/255.255.255.255
+	172.17.0.1/255.255.0.0
+
+Sudoers I/O plugin version 1.8.9p5
+[34m[1mgzip version[0m
+gzip 1.6
+Copyright (C) 2007, 2010, 2011 Free Software Foundation, Inc.
+Copyright (C) 1993 Jean-loup Gailly.
+This is free software.  You may redistribute copies of it under the terms of
+the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by Jean-loup Gailly.
+[34m[1mzip version[0m
+Copyright (c) 1990-2008 Info-ZIP - Type 'zip "-L"' for software license.
+This is Zip 3.0 (July 5th 2008), by Info-ZIP.
+Currently maintained by E. Gordon.  Please send bug reports to
+the authors using the web page at www.info-zip.org; see README for details.
+
+Latest sources and executables are at ftp://ftp.info-zip.org/pub/infozip,
+as of above date; see http://www.info-zip.org/ for other sites.
+
+Compiled with gcc 4.8.2 for Unix (Linux ELF) on Oct 21 2013.
+
+Zip special compilation options:
+	USE_EF_UT_TIME       (store Universal Time)
+	BZIP2_SUPPORT        (bzip2 library version 1.0.6, 6-Sept-2010)
+	    bzip2 code and library copyright (c) Julian R Seward
+	    (See the bzip2 license for terms of use)
+	SYMLINK_SUPPORT      (symbolic links supported)
+	LARGE_FILE_SUPPORT   (can read and write large files on file system)
+	ZIP64_SUPPORT        (use Zip64 to store large files in archives)
+	UNICODE_SUPPORT      (store and read UTF-8 Unicode paths)
+	STORE_UNIX_UIDs_GIDs (store UID/GID sizes/values using new extra field)
+	UIDGID_NOT_16BIT     (old Unix 16-bit UID/GID extra field not used)
+	[encryption, version 2.91 of 05 Jan 2007] (modified for Zip 3)
+
+Encryption notice:
+	The encryption code of this program is not copyrighted and is
+	put in the public domain.  It was originally written in Europe
+	and, to the best of our knowledge, can be freely distributed
+	in both source and object forms from any country, including
+	the USA under License Exception TSU of the U.S. Export
+	Administration Regulations (section 740.13(e)) of 6 June 2002.
+
+Zip environment options:
+             ZIP:  [none]
+          ZIPOPT:  [none]
+[34m[1mvim version[0m
+VIM - Vi IMproved 7.4 (2013 Aug 10, compiled Nov 24 2016 16:43:18)
+Included patches: 1-52
+Extra patches: 8.0.0056
+Modified by pkg-vim-maintainers@lists.alioth.debian.org
+Compiled by buildd@
+Huge version without GUI.  Features included (+) or not (-):
++acl             +farsi           +mouse_netterm   +syntax
++arabic          +file_in_path    +mouse_sgr       +tag_binary
++autocmd         +find_in_path    -mouse_sysmouse  +tag_old_static
+-balloon_eval    +float           +mouse_urxvt     -tag_any_white
+-browse          +folding         +mouse_xterm     -tcl
+++builtin_terms  -footer          +multi_byte      +terminfo
++byte_offset     +fork()          +multi_lang      +termresponse
++cindent         +gettext         -mzscheme        +textobjects
+-clientserver    -hangul_input    +netbeans_intg   +title
+-clipboard       +iconv           +path_extra      -toolbar
++cmdline_compl   +insert_expand   -perl            +user_commands
++cmdline_hist    +jumplist        +persistent_undo +vertsplit
++cmdline_info    +keymap          +postscript      +virtualedit
++comments        +langmap         +printer         +visual
++conceal         +libcall         +profile         +visualextra
++cryptv          +linebreak       +python          +viminfo
++cscope          +lispindent      -python3         +vreplace
++cursorbind      +listcmds        +quickfix        +wildignore
++cursorshape     +localmap        +reltime         +wildmenu
++dialog_con      -lua             +rightleft       +windows
++diff            +menu            -ruby            +writebackup
++digraphs        +mksession       +scrollbind      -X11
+-dnd             +modify_fname    +signs           -xfontset
+-ebcdic          +mouse           +smartindent     -xim
++emacs_tags      -mouseshape      -sniff           -xsmp
++eval            +mouse_dec       +startuptime     -xterm_clipboard
++ex_extra        +mouse_gpm       +statusline      -xterm_save
++extra_search    -mouse_jsbterm   -sun_workshop    -xpm
+   system vimrc file: "$VIM/vimrc"
+     user vimrc file: "$HOME/.vimrc"
+ 2nd user vimrc file: "~/.vim/vimrc"
+      user exrc file: "$HOME/.exrc"
+  fall-back for $VIM: "/usr/share/vim"
+Compilation: gcc -c -I. -Iproto -DHAVE_CONFIG_H     -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1      
+Linking: gcc   -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,--as-needed -o vim        -lm -ltinfo -lnsl  -lselinux  -lacl -lattr -lgpm -ldl    -L/usr/lib/python2.7/config-x86_64-linux-gnu -lpython2.7 -lpthread -ldl -lutil -lm -Xlinker -export-dynamic -Wl,-O1 -Wl,-Bsymbolic-functions      
+[34m[1miptables version[0m
+iptables v1.4.21
+[34m[1mcurl version[0m
+curl 7.35.0 (x86_64-pc-linux-gnu) libcurl/7.35.0 OpenSSL/1.0.1f zlib/1.2.8 libidn/1.28 librtmp/2.3
+[34m[1mwget version[0m
+GNU Wget 1.15 built on linux-gnu.
+[34m[1mrsync version[0m
+rsync  version 3.1.0  protocol version 31
+[34m[1mgimme version[0m
+v1.2.0
+[34m[1mnvm version[0m
+0.33.6
+[34m[1mperlbrew version[0m
+/home/travis/perl5/perlbrew/bin/perlbrew  - App::perlbrew/0.80
+[34m[1mphpenv version[0m
+rbenv 1.1.1-25-g6aa70b6
+[34m[1mrvm version[0m
+rvm 1.29.3 (latest) by Michal Papis, Piotr Kuczynski, Wayne E. Seguin [https://rvm.io]
+[34m[1mdefault ruby version[0m
+ruby 2.4.1p111 (2017-03-22 revision 58053) [x86_64-linux]
+[34m[1mCouchDB version[0m
+couchdb 1.6.1
+[34m[1mElasticSearch version[0m
+5.5.0
+[34m[1mInstalled Firefox version[0m
+firefox 56.0.2
+[34m[1mMongoDB version[0m
+MongoDB 3.4.10
+[34m[1mPhantomJS version[0m
+2.1.1
+[34m[1mPre-installed PostgreSQL versions[0m
+9.2.24
+9.3.20
+9.4.15
+9.5.10
+9.6.6
+[34m[1mRabbitMQ Version[0m
+3.6.14
+[34m[1mRedis version[0m
+redis-server 4.0.6
+[34m[1mriak version[0m
+2.2.3
+[34m[1mPre-installed Go versions[0m
+1.7.4
+[34m[1mant version[0m
+Apache Ant(TM) version 1.9.3 compiled on April 8 2014
+[34m[1mmvn version[0m
+Apache Maven 3.5.2 (138edd61fd100ec658bfa2d307c43b76940a5d7d; 2017-10-18T07:58:13Z)
+Maven home: /usr/local/maven-3.5.2
+Java version: 1.8.0_151, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-8-oracle/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "4.4.0-98-generic", arch: "amd64", family: "unix"
+[34m[1mgradle version[0m
+
+------------------------------------------------------------
+Gradle 4.0.1
+------------------------------------------------------------
+
+Build time:   2017-07-07 14:02:41 UTC
+Revision:     38e5dc0f772daecca1d2681885d3d85414eb6826
+
+Groovy:       2.4.11
+Ant:          Apache Ant(TM) version 1.9.6 compiled on June 29 2015
+JVM:          1.8.0_151 (Oracle Corporation 25.151-b12)
+OS:           Linux 4.4.0-98-generic amd64
+
+[34m[1mlein version[0m
+Leiningen 2.8.1 on Java 1.8.0_151 Java HotSpot(TM) 64-Bit Server VM
+[34m[1mPre-installed Node.js versions[0m
+v4.8.6
+v6.12.0
+v6.12.1
+v8.9
+v8.9.1
+[34m[1mphpenv versions[0m
+  system
+  5.6
+* 5.6.32 (set by /home/travis/.phpenv/version)
+  7.0
+  7.0.25
+  7.1
+  7.1.11
+  hhvm
+  hhvm-stable
+[34m[1mcomposer --version[0m
+Composer version 1.5.2 2017-09-11 16:59:25
+[34m[1mPre-installed Ruby versions[0m
+ruby-2.2.7
+ruby-2.3.4
+ruby-2.4.1
+travis_fold:end:system_info
+[0K
+
+travis_fold:start:git.checkout
+[0Ktravis_time:start:010975f8
+[0K$ git clone --depth=50 --branch=final https://github.com/8LabSolutions/Soldino-PoC.git 8LabSolutions/Soldino-PoC
+Cloning into '8LabSolutions/Soldino-PoC'...
+travis_time:end:010975f8:start=1556733387013807640,finish=1556733387905938004,duration=892130364
+[0K$ cd 8LabSolutions/Soldino-PoC
+$ git checkout -qf 94b2d6759ba96255bba1c3333641b3961b7ae78a
+travis_fold:end:git.checkout
+[0K
+
+[33;1mSetting environment variables from repository settings[0m
+$ export SURGE_LOGIN=[secure]
+$ export SURGE_TOKEN=[secure]
+$ export sonartoken=[secure]
+
+travis_fold:start:nvm.install
+[0Ktravis_time:start:1dd60abb
+[0K$ nvm install 8
+Downloading and installing node v8.16.0...
+Downloading https://nodejs.org/dist/v8.16.0/node-v8.16.0-linux-x64.tar.xz...
+Computing checksum with sha256sum
+Checksums matched!
+Now using node v8.16.0 (npm v6.4.1)
+travis_time:end:1dd60abb:start=1556733388832130345,finish=1556733392061048159,duration=3228917814
+[0Ktravis_fold:end:nvm.install
+[0K
+travis_fold:start:cache.1
+[0KSetting up build cache
+$ export CASHER_DIR=${TRAVIS_HOME}/.casher
+travis_time:start:2c7f8673
+[0K$ Installing caching utilities
+travis_time:end:2c7f8673:start=1556733396562683223,finish=1556733396703971902,duration=141288679
+[0Ktravis_time:start:2494a3bc
+[0Ktravis_time:end:2494a3bc:start=1556733396710056111,finish=1556733396713173231,duration=3117120
+[0Ktravis_time:start:0a311719
+[0K[32;1mattempting to download cache archive[0m
+[32;1mfetching final/cache-linux-trusty-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855--node-8.tgz[0m
+[32;1mfound cache[0m
+travis_time:end:0a311719:start=1556733396718600049,finish=1556733399585429138,duration=2866829089
+[0Ktravis_time:start:1b30b626
+[0Ktravis_time:end:1b30b626:start=1556733399589983474,finish=1556733399592963832,duration=2980358
+[0Ktravis_time:start:17819a66
+[0K[32;1madding /home/travis/build/8LabSolutions/Soldino-PoC/node_modules to cache[0m
+[32;1mcreating directory /home/travis/build/8LabSolutions/Soldino-PoC/node_modules[0m
+travis_time:end:17819a66:start=1556733399597208807,finish=1556733424598464494,duration=25001255687
+[0Ktravis_fold:end:cache.1
+[0K
+$ node --version
+v8.16.0
+$ npm --version
+6.4.1
+$ nvm --version
+0.34.0
+
+travis_fold:start:before_install.1
+[0Ktravis_time:start:25850fbe
+[0K$ npm install -g npm@latest
+/home/travis/.nvm/versions/node/v8.16.0/bin/npm -> /home/travis/.nvm/versions/node/v8.16.0/lib/node_modules/npm/bin/npm-cli.js
+/home/travis/.nvm/versions/node/v8.16.0/bin/npx -> /home/travis/.nvm/versions/node/v8.16.0/lib/node_modules/npm/bin/npx-cli.js
++ npm@6.9.0
+added 54 packages from 9 contributors, removed 15 packages and updated 47 packages in 6.759s
+travis_time:end:25850fbe:start=1556733425202536620,finish=1556733432378743291,duration=7176206671
+[0Ktravis_fold:end:before_install.1
+[0Ktravis_fold:start:before_install.2
+[0Ktravis_time:start:3dae5ba6
+[0K$ npm install -g ganache-cli truffle
+/home/travis/.nvm/versions/node/v8.16.0/bin/ganache-cli -> /home/travis/.nvm/versions/node/v8.16.0/lib/node_modules/ganache-cli/cli.js
+/home/travis/.nvm/versions/node/v8.16.0/bin/truffle -> /home/travis/.nvm/versions/node/v8.16.0/lib/node_modules/truffle/build/cli.bundled.js
+
+> keccak@1.4.0 install /home/travis/.nvm/versions/node/v8.16.0/lib/node_modules/truffle/node_modules/keccak
+> npm run rebuild || echo "Keccak bindings compilation fail. Pure JS implementation will be used."
+
+
+> keccak@1.4.0 rebuild /home/travis/.nvm/versions/node/v8.16.0/lib/node_modules/truffle/node_modules/keccak
+> node-gyp rebuild
+
+make: Entering directory `/home/travis/.nvm/versions/node/v8.16.0/lib/node_modules/truffle/node_modules/keccak/build'
+  CXX(target) Release/obj.target/keccak/src/addon.o
+  CC(target) Release/obj.target/keccak/src/libkeccak/KeccakSponge.o
+  CC(target) Release/obj.target/keccak/src/libkeccak/KeccakP-1600-reference.o
+  SOLINK_MODULE(target) Release/obj.target/keccak.node
+  COPY Release/keccak.node
+make: Leaving directory `/home/travis/.nvm/versions/node/v8.16.0/lib/node_modules/truffle/node_modules/keccak/build'
++ ganache-cli@6.4.3
++ truffle@5.0.14
+added 145 packages from 342 contributors in 9.762s
+travis_time:end:3dae5ba6:start=1556733432384860806,finish=1556733442636504646,duration=10251643840
+[0Ktravis_fold:end:before_install.2
+[0Ktravis_fold:start:install
+[0Ktravis_time:start:0e5d7b0f
+[0K$ npm install
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN react-final-form@4.1.0 requires a peer of final-form@^4.11.0 but none is installed. You must install peer dependencies yourself.
+npm WARN ts-pnp@1.0.1 requires a peer of typescript@* but none is installed. You must install peer dependencies yourself.
+
+audited 261528 packages in 14.295s
+found 101 vulnerabilities (63 low, 14 moderate, 24 high)
+  run `npm audit fix` to fix them, or `npm audit` for details
+travis_time:end:0e5d7b0f:start=1556733442642967793,finish=1556733457433959461,duration=14790991668
+[0Ktravis_fold:end:install
+[0Ktravis_time:start:1364270a
+[0K$ npm run lint
+
+> soldino@0.1.0 lint /home/travis/build/8LabSolutions/Soldino-PoC
+> eslint src/
+
+travis_time:end:1364270a:start=1556733457439372115,finish=1556733463590490290,duration=6151118175
+[0K[32;1mThe command "npm run lint" exited with 0.[0m
+
+travis_time:start:194f1a32
+[0K$ ganache-cli -p 9545 > /dev/null &
+travis_time:end:194f1a32:start=1556733463596286151,finish=1556733463603998244,duration=7712093
+[0K[32;1mThe command "ganache-cli -p 9545 > /dev/null &" exited with 0.[0m
+
+travis_time:start:0752e609
+[0K$ sleep 5
+travis_time:end:0752e609:start=1556733463611916943,finish=1556733468617961674,duration=5006044731
+[0K[32;1mThe command "sleep 5" exited with 0.[0m
+
+travis_time:start:0e0f27fa
+[0K$ truffle compile
+
+Compiling your contracts...
+===========================
+- Fetching solc version list from solc-bin. Attempt #1
+- Downloading compiler. Attempt #1
+> Compiling ./contracts/Authorizable.sol
+> Compiling ./contracts/ContractManager.sol
+> Compiling ./contracts/Migrations.sol
+> Compiling ./contracts/Owned.sol
+> Compiling ./contracts/Purchase.sol
+> Compiling ./contracts/TokenCubit.sol
+> Compiling ./contracts/logic/OrderLogic.sol
+> Compiling ./contracts/logic/ProductLogic.sol
+> Compiling ./contracts/logic/UserLogic.sol
+> Compiling ./contracts/logic/VatLogic.sol
+> Compiling ./contracts/storage/OrderStorage.sol
+> Compiling ./contracts/storage/ProductStorage.sol
+> Compiling ./contracts/storage/UserStorage.sol
+> Compiling ./contracts/storage/VatStorage.sol
+> Artifacts written to /home/travis/build/8LabSolutions/Soldino-PoC/src/contracts_build
+> Compiled successfully using:
+   - solc: 0.5.6+commit.b259423e.Emscripten.clang
+
+travis_time:end:0e0f27fa:start=1556733468622829172,finish=1556733481569634800,duration=12946805628
+[0K[32;1mThe command "truffle compile" exited with 0.[0m
+
+travis_time:start:05710584
+[0K$ truffle migrate --reset
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+Starting migrations...
+======================
+> Network name:    'development'
+> Network id:      1556733466113
+> Block gas limit: 0x6691b7
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x9531f2b8614c9bd778da79f26a322b431e61af3ebcb7b0193a37be3108acae7a
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x29aD63bAb3D0cC5Ad14c0948962201a726348fC6
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.99453676
+   > gas used:            273162
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00546324 ETH
+
+
+- Saving migration to chain.
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00546324 ETH
+
+
+2_deploy_contracts.js
+=====================
+
+   Deploying 'ContractManager'
+   ---------------------------
+   > transaction hash:    0xde5765b6b7e40e31d94186afa5d3733fb15053ca2c0fc587e264a31569a3dbc6
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x8743e61E01e7C2Df00BEA994441b3886BDA64f6C
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.97917788
+   > gas used:            725916
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01451832 ETH
+
+
+   Deploying 'TokenCubit'
+   ----------------------
+   > transaction hash:    0x462d3c87f99467f2e4e2e123aed100adf8bb4472ef096875618077a43ebeba9c
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x8F7dD0A58D0605f2f95A65900A7D39e69aC4aE9a
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.94611996
+   > gas used:            1652896
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.03305792 ETH
+
+
+   Deploying 'Purchase'
+   --------------------
+
+   Deploying 'UserStorage'
+   -----------------------
+   > transaction hash:    0xda00b0e50aa27d5e5a93067ead71703bfcee1398d228d8ea5b192e8769c7e031
+- Blocks: 0            Seconds: 0
+   > transaction hash:    0x5b04bcd13be7fcd671f6346a21e77909369017c9be1ec74f6c40f35c124fe1e4
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x60a01BEF4b1e1B663B92BcDe24Fd67B69FAaAc69
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.89980376
+   > gas used:            1031520
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0206304 ETH
+
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x0bf95DD8cC1341653343D83873baf134aD434cb1
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.89980376
+   > gas used:            1145054
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.02290108 ETH
+
+
+   Deploying 'UserLogic'
+   ---------------------
+   > transaction hash:    0x44b6b5b047fcec5b5be3d594f5f20e82f297a9f1f957c0bbecae647a59a9cf74
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x07Dd75ABe7294669cc86C175A8F8e4050D195D78
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.87215288
+   > gas used:            1168846
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.02337692 ETH
+
+
+   Deploying 'ProductStorage'
+   --------------------------
+   > transaction hash:    0x42f55fdd56294fc6a4646e560e04550d8e93cce3af915ffefdc0b64d57b5af4a
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x40B0376c16b2C7Bfd6560Bd9E9e9e9172CB697Ca
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.82780734
+   > gas used:            2102538
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.04205076 ETH
+
+
+   Deploying 'ProductLogic'
+   ------------------------
+   > transaction hash:    0x3e93a1dbc8ca8ac9d28333d338329aa69f2f1ad24a70f8cf95c66a03345fe385
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x2c8b0532f4DEdc69475FBDA99061Ef82bAb063D8
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.79010258
+   > gas used:            1813829
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.03627658 ETH
+
+
+   Deploying 'VatStorage'
+   ----------------------
+   > transaction hash:    0x489e5656ccf3b8416ec3b744719a54e8b31e078abe03d3edd6cf5e773b43afe5
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xeca6b136F782194caD8096f46BA128186c16d681
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.76490714
+   > gas used:            1144841
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.02289682 ETH
+
+
+   Deploying 'VatLogic'
+   --------------------
+   > transaction hash:    0xf793ada5fa9c3eabaedc1e6d5b95aea7f2cf8d8ff00f8beb3f128c75ecda0337
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x8287e74028948c093a8c3480B10003276663a0a0
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.72252362
+   > gas used:            2048023
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.04096046 ETH
+
+
+   Deploying 'OrderStorage'
+   ------------------------
+   > transaction hash:    0x2c8b7d4af7f8e319ccad36162d1611a0178b119b52abf179693cb917c6915453
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x37bDA282F99ed16723bE0886a4fb167754720697
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.67641914
+   > gas used:            2190676
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.04381352 ETH
+
+
+   Deploying 'OrderLogic'
+   ----------------------
+   > transaction hash:    0xcb76c3ac9b3ec79eb39c8cae3a97fb0adc604b6e20a127fae0a3efc1db2e8d1c
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x5d24228eE9c3b4000E139B205bF449AcFa8BD02b
+   > account:             0x13a5d6362620BbfF79Fe87B90584B2888E22178d
+   > balance:             99.6353159
+   > gas used:            1983881
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.03967762 ETH
+
+
+- Saving migration to chain.
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.3401604 ETH
+
+
+Summary
+=======
+> Total deployments:   12
+> Final cost:          0.34562364 ETH
+
+travis_time:end:05710584:start=1556733481577148604,finish=1556733488789824760,duration=7212676156
+[0K[32;1mThe command "truffle migrate --reset" exited with 0.[0m
+
+travis_time:start:0740b305
+[0K$ CI=false npm run build
+
+> soldino@0.1.0 build /home/travis/build/8LabSolutions/Soldino-PoC
+> react-scripts build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+./src/web3functions/business.js
+  Line 200:  Don't make functions within a loop  no-loop-func
+
+./src/facade/business.js
+  Line 216:  Expected a default case  default-case
+
+./src/facade/authentication.js
+  Line 70:  Expected '===' and instead saw '=='  eqeqeq
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  460.6 KB   build/static/js/2.35f6f3d5.chunk.js
+  138.77 KB  build/static/js/main.a2728630.chunk.js
+  32.61 KB   build/static/css/main.d6825577.chunk.css
+  762 B      build/static/js/runtime~main.a8a9905a.js
+
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+
+  "homepage" : "http://myname.github.io/myapp",
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://bit.ly/CRA-deploy
+
+travis_time:end:0740b305:start=1556733488795554494,finish=1556733552908468391,duration=64112913897
+[0K[32;1mThe command "CI=false npm run build" exited with 0.[0m
+
+travis_time:start:004bcb5e
+[0K$ npm run coverage && cat coverage/lcov.info | coveralls
+
+> soldino@0.1.0 coverage /home/travis/build/8LabSolutions/Soldino-PoC
 > cp sol_coverage_patch/parser.js node_modules/solidity-parser-sc/build/ && ./node_modules/.bin/solidity-coverage
 
 Generating coverage environment
@@ -22,10 +847,11 @@ Compiling your contracts...
 > Compiling ./contracts/storage/ProductStorage.sol
 > Compiling ./contracts/storage/UserStorage.sol
 > Compiling ./contracts/storage/VatStorage.sol
-> Artifacts written to /home/iaito/git/Soldino-PoC/coverageEnv/src/contracts_build
+> Artifacts written to /home/travis/build/8LabSolutions/Soldino-PoC/coverageEnv/src/contracts_build
 > Compiled successfully using:
    - solc: 0.5.6+commit.b259423e.Emscripten.clang
 
+ls: no such file or directory: ./coverageEnv/build/contracts/*.json
 Instrumenting  ./coverageEnv/contracts/Authorizable.sol
 Instrumenting  ./coverageEnv/contracts/ContractManager.sol
 Instrumenting  ./coverageEnv/contracts/logic/OrderLogic.sol
@@ -59,10 +885,11 @@ Compiling your contracts...
 > Compiling ./contracts/storage/ProductStorage.sol
 > Compiling ./contracts/storage/UserStorage.sol
 > Compiling ./contracts/storage/VatStorage.sol
-> Artifacts written to /home/iaito/git/Soldino-PoC/coverageEnv/src/contracts_build
+> Artifacts written to /home/travis/build/8LabSolutions/Soldino-PoC/coverageEnv/src/contracts_build
 > Compiled successfully using:
    - solc: 0.5.6+commit.b259423e.Emscripten.clang
 
+ls: no such file or directory: ./coverageEnv/build/contracts/*.json
 Launched testrpc on port 8545
 Running: truffle test --network coverage
 (this can take a few seconds)...
@@ -73,210 +900,260 @@ Compiling your contracts...
 ===========================
 > Everything is up to date, there is nothing to compile.
 
-
-  Contract: VatLogic
+[0m[0m
+[0m  Contract: VatLogic[0m
 test1
-    ✓ should create a vat key
-    ✓ should register Vat input movement (89095 gas)
-    ✓ should register Vat output movement (91025 gas)
-    ✓ should pay vat input movement (219775 gas)
-    ✓ should pay vat output movement (213539 gas)
+  [32m  âœ“[0m[90m should create a vat key[0m
+  [32m  âœ“[0m[90m should register Vat input movement[0m ([32m89179 gas[0m)
+  [32m  âœ“[0m[90m should register Vat output movement[0m ([32m91109 gas[0m)
+  [32m  âœ“[0m[90m should pay vat input movement[0m ([32m220159 gas[0m)
+  [32m  âœ“[0m[90m should pay vat output movement[0m ([32m214011 gas[0m)
 
-  Contract: OrderLogic
-    ✓ should set authorizations (70330 gas)
-    ✓ should add a new order (1461254 gas)
+[0m  Contract: OrderLogic[0m
+  [32m  âœ“[0m[90m should set authorizations[0m ([32m70378 gas[0m)
+  [32m  âœ“[0m[90m should add a new order[0m ([32m1468386 gas[0m)
+  [32m  âœ“[0m[90m should revert the order, buyer is the same of the seller[0m ([32m60935 gas[0m)
 
-    1) should revert the order, buyer is the same of the seller
-    > No events were emitted
+[0m  Contract: Owned[0m
+  [32m  âœ“[0m[90m Should transfer ownership[0m ([32m32956 gas[0m)
 
-  Contract: Owned
-    ✓ Should transfer ownership (32956 gas)
+[0m  Contract: Test IPFS functions[0m
+  [32m  âœ“[0m[90m should test IPFS Product insertProduct and getProduct[0m
 
-  Contract: Test IPFS functions
-getttin hash
-QmWrgvqwMVNgoKwhndfKu2Mz9XrZjHug7XptYS2yb7nmUB
-    ✓ should test IPFS Product insertProduct and getProduct
+[0m  Contract: VatLogic[0m
+  [32m  âœ“[0m[90m should insert a VAT input movement[0m ([32m78734 gas[0m)
+  [32m  âœ“[0m[90m should insert  a VAT output movement[0m ([32m80664 gas[0m)
 
-  Contract: VatLogic
-    ✓ should insert a VAT input movement (78683 gas)
-    ✓ should insert  a VAT output movement (80613 gas)
+[0m  Contract: Authorizable[0m
+  [32m  âœ“[0m[90m Should add an authorized[0m ([32m50144 gas[0m)
+  [32m  âœ“[0m[90m Should remove the previous authorized[0m ([32m22119 gas[0m)
 
-  Contract: Authorizable
-    ✓ Should add an authorized (50120 gas)
-    ✓ Should remove the previous authorized (22083 gas)
+[0m  Contract: UserStorage[0m
+  [32m  âœ“[0m[90m should add a new User[0m ([32m123173 gas[0m)
+  [32m  âœ“[0m[90m should check if the user type is correct[0m ([32m26793 gas[0m)
+  [32m  âœ“[0m[90m should ban a user[0m ([32m30020 gas[0m)
 
-  Contract: UserStorage
-    ✓ should add a new User (123092 gas)
-    ✓ should check if the user type is correct (26772 gas)
-    ✓ should ban a user (30008 gas)
+[0m  Contract: ProductStorage[0m
+  [32m  âœ“[0m[90m should set the ProductLogic contract as authorized contract[0m ([32m35166 gas[0m)
+  [32m  âœ“[0m[90m should add a new product[0m ([32m157701 gas[0m)
+  [32m  âœ“[0m[90m should set the NetPrice of a product[0m ([32m32396 gas[0m)
+  [32m  âœ“[0m[90m should set the VAT percentage of a product[0m ([32m32642 gas[0m)
+  [32m  âœ“[0m[90m should set the Seller of a product[0m ([32m33987 gas[0m)
+  [32m  âœ“[0m[90m should set the Hash Size of a product[0m ([32m32764 gas[0m)
+  [32m  âœ“[0m[90m should set the Hash Function of a product[0m ([32m32727 gas[0m)
+  [32m  âœ“[0m[90m should set the Latest Hash Ipfs of a product[0m ([32m32632 gas[0m)
+  [32m  âœ“[0m[90m should update Hash of a product[0m ([32m128123 gas[0m)
+  [32m  âœ“[0m[90m should delete a product[0m ([32m34485 gas[0m)
 
-  Contract: ProductStorage
-    ✓ should set the ProductLogic contract as authorized contract (35142 gas)
-    ✓ should add a new product (157635 gas)
-    ✓ should set the NetPrice of a product (32366 gas)
-    ✓ should set the VAT percentage of a product (32612 gas)
-    ✓ should set the Seller of a product (33957 gas)
-    ✓ should set the Hash Size of a product (32734 gas)
-    ✓ should set the Hash Function of a product (32697 gas)
-    ✓ should set the Latest Hash Ipfs of a product (32602 gas)
-    ✓ should update Hash of a product (128033 gas)
-    ✓ should delete a product (34470 gas)
+[0m  Contract: ProductLogic[0m
+  [32m  âœ“[0m[90m should check if product logic is added to the authorized contract of ProductStorage[0m
+  [32m  âœ“[0m[90m should add a new product successfully[0m ([32m293079 gas[0m)
+  [32m  âœ“[0m[90m should modify a product[0m ([32m111127 gas[0m)
+  [32m  âœ“[0m[90m should delete a product[0m ([32m42360 gas[0m)
 
-  Contract: ProductLogic
-    ✓ should check if product logic is added to the authorized contract of ProductStorage
-    ✓ should add a new product successfully (292800 gas)
-    ✓ should modify a product (110845 gas)
-    ✓ should delete a product (42314 gas)
+[0m  Contract: Purchase[0m
+  [32m  âœ“[0m[90m should set authorizations[0m ([32m70378 gas[0m)
+  [32m  âœ“[0m[90m should buy some products[0m ([32m3271538 gas[0m)
 
-  Contract: Purchase
-    ✓ should set authorizations (70330 gas)
-    ✓ should buy some products (3247643 gas)
+[0m  Contract: OrderStorage[0m
+  [32m  âœ“[0m[90m should add a new order[0m ([32m377606 gas[0m)
 
-  Contract: OrderStorage
-    ✓ should add a new order (377534 gas)
+[0m  Contract: UserLogic[0m
+  [32m  âœ“[0m[90m should check if user logic is added to the authorized contract of UserStorage[0m
+  [32m  âœ“[0m[90m Should add a new Citizen[0m ([32m110880 gas[0m)
+  [32m  âœ“[0m[90m Should add a new Business[0m ([32m110946 gas[0m)
 
-  Contract: UserLogic
-    ✓ should check if user logic is added to the authorized contract of UserStorage
-    ✓ Should add a new Citizen (110766 gas)
-    ✓ Should add a new Business (110832 gas)
+[0m  Contract: TokenCubit[0m
 
-·-----------------------------------------------------------------------------|-----------------------------------·
-|                                     Gas                                     ·  Block limit: 17592186044415 gas  │
-············································|·································|····································
-|  Methods                                  ·           21 gwei/gas           ·          142.18 eur/eth           │
-···················|························|··········|··········|···········|··················|·················
-|  Contract        ·  Method                ·  Min     ·  Max     ·  Avg      ·  # calls         ·  eur (avg)     │
-···················|························|··········|··········|···········|··················|·················
-|  Authorizable    ·  addAuthorized         ·       -  ·       -  ·    50120  ·               1  ·          0.15  │
-···················|························|··········|··········|···········|··················|·················
-|  Authorizable    ·  removeAuthorized      ·       -  ·       -  ·    22083  ·               1  ·          0.07  │
-···················|························|··········|··········|···········|··················|·················
-|  OrderLogic      ·  registerOrder         ·       -  ·       -  ·   513510  ·               1  ·          1.53  │
-···················|························|··········|··········|···········|··················|·················
-|  OrderStorage    ·  addAuthorized         ·       -  ·       -  ·    35187  ·               2  ·          0.11  │
-···················|························|··········|··········|···········|··················|·················
-|  OrderStorage    ·  addOrder              ·       -  ·       -  ·   377534  ·               1  ·          1.13  │
-···················|························|··········|··········|···········|··················|·················
-|  Owned           ·  transferOwnership     ·       -  ·       -  ·    32956  ·               1  ·          0.10  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductLogic    ·  addProduct            ·  181968  ·  182032  ·   181989  ·              12  ·          0.54  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductLogic    ·  deleteProduct         ·       -  ·       -  ·    42314  ·               1  ·          0.13  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductLogic    ·  modifyProduct         ·       -  ·       -  ·   110845  ·               1  ·          0.33  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  addAuthorized         ·       -  ·       -  ·    35142  ·               1  ·          0.10  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  addProduct            ·       -  ·       -  ·   157635  ·               1  ·          0.47  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  deleteProduct         ·       -  ·       -  ·    34470  ·               1  ·          0.10  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  setHashFunction       ·   32697  ·   47697  ·    40197  ·               2  ·          0.12  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  setHashSize           ·       -  ·       -  ·    32734  ·               2  ·          0.10  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  setLatestHashIpfs     ·   32602  ·   47602  ·    40102  ·               2  ·          0.12  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  setNetPrice           ·       -  ·       -  ·    32366  ·               1  ·          0.10  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  setSeller             ·       -  ·       -  ·    33957  ·               1  ·          0.10  │
-···················|························|··········|··········|···········|··················|·················
-|  ProductStorage  ·  setVatPercentage      ·       -  ·       -  ·    32612  ·               1  ·          0.10  │
-···················|························|··········|··········|···········|··················|·················
-|  Purchase        ·  saveAndPayOrder       ·       -  ·       -  ·  1527491  ·               1  ·          4.56  │
-···················|························|··········|··········|···········|··················|·················
-|  TokenCubit      ·  approve               ·       -  ·       -  ·    48917  ·               3  ·          0.15  │
-···················|························|··········|··········|···········|··················|·················
-|  TokenCubit      ·  mintToken             ·   45671  ·   60735  ·    53203  ·               2  ·          0.16  │
-···················|························|··········|··········|···········|··················|·················
-|  TokenCubit      ·  transfer              ·       -  ·       -  ·    68035  ·               1  ·          0.20  │
-···················|························|··········|··········|···········|··················|·················
-|  UserLogic       ·  addBusiness           ·  109808  ·  110832  ·   110101  ·               7  ·          0.33  │
-···················|························|··········|··········|···········|··················|·················
-|  UserLogic       ·  addCitizen            ·       -  ·       -  ·   110766  ·               1  ·          0.33  │
-···················|························|··········|··········|···········|··················|·················
-|  UserStorage     ·  addUser               ·       -  ·       -  ·    96320  ·               1  ·          0.29  │
-···················|························|··········|··········|···········|··················|·················
-|  UserStorage     ·  getUserType           ·       -  ·       -  ·    26772  ·               2  ·          0.08  │
-···················|························|··········|··········|···········|··················|·················
-|  UserStorage     ·  setEnable             ·       -  ·       -  ·    30008  ·               1  ·          0.09  │
-···················|························|··········|··········|···········|··················|·················
-|  VatLogic        ·  payVat                ·       -  ·       -  ·   110123  ·               1  ·          0.33  │
-···················|························|··········|··········|···········|··················|·················
-|  VatLogic        ·  refundVat             ·       -  ·       -  ·   118951  ·               1  ·          0.36  │
-···················|························|··········|··········|···········|··················|·················
-|  VatLogic        ·  registerVat           ·   89095  ·   91025  ·    90060  ·               2  ·          0.27  │
-···················|························|··········|··········|···········|··················|·················
-|  VatStorage      ·  addAuthorized         ·       -  ·       -  ·    35143  ·               2  ·          0.10  │
-···················|························|··········|··········|···········|··················|·················
-|  VatStorage      ·  insertVatAndSetState  ·   78683  ·   80613  ·    79648  ·               2  ·          0.24  │
-···················|························|··········|··········|···········|··················|·················
-|  Deployments                              ·                                 ·  % of limit      ·                │
-············································|··········|··········|···········|··················|·················
-|  Authorizable                             ·       -  ·       -  ·  1502432  ·             0 %  ·          4.49  │
-············································|··········|··········|···········|··················|·················
-|  ContractManager                          ·       -  ·       -  ·  1361268  ·             0 %  ·          4.06  │
-············································|··········|··········|···········|··················|·················
-|  OrderLogic                               ·       -  ·       -  ·  3312077  ·             0 %  ·          9.89  │
-············································|··········|··········|···········|··················|·················
-|  OrderStorage                             ·       -  ·       -  ·  5680720  ·             0 %  ·         16.96  │
-············································|··········|··········|···········|··················|·················
-|  Owned                                    ·       -  ·       -  ·   463968  ·             0 %  ·          1.39  │
-············································|··········|··········|···········|··················|·················
-|  ProductLogic                             ·       -  ·       -  ·  3987769  ·             0 %  ·         11.91  │
-············································|··········|··········|···········|··················|·················
-|  ProductStorage                           ·       -  ·       -  ·  5592834  ·             0 %  ·         16.70  │
-············································|··········|··········|···········|··················|·················
-|  Purchase                                 ·       -  ·       -  ·  1907416  ·             0 %  ·          5.70  │
-············································|··········|··········|···········|··················|·················
-|  TokenCubit                               ·       -  ·       -  ·  3598298  ·             0 %  ·         10.74  │
-············································|··········|··········|···········|··················|·················
-|  UserLogic                                ·       -  ·       -  ·  2323870  ·             0 %  ·          6.94  │
-············································|··········|··········|···········|··················|·················
-|  UserStorage                              ·       -  ·       -  ·  2948713  ·             0 %  ·          8.80  │
-············································|··········|··········|···········|··················|·················
-|  VatLogic                                 ·       -  ·       -  ·  3004201  ·             0 %  ·          8.97  │
-············································|··········|··········|···········|··················|·················
-|  VatStorage                               ·       -  ·       -  ·  2993780  ·             0 %  ·          8.94  │
-·-------------------------------------------|----------|----------|-----------|------------------|----------------·
+  [31m  1) "before all" hook: prepare suite[0m
 
-  36 passing (28s)
-  1 failing
+Â·-----------------------------------------------------------------------------|-----------------------------------Â·
+|                                     [32m[1mGas[22m[39m                                     Â·  [90mBlock limit: 17592186044415 gas[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [32m[1mMethods[22m[39m                                  Â·           [90m21 gwei/gas[39m           Â·          [31m144.30 eur/eth[39m           â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [1mContract[22m        Â·  [1mMethod[22m                Â·  [32mMin[39m     Â·  [32mMax[39m     Â·  [32mAvg[39m      Â·  [1m# calls[22m         Â·  [1meur (avg)[22m     â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mAuthorizable[39m    Â·  addAuthorized         Â·       -  Â·       -  Â·    50144  Â·               [90m1[39m  Â·          [32m0.15[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·ï¿½ï¿½Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mAuthorizable[39m    Â·  removeAuthorized      Â·       -  Â·       -  Â·    22119  Â·               [90m1[39m  Â·          [32m0.07[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mOrderLogic[39m      Â·  registerOrder         Â·       -  Â·       -  Â·   519754  Â·               [90m1[39m  Â·          [32m1.58[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mOrderStorage[39m    Â·  addAuthorized         Â·       -  Â·       -  Â·    35211  Â·               [90m2[39m  Â·          [32m0.11[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mOrderStorage[39m    Â·  addOrder              Â·       -  Â·       -  Â·   377606  Â·               [90m1[39m  Â·          [32m1.14[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mOwned[39m           Â·  transferOwnership     Â·       -  Â·       -  Â·    32956  Â·               [90m1[39m  Â·          [32m0.10[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductLogic[39m    Â·  addProduct            Â·  [36m182133[39m  Â·  [31m182197[39m  Â·   182154  Â·              [90m12[39m  Â·          [32m0.55[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductLogic[39m    Â·  deleteProduct         Â·       -  Â·       -  Â·    42360  Â·               [90m1[39m  Â·          [32m0.13[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductLogic[39m    Â·  modifyProduct         Â·       -  Â·       -  Â·   111127  Â·               [90m1[39m  Â·          [32m0.34[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  addAuthorized         Â·       -  Â·       -  Â·    35166  Â·               [90m1[39m  Â·          [32m0.11[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·ï¿½ï¿½Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  addProduct            Â·       -  Â·       -  Â·   157701  Â·               [90m1[39m  Â·          [32m0.48[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  deleteProduct         Â·       -  Â·       -  Â·    34485  Â·               [90m1[39m  Â·          [32m0.10[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  setHashFunction       Â·   [36m32727[39m  Â·   [31m47727[39m  Â·    40227  Â·               [90m2[39m  Â·          [32m0.12[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  setHashSize           Â·       -  Â·       -  Â·    32764  Â·               [90m2[39m  Â·          [32m0.10[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  setLatestHashIpfs     Â·   [36m32632[39m  Â·   [31m47632[39m  Â·    40132  Â·               [90m2[39m  Â·          [32m0.12[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  setNetPrice           Â·       -  Â·       -  Â·    32396  Â·               [90m1[39m  Â·          [32m0.10[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  setSeller             Â·       -  Â·       -  Â·    33987  Â·               [90m1[39m  Â·          [32m0.10[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mProductStorage[39m  Â·  setVatPercentage      Â·       -  Â·       -  Â·    32642  Â·               [90m1[39m  Â·          [32m0.10[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mPurchase[39m        Â·  saveAndPayOrder       Â·       -  Â·       -  Â·  1549772  Â·               [90m1[39m  Â·          [32m4.70[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mTokenCubit[39m      Â·  approve               Â·       -  Â·       -  Â·    48941  Â·               [90m3[39m  Â·          [32m0.15[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mTokenCubit[39m      Â·  mintToken             Â·   [36m45787[39m  Â·   [31m60787[39m  Â·    53287  Â·               [90m2[39m  Â·          [32m0.16[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mTokenCubit[39m      Â·  transfer              Â·       -  Â·       -  Â·    68128  Â·               [90m1[39m  Â·          [32m0.21[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mUserLogic[39m       Â·  addBusiness           Â·  [36m109922[39m  Â·  [31m110946[39m  Â·   110215  Â·               [90m7[39m  Â·          [32m0.33[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mUserLogic[39m       Â·  addCitizen            Â·       -  Â·       -  Â·   110880  Â·               [90m1[39m  Â·          [32m0.34[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mUserStorage[39m     Â·  addUser               Â·       -  Â·       -  Â·    96380  Â·               [90m1[39m  Â·          [32m0.29[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mUserStorage[39m     Â·  getUserType           Â·       -  Â·       -  Â·    26793  Â·               [90m2[39m  Â·          [32m0.08[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mUserStorage[39m     Â·  setEnable             Â·       -  Â·       -  Â·    30020  Â·               [90m1[39m  Â·          [32m0.09[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mVatLogic[39m        Â·  payVat                Â·       -  Â·       -  Â·   110431  Â·               [90m1[39m  Â·          [32m0.33[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mVatLogic[39m        Â·  refundVat             Â·       -  Â·       -  Â·   119283  Â·               [90m1[39m  Â·          [32m0.36[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mVatLogic[39m        Â·  registerVat           Â·   [36m89179[39m  Â·   [31m91109[39m  Â·    90144  Â·               [90m2[39m  Â·          [32m0.27[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mVatStorage[39m      Â·  addAuthorized         Â·       -  Â·       -  Â·    35167  Â·               [90m2[39m  Â·          [32m0.11[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [90mVatStorage[39m      Â·  insertVatAndSetState  Â·   [36m78734[39m  Â·   [31m80664[39m  Â·    79699  Â·               [90m2[39m  Â·          [32m0.24[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  [32m[1mDeployments[22m[39m                              Â·                                 Â·  [1m% of limit[22m      Â·                â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  Authorizable                             Â·       -  Â·       -  Â·  1512707  Â·             [90m0 %[39m  Â·          [32m4.58[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  ContractManager                          Â·       -  Â·       -  Â·  1371542  Â·             [90m0 %[39m  Â·          [32m4.16[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  OrderLogic                               Â·       -  Â·       -  Â·  3701997  Â·             [90m0 %[39m  Â·         [32m11.22[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  OrderStorage                             Â·       -  Â·       -  Â·  5695561  Â·             [90m0 %[39m  Â·         [32m17.26[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  Owned                                    Â·       -  Â·       -  Â·   469622  Â·             [90m0 %[39m  Â·          [32m1.42[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  ProductLogic                             Â·       -  Â·       -  Â·  3993464  Â·             [90m0 %[39m  Â·         [32m12.10[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  ProductStorage                           Â·       -  Â·       -  Â·  5607675  Â·             [90m0 %[39m  Â·         [32m16.99[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·ï¿½ï¿½Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  Purchase                                 Â·       -  Â·       -  Â·  1913167  Â·             [90m0 %[39m  Â·          [32m5.80[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  TokenCubit                               Â·       -  Â·       -  Â·  3977309  Â·             [90m0 %[39m  Â·         [32m12.05[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  UserLogic                                Â·       -  Â·       -  Â·  2329621  Â·             [90m0 %[39m  Â·          [32m7.06[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  UserStorage                              Â·       -  Â·       -  Â·  2964716  Â·             [90m0 %[39m  Â·          [32m8.98[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  VatLogic                                 Â·       -  Â·       -  Â·  3642628  Â·             [90m0 %[39m  Â·         [32m11.04[39m  â”‚
+Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·|Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·
+|  VatStorage                               Â·       -  Â·       -  Â·  3008618  Â·             [90m0 %[39m  Â·          [32m9.12[39m  â”‚
+Â·-------------------------------------------|----------|----------|-----------|------------------|----------------Â·
 
-  1) Contract: OrderLogic
-       should revert the order, buyer is the same of the seller:
-     AssertionError: Expected to fail with OrderLogic: cannot buy from yourself, but failed with: Error: Returned error: VM Exception while processing transaction: revert
-      at fails (/home/iaito/git/Soldino-PoC/node_modules/truffle-assertions/index.js:138:13)
-      at runNextTicks (internal/process/task_queues.js:52:5)
-      at listOnTimeout (internal/timers.js:505:9)
-      at processTimers (internal/timers.js:479:7)
+[92m [0m[32m 37 passing[0m[90m (34s)[0m
+[31m  1 failing[0m
 
+[0m  1) Contract: TokenCubit
+       "before all" hook: prepare suite:
+
+      [31mUncaught AssertionError: expected '0xb33f2e3265a2531b9b9bec17e07763350e32857f000000000000000000000000' to equal '0xB33F2E3265a2531B9b9bEC17E07763350e32857F'[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-0xb33f2e3265a2531b9b9bec17e07763350e32857f000000000000000000000000[0m
+      [32m+0xB33F2E3265a2531B9b9bEC17E07763350e32857F[0m
+      [0m[90m
+      at test/7_userLogicTest.js:66:20
+      at <anonymous>
+      at process._tickCallback (internal/process/next_tick.js:189:7)
+[0m
 
 
 ----------------------|----------|----------|----------|----------|----------------|
 File                  |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 ----------------------|----------|----------|----------|----------|----------------|
- contracts/           |    92.73 |    53.13 |       90 |    92.42 |                |
+ contracts/           |    89.47 |    53.13 |    85.71 |    89.71 |                |
   Authorizable.sol    |      100 |       50 |      100 |      100 |                |
   ContractManager.sol |      100 |       50 |      100 |      100 |                |
   Owned.sol           |      100 |       50 |      100 |      100 |                |
   Purchase.sol        |      100 |    83.33 |      100 |      100 |                |
-  TokenCubit.sol      |     87.1 |    42.86 |       75 |    84.38 |... 139,140,141 |
- contracts/logic/     |    88.51 |    45.16 |    75.68 |    86.61 |                |
-  OrderLogic.sol      |     87.1 |       45 |       60 |    81.08 |... 0,34,35,119 |
+  TokenCubit.sol      |    81.82 |    42.86 |    66.67 |    79.41 |... 141,166,167 |
+ contracts/logic/     |    84.78 |    42.42 |       70 |    83.05 |                |
+  OrderLogic.sol      |    84.85 |       45 |    54.55 |    79.49 |... ,35,125,129 |
   ProductLogic.sol    |    86.96 |       50 |    84.62 |    91.18 |     51,134,135 |
   UserLogic.sol       |       80 |    33.33 |     62.5 |    73.68 | 17,18,27,51,52 |
-  VatLogic.sol        |      100 |       50 |      100 |      100 |                |
+  VatLogic.sol        |    85.71 |    38.89 |       75 |    84.62 |    75,80,82,83 |
  contracts/storage/   |       80 |      100 |    67.44 |    79.41 |                |
   OrderStorage.sol    |    59.09 |      100 |       40 |    59.09 |... 41,45,49,94 |
   ProductStorage.sol  |       85 |      100 |       75 |    82.61 | 47,105,109,113 |
   UserStorage.sol     |      100 |      100 |      100 |      100 |                |
   VatStorage.sol      |       90 |      100 |    83.33 |       90 |             40 |
 ----------------------|----------|----------|----------|----------|----------------|
-All files             |    86.96 |       50 |       75 |    86.18 |                |
+All files             |    84.58 |    48.04 |    72.12 |    83.86 |                |
 ----------------------|----------|----------|----------|----------|----------------|
 
 Istanbul coverage reports generated
 Cleaning up...
-Shutting down testrpc-sc (pid 31438)
+Shutting down testrpc-sc (pid 5679)
 Some truffle tests failed while running coverage
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! soldino@0.1.0 coverage: `cp sol_coverage_patch/parser.js node_modules/solidity-parser-sc/build/ && ./node_modules/.bin/solidity-coverage`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the soldino@0.1.0 coverage script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/travis/.npm/_logs/2019-05-01T18_01_24_342Z-debug.log
+travis_time:end:004bcb5e:start=1556733552914184314,finish=1556733684358163073,duration=131443978759
+[0K[31;1mThe command "npm run coverage && cat coverage/lcov.info | coveralls" exited with 1.[0m
+
+travis_fold:start:cache.2
+[0Kstore build cache
+travis_time:start:030f40c0
+[0Ktravis_time:end:030f40c0:start=1556733684365641994,finish=1556733684369030692,duration=3388698
+[0Ktravis_time:start:3a8161ac
+[0K[32;1mchange detected (content changed, file is created, or file is deleted):
+/home/travis/build/8LabSolutions/Soldino-PoC/node_modules/.cache/babel-loader/1201bd6f3b1fc4ccc87815fa18e208c0.json.gz
+/home/travis/build/8LabSolutions/Soldino-PoC/node_modules/.cache/babel-loader/3cfd185aa5a5d3a8230b55d611d6529e.json.gz
+/home/travis/build/8LabSolutions/Soldino-PoC/node_modules/.cache/babel-loader/65873eb8411235c33912a2a32106b9bf.json.gz
+/home/travis/build/8LabSolutions/Soldino-PoC/node_modules/.cache/babel-loader/b5beb38e2d361b56234a59647a325a28.json.gz
+/home/travis/build/8LabSolutions/Soldino-PoC/node_modules/.cache/terser-webpack-plugin/content-v2/sha512/43/72/91862ba4ab230dd839ff914b65a2dee2aeaf5678aac65b2622e864a2f149454e0fbbe3f9e92d4f2362fcfd8eeee0fb79706cc4851f20cf1938ce6982c051
+/home/travis/build/8LabSolutions/Soldino-PoC/node_modules/.cache/terser-webpack-plugin/content-v2/sha512/f4/94/49276818cf3bc2f0945e485b0c7e5c3718be4f7ff2fd6b55f0e3253cc9d098154af3a751cf3a831dac3c89e3ed2491fb70bf00781c0a3d201205f862cc18
+/home/travis/build/8LabSolutions/Soldino-PoC/node_mod
+[0m
+[32;1m...
+[0m
+[32;1mchanges detected, packing new archive[0m
+.
+.
+.
+.
+.
+.
+.
+.
+[32;1muploading final/cache-linux-trusty-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855--node-8.tgz[0m
+[32;1mcache uploaded[0m
+travis_time:end:3a8161ac:start=1556733684374567468,finish=1556733738611265576,duration=54236698108
+[0Ktravis_fold:end:cache.2
+[0K
+
+Done. Your build exited with 1.
