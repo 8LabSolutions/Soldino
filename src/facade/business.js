@@ -198,9 +198,10 @@ const business = (function(){
               promises.push(new Promise((resolve)=>{
                 web3business.getVATPeriodInfo(period).then(([, state, amount])=>{
                   //get the state of the period
+                  console.log(["stato: ", state])
                   var deferred = false;
                   var defereable = false;
-                  var payable = false;
+                  var payable = false; //false
                   var resolved = false;
                   var outOfLimit = false;
                   //enum state {DUE, OVERDUE, PAID, TO_BE_REFUNDED, REFUNDED}
@@ -212,8 +213,8 @@ const business = (function(){
 
                   [currYear, currMonth] = currentVATPeriod.split("-");
                   [oldYear, oldMonth] = oldVATPeriod.split("-");
-
-                  switch (state) {
+        
+                  switch (parseInt(state)) {
 
                     case 0:
                     //the business have to pay to the government
@@ -234,7 +235,7 @@ const business = (function(){
                     //the payment was deferred
                       deferred = true;
                       //check if the payment is out ou limit
-
+                      payable = true;
                       if(((currYear-oldYear)*4+(currMonth-oldMonth))>2){
                         outOfLimit = true;
                         defereable = false;
@@ -252,10 +253,13 @@ const business = (function(){
                     //the government did the refund
                       resolved = true;
                       break;
+                    default:
+                      console.log('ERRORE PERIODO')
+
                   }
                   var vatJSON = {
                     id: period,
-                    amount: amount,
+                    amount: amount/web3util.TOKENMULTIPLIER,
                     deferred: deferred,
                     defereable: defereable,
                     payable: payable,

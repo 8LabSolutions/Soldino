@@ -3,10 +3,18 @@ import TransactionsManager from '../presentational/TransactionsManager';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import history from '../../store/history'
 import { beginLoading, endLoading } from '../../actions/login';
+import { selectedPeriod } from '../../actions/business';
+import { store } from '../../store';
 
 const mapDispatchToProps = (dispatch) => {
   //should dispatch the action that fills the store with the first 50 users
   //*!!! maybe only the first time !!!*/
+  function getBusinessPeriods(){
+    businessActionCreator.getBusinessPeriod().then((action)=>{
+      dispatch(action)
+    })
+  }
+
   return {
     getInvoices: function(VATPeriod){
       businessActionCreator.getInvoices(VATPeriod).then((action)=>{
@@ -14,11 +22,7 @@ const mapDispatchToProps = (dispatch) => {
       })
     },
 
-    getBusinessPeriods: function(){
-      businessActionCreator.getBusinessPeriod().then((action)=>{
-        dispatch(action)
-      })
-    },
+    getBusinessPeriods: getBusinessPeriods,
 
     payVATPeriod: function(period){
       dispatch(beginLoading())
@@ -34,20 +38,30 @@ const mapDispatchToProps = (dispatch) => {
       businessActionCreator.putOnHoldVATPeriod(period)
       .then(()=>{
         dispatch(endLoading())
+        getBusinessPeriods()
         history.push("/transactionsmanager")
       })
+    },
+
+    selectPeriod: function(period){
+      let periods = store.getState().periods
+      for(let i=0; i<periods.length; i++){
+        if(period===periods[i].id){
+          dispatch(selectedPeriod(periods[i]))
+        }
+      }
     }
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('INVOICES')
-  console.log(state.invoices);
   let VATnumber = state.user;
   (VATnumber===null) ? VATnumber=0 : VATnumber=VATnumber.VATnumber 
   return {
+    selectedPeriod: state.selectedPeriod,
     invoices: state.invoices,
-    periods: [...state.periods, {id: '2019-3', payable: true}],
+    //periods: [state.selectedPeriod, ...state.periods, {id: '2019-3', payable: true, amount: 200}],
+    periods: [{id: "Select a quarter", amount: null, payable: false}, ...state.periods],
     myVATnumber: VATnumber
   }
 }

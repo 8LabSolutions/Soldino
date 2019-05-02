@@ -12,14 +12,11 @@ class TransactionsManager extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      selectedPeriod: this.props.periods[0]
-    };
   }
 
   componentWillMount(){
     const {/*getInvoices, */getBusinessPeriods} = this.props;
-    //getInvoices(this.state.lastQuarter)
+    //getInvoices(null)
     getBusinessPeriods();
   }
 
@@ -38,39 +35,41 @@ class TransactionsManager extends Component {
   }
 
   handleChange(event){
-    this.selectedQuarter = event.target.value
-    let obj = quarterToInvoices(event.target.value)
-    this.setState({invoices: obj})
-    console.log(this.selectedQuarter)
+    const {getInvoices} = this.props;
+    getInvoices(event.target.value)
+    let {selectPeriod} = this.props;
+    selectPeriod(event.target.value)
   }
 
-  printDebitButtons() {
-    return(
-      <div className="col-sm-6">
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-6">
-              <ButtonGeneric text="Instant Payment" />
-            </div>
-            <div className="col-sm-6">
-              <button type="button" className="btn btn-light" data-toggle="modal" data-target="#deferred">Deferred Payment</button>
-            </div>
-          </div>
-        </div>
+  nextQuarter() {
+    let {selectedPeriod} = this.props;
+    let next = ''
+    if(selectedPeriod.id[5]==='4'){
+      next = parseInt(selectedPeriod.id.substring(0, 4))+1
+      next += "-1"
+    }else{
+      next = selectedPeriod.id.substring(0, 5)+(parseInt(selectedPeriod.id.substring(5, 6))+1)
+    }
+    return next;
+  }
 
-        <div className="modal fade" id="deferred" tabIndex="-1" role="dialog" aria-labelledby="deferredLabel" aria-hidden="true">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="deferredLabel">Deferred Payment</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">UC 22.7</div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-light" data-dismiss="modal">Confirm</button>
-              </div>
+  printDeferredPayment() {
+    let {putOnHoldVATPeriod} = this.props;
+    let {selectedPeriod} = this.props;
+    return(
+      <div className="modal fade" id="deferred" tabIndex="-1" role="dialog" aria-labelledby="deferredLabel" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="deferredLabel">Deferred Payment</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">The payment will be deferred for three months.<br />You have to pay the debt by {this.nextQuarter()}.</div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-light" data-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-light" data-dismiss="modal" onClick={()=>{putOnHoldVATPeriod(selectedPeriod.id)}}>Confirm</button>
             </div>
           </div>
         </div>
@@ -78,17 +77,47 @@ class TransactionsManager extends Component {
     )
   }
 
-  printStatus() {
-    if(this.VATstatus>=0) {
-      return(
-        <p>VAT status for the selected quarter: <span className="green">+{this.VATstatus} CC</span></p>
-      )
-    }else{
-      return(
+  printDebitButtons() {
+    let {selectedPeriod} = this.props;
+    let {payVATPeriod} = this.props;
+    return(
+      <div className="col-sm-6">
         <div className="container">
           <div className="row">
             <div className="col-sm-6">
-              <p>VAT status for the selected quarter: <span className="red">{this.VATstatus} CC</span></p>
+              <button type="button" className="btn btn-light" onClick={()=>{payVATPeriod(selectedPeriod.id)}}>Instant Payment</button>
+            </div>
+            {(selectedPeriod.defereable===true) ? (
+              <div className="col-sm-6">
+                <button type="button" className="btn btn-light" data-toggle="modal" data-target="#deferred">Deferred Payment</button>
+              </div>
+            ): (
+              <div className="col-sm-6">
+                <button type="button" className="btn btn-light disabled">Deferred Payment</button>
+              </div>
+            )}
+          </div>
+        </div>
+        {(selectedPeriod.defereable===true) ? this.printDeferredPayment() : null}
+      </div>
+    )
+  }
+
+  printStatus() {
+    let {selectedPeriod} = this.props
+    if(selectedPeriod.amount!==null){
+      if(selectedPeriod.amount<0) {
+        return(
+          <p>VAT status for the selected quarter: <span className="green">{-1*selectedPeriod.amount} CC</span></p>
+        )
+      }else{
+        return(
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-6">
+                <p>VAT status for the selected quarter: <span className="red">{-1*selectedPeriod.amount} CC</span></p>
+              </div>
+              {(selectedPeriod.payable===true) ? this.printDebitButtons() : null}
             </div>
           </div>
         )
@@ -285,10 +314,9 @@ class TransactionsManager extends Component {
 
   render() {
     if(checkBusiness()===false){window.location.href = "/"}
-
+    let {periods} = this.props;
     var list = []
-    if(this.quarterList !== undefined && this.quarterList.length>0)
-      list = this.quarterList.map(quarter => this.printQuarters(quarter))
+    list = periods.map(quarter => this.printQuarters(quarter))
     return (
       <div>
         <NavBar />

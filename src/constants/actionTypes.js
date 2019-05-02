@@ -30,3 +30,4 @@ export const GETMYORDERS = "GETMYORDERS";
 export const RESETCART = "RESETCART";
 export const SETINVOICES = "SETINVOICES";
 export const SETPERIODS = "SETPERIODS";
+export const SELECTEDPERIOD = "SELECTEDPERIOD";
