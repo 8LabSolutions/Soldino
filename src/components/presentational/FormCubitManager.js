@@ -74,9 +74,6 @@ class FormCubitManager extends Component {
         fullList = [...fullList, { label: (businessList[i].name+" "+businessList[i].VATnumber+" "+businessList[i].address), value: businessList[i].address}]
       }
     }
-    console.log(businessList)
-    console.log(citizenList)
-    console.log(fullList)
     this.options = fullList;
     return (
       <form>

@@ -338,12 +338,12 @@ input:checked + .slider {
 }
 
 .css-1qprcsu-option {
-  background: #1abc9c !important;
-  color: #f1f1f1 !important;
+  background: #1abc3a77 !important;
+  color: #000 !important;
 }
 
 .css-1vr111p-option:hover {
-  background: #1abc9c42 !important;
+  background: #1abc3a36 !important;
 }
 
 .modal-description {
@@ -351,12 +351,16 @@ input:checked + .slider {
   overflow-y: scroll;
 }
 
-.redInvoice {
+.redInvoice, .redRow {
   background-color: #ff000016;
 }
 
-.greenInvoice {
+.greenInvoice, .greenRow {
   background-color: #1abc3b12;
+}
+
+.yellowRow {
+  background-color: #ffc50017;
 }
 
 .userlist-margin {
@@ -376,4 +380,21 @@ input:checked + .slider {
 
 .customCursor {
   cursor: context-menu;
+}
+
+.customCursorPointer {
+  cursor: pointer;
+}
+
+.itemVAT {
+  height: 45px;
+  line-height: 45px;
+}
+
+.popover-header {
+  margin-top: 0px !important;
+}
+
+.popover-inner, .popover {
+  max-width: 500px;
 }

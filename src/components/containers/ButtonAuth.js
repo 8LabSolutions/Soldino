@@ -30,6 +30,14 @@ const mapDispatchToProps = (dispatch) => {
       authentication.userLogin().then((user)=>{
         let action = (store.getState().logged === false) ? logIn(user) : logOut();
         dispatch(action)
+
+        //starting listening for account chages
+        authentication.listenForChanges()
+        .then(()=>{
+          dispatch(logOut())
+          history.push('/')
+        })
+
         history.push('/')
       }).catch((log) => {
         console.log(log)

@@ -74,8 +74,6 @@ const business = (function(){
     */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       //istantiate the necessary costracts and returns the results
-      console.log("ADDPRODUCT interno")
-      console.log(image)
       var newProductJSON = getProductJSONfromFields(
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
       return new Promise((resolve)=>{
@@ -88,13 +86,9 @@ const business = (function(){
     modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       var newProductJSON = getProductJSONfromFields(
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
+      console.log(image)
       return new Promise((resolve)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON).then((hash)=>{
-          console.log(keyProd)
-          console.log(hash)
-          console.log(vatPercentage)
-          console.log(netPrice)
-          console.log("entro in modify")
           web3business.modifyProduct(keyProd, hash, vatPercentage, netPrice).then(resolve)
         })
       })
@@ -164,7 +158,6 @@ const business = (function(){
           resolved: resolved,
           outOfLimit: outOfLimit
         }
-     *
      */
     getPeriods: function() {
       return new Promise((resolve)=>{
@@ -179,8 +172,6 @@ const business = (function(){
           });
           Promise.all(invoicesJSON).then((ris)=>{
             //get the date, then the periods
-            console.log(ris)
-
             var dates = []
             ris.forEach(json => {
               if(!dates.includes(json.date))
@@ -190,9 +181,10 @@ const business = (function(){
             var periods = []
             dates.forEach(date=>{
               var [year, month,] = date.split("/");
-              periods.push(web3util.getVATPeriod(month, year));
+              let newPeriod = web3util.getVATPeriod(month, year);
+              if (!periods.includes(newPeriod))
+                periods.push(newPeriod);
             })
-            console.log("periods: "+periods)
             var promises = []
             periods.forEach(period=>{
               promises.push(new Promise((resolve)=>{
@@ -213,22 +205,25 @@ const business = (function(){
 
                   [currYear, currMonth] = currentVATPeriod.split("-");
                   [oldYear, oldMonth] = oldVATPeriod.split("-");
-        
+
                   switch (parseInt(state)) {
 
                     case 0:
                     //the business have to pay to the government
                     //it could pay of defer
-                      defereable = true;
-                      payable = true;
-                      //check if the payment is out ou limit
-                      currentVATPeriod = web3util.getVATPeriod();
-                      oldVATPeriod = period;
+                      //if it is the current period, all  the flags are false
+                      if(((currYear-oldYear)*4+(currMonth-oldMonth)) !== 0){
+                        defereable = true;
+                        payable = true;
+                        //check if the payment is out ou limit
+                        currentVATPeriod = web3util.getVATPeriod();
+                        oldVATPeriod = period;
 
-                      if(((currYear-oldYear)*4+(currMonth-oldMonth))>1){
-                        outOfLimit = true;
-                        defereable = false;
-                        payable = false;
+                        if(((currYear-oldYear)*4+(currMonth-oldMonth))>1){
+                          outOfLimit = true;
+                          defereable = false;
+                          payable = false;
+                        }
                       }
                       break;
                     case 1:
@@ -259,7 +254,7 @@ const business = (function(){
                   }
                   var vatJSON = {
                     id: period,
-                    amount: amount/web3util.TOKENMULTIPLIER,
+                    amount: amount,
                     deferred: deferred,
                     defereable: defereable,
                     payable: payable,
@@ -277,9 +272,9 @@ const business = (function(){
       })
     },
 
-    payVATPeriod: function(period) {
+    payVATPeriod: function(period, amount) {
       return new Promise((resolve)=>{
-        web3business.payVATPeriod(period)
+        web3business.payVATPeriod(period, amount)
         .then(resolve)
       })
 

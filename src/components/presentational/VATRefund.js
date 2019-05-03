@@ -1,62 +1,162 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import NavBar from './NavBar'
-import ButtonGeneric from '../containers/ButtonGeneric';
-import { checkGovernment, round } from '../../auxiliaryFunctions';
+import { checkGovernment } from '../../auxiliaryFunctions';
 import SearchContainer from '../containers/SearchContainer';
+import { businessStatus } from '../../constants/fixedValues';
 
 class VATRefund extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentWillMount() {
+    let {resetSearch, setStatus, resetPeriod, getVATPeriods} = this.props;
+    resetSearch();
+    resetPeriod();
+    setStatus("");
+    getVATPeriods();
+    //setVATRefund();
+  }
+
+  handleChange(event, type){
+    let {setStatus} = this.props;
+    let {setPeriod} = this.props;
+    let {resetPeriod} = this.props;
+    (type==="status")
+      ? (event.target.value==="Select a status") ? setStatus("") : setStatus(event.target.value)
+      : (event.target.value==="Select a quarter") ? resetPeriod() : setPeriod({id: event.target.value, amount: null, payable: false})
+  }
+
   printBusiness(business) {
-    if(business[2] !== "await refund"){ //check payment status
-      return (
-        <li className="list-group-item userlist-item">
-          <strong className="customCursor">Company name: </strong><span className="customCursor">{business[0]}</span><br />
-          <strong className="customCursor">VAT number: </strong><span className="customCursor">{business[1]}</span><br />
-          <strong className="customCursor">Payment status: </strong><span className="customCursor">{business[2]}</span><br />
-          <strong className="customCursor">Balance: </strong><span className="customCursor">{round(business[3])}</span><br />
-        </li>
-      )
-    }else{
-      return (
-        <li className="list-group-item userlist-item">
-          <strong className="customCursor">Company name: </strong><span className="customCursor">{business[0]}</span><br />
-          <strong className="customCursor">VAT number: </strong><span className="customCursor">{business[1]}</span><br />
-          <strong className="customCursor">Payment status: </strong><span className="customCursor">{business[2]}</span><br />
-          <strong className="customCursor">Balance: </strong><span className="customCursor">{round(business[3])}</span><br />
-          <ButtonGeneric text="Refund" />
-        </li>
-      )
+    let refundButtonClasses = null;
+    let rowColor = null;
+    let { refund, selectedPeriod } = this.props;
+
+    switch(business.paymentStatus){
+      case businessStatus.payed:
+        refundButtonClasses = "btn btn-light disabled"
+        rowColor = "list-group-item userlist-item greenRow"
+      break;
+      case businessStatus.deferred:
+      case businessStatus.paying:
+        refundButtonClasses = "btn btn-light disabled"
+        rowColor = "list-group-item userlist-item yellowRow"
+      break;
+      case businessStatus.waiting:
+        refundButtonClasses = "btn btn-light"
+        rowColor = "list-group-item userlist-item yellowRow"
+      break;
+      case businessStatus.late:
+        refundButtonClasses = "btn btn-light disabled"
+        rowColor = "list-group-item userlist-item redRow"
+      break;
     }
+    return (
+      <li className={rowColor}>
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-2 offset-sm-1 itemVAT">
+              <span className="customCursor">{business.name}</span>
+            </div>
+            <div className="col-sm-2 itemVAT">
+              <span className="customCursor">{business.VATnumber}</span>
+            </div>
+            <div className="col-sm-2 itemVAT">
+              <span className="customCursor">{business.paymentStatus}</span>
+            </div>
+            <div className="col-sm-2 itemVAT">
+              <span className="customCursor">{business.amount}</span>
+            </div>
+            <div className="col-sm-2 itemVAT">
+              <button type="button" className={refundButtonClasses} onClick={() => {refund(business.address, selectedPeriod.id, business.amount*(-1))}}>Refund</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    )
   }
 
   render() {
     if(checkGovernment()===false){window.location.href = "/"}
-    //need to check if user type is government, else redirect to home like previous line
-    let totalBusiness = 15
-    let name
-    let vatNumber
-    let paymentStatus
-    let balance
-    let business
-    let businessArray = []
-    for(var i=0; i<totalBusiness; i++){
-      name = "Company name"
-      vatNumber = "VAT"
-      paymentStatus = "await refund"
-      balance = 999
-      business = [name, vatNumber, paymentStatus, balance]
-      businessArray[i] = business;
+    let {VATRefundList, VATPeriods, searchProduct, selectedStatus } = this.props;
+    let list = [];
+    let pushed = false;
+    if(VATRefundList!== undefined && VATRefundList.length>0){
+      for(let i=0; i< VATRefundList.length; i++){
+        if(VATRefundList[i].paymentStatus.includes(selectedStatus)){
+          pushed = false
+          if(VATRefundList[i].name.toUpperCase().includes(searchProduct.toUpperCase()) && pushed===false){
+            list = [...list, VATRefundList[i]];
+            pushed = true
+          }
+          if(VATRefundList[i].VATnumber.toUpperCase().includes(searchProduct.toUpperCase()) && pushed===false){
+            list = [...list, VATRefundList[i]];
+            pushed = true
+          }
+          if(VATRefundList[i].address.toUpperCase().includes(searchProduct.toUpperCase()) && pushed===false){
+            list = [...list, VATRefundList[i]];
+            pushed = true
+          }
+        }
+      }
     }
-
     return (
       <div>
         <NavBar />
         <div className="container">
           <div className="row">
             <div className="col-sm-12 userlist-margin">
-              <SearchContainer />
-              <ul className="list-group list-group-flush">
-                {businessArray.map(i => this.printBusiness(i))}
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm-6">
+                    <SearchContainer />
+                  </div>
+                  <div className="col-sm-3">
+                    <div className="form-group">
+                      <select className="form-control" id="exampleFormControlSelect1" onChange={(event) => {this.handleChange(event, "status")}}>
+                        <option>Select a status</option>
+                        <option>{businessStatus.deferred}</option>
+                        <option>{businessStatus.late}</option>
+                        <option>{businessStatus.payed}</option>
+                        <option>{businessStatus.paying}</option>
+                        <option>{businessStatus.waiting}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-sm-3">
+                    <div className="form-group">
+                      <select className="form-control" id="exampleFormControlSelect2" onChange={(event) => {this.handleChange(event, "period")}}>
+                        <option>Select a period</option>
+                        {VATPeriods.map((i) => <option key={i}>{i}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-sm-2 offset-sm-1 itemVAT">
+                        <p className="customCursor">Name</p>
+                      </div>
+                      <div className="col-sm-2 itemVAT">
+                        <p className="customCursor">VAT Number</p>
+                      </div>
+                      <div className="col-sm-2 itemVAT">
+                        <p className="customCursor">Status</p>
+                      </div>
+                      <div className="col-sm-2 itemVAT">
+                        <p className="customCursor">Amount</p>
+                      </div>
+                      <div className="col-sm-2 itemVAT" />
+                    </div>
+                  </div>
+                </li>
+                {list.map(i => this.printBusiness(i))}
               </ul>
             </div>
           </div>

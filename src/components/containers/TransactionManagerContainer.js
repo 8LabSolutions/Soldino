@@ -24,9 +24,9 @@ const mapDispatchToProps = (dispatch) => {
 
     getBusinessPeriods: getBusinessPeriods,
 
-    payVATPeriod: function(period){
+    payVATPeriod: function(period, amount){
       dispatch(beginLoading())
-      businessActionCreator.payVATPeriod(period)
+      businessActionCreator.payVATPeriod(period, amount)
       .then(()=>{
         dispatch(endLoading())
         history.push("/transactionsmanager")
@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   let VATnumber = state.user;
-  (VATnumber===null) ? VATnumber=0 : VATnumber=VATnumber.VATnumber 
+  (VATnumber===null) ? VATnumber=0 : VATnumber=VATnumber.VATnumber
   return {
     selectedPeriod: state.selectedPeriod,
     invoices: state.invoices,

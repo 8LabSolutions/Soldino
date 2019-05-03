@@ -90,7 +90,7 @@ class TransactionsManager extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-6">
-              <button type="button" className="btn btn-light" onClick={()=>{payVATPeriod(selectedPeriod.id)}}>Instant Payment</button>
+              <button type="button" className="btn btn-light" onClick={()=>{payVATPeriod(selectedPeriod.id, round(selectedPeriod.amount))}}>Instant Payment</button>
             </div>
             {(selectedPeriod.defereable===true) ? (
               <div className="col-sm-6">
@@ -121,14 +121,14 @@ class TransactionsManager extends Component {
     if(selectedPeriod.amount!==null){
       if(selectedPeriod.amount<0) {
         return(
-          <p>VAT status for the selected quarter: <span className="green">{-1*selectedPeriod.amount} CC</span></p>
+          <p>VAT status for the selected quarter: <span className="green">{round(-1*selectedPeriod.amount)} CC</span></p>
         )
       }else{
         return(
           <div className="container">
             <div className="row">
               <div className="col-sm-6">
-                <p>VAT status for the selected quarter: <span className="red">{-1*selectedPeriod.amount} CC</span></p>
+                <p>VAT status for the selected quarter: <span className="red">{round(-1*selectedPeriod.amount)} CC</span></p>
               </div>
               {(selectedPeriod.payable===true) ? this.printDebitButtons() : null}
               {(selectedPeriod.payable===true && selectedPeriod.defereable===false) ? this.printDeferredDate() : null}

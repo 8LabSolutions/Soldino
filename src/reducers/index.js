@@ -1,6 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS, PASSKEYPROD, GETMYORDERS, RESETCART, SETINVOICES, SETPERIODS, SELECTEDPERIOD, RESETINVOICES} from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS, PASSKEYPROD, GETMYORDERS, RESETCART, SETINVOICES, SETPERIODS, SELECTEDPERIOD, RESETINVOICES, SETVATREFUND, SETSTATUS, VATPERIODS} from "../constants/actionTypes";
 import { defaultIndex } from '../constants/fixedValues';
 
 const initialState = {
@@ -19,7 +19,10 @@ const initialState = {
   editProd: null,
   periods: [],
   invoices: [],
-  selectedPeriod: {id: "Select a quarter", amount: null, payable: false}
+  selectedPeriod: {id: "Select a quarter", amount: null, payable: false},
+  VATRefundList: [],
+  selectedStatus: "",
+  VATPeriods: []
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === BEGINLOADING || action.type === ENDLOADING) {
@@ -238,6 +241,23 @@ export function rootReducer(state = initialState, action) {
     })
   }
 
+  if(action.type === SETVATREFUND) {
+    return Object.assign({}, state, {
+      VATRefundList: action.VATRefundList
+    })
+  }
+
+  if(action.type === SETSTATUS) {
+    return Object.assign({}, state, {
+      selectedStatus: action.selectedStatus
+    })
+  }
+
+  if(action.type === VATPERIODS) {
+    return Object.assign({}, state, {
+      VATPeriods: action.periods
+    })
+  }
 
   //returning the state
   return state;
@@ -247,7 +267,7 @@ export const persistConfig = {
   key: 'root',
   storage: storage,
   /** 'cart', 'ordersList' prima della presentazione */
-  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct', 'myProductsArray', 'ordersList', 'businessList', 'citizenList', 'editProd', 'periods', 'invoices', 'selectedPeriod']
+  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct', 'myProductsArray', 'ordersList', 'businessList', 'citizenList', 'editProd', 'periods', 'invoices', 'selectedPeriod', 'VATRefundList']
 };
 
 export default persistReducer(persistConfig, rootReducer);

@@ -1,15 +1,20 @@
 [![Build Status](https://travis-ci.com/8LabSolutions/Soldino-PoC.svg?branch=final)](https://travis-ci.com/8LabSolutions/Soldino-PoC)
 [![Coverage Status](https://coveralls.io/repos/github/8LabSolutions/Soldino-PoC/badge.svg?branch=final)](https://coveralls.io/github/8LabSolutions/Soldino-PoC?branch=final)
 # Soldino
-## 8Lab Solutions group
-- [Federico Bicciato](https://github.com/nevepura)
-- [Mattia Bolzonella](https://github.com/KamiShire)
-- [Francesco Donè](https://github.com/francescodone)
-- [Sara Feltrin](https://github.com/BluePerception)
-- [Giacomo Greggio](https://github.com/giacomogreggio)
-- [Samuele Giuliano Piazzetta](https://github.com/piaz97)
-- [Paolo Pozzan](https://github.com/pozza96)
-- [Matteo Santinon](https://github.com/MatteoSantinon)
+
+## Table of contents
+
+- [References](#references)
+- [Getting started](#getting-started)
+- [Installation](#installation)
+  * [Ubuntu](#ubuntu)
+  * [Windows](#windows)
+  * [Content of the repository](#content-of-the-repository)
+  * [Configure Soldino for the local envirorment](#configure-soldino-for-the-local-envirorment)
+    + [Configure Ganache](#configure-ganache)
+    + [Run Soldino on the development environment](#run-soldino-on-the-development-environment)
++ [Authors](#authors)
+
 ## References
 
 https://www.math.unipd.it/~tullio/IS-1/2018/Progetto/C6.pdf
@@ -21,13 +26,13 @@ Software Engineering project at University of Padua, developed for [Red Babel](h
 In order to run Soldino you **must** have:
 
 - `git`
-- `truffle v5.0.5`  [ see references](https://www.truffleframework.com/docs/truffle/getting-started/installation)
-- `nodejs v8.9.4` or later [see references](https://nodejs.org/en/)
-- `metamask plugin` for `chrome v64 or later` or `firefox v71 or later`
-
-Additional software:
-
-- `Ganache GUI`  if you want an user interface for the local blockchain.
+- `nodejs v10.15.1` or later [see references](https://nodejs.org/en/)
+- `npm v3.5.2` or later [see references](https://www.npmjs.com/get-npm)
+- `truffle v5.0.5`   [ see references](https://www.truffleframework.com/docs/truffle/getting-started/installation)
+- one or both: 
+  - `Ganache GUI`  if you want an user interface for the local blockchain.
+  - `ganache-cli` if you want fast local blockchain on command line.
+- `metamask plugin` for `Google Chrome v64 or later` or `Mozilla Firefox v71 or later`
 
 **Note** : *both* `Ganache GUI` *and* `ganache-cli` *(this is provided by default)*   **must**   *be set with port 9545 in order to run Soldino on the development environment, this port can be set later.*
 
@@ -36,16 +41,18 @@ Additional software:
 ### Ubuntu
 
 1. download or clone (`git clone https://github.com/8LabSolutions/Soldino-PoC.git` ) this repository 
-2. run `$ npm install` in the repository folder (`Soldino-PoC` folder)
+2. run `$ npm install` in the repository folder (`Soldino-PoC` folder), it may take a while
    - If you have trouble with `$ npm install` run `$ sudo apt-get install build-essential` and retry run `npm install`
 3. done!
 
 ### Windows
 
 1. download or clone (`git clone https://github.com/8LabSolutions/Soldino-PoC.git` ) this repository
-2. run `$ npm install` in the repository folder (`Soldino-PoC` folder)
+2. run `$ npm install` in the repository folder (`Soldino-PoC` folder), it may take a while
    - If you have trouble try this solution: [Microsoft.cpp.default.props not found(first answer)](https://stackoverflow.com/questions/41695251/c-microsoft-cpp-default-props-was-not-found) and retry run `npm install`
 3. done!
+
+**Note: npm run coverage doesn't work on Windows, so you can't use the coverage environment.**
 
 ### Content of the repository
 
@@ -82,11 +89,13 @@ The folders organization separates the back end ad front end.
 
 In the `truffle-config.js` you can set all the options for your environment. There are three default environments configured:
 
-- `develop` : used as local environment it has the 9545 port set.
+- `development` : used as local environment it has the 9545 port set.
 
 - `coverage`: used for the test coverage environment, port 8545. 
 
   To use this environment for run `$ npm run coverage`, it will not open the web page. 
+
+  **Note: npm run coverage doesn't work on Windows.**
 
 - `ropsten`: used to migrate contracts onto Ropsten test network.
 
@@ -123,9 +132,16 @@ In "New RPC URL" textbox insert http://localhost:9545. 
 
 and click "Save" button.
 
-#### Now you can enjoy Soldino!!
+**Now you can enjoy Soldino!!**
 
+## Authors
 
-
-
+- [Federico Bicciato](https://github.com/nevepura)
+- [Mattia Bolzonella](https://github.com/KamiShire)
+- [Francesco Donè](https://github.com/francescodone)
+- [Sara Feltrin](https://github.com/BluePerception)
+- [Giacomo Greggio](https://github.com/giacomogreggio)
+- [Samuele Giuliano Piazzetta](https://github.com/piaz97)
+- [Paolo Pozzan](https://github.com/pozza96)
+- [Matteo Santinon](https://github.com/MatteoSantinon)
 

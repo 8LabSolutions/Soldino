@@ -1,8 +1,9 @@
 import government from "../facade/government"
 import user from "../facade/user"
-import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount} from "../actions/government"
+import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount, setVATrefund, setVATPeriod, resetVATPeriods, resetPeriod, setStatus} from "../actions/government"
 import {CITIZEN, BUSINESS} from "../constants/actionTypes"
 import {store} from "../store/index"
+import { searchaction } from "../actions/searchaction";
 
 const governmentActionCreator = (function(){
   return{
@@ -27,6 +28,28 @@ const governmentActionCreator = (function(){
             //should resolve an error that says "No user found."
           })
         })
+    },
+    /**
+     * @returns Return an array of the business JSON with the VAT period info
+     * @param {*} period the VAT period you want to get the business info
+     */
+    setVATrefund: function(period){
+      return new Promise((resolve)=>{
+        government.getBusinessVATState(period)
+        .then((businessStateArray)=>{
+          resolve(setVATrefund(businessStateArray))
+        })
+      })
+    },
+
+    getVATPeriods: function(){
+      return new Promise((resolve)=>{
+        government.getPeriods()
+        .then((periods)=>{
+          resolve(setVATPeriod(periods))
+        })
+      })
+
     },
 
     getBalanceAndTotalAmount: function(){
@@ -92,7 +115,29 @@ const governmentActionCreator = (function(){
           }
         })
       })
+    },
+    refund: function(address, period, amount){
+      return new Promise((resolve)=>{
+        government.refund(period, address, amount)
+        .then(resolve)
+      })
 
+    },
+
+    resetPeriods: function(){
+      return(resetVATPeriods())
+    },
+
+    resetSearch: function(){
+      return(searchaction(""))
+    },
+
+    resetPeriod: function(){
+      return(resetPeriod())
+    },
+
+    setStatus: function(status){
+      return(setStatus(status))
     }
   }
 
