@@ -193,7 +193,14 @@ const web3government = (function(){
 
       })
     },
-
+    /**
+     * @returns Return the following info:
+     * 1) businessAddress
+     * 2) state: [DUE, OVERDUE, PAID, TO_BE_REFUNDED, REFUNDED] enum 0->4
+     * 3) amount: VAT amount
+     * @param {*} period
+     * @param {*} businessAddress
+     */
     getVATQuarterInfo: function(period, businessAddress){
       return new Promise((resolve)=>{
         web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{

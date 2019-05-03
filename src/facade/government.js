@@ -255,19 +255,79 @@ const government = (function(){
         Promise.all(keyPromises).then((businessVATData)=>{
           //businessVATData is an array of array with the following format
           //[businessAddress, paymentStatus, amount]
+          let promises = []
+          for(let i = 0; i < businessVATData.length; i++){
+            promises.push(new Promise((resolve)=>{
+              web3authentication.getUser(businessAddresses[i].businessAddress)
+              .then(([IPFSHash,,])=>{
+                ipfsModule.getJSONfromHash(IPFSHash)
+                .then((businessJSON)=>{
+                  let paymentStatus = undefined;
 
-          /*
-          payed --> verde
-          deferred --> yellow
-          paying --> yellow
-          waiting --> yellow
-          late --> red
-          */
+                  let currentVATPeriod = web3util.getVATPeriod();
+                  let oldVATPeriod = period;
 
-          console.log('FINISCI QUIIII')
-          resolve(businessVATData)
+                  let [currYear, currMonth] = currentVATPeriod.split("-");
+                  let [oldYear, oldMonth] = oldVATPeriod.split("-");
+
+                  [currYear, currMonth] = currentVATPeriod.split("-");
+                  [oldYear, oldMonth] = oldVATPeriod.split("-");
+
+                   /* paymentStatus Options
+                    payed --> verde
+                    deferred --> yellow
+                    paying --> yellow
+                    waiting --> yellow
+                    late --> red
+                  */
+                  //set the state
+                  switch (businessVATData[i].paymentStatus) {
+                    case 0:
+                    //DUE: the business must pay
+                      //check if it is late or in time (paying or late)
+                      if(((currYear-oldYear)*4+(currMonth-oldMonth))>1){
+                        paymentStatus = "late";
+                      }
+                      else {
+                        paymentStatus = "paying";
+                      }
+                      break;
+                    case 1:
+                    //OVERDUE: deferred payment
+                    //check if it is late or in time (paying or late)
+                      if(((currYear-oldYear)*4+(currMonth-oldMonth))>2){
+                        paymentStatus = "late";
+                      }
+                      else {
+                        paymentStatus = "deferred";
+                      }
+                      break;
+                    case 2:
+                    //PAID: the business paid the VAT
+                      paymentStatus = "payed";
+                      break;
+                    case 3:
+                    //TO_BE_REFUNDED: the government must pay the VAT
+                      paymentStatus = "waiting";
+                      break;
+                    case 4:
+                    //REFUNDED: the govenment refunded the VAT
+                      paymentStatus = "payed";
+                      break;
+                  }
+
+                  //adding the paymentStatus and amount to the business JSON
+
+                  businessJSON.paymentStatus = paymentStatus;
+                  businessJSON.amount = businessVATData[i].amount;
+
+                  resolve(businessJSON)
+                })
+              })
+            }))
+          }
+          Promise.all(promises).then(resolve)
         })
-
       })
     },
 
