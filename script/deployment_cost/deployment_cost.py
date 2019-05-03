@@ -1,7 +1,7 @@
 import re
 import datetime
 
-INPUT_PATH = '../coverage/coverage.txt'
+INPUT_PATH = '../truffle_test/truffle_test_ris.txt'
 OUTPUT_PATH = 'deployment_cost.csv'
 
 def calc_average(list):

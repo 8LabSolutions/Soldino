@@ -1,0 +1,195 @@
+Using network 'development'.
+
+Compiling ./contracts/Purchase.sol...
+Compiling ./contracts/TokenCubit.sol...
+Compiling ./contracts/logic/OrderLogic.sol...
+Compiling ./contracts/logic/VatLogic.sol...
+
+  Contract: VatLogic
+test1
+    ✓ should create a vat key
+    ✓ should register Vat input movement (71300 gas)
+    ✓ should register Vat output movement (73230 gas)
+    ✓ should pay vat input movement (168433 gas)
+    ✓ should pay vat output movement (155863 gas)
+
+  Contract: OrderLogic
+    ✓ should set authorizations (47746 gas)
+    ✓ should add a new order (1085235 gas)
+    ✓ should revert the order, buyer is the same of the seller (38048 gas)
+
+  Contract: Owned
+    ✓ Should transfer ownership (28456 gas)
+
+  Contract: Test IPFS functions
+    ✓ should test IPFS Product insertProduct and getProduct
+
+  Contract: VatLogic
+    ✓ should insert a VAT input movement (65874 gas)
+    ✓ should insert  a VAT output movement (67804 gas)
+
+  Contract: Purchase
+    ✓ should set authorizations (47746 gas)
+    ✓ should buy some products (2218101 gas)
+
+  Contract: Authorizable
+    ✓ Should add an authorized (43628 gas)
+    ✓ Should remove the previous authorized (14300 gas)
+
+  Contract: UserStorage
+    ✓ should add a new User (91389 gas)
+    ✓ should check if the user type is correct (23749 gas)
+    ✓ should ban a user (23696 gas)
+
+  Contract: ProductStorage
+    ✓ should set the ProductLogic contract as authorized contract (23850 gas)
+    ✓ should add a new product (132759 gas)
+    ✓ should set the NetPrice of a product (27866 gas)
+    ✓ should set the VAT percentage of a product (23312 gas)
+    ✓ should set the Seller of a product (29457 gas)
+    ✓ should set the Hash Size of a product (28234 gas)
+    ✓ should set the Hash Function of a product (28197 gas)
+    ✓ should set the Latest Hash Ipfs of a product (28102 gas)
+    ✓ should update Hash of a product (114533 gas)
+    ✓ should delete a product (25020 gas)
+
+  Contract: ProductLogic
+    ✓ should check if product logic is added to the authorized contract of ProductStorage
+    ✓ should add a new product successfully (215252 gas)
+    ✓ should modify a product (57712 gas)
+    ✓ should delete a product (28121 gas)
+
+  Contract: OrderStorage
+    ✓ should add a new order (356462 gas)
+
+  Contract: UserLogic
+    ✓ should check if user logic is added to the authorized contract of UserStorage
+
+    1) Should add a new Citizen
+    > No events were emitted
+    ✓ Should add a new Business (72624 gas)
+
+  Contract: TokenCubit
+0
+1
+2
+3
+    ✓ should distribute token to multiple addresses (134476 gas)
+
+·--------------------------------------------------------------------------------------|----------------------------·
+|                                         Gas                                          ·  Block limit: 6721975 gas  │
+·····················································|·································|·····························
+|  Methods                                           ·           21 gwei/gas           ·       145.14 eur/eth       │
+···················|·································|··········|··········|···········|··············|··············
+|  Contract        ·  Method                         ·  Min     ·  Max     ·  Avg      ·  # calls     ·  eur (avg)  │
+···················|·································|··········|··········|···········|··············|··············
+|  Authorizable    ·  addAuthorized                  ·       -  ·       -  ·    43628  ·           1  ·       0.13  │
+···················|·································|··········|··········|···········|··············|··············
+|  Authorizable    ·  removeAuthorized               ·       -  ·       -  ·    14300  ·           1  ·       0.04  │
+···················|·································|··········|··········|···········|··············|··············
+|  OrderLogic      ·  registerOrder                  ·       -  ·       -  ·   378115  ·           1  ·       1.15  │
+···················|·································|··········|··········|···········|··············|··············
+|  OrderStorage    ·  addAuthorized                  ·       -  ·       -  ·    23895  ·           2  ·       0.07  │
+···················|·································|··········|··········|···········|··············|··············
+|  OrderStorage    ·  addOrder                       ·       -  ·       -  ·   356462  ·           1  ·       1.09  │
+···················|·································|··········|··········|···········|··············|··············
+|  Owned           ·  transferOwnership              ·       -  ·       -  ·    28456  ·           1  ·       0.09  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductLogic    ·  addProduct                     ·  136804  ·  141668  ·   140825  ·          12  ·       0.43  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductLogic    ·  deleteProduct                  ·       -  ·       -  ·    28121  ·           1  ·       0.09  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductLogic    ·  modifyProduct                  ·       -  ·       -  ·    57712  ·           1  ·       0.18  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  addAuthorized                  ·       -  ·       -  ·    23850  ·           1  ·       0.07  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  addProduct                     ·       -  ·       -  ·   132759  ·           1  ·       0.40  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  deleteProduct                  ·       -  ·       -  ·    25020  ·           1  ·       0.08  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  setHashFunction                ·   28197  ·   43197  ·    35697  ·           2  ·       0.11  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  setHashSize                    ·       -  ·       -  ·    28234  ·           2  ·       0.09  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  setLatestHashIpfs              ·   28102  ·   43102  ·    35602  ·           2  ·       0.11  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  setNetPrice                    ·       -  ·       -  ·    27866  ·           1  ·       0.08  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  setSeller                      ·       -  ·       -  ·    29457  ·           1  ·       0.09  │
+···················|·································|··········|··········|···········|··············|··············
+|  ProductStorage  ·  setVatPercentage               ·       -  ·       -  ·    23312  ·           1  ·       0.07  │
+···················|·································|··········|··········|···········|··············|··············
+|  Purchase        ·  saveAndPayOrder                ·       -  ·       -  ·   915299  ·           1  ·       2.79  │
+···················|·································|··········|··········|···········|··············|··············
+|  TokenCubit      ·  approve                        ·       -  ·       -  ·    45419  ·           3  ·       0.14  │
+···················|·································|··········|··········|···········|··············|··············
+|  TokenCubit      ·  distributeToMultipleAddresses  ·       -  ·       -  ·   134476  ·           1  ·       0.41  │
+···················|·································|··········|··········|···········|··············|··············
+|  TokenCubit      ·  mintToken                      ·   38275  ·   53275  ·    45775  ·           2  ·       0.14  │
+···················|·································|··········|··········|···········|··············|··············
+|  TokenCubit      ·  transfer                       ·       -  ·       -  ·    53083  ·           1  ·       0.16  │
+···················|·································|··········|··········|···········|··············|··············
+|  UserLogic       ·  addBusiness                    ·   72624  ·   73648  ·    72770  ·           7  ·       0.22  │
+···················|·································|··········|··········|···········|··············|··············
+|  UserStorage     ·  addUser                        ·       -  ·       -  ·    67640  ·           1  ·       0.21  │
+···················|·································|··········|··········|···········|··············|··············
+|  UserStorage     ·  setEnable                      ·       -  ·       -  ·    23696  ·           1  ·       0.07  │
+···················|·································|··········|··········|···········|··············|··············
+|  VatLogic        ·  payVat                         ·       -  ·       -  ·    69739  ·           1  ·       0.21  │
+···················|·································|··········|··········|···········|··············|··············
+|  VatLogic        ·  refundVat                      ·       -  ·       -  ·    72169  ·           1  ·       0.22  │
+···················|·································|··········|··········|···········|··············|··············
+|  VatLogic        ·  registerVat                    ·   71300  ·   73230  ·    72265  ·           2  ·       0.22  │
+···················|·································|··········|··········|···········|··············|··············
+|  VatStorage      ·  addAuthorized                  ·       -  ·       -  ·    23851  ·           2  ·       0.07  │
+···················|·································|··········|··········|···········|··············|··············
+|  VatStorage      ·  insertVatAndSetState           ·   65874  ·   67804  ·    66839  ·           2  ·       0.20  │
+···················|·································|··········|··········|···········|··············|··············
+|  Deployments                                       ·                                 ·  % of limit  ·             │
+·····················································|··········|··········|···········|··············|··············
+|  Authorizable                                      ·       -  ·       -  ·   575342  ·       8.6 %  ·       1.75  │
+·····················································|··········|··········|···········|··············|··············
+|  ContractManager                                   ·       -  ·       -  ·   725916  ·      10.8 %  ·       2.21  │
+·····················································|··········|··········|···········|··············|··············
+|  OrderLogic                                        ·       -  ·       -  ·  1984073  ·      29.5 %  ·       6.05  │
+·····················································|··········|··········|···········|··············|··············
+|  OrderStorage                                      ·       -  ·       -  ·  2190676  ·      32.6 %  ·       6.68  │
+·····················································|··········|··········|···········|··············|··············
+|  Owned                                             ·       -  ·       -  ·   226977  ·       3.4 %  ·       0.69  │
+·····················································|··········|··········|···········|··············|··············
+|  ProductLogic                                      ·       -  ·       -  ·  1813893  ·        27 %  ·       5.53  │
+·····················································|··········|··········|···········|··············|··············
+|  ProductStorage                                    ·       -  ·       -  ·  2102538  ·      31.3 %  ·       6.41  │
+·····················································|··········|··········|···········|··············|··············
+|  Purchase                                          ·       -  ·       -  ·  1031584  ·      15.3 %  ·       3.14  │
+·····················································|··········|··········|···········|··············|··············
+|  TokenCubit                                        ·       -  ·       -  ·  1648096  ·      24.5 %  ·       5.02  │
+·····················································|··········|··········|···········|··············|··············
+|  UserLogic                                         ·       -  ·       -  ·  1168974  ·      17.4 %  ·       3.56  │
+·····················································|··········|··········|···········|··············|··············
+|  UserStorage                                       ·       -  ·       -  ·  1145118  ·        17 %  ·       3.49  │
+·····················································|··········|··········|···········|··············|··············
+|  VatLogic                                          ·       -  ·       -  ·  1999301  ·      29.7 %  ·       6.09  │
+·····················································|··········|··········|···········|··············|··············
+|  VatStorage                                        ·       -  ·       -  ·  1144841  ·        17 %  ·       3.49  │
+·----------------------------------------------------|----------|----------|-----------|--------------|-------------·
+
+  37 passing (55s)
+  1 failing
+
+  1) Contract: UserLogic
+       Should add a new Citizen:
+     Error: Returned error: VM Exception while processing transaction: revert User already registered
+      at Object.ErrorResponse (node_modules/web3-core-helpers/src/errors.js:29:16)
+      at node_modules/web3-core-requestmanager/src/index.js:140:36
+      at /usr/lib/node_modules/truffle/build/webpack:/packages/truffle-provider/wrapper.js:112:1
+      at XMLHttpRequest.request.onreadystatechange (/usr/lib/node_modules/truffle/build/webpack:/~/web3/~/web3-providers-http/src/index.js:96:1)
+      at XMLHttpRequestEventTarget.dispatchEvent (/usr/lib/node_modules/truffle/build/webpack:/~/xhr2-cookies/dist/xml-http-request-event-target.js:34:1)
+      at XMLHttpRequest._setReadyState (/usr/lib/node_modules/truffle/build/webpack:/~/xhr2-cookies/dist/xml-http-request.js:208:1)
+      at XMLHttpRequest._onHttpResponseEnd (/usr/lib/node_modules/truffle/build/webpack:/~/xhr2-cookies/dist/xml-http-request.js:318:1)
+      at IncomingMessage.<anonymous> (/usr/lib/node_modules/truffle/build/webpack:/~/xhr2-cookies/dist/xml-http-request.js:289:47)
+      at endReadableNT (_stream_readable.js:1139:12)
+      at processTicksAndRejections (internal/process/task_queues.js:81:17)
+
+
+
