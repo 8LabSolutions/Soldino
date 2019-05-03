@@ -382,7 +382,19 @@ input:checked + .slider {
   cursor: context-menu;
 }
 
+.customCursorPointer {
+  cursor: pointer;
+}
+
 .itemVAT {
   height: 45px;
   line-height: 45px;
+}
+
+.popover-header {
+  margin-top: 0px !important;
+}
+
+.popover-inner, .popover {
+  max-width: 500px;
 }

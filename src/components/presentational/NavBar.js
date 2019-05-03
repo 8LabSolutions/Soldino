@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom'
 import ButtonAuth from '../containers/ButtonAuth';
 import { store } from "../../store/index";
+import UserInfoContainer from '../containers/UserInfoContainer';
 
 
 class NavBar extends Component {
@@ -22,6 +23,7 @@ class NavBar extends Component {
     }else if (store.getState().logged === true && store.getState().user.userType === "CITIZEN"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav navbar-items">
+                    <UserInfoContainer />
                     <NavLink exact className="nav-item nav-link" to="/">Store</NavLink>
                     <NavLink className="nav-item nav-link" to="/orders">Orders</NavLink>
                     {/*<NavLink className="nav-item nav-link" to="/purchasesconfirmation">Purchases confirmation</NavLink>*/}
@@ -31,6 +33,7 @@ class NavBar extends Component {
     }else if (store.getState().logged === true && store.getState().user.userType === "BUSINESS"){
       authText = 'Logout'
       navLinks =  <div className="navbar-nav navbar-items">
+                    <UserInfoContainer />
                     <NavLink exact className="nav-item nav-link" to="/">Store</NavLink>
                     <NavLink className="nav-item nav-link" to="/orders">Orders</NavLink>
                     {/*<NavLink className="nav-item nav-link" to="/purchasesconfirmation">Purchases confirmation</NavLink>*/}
