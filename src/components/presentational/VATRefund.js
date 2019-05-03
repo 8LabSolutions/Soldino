@@ -11,9 +11,9 @@ class VATRefund extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
   }
-  
+
   componentWillMount() {
-    let {setVATRefund, resetSearch, setStatus, resetPeriod, getVATPeriods} = this.props;
+    let {resetSearch, setStatus, resetPeriod, getVATPeriods} = this.props;
     resetSearch();
     resetPeriod();
     setStatus("");
@@ -25,7 +25,7 @@ class VATRefund extends Component {
     let {setStatus} = this.props;
     let {setPeriod} = this.props;
     let {resetPeriod} = this.props;
-    (type==="status") 
+    (type==="status")
       ? (event.target.value==="Select a status") ? setStatus("") : setStatus(event.target.value)
       : (event.target.value==="Select a quarter") ? resetPeriod() : setPeriod({id: event.target.value, amount: null, payable: false})
   }
@@ -33,6 +33,8 @@ class VATRefund extends Component {
   printBusiness(business) {
     let refundButtonClasses = null;
     let rowColor = null;
+    let { refund, selectedPeriod } = this.props;
+
     switch(business.paymentStatus){
       case businessStatus.payed:
         refundButtonClasses = "btn btn-light disabled"
@@ -69,7 +71,7 @@ class VATRefund extends Component {
               <span className="customCursor">{business.amount}</span>
             </div>
             <div className="col-sm-2 itemVAT">
-              <button type="button" className={refundButtonClasses} onClick={() => {console.log(business.address)}}>Refund</button>
+              <button type="button" className={refundButtonClasses} onClick={() => {refund(business.address, selectedPeriod.id)}}>Refund</button>
             </div>
           </div>
         </div>
@@ -79,12 +81,7 @@ class VATRefund extends Component {
 
   render() {
     if(checkGovernment()===false){window.location.href = "/"}
-    let {VATRefundList, VATPeriods, setVATRefund, selectedPeriod} = this.props;
-    let {searchProduct} = this.props;
-    let {selectedStatus} = this.props;
-    if(selectedPeriod.id !== "Select a quarter"){
-      setVATRefund(selectedPeriod.id)
-    }
+    let {VATRefundList, VATPeriods, searchProduct, selectedStatus } = this.props;
     let list = [];
     let pushed = false;
     if(VATRefundList!== undefined && VATRefundList.length>0){
@@ -133,12 +130,12 @@ class VATRefund extends Component {
                     <div className="form-group">
                       <select className="form-control" id="exampleFormControlSelect2" onChange={(event) => {this.handleChange(event, "period")}}>
                         <option>Select a period</option>
-                        {VATPeriods.map((i) => <option>{i}</option>)}
+                        {VATPeriods.map((i) => <option key={i}>{i}</option>)}
                       </select>
                     </div>
                   </div>
                 </div>
-              </div> 
+              </div>
               <ul className="list-group">
                 <li className="list-group-item">
                   <div className="container">

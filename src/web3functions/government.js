@@ -73,12 +73,12 @@ const web3government = (function(){
      */
     refundVAT: function(businessAddress, period){
       return new Promise((resolve)=>{
-        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
+        web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
           web3util.getCurrentAccount().then((account)=>{
-            tokenInstance.methods.createVatKey(businessAddress, period)
+            vatLogicInstance.methods.createVatKey(businessAddress, period)
             .call({from:account})
             .then((key)=>{
-              tokenInstance.methods.refundVat(key)
+              vatLogicInstance.methods.refundVat(key)
               .send({from:account})
               .then(resolve)
             })

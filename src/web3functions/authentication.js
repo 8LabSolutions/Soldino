@@ -57,6 +57,7 @@ const web3authentication = (function() {
             var hashFun = ris[1];
             var hashSize = ris[2];
             var state = ris[3];
+
             var type = ris[4];
             resolve([web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun), state, type]);
           });

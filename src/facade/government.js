@@ -24,6 +24,7 @@ const government = (function(){
           });
           Promise.all(invoicesJSON).then((ris)=>{
             //get the date, then the periods
+            invoicesJSON = ris
             var dates = []
             ris.forEach(json => {
               dates.push(json.date);
@@ -45,11 +46,11 @@ const government = (function(){
                 new Promise((resolve)=>{
                   if(periods[i] === period){
                     //the selling business must be inserted
-                    let sellerAddress = invoicesJSON.products[0].seller;
+                    let sellerAddress = invoicesJSON[i].products[0].seller;
                     if (!businessAddresses.includes(sellerAddress))
                       businessAddresses.push(sellerAddress);
                     //the buyer must be inserted only if it is a business
-                    let buyerAddress = invoicesJSON.buyerAddress;
+                    let buyerAddress = invoicesJSON[i].buyerAddress;
                     web3authentication.getUser(buyerAddress).then(([,,type])=>{
                       if(parseInt(type) === 2)
                         if (!businessAddresses.includes(buyerAddress))
@@ -241,14 +242,13 @@ const government = (function(){
       })
     },
     /**
-     *
+     * @returns An array containing all the businesses with the related VAT state of [period]
      * @param {*} period the period you want the businesses' state
      */
     getBusinessVATState: function(period){
-      return new Promise((resolve)=>{
+      return new Promise(async (resolve)=>{
         //getting the businesses' addresses
-        var businessAddresses = getBusinessActiveInPeriod(period);
-
+        var businessAddresses = await getBusinessActiveInPeriod(period);
         //creating the VAT keys with the period+business's address
 
         var keyPromises = [];
@@ -265,8 +265,12 @@ const government = (function(){
           let promises = []
           for(let i = 0; i < businessVATData.length; i++){
             promises.push(new Promise((resolve)=>{
-              web3authentication.getUser(businessAddresses[i].businessAddress)
+              console.log("business")
+              console.log(businessVATData[i])
+              web3authentication.getUser(businessVATData[i][0])
               .then(([IPFSHash,,])=>{
+                console.log("Eccolo qua")
+                console.log(IPFSHash)
                 ipfsModule.getJSONfromHash(IPFSHash)
                 .then((businessJSON)=>{
                   let paymentStatus = undefined;
@@ -288,7 +292,7 @@ const government = (function(){
                     late --> red
                   */
                   //set the state
-                  switch (businessVATData[i].paymentStatus) {
+                  switch (parseInt(businessVATData[i][1])) {
                     case 0:
                     //DUE: the business must pay
                       //check if it is late or in time (paying or late)
@@ -326,8 +330,8 @@ const government = (function(){
                   //adding the paymentStatus and amount to the business JSON
 
                   businessJSON.paymentStatus = paymentStatus;
-                  businessJSON.amount = businessVATData[i].amount;
-
+                  businessJSON.amount = businessVATData[i][2];
+                  businessJSON.address = businessVATData[i][0];
                   resolve(businessJSON)
                 })
               })

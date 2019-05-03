@@ -1,68 +1,60 @@
 import { connect } from 'react-redux';
 import VATRefund from '../presentational/VATRefund';
 import governmentActionCreator from '../../actionsCreator/governmentActionCreator';
-import { searchaction } from '../../actions/searchaction';
-import { setStatus, resetPeriod, setPeriod, resetVATPeriods } from '../../actions/government';
-import { store } from '../../store';
-import { SETVATREFUND, MINTANDDISTRIBUTE } from '../../constants/actionTypes';
+import { setPeriod, setVATrefund } from '../../actions/government';
+import history from '../../store/history';
 
 const mapDispatchToProps = (dispatch) => {
 
+  function setVATRefund(period){
+    governmentActionCreator.setVATrefund(period)
+    .then((action)=>{
+      dispatch(action)
+    })
+  }
+
   return {
-    setVATRefund: function(period){
-      /*governmentActionCreator.setVATRefund().then((action)=>{
-        dispatch(action)
-      })*/
-      let newList = governmentActionCreator.setVATrefund(period)
-      let oldList = {
-        type: SETVATREFUND,
-        VATRefundList: store.getState().VATRefundList
-      }
-      console.log([newList, oldList])
-      let equals = true
-      if(newList.VATRefundList.length!==oldList.VATRefundList.length){
-        equals = false
-      }else{
-        for(let i=0; i<oldList.VATRefundList.length; i++){
-          if(i.name===newList.VATRefundList.name &&
-             i.VATnumber===newList.VATRefundList.VATnumber &&
-             i.paymentStatus===newList.VATRefundList.paymentStatus &&
-             i.amount===newList.VATRefundList.amount &&
-             i.address===newList.VATRefundList.address &&
-             equals===true){
-              equals=true
-            }else{
-              equals=false
-            }
-        }
-      }
-      if(equals===false){
-        dispatch(newList) //rimuovere questa linea
-      }
-    },
+    setVATRefund: setVATRefund,
 
     getVATPeriods: function(){
-      dispatch(governmentActionCreator.getVATPeriods()) //rimuovere questa linea
+      governmentActionCreator.getVATPeriods()
+      .then((action)=>{
+        dispatch(action)
+      })
     },
 
     resetPeriods: function(){
-      dispatch(resetVATPeriods())
+      dispatch(governmentActionCreator.resetPeriods())
     },
 
     resetSearch: function(){
-      dispatch(searchaction(""))
+      dispatch(governmentActionCreator.resetSearch())
     },
 
     resetPeriod: function(){
-      dispatch(resetPeriod())
+      dispatch(governmentActionCreator.resetPeriod())
     },
 
     setPeriod: function(period){
       dispatch(setPeriod(period))
+      if(period.id !== "Select a quarter"){
+        setVATRefund(period.id)
+      }else{
+        setVATrefund([])
+      }
     },
 
     setStatus: function(status){
-      dispatch(setStatus(status))
+      dispatch(governmentActionCreator.setStatus(status))
+    },
+
+    refund : function(address, period){
+      governmentActionCreator.refund(address, period)
+      .then(()=>{
+        history.push("/vatrefund")
+      })
+
+
     }
   }
 }
