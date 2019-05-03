@@ -116,9 +116,9 @@ const governmentActionCreator = (function(){
         })
       })
     },
-    refund: function(address, period){
+    refund: function(address, period, amount){
       return new Promise((resolve)=>{
-        government.refund(period, address)
+        government.refund(period, address, amount)
         .then(resolve)
       })
 

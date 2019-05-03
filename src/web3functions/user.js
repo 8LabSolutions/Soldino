@@ -19,8 +19,6 @@ const web3user = (function(){
           console.log("Cubit "+tokenInstance.options.address)
           web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
             web3util.getCurrentAccount().then((account)=>{
-              console.log('AMOUNT PAGATO')
-              console.log(round(amount*web3util.TOKENMULTIPLIER))
               tokenInstance.methods.approve(purchaseInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
               .send({from: account})
               .then((txnHash) => {

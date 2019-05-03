@@ -252,7 +252,7 @@ const business = (function(){
                   }
                   var vatJSON = {
                     id: period,
-                    amount: amount/web3util.TOKENMULTIPLIER,
+                    amount: amount,
                     deferred: deferred,
                     defereable: defereable,
                     payable: payable,
@@ -270,9 +270,9 @@ const business = (function(){
       })
     },
 
-    payVATPeriod: function(period) {
+    payVATPeriod: function(period, amount) {
       return new Promise((resolve)=>{
-        web3business.payVATPeriod(period)
+        web3business.payVATPeriod(period, amount)
         .then(resolve)
       })
 

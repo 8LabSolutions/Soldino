@@ -343,9 +343,9 @@ const government = (function(){
       })
     },
 
-    refund: function(period, business){
+    refund: function(period, business, amount){
       return new Promise((resolve)=>{
-        web3government.refundVAT(business, period)
+        web3government.refundVAT(business, period, amount)
         .then(resolve)
       })
 

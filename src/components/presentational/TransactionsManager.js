@@ -90,7 +90,7 @@ class TransactionsManager extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-6">
-              <button type="button" className="btn btn-light" onClick={()=>{payVATPeriod(selectedPeriod.id)}}>Instant Payment</button>
+              <button type="button" className="btn btn-light" onClick={()=>{payVATPeriod(selectedPeriod.id, round(selectedPeriod.amount))}}>Instant Payment</button>
             </div>
             {(selectedPeriod.defereable===true) ? (
               <div className="col-sm-6">
