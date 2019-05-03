@@ -24,9 +24,9 @@ const mapDispatchToProps = (dispatch) => {
 
     getBusinessPeriods: getBusinessPeriods,
 
-    payVATPeriod: function(period){
+    payVATPeriod: function(period, amount){
       dispatch(beginLoading())
-      businessActionCreator.payVATPeriod(period)
+      businessActionCreator.payVATPeriod(period, amount)
       .then(()=>{
         dispatch(endLoading())
         history.push("/transactionsmanager")

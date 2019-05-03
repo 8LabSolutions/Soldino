@@ -3,6 +3,7 @@ import UserLogic from "../contracts_build/UserLogic"
 import TokenCubit from "../contracts_build/TokenCubit"
 import OrderLogic from "../contracts_build/OrderLogic"
 import VatLogic from "../contracts_build/VatLogic"
+import { round } from "../auxiliaryFunctions";
 
 const web3government = (function(){
   //initialize web3
@@ -71,16 +72,24 @@ const web3government = (function(){
      * @param {*} businessAddress business address you want to pay
      * @param {*} period the VAT period you want to refund
      */
-    refundVAT: function(businessAddress, period){
+    refundVAT: function(businessAddress, period, amount){
       return new Promise((resolve)=>{
         web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            vatLogicInstance.methods.createVatKey(businessAddress, period)
-            .call({from:account})
-            .then((key)=>{
-              vatLogicInstance.methods.refundVat(key)
-              .send({from:account})
-              .then(resolve)
+          web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
+            web3util.getCurrentAccount().then((account)=>{
+              tokenInstance.methods.approve(vatLogicInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
+              .send({from: account})
+              .then(()=>{
+                web3util.getCurrentAccount().then((account)=>{
+                  vatLogicInstance.methods.createVatKey(businessAddress, period)
+                  .call({from:account})
+                  .then((key)=>{
+                    vatLogicInstance.methods.refundVat(key)
+                    .send({from:account})
+                    .then(resolve)
+                  })
+                })
+              })
             })
           })
         })
@@ -131,6 +140,9 @@ const web3government = (function(){
         })
       })
     },
+    /**
+     * @returns the total supply of Cubit
+     */
     getTotalCubit: function(){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{

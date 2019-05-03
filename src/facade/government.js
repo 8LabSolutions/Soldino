@@ -246,7 +246,7 @@ const government = (function(){
      * @param {*} period the period you want the businesses' state
      */
     getBusinessVATState: function(period){
-      return new Promise(async (resolve)=>{
+      return new Promise(async (resolve, reject)=>{
         //getting the businesses' addresses
         var businessAddresses = await getBusinessActiveInPeriod(period);
         //creating the VAT keys with the period+business's address
@@ -300,6 +300,10 @@ const government = (function(){
                         paymentStatus = "late";
                       }
                       else {
+                        if(((currYear-oldYear)*4+(currMonth-oldMonth)) === 0){
+                          //current period ->
+                          paymentStatus = "current"
+                        }
                         paymentStatus = "paying";
                       }
                       break;
@@ -325,6 +329,8 @@ const government = (function(){
                     //REFUNDED: the govenment refunded the VAT
                       paymentStatus = "payed";
                       break;
+                    default:
+                      reject("Wrong paymentStatus passed")
                   }
 
                   //adding the paymentStatus and amount to the business JSON
@@ -343,9 +349,9 @@ const government = (function(){
       })
     },
 
-    refund: function(period, business){
+    refund: function(period, business, amount){
       return new Promise((resolve)=>{
-        web3government.refundVAT(business, period)
+        web3government.refundVAT(business, period, amount)
         .then(resolve)
       })
 

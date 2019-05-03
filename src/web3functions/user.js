@@ -9,18 +9,17 @@ const web3user = (function(){
   //initializing web3
   web3util.init()
 
-  //return the actual VAT period
-
-
   return{
+    /**
+     *
+     * @param {*} amount
+     */
     tokenTransferApprove: function(amount) {
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
           console.log("Cubit "+tokenInstance.options.address)
           web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
             web3util.getCurrentAccount().then((account)=>{
-              console.log('AMOUNT PAGATO')
-              console.log(round(amount*web3util.TOKENMULTIPLIER))
               tokenInstance.methods.approve(purchaseInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
               .send({from: account})
               .then((txnHash) => {
@@ -67,7 +66,9 @@ const web3user = (function(){
         })
       })
     },
-
+    /**
+     * @returns Returns the balance of the logged account
+     */
     getBalance: function(){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
@@ -75,7 +76,7 @@ const web3user = (function(){
             tokenInstance.methods.balanceOf(account).call().then((balance)=>{
               if(balance!==0)
                 balance/=web3util.TOKENMULTIPLIER;
-              resolve(balance)
+              resolve(round(balance))
             })
           })
         })

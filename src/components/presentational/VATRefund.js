@@ -71,7 +71,7 @@ class VATRefund extends Component {
               <span className="customCursor">{business.amount}</span>
             </div>
             <div className="col-sm-2 itemVAT">
-              <button type="button" className={refundButtonClasses} onClick={() => {refund(business.address, selectedPeriod.id)}}>Refund</button>
+              <button type="button" className={refundButtonClasses} onClick={() => {refund(business.address, selectedPeriod.id, business.amount*(-1))}}>Refund</button>
             </div>
           </div>
         </div>

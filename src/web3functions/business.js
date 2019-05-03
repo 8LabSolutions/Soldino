@@ -2,6 +2,8 @@ import web3util from "./web_util";
 import ProductLogic from "../contracts_build/ProductLogic"
 import OrderLogic from "../contracts_build/OrderLogic"
 import VatLogic from "../contracts_build/VatLogic"
+import TokenCubit from "../contracts_build/TokenCubit"
+import { round } from "../auxiliaryFunctions";
 
 const web3business = (function(){
 
@@ -333,16 +335,24 @@ const web3business = (function(){
       })
     },
 
-    payVATPeriod: function(period) {
+    payVATPeriod: function(period, amount) {
       return new Promise((resolve)=>{
-        web3util.getCurrentAccount().then((account)=>{
-          web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
-            vatLogicInstance.methods.createVatKey(account, period)
-            .call()
-            .then((key)=>{
-              vatLogicInstance.methods.payVat(key)
-              .send({from: account})
-              .then(resolve)
+        web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
+          web3util.getCurrentAccount().then((account)=>{
+            web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
+              tokenInstance.methods.approve(vatLogicInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
+                .send({from: account})
+                .then(()=>{
+                web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
+                  vatLogicInstance.methods.createVatKey(account, period)
+                  .call()
+                  .then((key)=>{
+                    vatLogicInstance.methods.payVat(key)
+                    .send({from: account})
+                    .then(resolve)
+                  })
+                })
+              })
             })
           })
         })

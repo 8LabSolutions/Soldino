@@ -3,6 +3,7 @@ import VATRefund from '../presentational/VATRefund';
 import governmentActionCreator from '../../actionsCreator/governmentActionCreator';
 import { setPeriod, setVATrefund } from '../../actions/government';
 import history from '../../store/history';
+import { beginLoading, endLoading } from '../../actions/login';
 
 const mapDispatchToProps = (dispatch) => {
 
@@ -48,10 +49,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(governmentActionCreator.setStatus(status))
     },
 
-    refund : function(address, period){
-      governmentActionCreator.refund(address, period)
+    refund : function(address, period, amount){
+      dispatch(beginLoading())
+      governmentActionCreator.refund(address, period, amount)
       .then(()=>{
+        dispatch(endLoading())
         history.push("/vatrefund")
+      })
+      .catch(()=>{
+        dispatch(endLoading())
       })
 
 

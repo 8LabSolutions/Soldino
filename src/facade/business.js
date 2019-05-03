@@ -158,7 +158,6 @@ const business = (function(){
           resolved: resolved,
           outOfLimit: outOfLimit
         }
-     *
      */
     getPeriods: function() {
       return new Promise((resolve)=>{
@@ -212,16 +211,19 @@ const business = (function(){
                     case 0:
                     //the business have to pay to the government
                     //it could pay of defer
-                      defereable = true;
-                      payable = true;
-                      //check if the payment is out ou limit
-                      currentVATPeriod = web3util.getVATPeriod();
-                      oldVATPeriod = period;
+                      //if it is the current period, all  the flags are false
+                      if(((currYear-oldYear)*4+(currMonth-oldMonth)) !== 0){
+                        defereable = true;
+                        payable = true;
+                        //check if the payment is out ou limit
+                        currentVATPeriod = web3util.getVATPeriod();
+                        oldVATPeriod = period;
 
-                      if(((currYear-oldYear)*4+(currMonth-oldMonth))>1){
-                        outOfLimit = true;
-                        defereable = false;
-                        payable = false;
+                        if(((currYear-oldYear)*4+(currMonth-oldMonth))>1){
+                          outOfLimit = true;
+                          defereable = false;
+                          payable = false;
+                        }
                       }
                       break;
                     case 1:
@@ -252,7 +254,7 @@ const business = (function(){
                   }
                   var vatJSON = {
                     id: period,
-                    amount: amount/web3util.TOKENMULTIPLIER,
+                    amount: amount,
                     deferred: deferred,
                     defereable: defereable,
                     payable: payable,
@@ -270,9 +272,9 @@ const business = (function(){
       })
     },
 
-    payVATPeriod: function(period) {
+    payVATPeriod: function(period, amount) {
       return new Promise((resolve)=>{
-        web3business.payVATPeriod(period)
+        web3business.payVATPeriod(period, amount)
         .then(resolve)
       })
 

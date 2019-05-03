@@ -78,9 +78,9 @@ const businessActionCreator = (function(){
       })
     },
 
-    payVATPeriod: function(period){
+    payVATPeriod: function(period, amount){
       return new Promise((resolve)=>{
-        business.payVATPeriod(period)
+        business.payVATPeriod(period, amount)
         .then(resolve)
       })
     },
