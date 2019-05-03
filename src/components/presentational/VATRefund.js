@@ -3,26 +3,45 @@ import React, {Component} from 'react';
 import NavBar from './NavBar'
 import { checkGovernment } from '../../auxiliaryFunctions';
 import SearchContainer from '../containers/SearchContainer';
+import { businessStatus } from '../../constants/fixedValues';
 
 class VATRefund extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  componentWillMount() {
+    let {setVATRefund, resetSearch, setStatus} = this.props;
+    resetSearch();
+    setStatus("")
+    setVATRefund();
+  }
+
+  handleChange(event){
+    let {setStatus} = this.props;
+    (event.target.value==="Select a status") ? setStatus("") : setStatus(event.target.value)
+  }
+
   printBusiness(business) {
     let refundButtonClasses = null;
     let rowColor = null;
     switch(business.paymentStatus){
-      case "payed":
+      case businessStatus.payed:
         refundButtonClasses = "btn btn-light disabled"
         rowColor = "list-group-item userlist-item greenRow"
       break;
-      case "deferred":
-      case "paying":
+      case businessStatus.deferred:
+      case businessStatus.paying:
         refundButtonClasses = "btn btn-light disabled"
         rowColor = "list-group-item userlist-item yellowRow"
       break;
-      case "waiting":
+      case businessStatus.waiting:
         refundButtonClasses = "btn btn-light"
         rowColor = "list-group-item userlist-item yellowRow"
       break;
-      case "late":
+      case businessStatus.late:
         refundButtonClasses = "btn btn-light disabled"
         rowColor = "list-group-item userlist-item redRow"
       break;
@@ -54,22 +73,55 @@ class VATRefund extends Component {
 
   render() {
     if(checkGovernment()===false){window.location.href = "/"}
-    let businessArray = []
-    businessArray = [
-      {name: "Azienda 1", VATnumber: "54623102359", paymentStatus: "payed", amount: 382.14, address: "address"},
-      {name: "Azienda 2", VATnumber: "54210567953", paymentStatus: "deferred", amount: 24.50, address: "address"},
-      {name: "Azienda 3", VATnumber: "97652134056", paymentStatus: "paying", amount: 576.2, address: "address"},
-      {name: "Azienda 4", VATnumber: "54615064254", paymentStatus: "waiting", amount: 542.23, address: "address"},
-      {name: "Azienda 5", VATnumber: "97845160506", paymentStatus: "late", amount: 95.6, address: "address"}
-    ];
+    let {VATRefundList} = this.props;
+    let {searchProduct} = this.props;
+    let {selectedStatus} = this.props;
+    let list = [];
+    let pushed = false;
+    if(VATRefundList!== undefined && VATRefundList.length>0){
+      for(let i=0; i< VATRefundList.length; i++){
+        if(VATRefundList[i].paymentStatus.includes(selectedStatus)){
+          pushed = false
+          if(VATRefundList[i].name.toUpperCase().includes(searchProduct.toUpperCase()) && pushed===false){
+            list = [...list, VATRefundList[i]];
+            pushed = true
+          }
+          if(VATRefundList[i].VATnumber.toUpperCase().includes(searchProduct.toUpperCase()) && pushed===false){
+            list = [...list, VATRefundList[i]];
+            pushed = true
+          }
+          if(VATRefundList[i].address.toUpperCase().includes(searchProduct.toUpperCase()) && pushed===false){
+            list = [...list, VATRefundList[i]];
+            pushed = true
+          }
+        }
+      }
+    }
     return (
       <div>
         <NavBar />
         <div className="container">
           <div className="row">
             <div className="col-sm-12 userlist-margin">
-              <SearchContainer />
-
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm-8">
+                    <SearchContainer />
+                  </div>
+                  <div className="col-sm-4">
+                    <div className="form-group">
+                      <select className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange}>
+                        <option>Select a status</option>
+                        <option>{businessStatus.deferred}</option>
+                        <option>{businessStatus.late}</option>
+                        <option>{businessStatus.payed}</option>
+                        <option>{businessStatus.paying}</option>
+                        <option>{businessStatus.waiting}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div> 
               <ul className="list-group">
                 <li className="list-group-item">
                   <div className="container">
@@ -86,13 +138,11 @@ class VATRefund extends Component {
                       <div className="col-sm-2 itemVAT">
                         <p className="customCursor">Amount</p>
                       </div>
-                      <div className="col-sm-2 itemVAT">
-                        {/*<button type="button" className="btn btn-light" onClick={() => console.log("REFUND")}>Refund</button>*/}
-                      </div>
+                      <div className="col-sm-2 itemVAT" />
                     </div>
                   </div>
                 </li>
-                {businessArray.map(i => this.printBusiness(i))}
+                {list.map(i => this.printBusiness(i))}
               </ul>
             </div>
           </div>
