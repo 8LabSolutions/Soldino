@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import NavBar from './NavBar'
-import { checkGovernment, round } from '../../auxiliaryFunctions';
+import { checkGovernment } from '../../auxiliaryFunctions';
 import SearchContainer from '../containers/SearchContainer';
 
 class VATRefund extends Component {
