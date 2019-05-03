@@ -338,12 +338,12 @@ input:checked + .slider {
 }
 
 .css-1qprcsu-option {
-  background: #1abc9c !important;
-  color: #f1f1f1 !important;
+  background: #1abc3a77 !important;
+  color: #000 !important;
 }
 
 .css-1vr111p-option:hover {
-  background: #1abc9c42 !important;
+  background: #1abc3a36 !important;
 }
 
 .modal-description {

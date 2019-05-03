@@ -7,7 +7,6 @@ import './styles/App.css';
 import Home from './components/presentational/Home';
 import CitizenListContainer from './components/containers/CitizenListContainer';
 import BusinessListContainer from './components/containers/BusinessListContainer';
-import VATRefund from './components/presentational/VATRefund';
 import Cart from './components/presentational/Cart';
 import Footer from './components/presentational/Footer'
 import Success from './components/presentational/Success';
@@ -20,13 +19,13 @@ import AddProductsManager from './components/presentational/AddProductsManager';
 import history from './store/history';
 import ProductsManagerContainer from './components/containers/ProductManagerContainer';
 import OrdersContainer from './components/containers/OrdersContainer';
+import VATRefundContainer from './components/containers/VATRefundContainer';
 
 //store.dispatch(reset())
 
 class App extends Component {
   render() {
     let props = this.props
-    //console.log(props.loading)
     if(props.loading === false){
       return (
         <Router history={history}>
@@ -34,7 +33,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/userslist" component={CitizenListContainer} />
             <Route path="/businesslist" component={BusinessListContainer} />
-            <Route path="/vatrefund" component={VATRefund} />
+            <Route path="/vatrefund" component={VATRefundContainer} />
             <Route path="/cart" component={Cart} />
             <Route path="/errorregistration" render={()=><Error errorMessage="Registration failed." nextMessage="Something went wrong, try checking Metamask or changing email address." />} />
             <Route path="/successregistration" render={()=><Success successMessage="Registration completed." nextMessage="Now you can login and start using Soldino." />} />

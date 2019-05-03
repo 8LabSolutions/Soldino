@@ -1,8 +1,9 @@
 import government from "../facade/government"
 import user from "../facade/user"
-import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount} from "../actions/government"
+import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount, setVATrefund} from "../actions/government"
 import {CITIZEN, BUSINESS} from "../constants/actionTypes"
 import {store} from "../store/index"
+import { businessStatus } from "../constants/fixedValues";
 
 const governmentActionCreator = (function(){
   return{
@@ -27,6 +28,20 @@ const governmentActionCreator = (function(){
             //should resolve an error that says "No user found."
           })
         })
+    },
+
+    setVATrefund: function(){
+      /*return new Promise((resolve)=>{*/
+        let list = [
+          {name: "Azienda 1", VATnumber: "54623102359", paymentStatus: businessStatus.payed, amount: 382.14, address: "address"},
+          {name: "Azienda 2", VATnumber: "54210567953", paymentStatus: businessStatus.deferred, amount: 24.50, address: "address"},
+          {name: "Azienda 3", VATnumber: "97652134056", paymentStatus: businessStatus.paying, amount: 576.2, address: "address"},
+          {name: "Azienda 4", VATnumber: "54615064254", paymentStatus: businessStatus.waiting, amount: 542.23, address: "address"},
+          {name: "Azienda 5", VATnumber: "97845160506", paymentStatus: businessStatus.late, amount: 95.6, address: "address"}
+        ];
+        return setVATrefund(list)
+        //resolve(setVATrefund(list))
+      //})
     },
 
     getBalanceAndTotalAmount: function(){
