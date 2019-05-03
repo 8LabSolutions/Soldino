@@ -30,7 +30,9 @@ const web3util = (function() {
   //initialize web3
   init();
 
+
   return {
+
     init: init,
     /**
      * @returns The corresponding VAT period in the format YYYY-MM

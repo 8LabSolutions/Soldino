@@ -170,7 +170,8 @@ const government = (function(){
           var businessJSON = [];
           for(let i = 0; i < resultsArray.length; i++){
             businessJSON.push(new Promise((resolve)=>{
-              ipfsModule.getJSONfromHash(resultsArray[i][1]).then(resolve)
+              ipfsModule.getJSONfromHash(resultsArray[i][1])
+              .then(resolve)
             }))
           }
           var business = [];
@@ -198,7 +199,8 @@ const government = (function(){
 
     getTotalCubit: function(){
       return new Promise((resolve)=>{
-        web3government.getTotalCubit().then(resolve)
+        web3government.getTotalCubit()
+        .then(resolve)
       })
     },
     /**
@@ -206,16 +208,19 @@ const government = (function(){
      */
     getPeriods: function() {
       return new Promise((resolve)=>{
-        web3government.getInvoicesGovernment().then((invoicesIPFSHash)=>{
+        web3government.getInvoicesGovernment()
+        .then((invoicesIPFSHash)=>{
           var invoicesJSON = []
           invoicesIPFSHash.forEach(invoceIPFSHash => {
             invoicesJSON.push(
               new Promise((resolve)=>{
-                ipfsModule.getJSONfromHash(invoceIPFSHash).then(resolve)
+                ipfsModule.getJSONfromHash(invoceIPFSHash)
+                .then(resolve)
               })
             )
           });
-          Promise.all(invoicesJSON).then((ris)=>{
+          Promise.all(invoicesJSON)
+          .then((ris)=>{
             //get the date, then the periods
             var dates = []
             ris.forEach(json => {
@@ -249,10 +254,12 @@ const government = (function(){
         var keyPromises = [];
         businessAddresses.forEach((address)=>{
           keyPromises.push(new Promise((resolve)=>{
-            web3government.getVATQuarterInfo(period, address).then(resolve)
+            web3government.getVATQuarterInfo(period, address)
+            .then(resolve)
           }))
         })
-        Promise.all(keyPromises).then((businessVATData)=>{
+        Promise.all(keyPromises)
+        .then((businessVATData)=>{
           //businessVATData is an array of array with the following format
           //[businessAddress, paymentStatus, amount]
           let promises = []
@@ -326,13 +333,18 @@ const government = (function(){
               })
             }))
           }
-          Promise.all(promises).then(resolve)
+          Promise.all(promises)
+          .then(resolve)
         })
       })
     },
 
     refund: function(period, business){
-      console.log(["riborsare!!!!!!!!!", period, business])
+      return new Promise((resolve)=>{
+        web3government.refundVAT(business, period)
+        .then(resolve)
+      })
+
     }
 
   }

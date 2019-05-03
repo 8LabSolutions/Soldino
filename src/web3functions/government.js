@@ -66,7 +66,11 @@ const web3government = (function(){
         })
       })
     },
-
+    /**
+     * @describe Refund the business on the VAT period passed
+     * @param {*} businessAddress business address you want to pay
+     * @param {*} period the VAT period you want to refund
+     */
     refundVAT: function(businessAddress, period){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{

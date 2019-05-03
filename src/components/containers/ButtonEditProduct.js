@@ -12,6 +12,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     action: (parametersArray) => {
       parametersArray = [store.getState().editProd, ...parametersArray]
+      console.log([...parametersArray])
       if(
         parametersArray[1]==="" &&
         parametersArray[2]==="" &&
@@ -33,7 +34,7 @@ const mapDispatchToProps = (dispatch) => {
         editedProduct[6] = parametersArray[6] //sellername
         editedProduct[7] = parametersArray[7] //sellervat
         //need to check if picture has changed
-        console.log(editedProduct)
+
         if(parametersArray[5]!==null){
           getBase64(parametersArray[5]).then((base64Image)=>{
             editedProduct[5] = base64Image
@@ -52,6 +53,9 @@ const mapDispatchToProps = (dispatch) => {
             })
           })
         }else{
+          editedProduct[5] = parametersArray[0][5];
+
+          console.log([...editedProduct])
           businessActionCreator.modifyProduct(...editedProduct)
           .then(()=>{
             businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{

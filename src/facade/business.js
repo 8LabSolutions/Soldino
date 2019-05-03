@@ -86,6 +86,7 @@ const business = (function(){
     modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       var newProductJSON = getProductJSONfromFields(
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
+      console.log(image)
       return new Promise((resolve)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON).then((hash)=>{
           web3business.modifyProduct(keyProd, hash, vatPercentage, netPrice).then(resolve)
@@ -205,7 +206,7 @@ const business = (function(){
 
                   [currYear, currMonth] = currentVATPeriod.split("-");
                   [oldYear, oldMonth] = oldVATPeriod.split("-");
-        
+
                   switch (parseInt(state)) {
 
                     case 0:

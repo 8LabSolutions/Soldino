@@ -83,6 +83,16 @@ const authentication = (function(){
           }
         })
       })
+    },
+    /**
+     * @description Listens for an account or network change and returns if
+     * one of them happen
+     */
+    listenForChanges: function(){
+      return new Promise((resolve)=>{
+        web3authentication.listenForChanges()
+        .then(resolve)
+      })
     }
   }
 }());

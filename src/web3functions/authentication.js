@@ -6,6 +6,17 @@ const web3authentication = (function() {
   web3util.init();
 
   return {
+
+    /**
+     * @description Listens for an account or network change and returns if
+     * one of them happen
+     */
+    listenForChanges: function(){
+      return new Promise((resolve)=>{
+        window.ethereum.on('accountsChanged', function(){resolve()})
+        window.ethereum.on('networkChanged', function(){resolve()})
+      })
+    },
     addCitizen: function(hash) {
       return new Promise((resolve)=>{
         web3util.getContractInstance(UserLogic).then((userLogicInstance) =>{
