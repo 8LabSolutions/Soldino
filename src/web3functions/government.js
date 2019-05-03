@@ -140,6 +140,9 @@ const web3government = (function(){
         })
       })
     },
+    /**
+     * @returns the total supply of Cubit
+     */
     getTotalCubit: function(){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{

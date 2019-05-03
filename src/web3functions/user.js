@@ -9,10 +9,11 @@ const web3user = (function(){
   //initializing web3
   web3util.init()
 
-  //return the actual VAT period
-
-
   return{
+    /**
+     *
+     * @param {*} amount
+     */
     tokenTransferApprove: function(amount) {
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
@@ -65,7 +66,9 @@ const web3user = (function(){
         })
       })
     },
-
+    /**
+     * @returns Returns the balance of the logged account
+     */
     getBalance: function(){
       return new Promise((resolve)=>{
         web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
@@ -73,7 +76,7 @@ const web3user = (function(){
             tokenInstance.methods.balanceOf(account).call().then((balance)=>{
               if(balance!==0)
                 balance/=web3util.TOKENMULTIPLIER;
-              resolve(balance)
+              resolve(round(balance))
             })
           })
         })

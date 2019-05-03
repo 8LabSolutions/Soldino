@@ -5,6 +5,10 @@ const web3util = (function() {
   var bs58 = require('bs58');
   var web3js = undefined;
 
+  /**
+   * @description Initialize the Web3 provider, unlocks MetaMask asking the user permission to use
+   * the site, check if there is at least an account
+   */
   function init(){
     return new Promise((resolve, reject)=> {
       //if web3 is already been setted
@@ -30,12 +34,11 @@ const web3util = (function() {
   //initialize web3
   init();
 
-
   return {
 
     init: init,
     /**
-     * @returns The corresponding VAT period in the format YYYY-MM
+     * @returns The corresponding VAT period in the format YYYY-MM, starting from a YYYY year and a MM month
      *
      * @param {*} month month in NUMBER(1-12)
      * @param {*} year year in NUMBER
@@ -47,22 +50,35 @@ const web3util = (function() {
       var period = parseInt(mm/4) +1;
       return String(yyyy).concat("-").concat(String(period))
     },
-
+    /**
+     * @returns Promise: returns the current active account on MetaMask,
+     * otherwise rejects with an error
+     */
     getCurrentAccount: async function(){
       if (web3js === undefined)
           await init()
 
-      return new Promise(async (resolve) =>{
+      return new Promise(async (resolve, reject) =>{
         //if there is no web3 instance reject with an error
         if (web3js === undefined)
           await init()
 
-        web3js.eth.getAccounts().then((account)=>{
+        web3js.eth.getAccounts()
+        .then((account)=>{
           resolve(account[0])
+        })
+        .catch(()=>{
+          reject("Error trying to get the active account on MetaMask, please check if you're logged in into MetaMask");
         })
       })
     },
-
+    /**
+     * @returns Return an array in the following format [remainingHash, size, fun], where:
+     * \t 1) remainingHash: the ID of the object
+     * \t 2) size: the size of the contained object
+     * \t 3) fun: the function ID use to build the hash
+     * @param {*} hash IPFS CID (hash) to be splitted
+     */
     splitIPFSHash: function(hash){
       hash = new Buffer(bs58.decode(hash))
       let fun = parseInt(hash[0]);
@@ -77,7 +93,13 @@ const web3util = (function() {
       }
       return [remainingHash, size, fun];
     },
-
+    /**
+     * @description Returns the IPFS CID starting from the ID, the function and the size of the object
+     * @return The IPFS CID (hash)
+     * @param {*} remainingHash the ID of the object
+     * @param {*} size the size of the contained object
+     * @param {*} fun the function ID use to build the hash
+     */
     recomposeIPFSHash: function(remainingHash, size, fun){
         var array = [parseInt(fun), parseInt(size)]
         for (let i = 2; i<66; i+=2){
@@ -87,21 +109,39 @@ const web3util = (function() {
         return bs58.encode(buffer)
     },
 
+    /**
+     * @description The function ask the current deployment address from the ContractManager,
+     * and returns the instance
+     * @returns The contract instance of the JSON
+     * @param {*} contractJSON The JSON representing the compiled contract, obtained from truffle-compile
+     * command
+     */
     getContractInstance: async function(contractJSON){
       if (web3js === undefined)
           await init()
 
       let contractManagerInstance;
       return new Promise((resolve, reject)=>{
-        web3js.eth.net.getId().then((id)=>{
+        web3js.eth.net.getId()
+        .then((id)=>{
+          //getting the contract manager instance
           contractManagerInstance = new web3js.eth.Contract(ContractManager.abi,
             ContractManager.networks[id].address);
-          contractManagerInstance.methods.getContractAddress(contractJSON.contractName).call()
+          //getting the deployment address of the Passed contract
+          contractManagerInstance.methods.getContractAddress(contractJSON.contractName)
+          .call()
           .then((_contractAddress)=>{
+            //getting the instance of the deployed contract
             var instance = new web3js.eth.Contract(contractJSON.abi, _contractAddress);
             resolve(instance)
-          });
-        }).catch(reject)
+          })
+          .catch(()=>{
+            reject("Error retriving the Contract in the ContractManager, it is possible that the name of the contract is wrong")
+          })
+        })
+        .catch(()=>{
+          reject("Error retrieving the network ID, check the Web3 Object instance")
+        })
       })
     },
     //constant to multiply the amounts in order to get more precision in the solidity's functions

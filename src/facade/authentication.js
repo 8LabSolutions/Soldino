@@ -1,5 +1,6 @@
 import web3authentication from "../web3functions/authentication"
 import ipfsModule from "../ipfsCalls/index"
+import web3user from "../web3functions/user"
 
 const authentication = (function(){
   return{
@@ -67,7 +68,7 @@ const authentication = (function(){
           if(state === false)
             reject("the account is disabled, please call the offices to get more infos");
           //if the government is logging in, there's no need to call IPFS
-          if(userType == 3){
+          if(parseInt(userType) === 3){
             var governmentJSON = {
               userType: "GOVERNMENT",
               name: "Government",
@@ -78,7 +79,10 @@ const authentication = (function(){
           else {
             ipfsModule.getJSONfromHash(hashIPFS).then((ris)=>{
               ris.state = state;
-              resolve(ris)
+              web3user.getBalance().then((balance)=>{
+                ris.balance = balance
+                resolve(ris)
+              })
             })
           }
         })
