@@ -1,6 +1,6 @@
 import government from "../facade/government"
 import user from "../facade/user"
-import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount, setVATrefund} from "../actions/government"
+import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount, setVATrefund, setPeriod, setVATPeriod} from "../actions/government"
 import {CITIZEN, BUSINESS} from "../constants/actionTypes"
 import {store} from "../store/index"
 import { businessStatus } from "../constants/fixedValues";
@@ -30,7 +30,7 @@ const governmentActionCreator = (function(){
         })
     },
 
-    setVATrefund: function(){
+    setVATrefund: function(period){
       /*return new Promise((resolve)=>{*/
         let list = [
           {name: "Azienda 1", VATnumber: "54623102359", paymentStatus: businessStatus.payed, amount: 382.14, address: "address"},
@@ -42,6 +42,11 @@ const governmentActionCreator = (function(){
         return setVATrefund(list)
         //resolve(setVATrefund(list))
       //})
+    },
+
+    getVATPeriods: function(){
+      let periods = ["2019-1", "2019-2", "2019-3", "2019-4"]
+      return setVATPeriod(periods)
     },
 
     getBalanceAndTotalAmount: function(){

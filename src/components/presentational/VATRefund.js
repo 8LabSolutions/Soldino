@@ -13,15 +13,21 @@ class VATRefund extends Component {
   }
   
   componentWillMount() {
-    let {setVATRefund, resetSearch, setStatus} = this.props;
+    let {setVATRefund, resetSearch, setStatus, resetPeriod, getVATPeriods} = this.props;
     resetSearch();
-    setStatus("")
-    setVATRefund();
+    resetPeriod();
+    setStatus("");
+    getVATPeriods();
+    //setVATRefund();
   }
 
-  handleChange(event){
+  handleChange(event, type){
     let {setStatus} = this.props;
-    (event.target.value==="Select a status") ? setStatus("") : setStatus(event.target.value)
+    let {setPeriod} = this.props;
+    let {resetPeriod} = this.props;
+    (type==="status") 
+      ? (event.target.value==="Select a status") ? setStatus("") : setStatus(event.target.value)
+      : (event.target.value==="Select a quarter") ? resetPeriod() : setPeriod({id: event.target.value, amount: null, payable: false})
   }
 
   printBusiness(business) {
@@ -73,9 +79,12 @@ class VATRefund extends Component {
 
   render() {
     if(checkGovernment()===false){window.location.href = "/"}
-    let {VATRefundList} = this.props;
+    let {VATRefundList, VATPeriods, setVATRefund, selectedPeriod} = this.props;
     let {searchProduct} = this.props;
     let {selectedStatus} = this.props;
+    if(selectedPeriod.id !== "Select a quarter"){
+      setVATRefund(selectedPeriod.id)
+    }
     let list = [];
     let pushed = false;
     if(VATRefundList!== undefined && VATRefundList.length>0){
@@ -105,18 +114,26 @@ class VATRefund extends Component {
             <div className="col-sm-12 userlist-margin">
               <div className="container">
                 <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <SearchContainer />
                   </div>
-                  <div className="col-sm-4">
+                  <div className="col-sm-3">
                     <div className="form-group">
-                      <select className="form-control" id="exampleFormControlSelect1" onChange={this.handleChange}>
+                      <select className="form-control" id="exampleFormControlSelect1" onChange={(event) => {this.handleChange(event, "status")}}>
                         <option>Select a status</option>
                         <option>{businessStatus.deferred}</option>
                         <option>{businessStatus.late}</option>
                         <option>{businessStatus.payed}</option>
                         <option>{businessStatus.paying}</option>
                         <option>{businessStatus.waiting}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-sm-3">
+                    <div className="form-group">
+                      <select className="form-control" id="exampleFormControlSelect2" onChange={(event) => {this.handleChange(event, "period")}}>
+                        <option>Select a period</option>
+                        {VATPeriods.map((i) => <option>{i}</option>)}
                       </select>
                     </div>
                   </div>
