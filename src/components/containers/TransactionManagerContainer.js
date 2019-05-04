@@ -6,7 +6,7 @@ import history from '../../store/history'
 import { beginLoading, endLoading } from '../../actions/login';
 import { selectedPeriod, resetInvoices } from '../../actions/business';
 import { store } from '../../store';
-import { ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
+import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 
@@ -37,14 +37,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     payVATPeriod: function(period, amount){
       dispatch(beginLoading())
+      let id
+      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
       businessActionCreator.payVATPeriod(period, amount)
       .then(()=>{
         dispatch(endLoading())
         toastManager.add("VAT period paid.", SUCCESSTOAST);
+        toastManager.remove(id)
         history.push("/transactionsmanager")
       })
       .catch((err)=>{
         dispatch(endLoading())
+        toastManager.remove(id)
         toastManager.add(err, ERRORTOAST);
       })
     },

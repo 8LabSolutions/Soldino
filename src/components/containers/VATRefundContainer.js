@@ -5,7 +5,7 @@ import governmentActionCreator from '../../actionsCreator/governmentActionCreato
 import { setPeriod, setVATrefund } from '../../actions/government';
 import history from '../../store/history';
 import { beginLoading, endLoading } from '../../actions/login';
-import { ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
+import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -65,14 +65,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     refund : function(address, period, amount){
       dispatch(beginLoading())
+      let id
+      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
       governmentActionCreator.refund(address, period, amount)
       .then(()=>{
         dispatch(endLoading())
         toastManager.add("Business refunded.", SUCCESSTOAST);
+        toastManager.remove(id)
         history.push("/vatrefund")
       })
       .catch((err)=>{
         toastManager.add(err, ERRORTOAST);
+        toastManager.remove(id)
         dispatch(endLoading())
       })
     }
