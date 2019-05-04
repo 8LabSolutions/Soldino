@@ -55,8 +55,9 @@ const web3user = (function(){
         .catch(reject)
       })
     },
-    /**
-     * @returns Returns the balance of the logged account
+   /**
+     * @returns The function returns a promise that resolve with the balance of the current user,
+     * otherwise reject with an error
      */
     getBalance: function(){
       return new Promise((resolve, reject)=>{

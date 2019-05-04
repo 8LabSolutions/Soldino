@@ -128,7 +128,7 @@ const web3government = (function(){
       })
     },
     /**
-     * @describe Refund the business on the VAT period passed
+     * @describe Returns a promise that resolves if VAT period of the business passed has been refunded correctly
      * @param {*} businessAddress business address you want to pay
      * @param {*} period the VAT period you want to refund
      */
@@ -214,7 +214,7 @@ const web3government = (function(){
       })
     },
     /**
-     * @returns the total supply of Cubit in Soldino
+     * @returns The function returns a promise that resolves with the current total supply of Cubit on Soldino
      */
     getTotalCubit: function(){
       return new Promise((resolve, reject)=>{

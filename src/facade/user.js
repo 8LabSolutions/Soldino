@@ -50,7 +50,10 @@ const user = (function(){
     totalVat = round(parseFloat((totalVatCC*100)/sumNetPrice));
     return totalVat;
   }
-
+  /**
+   * @returns The total net amount of the given products
+   * @param {*} products An array of products
+   */
   function getTotalNet(products){
     let sum = 0;
     for(let i = 0; i < products.length; i++){
@@ -58,7 +61,10 @@ const user = (function(){
     }
     return sum;
   }
-
+  /**
+   * @returns The total cost (net + VAT) of the given products
+   * @param {*} products An array of products
+   */
   function getTotal(products){
     var sum = 0;
     for(let i = 0; i < products.length; i++){
@@ -66,29 +72,49 @@ const user = (function(){
     }
     return sum;
   }
-
+  /**
+   * @returns The function return a promise that resolves with the number of orders done by
+   * the current user, otherwise reject with an error
+   */
   function getLastOrderNumber(){
-    return new Promise((resolve)=>{
-      web3user.getPurchaseNumber().then(resolve)
+    return new Promise((resolve, reject)=>{
+      web3user.getPurchaseNumber()
+      .then(resolve)
+      .catch(reject)
     })
   }
 
 
   return {
+    /**
+     *
+     * @param {*} cartInfo A JSON representing the cart information. The JSON must have the following format:
+     *
+     * var cart = {
+        products: array of products
+        date: the current date,
+        VAT: the total VAT amount,
+        net: the total net amount,
+        address: the shipping address,
+        buyerName: the name of the buyer,
+        buyerDetails: the surname of the citizen or the VAT number of the business
+      }
+     */
     buy: function(cartInfo){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
          //get all the products
 
         var products = cartInfo.products;
-        console.log(products)
         //cartInfo contains all the information about the order
 
-        //sort the products by seller
+        //sorting the products by seller
         products = groupProductsBySeller(products)
         var orders = splitInSellerArray(products)
         var promises = []
-        getLastOrderNumber().then((number)=>{
-          web3util.getCurrentAccount().then((account)=>{
+        getLastOrderNumber()
+        .then((number)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
             for(let i = 0; i < orders.length; i++){
               promises.push(new Promise((resolve)=>{
                 var order = {
@@ -105,11 +131,14 @@ const user = (function(){
                   sellerName: orders[i][0].sellerName,
                   sellerVATNumber: orders[i][0].sellerVATNumber
                 }
-                ipfsModule.insertJSONintoIPFS(order).then(resolve)
+                ipfsModule.insertJSONintoIPFS(order)
+                .then(resolve)
+                .catch(reject)
               }))
             }
 
-            Promise.all(promises).then((results)=>{
+            Promise.all(promises)
+            .then((results)=>{
               //results: array of IPFS (orders)
               var remainingHash = []
               var hashSize = []
@@ -126,34 +155,50 @@ const user = (function(){
               }
               web3user.purchase(cartInfo.VAT+cartInfo.net, products, remainingHash, hashSize, hashFun, productQtn)
               .then(resolve)
+              .catch(reject)
             })
+            .catch(reject)
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns The function returns a promise that resolve with the balance of the current user,
+     * otherwise reject with an error
+     */
     getBalance: function(){
-      return new Promise((resolve)=>{
-        web3user.getBalance().then(resolve)
+      return new Promise((resolve, reject)=>{
+        web3user.getBalance()
+        .then(resolve)
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns The function returns all the IPFS hashes of the current account,
+     * from which it is possible to retrieve all the information
+     */
     getPurchases: function(){
-      return new Promise((resolve)=>{
-        web3user.getPurchase().then((purchases)=>{
-          console.log('HASH IPFS DEI PRODOTTI')
-          console.log(purchases)
+      return new Promise((resolve, reject)=>{
+        web3user.getPurchase()
+        .then((purchases)=>{
           //getting the orders JSONs from IPFS
           let purchaseJSONs = []
           for(let i = 0; i<purchases.length; i++){
             purchaseJSONs.push(
               new Promise((resolve)=>{
-                ipfsModule.getJSONfromHash(purchases[i]).then(resolve)
+                ipfsModule.getJSONfromHash(purchases[i])
+                .then(resolve)
+                .catch(reject)
               })
             )
           }
-          Promise.all(purchaseJSONs).then(resolve)
+          Promise.all(purchaseJSONs)
+          .then(resolve)
+          .catch(reject)
         })
+        .catch(reject)
       })
     }
   }

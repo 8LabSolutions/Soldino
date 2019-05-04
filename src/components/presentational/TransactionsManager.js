@@ -20,8 +20,9 @@ class TransactionsManager extends Component {
   }
 
   downloadPDF() {
+    let {selectedPeriod} = this.props;
     var doc = new jsPDF()
-    doc.fromHTML(ExportPDF(this.props.invoices, this.selectedQuarter) , 1, 1)
+    doc.fromHTML(ExportPDF(this.props.invoices, selectedPeriod) , 1, 1)
     return(
       doc.save("invoices "+this.selectedQuarter+".pdf")
     )
@@ -116,6 +117,22 @@ class TransactionsManager extends Component {
     )
   }
 
+  printResolvedRefunded() {
+    return(
+      <div className="col-sm-6">
+        <p>You have been completely refunded for this quarter.</p>
+      </div>
+    )
+  }
+
+  printResolvedPaid() {
+    return(
+      <div className="col-sm-6">
+        <p>You have paid the debt for this quarter.</p>
+      </div>
+    )
+  }
+
   printStatus() {
     let {selectedPeriod} = this.props
     if(selectedPeriod.amount!==null){
@@ -132,6 +149,8 @@ class TransactionsManager extends Component {
               </div>
               {(selectedPeriod.payable===true) ? this.printDebitButtons() : null}
               {(selectedPeriod.payable===true && selectedPeriod.defereable===false) ? this.printDeferredDate() : null}
+              {(selectedPeriod.resolved===true && selectedPeriod.amount<0) ? this.printResolvedRefunded() : null}
+              {(selectedPeriod.resolved===true && selectedPeriod.amount>=0) ? this.printResolvedPaid() : null}
             </div>
           </div>
         )
@@ -140,8 +159,7 @@ class TransactionsManager extends Component {
   }
 
   printInvoices() {
-    let {selectedPeriod} = this.props;
-    let {myVATnumber} = this.props;
+    let {selectedPeriod, myVATnumber} = this.props;
     return(
       <ul className="list-group">
         <li className="list-group-item">
@@ -163,8 +181,9 @@ class TransactionsManager extends Component {
                 <p>Total VAT</p>
               </div>
               <div className="col-sm-2">
-                {/*<ButtonGeneric text="Download PDF" />*/}
-                <button type="button" className="btn btn-light" onClick={() => this.downloadPDF()}>Download PDF</button>
+                {(selectedPeriod.id==="Select a quarter") 
+                ? <button type="button" className="btn btn-light disabled" id="downloadPDF"><span className="material-icons">cloud_download</span></button> 
+                : <button type="button" className="btn btn-light" id="downloadPDF" onClick={() => this.downloadPDF()}><span className="material-icons">cloud_download</span></button>}
               </div>
             </div>
           </div>
@@ -197,7 +216,7 @@ class TransactionsManager extends Component {
             let classColor;
             let type;
             {(i.sellerVATNumber===myVATnumber) ? type = <p>Sale</p> : type = <p>Purchase</p>}
-            {(i.sellerVATNumber===myVATnumber) ? classColor = "list-group-item redInvoice" : classColor = "list-group-item greenInvoice"}
+            {(i.sellerVATNumber===myVATnumber) ? classColor = "list-group-item redInvoice userlist-item" : classColor = "list-group-item greenInvoice userlist-item"}
             return(
               <div key={i.number}>
                 <li className={classColor}>

@@ -398,3 +398,76 @@ input:checked + .slider {
 .popover-inner, .popover {
   max-width: 500px;
 }
+
+.navbar {
+  padding: 0px !important;
+}
+
+#burger {
+  border: none !important;
+}
+
+#burger::before {
+  display: none !important;
+}
+
+#downloadPDF {
+  line-height: 1 !important;
+}
+
+@media only screen and (max-width: 991px)  {
+  .navbar .badge {
+    display: none;
+  }
+
+  #logButton button {
+    position: absolute;
+    right: 0px;
+    top: 4px;
+  }
+
+  #logo {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 14px;
+  }
+}
+
+h1, h2, h3 {
+  margin-top: 40px;
+  margin-bottom: 15px;
+}
+
+.productOverlay {
+  position:relative;
+  transition: transform .2s;
+}
+
+#notAllowed {
+  display: none;
+  position: absolute;
+  top: 240px;
+  color: #fff;
+  z-index: 999;
+  font-size: 30px;
+  cursor: not-allowed;
+}
+
+.productOverlay:hover #notAllowed {
+  display: block;
+}
+
+.productOverlay:hover::before{
+  content:"";
+  position: absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  background: rgba(0,0,0,0.7);
+  z-index:999;
+  cursor: not-allowed;
+}
