@@ -6,7 +6,6 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import ButtonProduct from '../containers/ButtonProduct';
 import { round } from '../../auxiliaryFunctions';
-import { userInfo } from 'os';
 import { store } from '../../store';
 
 class Product extends Component {

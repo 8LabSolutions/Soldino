@@ -20,8 +20,9 @@ class TransactionsManager extends Component {
   }
 
   downloadPDF() {
+    let {selectedPeriod} = this.props;
     var doc = new jsPDF()
-    doc.fromHTML(ExportPDF(this.props.invoices, this.selectedQuarter) , 1, 1)
+    doc.fromHTML(ExportPDF(this.props.invoices, selectedPeriod) , 1, 1)
     return(
       doc.save("invoices "+this.selectedQuarter+".pdf")
     )
