@@ -10,23 +10,25 @@ export default class UserInfo extends React.Component {
   }
 
   printInfo() {
-    let {user} = this.props;
-    return(
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-4">Name</div>
-          <div className="col-sm-8">{user.name}</div>
-          {(user.userType===BUSINESS) ? <div className="col-sm-4">VAT Number</div> : <div className="col-sm-4">Surame</div>} 
-          {(user.userType===BUSINESS) ? <div className="col-sm-8">{user.VATnumber}</div> : <div className="col-sm-8">{user.surname}</div>} 
-          <div className="col-sm-4">Email</div>
-          <div className="col-sm-8">{user.email}</div>
-          <div className="col-sm-4">Address</div>
-          <div className="col-sm-8">{printShipment([user.streetname, user.streetNumber, user.district, user.postcode])}</div>
-          <div className="col-sm-4">Balance</div>
-          <div className="col-sm-8">CC {user.balance}</div>
+    let {user, logged} = this.props;
+    if(logged===true){ 
+      return(
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-4">Name</div>
+            <div className="col-sm-8">{user.name}</div>
+            {(user.userType===BUSINESS) ? <div className="col-sm-4">VAT Number</div> : <div className="col-sm-4">Surame</div>} 
+            {(user.userType===BUSINESS) ? <div className="col-sm-8">{user.VATnumber}</div> : <div className="col-sm-8">{user.surname}</div>} 
+            <div className="col-sm-4">Email</div>
+            <div className="col-sm-8">{user.email}</div>
+            <div className="col-sm-4">Address</div>
+            <div className="col-sm-8">{printShipment([user.streetname, user.streetNumber, user.district, user.postcode])}</div>
+            <div className="col-sm-4">Balance</div>
+            <div className="col-sm-8">CC {user.balance}</div>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   } 
 
   render() {
