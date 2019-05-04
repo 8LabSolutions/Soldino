@@ -116,6 +116,22 @@ class TransactionsManager extends Component {
     )
   }
 
+  printResolvedRefunded() {
+    return(
+      <div className="col-sm-6">
+        <p>You have been completely refunded for this quarter.</p>
+      </div>
+    )
+  }
+
+  printResolvedPaid() {
+    return(
+      <div className="col-sm-6">
+        <p>You have paid the debt for this quarter.</p>
+      </div>
+    )
+  }
+
   printStatus() {
     let {selectedPeriod} = this.props
     if(selectedPeriod.amount!==null){
@@ -132,6 +148,8 @@ class TransactionsManager extends Component {
               </div>
               {(selectedPeriod.payable===true) ? this.printDebitButtons() : null}
               {(selectedPeriod.payable===true && selectedPeriod.defereable===false) ? this.printDeferredDate() : null}
+              {(selectedPeriod.resolved===true && selectedPeriod.amount<0) ? this.printResolvedRefunded() : null}
+              {(selectedPeriod.resolved===true && selectedPeriod.amount>=0) ? this.printResolvedPaid() : null}
             </div>
           </div>
         )
@@ -165,7 +183,6 @@ class TransactionsManager extends Component {
                 {(selectedPeriod.id==="Select a quarter") 
                 ? <button type="button" className="btn btn-light disabled" id="downloadPDF"><span className="material-icons">cloud_download</span></button> 
                 : <button type="button" className="btn btn-light" id="downloadPDF" onClick={() => this.downloadPDF()}><span className="material-icons">cloud_download</span></button>}
-                
               </div>
             </div>
           </div>
