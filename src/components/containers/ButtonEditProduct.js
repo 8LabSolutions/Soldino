@@ -1,14 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
+import { withToastManager } from 'react-toast-notifications';
 import Button from '../presentational/Button';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import { getBase64 } from '../../auxiliaryFunctions';
 import { beginLoading, endLoading } from '../../actions/login';
 import { store } from '../../store';
 import history from '../../store/history'
-import { amountStore, defaultIndex } from '../../constants/fixedValues';
+import { amountStore, defaultIndex, ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { toastManager } = ownProps;
   return {
     action: (parametersArray) => {
       parametersArray = [store.getState().editProd, ...parametersArray]
@@ -21,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
         parametersArray[5]===null
       ){
         //nothing has changed
-        history.push("/erroredit")
+        toastManager.add("You have to edit at least one field.", ERRORTOAST)
       }else{
         //something has changed, need to check what has been changed and change it/them
         dispatch(beginLoading())
@@ -42,12 +44,13 @@ const mapDispatchToProps = (dispatch) => {
             .then(()=>{
               businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
                 dispatch(action)
+                toastManager.add("Product edited successfully.", SUCCESSTOAST)
                 dispatch(endLoading())
                 history.push("/productsmanager")
               })
             })
             .catch((err)=>{
-              console.log(err)
+              toastManager.add(err, ERRORTOAST)
               dispatch(endLoading())
               history.push("/errorwhileediting")
             })
@@ -60,12 +63,13 @@ const mapDispatchToProps = (dispatch) => {
           .then(()=>{
             businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
               dispatch(action)
+              toastManager.add("Product edited successfully.", SUCCESSTOAST)
               dispatch(endLoading())
               history.push("/productsmanager")
             })
           })
           .catch((err)=>{
-            console.log(err)
+            toastManager.add(err, ERRORTOAST)
             dispatch(endLoading())
             history.push("/errorwhileediting")
           })
@@ -83,4 +87,4 @@ const mapStateToProps = (state) => {
 
 const ButtonEditProduct = connect(mapStateToProps, mapDispatchToProps)(Button);
 
-export default ButtonEditProduct;
+export default withToastManager(ButtonEditProduct);
