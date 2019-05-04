@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import App from '../../App'
 
 /**
  * @description map the loading state value into the App component
- * @param {*} state 
+ * @param {*} state
  */
 const mapStateToProps = (state) => {
   return {

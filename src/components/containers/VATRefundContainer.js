@@ -5,7 +5,7 @@ import governmentActionCreator from '../../actionsCreator/governmentActionCreato
 import { setPeriod, setVATrefund } from '../../actions/government';
 import history from '../../store/history';
 import { beginLoading, endLoading } from '../../actions/login';
-import { ERRORTOAST } from '../../constants/fixedValues';
+import { ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -68,6 +68,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       governmentActionCreator.refund(address, period, amount)
       .then(()=>{
         dispatch(endLoading())
+        toastManager.add("Business refunded.", SUCCESSTOAST);
         history.push("/vatrefund")
       })
       .catch((err)=>{

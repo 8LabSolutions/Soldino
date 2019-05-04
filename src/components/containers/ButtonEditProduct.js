@@ -1,18 +1,19 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
+import { withToastManager } from 'react-toast-notifications';
 import Button from '../presentational/Button';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import { getBase64 } from '../../auxiliaryFunctions';
 import { beginLoading, endLoading } from '../../actions/login';
 import { store } from '../../store';
 import history from '../../store/history'
-import { amountStore, defaultIndex } from '../../constants/fixedValues';
+import { amountStore, defaultIndex, ERRORTOAST } from '../../constants/fixedValues';
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { toastManager } = ownProps;
   return {
     action: (parametersArray) => {
       parametersArray = [store.getState().editProd, ...parametersArray]
-      console.log([...parametersArray])
       if(
         parametersArray[1]==="" &&
         parametersArray[2]==="" &&
@@ -36,20 +37,25 @@ const mapDispatchToProps = (dispatch) => {
         //need to check if picture has changed
 
         if(parametersArray[5]!==null){
-          getBase64(parametersArray[5]).then((base64Image)=>{
+          getBase64(parametersArray[5])
+          .then((base64Image)=>{
             editedProduct[5] = base64Image
             businessActionCreator.modifyProduct(...editedProduct)
             .then(()=>{
-              businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
+              businessActionCreator.getMyProducts(amountStore, defaultIndex)
+              .then((action)=>{
                 dispatch(action)
                 dispatch(endLoading())
                 history.push("/productsmanager")
               })
+              .catch((err)=>{
+                toastManager.add(err, ERRORTOAST);
+                dispatch(endLoading())
+              })
             })
             .catch((err)=>{
-              console.log(err)
+              toastManager.add(err, ERRORTOAST);
               dispatch(endLoading())
-              history.push("/errorwhileediting")
             })
           })
         }else{
@@ -58,16 +64,20 @@ const mapDispatchToProps = (dispatch) => {
           console.log([...editedProduct])
           businessActionCreator.modifyProduct(...editedProduct)
           .then(()=>{
-            businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
+            businessActionCreator.getMyProducts(amountStore, defaultIndex)
+            .then((action)=>{
               dispatch(action)
               dispatch(endLoading())
               history.push("/productsmanager")
             })
+            .catch((err)=>{
+              toastManager.add(err, ERRORTOAST);
+              dispatch(endLoading())
+            })
           })
           .catch((err)=>{
-            console.log(err)
+            toastManager.add(err, ERRORTOAST);
             dispatch(endLoading())
-            history.push("/errorwhileediting")
           })
         }
       }
@@ -83,4 +93,4 @@ const mapStateToProps = (state) => {
 
 const ButtonEditProduct = connect(mapStateToProps, mapDispatchToProps)(Button);
 
-export default ButtonEditProduct;
+export default withToastManager(ButtonEditProduct);

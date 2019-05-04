@@ -5,7 +5,7 @@ import FormCubitManager from '../presentational/FormCubitManager';
 import governmentActionCreator from "../../actionsCreator/governmentActionCreator"
 import { beginLoading, endLoading } from '../../actions/login';
 import { CITIZEN, BUSINESS } from '../../constants/actionTypes';
-import { amountStore, defaultIndex, amountUser, ERRORTOAST } from '../../constants/fixedValues';
+import { amountStore, defaultIndex, amountUser, ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { toastManager } = ownProps;
@@ -25,6 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       governmentActionCreator.mint(amount)
       .then((action)=>{
         dispatch(action)
+        toastManager.add(amount+" CC minted.", SUCCESSTOAST);
         dispatch(endLoading())
       })
       .catch((err)=>{
@@ -43,6 +44,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       governmentActionCreator.distribute(amount, final)
       .then((action)=>{
         dispatch(action)
+        toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
         dispatch(endLoading())
       })
       .catch((err)=>{

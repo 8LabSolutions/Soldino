@@ -6,7 +6,7 @@ import history from '../../store/history'
 import { beginLoading, endLoading } from '../../actions/login';
 import { selectedPeriod, resetInvoices } from '../../actions/business';
 import { store } from '../../store';
-import { ERRORTOAST } from '../../constants/fixedValues';
+import { ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 
@@ -40,6 +40,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       businessActionCreator.payVATPeriod(period, amount)
       .then(()=>{
         dispatch(endLoading())
+        toastManager.add("VAT period paid.", SUCCESSTOAST);
         history.push("/transactionsmanager")
       })
       .catch((err)=>{
@@ -55,6 +56,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(endLoading())
         getBusinessPeriods()
         dispatch(resetInvoices())
+        toastManager.add("VAT period deferred.", SUCCESSTOAST);
         history.push("/transactionsmanager")
       })
       .catch((err)=>{

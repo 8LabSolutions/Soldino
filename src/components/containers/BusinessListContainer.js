@@ -1,24 +1,29 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import React from 'react';
+import { withToastManager } from 'react-toast-notifications';
 import UsersList from '../presentational/UsersList';
 import governmentActionCreator from "../../actionsCreator/governmentActionCreator"
 import {BUSINESS} from "../../constants/actionTypes"
 import ButtonState from './ButtonState';
 import { printShipment } from '../../auxiliaryFunctions';
 import { searchaction } from '../../actions/searchaction';
+import { ERRORTOAST } from '../../constants/fixedValues';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  //should dispatch the action that fills the store with the first 50 users
-  //*!!! maybe only the first time !!!*/
+  const { toastManager } = ownProps;
   return {
     resetSearch: () => {
       dispatch(searchaction(""))
     },
 
     getUserList: (amount, index)=> {
-      governmentActionCreator.getUserList(amount, index, BUSINESS).then((action)=>{
+      governmentActionCreator.getUserList(amount, index, BUSINESS)
+      .then((action)=>{
         dispatch(action);
+      })
+      .catch((err)=>{
+        toastManager.add(err, ERRORTOAST);
       })
     },
 
@@ -61,4 +66,4 @@ const mapStateToProps = (state) => {
 
 const BusinessListContainer = connect(mapStateToProps, mapDispatchToProps)(UsersList);
 
-export default BusinessListContainer;
+export default withToastManager(BusinessListContainer);

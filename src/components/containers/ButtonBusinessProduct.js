@@ -28,7 +28,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             parametersArray[4] = base64Image
             businessActionCreator.addProduct(...parametersArray)
             .then(()=>{
-              businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
+              businessActionCreator.getMyProducts(amountStore, defaultIndex)
+              .then((action)=>{
                 dispatch(action)
                 toastManager.add("Product added successfully.", SUCCESSTOAST)
                 dispatch(endLoading())
@@ -42,7 +43,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }else{
           businessActionCreator.addProduct(...parametersArray)
           .then(()=>{
-            businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
+            businessActionCreator.getMyProducts(amountStore, defaultIndex)
+            .then((action)=>{
               dispatch(action)
               toastManager.add("Product added successfully.", SUCCESSTOAST)
               dispatch(endLoading())

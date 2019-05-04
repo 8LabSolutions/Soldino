@@ -1,23 +1,29 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
+import { withToastManager } from 'react-toast-notifications';
 import Button from '../presentational/Button';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import { beginLoading, endLoading } from '../../actions/login';
-import { amountStore, defaultIndex } from '../../constants/fixedValues';
+import { amountStore, defaultIndex, ERRORTOAST } from '../../constants/fixedValues';
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { toastManager } = ownProps;
   return {
     action: (keyProd) => {
       dispatch(beginLoading())
       businessActionCreator.deleteProduct(keyProd)
       .then(()=>{
-        businessActionCreator.getMyProducts(amountStore, defaultIndex).then((action)=>{
+        businessActionCreator.getMyProducts(amountStore, defaultIndex)
+        .then((action)=>{
           dispatch(action)
+          dispatch(endLoading())
+        })
+        .catch((err)=>{
+          toastManager.add(err, ERRORTOAST);
           dispatch(endLoading())
         })
       })
       .catch((err)=>{
-        console.log(err)
+        toastManager.add(err, ERRORTOAST);
         dispatch(endLoading())
       })
     }
@@ -26,4 +32,4 @@ const mapDispatchToProps = (dispatch) => {
 
 const ButtonRemoveProduct = connect(null, mapDispatchToProps)(Button);
 
-export default ButtonRemoveProduct;
+export default withToastManager(ButtonRemoveProduct);
