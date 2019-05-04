@@ -250,6 +250,7 @@ const government = (function(){
         //getting the businesses' addresses
         var businessAddresses = await getBusinessActiveInPeriod(period);
         //creating the VAT keys with the period+business's address
+
         var keyPromises = [];
         businessAddresses.forEach((address)=>{
           keyPromises.push(new Promise((resolve)=>{

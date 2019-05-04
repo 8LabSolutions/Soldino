@@ -3,8 +3,7 @@ import UserInfo from '../presentational/UserInfo';
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
-    logged: state.logged
+    user: state.user
   }
 }
 

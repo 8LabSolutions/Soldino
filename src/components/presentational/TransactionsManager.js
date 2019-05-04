@@ -11,6 +11,9 @@ class TransactionsManager extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      lastQuarter: '2019-1'
+    };
   }
 
   componentWillMount(){
@@ -116,14 +119,6 @@ class TransactionsManager extends Component {
     )
   }
 
-  printAlreadyPaid() {
-    return(
-      <div className="col-sm-6">
-        <p>You have already paid the debt.</p>
-      </div>
-    )
-  }
-
   printStatus() {
     let {selectedPeriod} = this.props
     if(selectedPeriod.amount!==null){
@@ -140,7 +135,6 @@ class TransactionsManager extends Component {
               </div>
               {(selectedPeriod.payable===true) ? this.printDebitButtons() : null}
               {(selectedPeriod.payable===true && selectedPeriod.defereable===false) ? this.printDeferredDate() : null}
-              {(selectedPeriod.resolved===true) ? this.printAlreadyPaid() : null}
             </div>
           </div>
         )
@@ -149,7 +143,8 @@ class TransactionsManager extends Component {
   }
 
   printInvoices() {
-    let {selectedPeriod, myVATnumber} = this.props;
+    let {selectedPeriod} = this.props;
+    let {myVATnumber} = this.props;
     return(
       <ul className="list-group">
         <li className="list-group-item">
@@ -171,10 +166,8 @@ class TransactionsManager extends Component {
                 <p>Total VAT</p>
               </div>
               <div className="col-sm-2">
-                {(selectedPeriod.id!=="Select a quarter") 
-                  ? <button type="button" className="btn btn-light" onClick={() => this.downloadPDF()}>Download PDF</button> 
-                  : <button type="button" className="btn btn-light disabled">Download PDF</button> 
-                }
+                {/*<ButtonGeneric text="Download PDF" />*/}
+                <button type="button" className="btn btn-light" onClick={() => this.downloadPDF()}>Download PDF</button>
               </div>
             </div>
           </div>
@@ -207,7 +200,7 @@ class TransactionsManager extends Component {
             let classColor;
             let type;
             {(i.sellerVATNumber===myVATnumber) ? type = <p>Sale</p> : type = <p>Purchase</p>}
-            {(i.sellerVATNumber===myVATnumber) ? classColor = "list-group-item redInvoice userlist-item" : classColor = "list-group-item greenInvoice userlist-item"}
+            {(i.sellerVATNumber===myVATnumber) ? classColor = "list-group-item redInvoice" : classColor = "list-group-item greenInvoice"}
             return(
               <div key={i.number}>
                 <li className={classColor}>

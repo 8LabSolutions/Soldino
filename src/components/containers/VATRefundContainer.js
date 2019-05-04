@@ -10,8 +10,6 @@ const mapDispatchToProps = (dispatch) => {
   function setVATRefund(period){
     governmentActionCreator.setVATrefund(period)
     .then((action)=>{
-      console.log("SETVATREFUNDACTION")
-      console.log(action)
       dispatch(action)
     })
   }

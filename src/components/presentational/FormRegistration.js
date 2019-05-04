@@ -87,7 +87,7 @@ class FormRegistration extends Component {
         </label>
         <label htmlFor="InputCompanyName" className="form-group col-sm-6">
           <span>VAT Number</span>
-          <input type="number" className="form-control" id="InputCompanyName" name="details" placeholder="Enter VAT Number" onChange={this.handleChange} max={99999999999} />
+          <input type="number" className="form-control" id="InputCompanyName" name="details" placeholder="Enter VAT Number" onChange={this.handleChange}  />
         </label>
       </div>
     )
