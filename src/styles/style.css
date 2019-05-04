@@ -435,3 +435,39 @@ input:checked + .slider {
     top: 14px;
   }
 }
+
+h1, h2, h3 {
+  margin-top: 40px;
+  margin-bottom: 15px;
+}
+
+.productOverlay {
+  position:relative;
+  transition: transform .2s;
+}
+
+#notAllowed {
+  display: none;
+  position: absolute;
+  top: 240px;
+  color: #fff;
+  z-index: 999;
+  font-size: 30px;
+  cursor: not-allowed;
+}
+
+.productOverlay:hover #notAllowed {
+  display: block;
+}
+
+.productOverlay:hover::before{
+  content:"";
+  position: absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  background: rgba(0,0,0,0.7);
+  z-index:999;
+  cursor: not-allowed;
+}
