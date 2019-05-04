@@ -89,7 +89,9 @@ const web3authentication = (function() {
             var type = ris[4];
             resolve([web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun), state, type]);
           })
-          .catch("The user seem not to be registered")
+          .catch(()=>{
+            reject("The user seems not to be registered")
+          })
         })
         .catch(reject)
       })

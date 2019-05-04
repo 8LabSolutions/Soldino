@@ -1,30 +1,29 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
+import { withToastManager } from 'react-toast-notifications';
 import Button from '../presentational/Button';
 import authentication from "../../facade/authentication"
-import history from '../../store/history'
 import { beginLoading, endLoading } from '../../actions/login';
+import { SUCCESSTOAST, ERRORTOAST } from '../../constants/fixedValues';
 
-
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { toastManager } = ownProps;
   return {
     action: (parametersArray) => {
       dispatch(beginLoading())
       authentication.addUser(...parametersArray).then(()=>{
+        toastManager.add("Registration completed. Now you can login and start using Soldino.", SUCCESSTOAST)
         dispatch(endLoading())
-        history.push('/successregistration')
       })
       .catch((err)=>{
         console.log(err)
         //dispatch the error message
+        toastManager.add(err, ERRORTOAST)
         dispatch(endLoading())
-        history.push('/errorregistration')
       })
-
     }
   }
 }
 
 const ButtonSignUp = connect(null, mapDispatchToProps)(Button);
 
-export default ButtonSignUp;
+export default withToastManager(ButtonSignUp);

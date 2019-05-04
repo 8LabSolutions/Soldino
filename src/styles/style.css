@@ -195,17 +195,17 @@ input:checked + .slider {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #bdc3c7; 
+  background: #bdc3c7;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #bdc3c7; 
+  background: #bdc3c7;
 }
 
 .card img {
@@ -226,11 +226,11 @@ input:checked + .slider {
 
 .decrease {
   cursor: pointer;
-  margin-right: 25px; 
+  margin-right: 25px;
 }
 .increase {
   cursor: pointer;
-  margin-left: 25px; 
+  margin-left: 25px;
 }
 
 .cardHeaderWrapper {
@@ -434,4 +434,9 @@ input:checked + .slider {
     right: 0;
     top: 14px;
   }
+}
+/*toast*/
+.css-1ed3p0v, .css-e110bw{
+  z-index: 9999;
+  margin-top: 52px;
 }

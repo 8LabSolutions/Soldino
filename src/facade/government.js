@@ -4,7 +4,6 @@ import web3util from "../web3functions/web_util";
 import web3authentication from "../web3functions/authentication"
 
 const government = (function(){
-
   /**
      *
      * @returns An array containing all the business addresses with at least a transaction in the given period

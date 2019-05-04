@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 /*
  * Each <Button /> hash two main props:
  *  -text: the text that is displayed inside it
@@ -14,9 +13,10 @@ import React, {Component} from 'react';
 class Button extends Component {
   render() {
     let props = this.props;
+    console.log(props)
     return (
       /*}, props.args2, props.args3*/
-      <button type="button" className="btn btn-light" onClick={() => {props.action(props.args1)}}>{props.text}</button>
+      <button type="button" className="btn btn-light" onClick={() =>{props.action(props.args1)}}>{props.text}</button>
     )
   }
 }

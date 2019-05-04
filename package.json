@@ -44,6 +44,7 @@
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
     "react-scripts": "^2.1.8",
+    "react-toast-notifications": "^1.4.0",
     "reactstrap": "^8.0.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",

@@ -1,10 +1,11 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
-import { logIn, logOut, logBusiness, logCitizen, logGovern } from '../../actions/login';
+import { withToastManager } from 'react-toast-notifications';
+import { logIn, logOut } from '../../actions/login';
 import Button from '../presentational/Button';
 import { store } from "../../store/index";
 import authentication from "../../facade/authentication"
 import history from '../../store/history'
+import { ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
 
 
 /**
@@ -21,14 +22,16 @@ const mapStateToProps = (state) => {
  * @description map the logIn/logOut actions into the Button component
  * @param {*} dispatch
  */
-const mapDispatchToProps = (dispatch) => {
-
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { toastManager } = ownProps;
   return {
     action: () => {
 
       //get the object if user exists
-      authentication.userLogin().then((user)=>{
+      authentication.userLogin()
+      .then((user)=>{
         let action = (store.getState().logged === false) ? logIn(user) : logOut();
+        let message = (store.getState().logged === false) ? "Welcome back "+user.name+"!" : "See you soon";
         dispatch(action)
 
         //starting listening for account chages
@@ -37,16 +40,12 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(logOut())
           history.push('/')
         })
-
+        toastManager.add(message, SUCCESSTOAST);
         history.push('/')
-      }).catch((log) => {
-        console.log(log)
-        history.push('/erroruserdisabled')
       })
-      //swith sul type dello user (diversi dispatch) : paramentro oggetto JSON
-      //dispatch dell'azione di login/logout
-
-
+      .catch((error) => {
+        toastManager.add(error, ERRORTOAST);
+      })
     }
   }
 }
@@ -57,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
  */
 const ButtonAuth = connect(mapStateToProps, mapDispatchToProps)(Button);
 
-export default ButtonAuth;
+export default withToastManager(ButtonAuth);
