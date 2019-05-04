@@ -267,7 +267,7 @@ export const persistConfig = {
   key: 'root',
   storage: storage,
   /** 'cart', 'ordersList' prima della presentazione */
-  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct', 'myProductsArray', 'ordersList', 'businessList', 'citizenList', 'editProd', 'periods', 'invoices', 'selectedPeriod', 'VATRefundList']
+  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct', 'myProductsArray', 'ordersList', 'businessList', 'citizenList', 'editProd', 'periods', 'invoices', 'selectedPeriod', 'VATRefundList', 'VATPeriods']
 };
 
 export default persistReducer(persistConfig, rootReducer);
