@@ -1,24 +1,35 @@
 import { connect } from 'react-redux';
+import { withToastManager } from 'react-toast-notifications';
 import TransactionsManager from '../presentational/TransactionsManager';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import history from '../../store/history'
 import { beginLoading, endLoading } from '../../actions/login';
 import { selectedPeriod, resetInvoices } from '../../actions/business';
 import { store } from '../../store';
+import { ERRORTOAST } from '../../constants/fixedValues';
 
-const mapDispatchToProps = (dispatch) => {
-  //should dispatch the action that fills the store with the first 50 users
-  //*!!! maybe only the first time !!!*/
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+  const { toastManager } = ownProps;
   function getBusinessPeriods(){
-    businessActionCreator.getBusinessPeriod().then((action)=>{
+    businessActionCreator.getBusinessPeriod()
+    .then((action)=>{
       dispatch(action)
+    })
+    .catch((err)=>{
+      toastManager.add(err, ERRORTOAST);
     })
   }
 
   return {
     getInvoices: function(VATPeriod){
-      businessActionCreator.getInvoices(VATPeriod).then((action)=>{
+      businessActionCreator.getInvoices(VATPeriod)
+      .then((action)=>{
         dispatch(action)
+      })
+      .catch((err)=>{
+        dispatch(endLoading())
+        toastManager.add(err, ERRORTOAST);
       })
     },
 
@@ -31,6 +42,10 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(endLoading())
         history.push("/transactionsmanager")
       })
+      .catch((err)=>{
+        dispatch(endLoading())
+        toastManager.add(err, ERRORTOAST);
+      })
     },
 
     putOnHoldVATPeriod: function(period){
@@ -41,6 +56,10 @@ const mapDispatchToProps = (dispatch) => {
         getBusinessPeriods()
         dispatch(resetInvoices())
         history.push("/transactionsmanager")
+      })
+      .catch((err)=>{
+        dispatch(endLoading())
+        toastManager.add(err, ERRORTOAST);
       })
     },
 
@@ -73,4 +92,4 @@ const mapStateToProps = (state) => {
 
 const TransactionManagerContainer = connect(mapStateToProps, mapDispatchToProps)(TransactionsManager);
 
-export default TransactionManagerContainer;
+export default withToastManager(TransactionManagerContainer);

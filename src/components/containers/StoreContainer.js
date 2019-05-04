@@ -1,34 +1,53 @@
 /* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
+import { withToastManager } from 'react-toast-notifications';
 import Store from '../presentational/Store';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import { increaseIndex, decreaseIndex, resetIndex } from '../../actions/store'
 import { store } from '../../store';
-import { amountStore } from '../../constants/fixedValues';
+import { amountStore, ERRORTOAST } from '../../constants/fixedValues';
 import { setTotalNumberOfProducts } from '../../actions/business';
 
-const mapDispatchToProps = (dispatch) => {
-  //should dispatch the action that fills the store with the first 50 users
-  //*!!! maybe only the first time !!!*/
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { toastManager } = ownProps;
+
   return {
     getStoreProducts: (index) => {
       //call the action creator to dispatch the products getter
       dispatch(resetIndex())
-      businessActionCreator.getTotalStoreProduct().then((total)=>{dispatch(setTotalNumberOfProducts(total))})
-      businessActionCreator.getStoreProducts(amountStore, index).then((action)=>{
+      businessActionCreator.getTotalStoreProduct()
+      .then((total)=>{
+        dispatch(setTotalNumberOfProducts(total))
+      })
+      .catch((err)=>{
+        toastManager.add(err, ERRORTOAST);
+      })
+      businessActionCreator.getStoreProducts(amountStore, index)
+      .then((action)=>{
         dispatch(action)
+      })
+      .catch((err)=>{
+        toastManager.add(err, ERRORTOAST);
       })
     },
     increaseIndex: () => {
       dispatch(increaseIndex())
-      businessActionCreator.getStoreProducts(amountStore, store.getState().index).then((action)=>{
+      businessActionCreator.getStoreProducts(amountStore, store.getState().index)
+      .then((action)=>{
         dispatch(action)
+      })
+      .catch((err)=>{
+        toastManager.add(err, ERRORTOAST);
       })
     },
     decreaseIndex: () => {
       dispatch(decreaseIndex())
-      businessActionCreator.getStoreProducts(amountStore, store.getState().index).then((action)=>{
+      businessActionCreator.getStoreProducts(amountStore, store.getState().index)
+      .then((action)=>{
         dispatch(action)
+      })
+      .catch((err)=>{
+        toastManager.add(err, ERRORTOAST);
       })
     }
   }
@@ -45,4 +64,4 @@ const mapStateToProps = (state) => {
 
 const StoreContainer = connect(mapStateToProps, mapDispatchToProps)(Store);
 
-export default StoreContainer;
+export default withToastManager(StoreContainer);

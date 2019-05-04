@@ -10,7 +10,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     action: (parametersArray) => {
       dispatch(beginLoading())
-      authentication.addUser(...parametersArray).then(()=>{
+      authentication.addUser(...parametersArray)
+      .then(()=>{
         toastManager.add("Registration completed. Now you can login and start using Soldino.", SUCCESSTOAST)
         dispatch(endLoading())
       })

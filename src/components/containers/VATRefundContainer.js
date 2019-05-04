@@ -1,17 +1,24 @@
 import { connect } from 'react-redux';
+import { withToastManager } from 'react-toast-notifications';
 import VATRefund from '../presentational/VATRefund';
 import governmentActionCreator from '../../actionsCreator/governmentActionCreator';
 import { setPeriod, setVATrefund } from '../../actions/government';
 import history from '../../store/history';
 import { beginLoading, endLoading } from '../../actions/login';
+import { ERRORTOAST } from '../../constants/fixedValues';
 
-const mapDispatchToProps = (dispatch) => {
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { toastManager } = ownProps;
   function setVATRefund(period){
     governmentActionCreator.setVATrefund(period)
     .then((action)=>{
       dispatch(action)
     })
+    .catch((err)=>{
+      toastManager.add(err, ERRORTOAST);
+    })
+
   }
 
   return {
@@ -21,6 +28,9 @@ const mapDispatchToProps = (dispatch) => {
       governmentActionCreator.getVATPeriods()
       .then((action)=>{
         dispatch(action)
+      })
+      .catch((err)=>{
+        toastManager.add(err, ERRORTOAST);
       })
     },
 
@@ -60,11 +70,10 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(endLoading())
         history.push("/vatrefund")
       })
-      .catch(()=>{
+      .catch((err)=>{
+        toastManager.add(err, ERRORTOAST);
         dispatch(endLoading())
       })
-
-
     }
   }
 }
@@ -81,4 +90,4 @@ const mapStateToProps = (state) => {
 
 const VATRefundContainer = connect(mapStateToProps, mapDispatchToProps)(VATRefund);
 
-export default VATRefundContainer;
+export default withToastManager(VATRefundContainer);

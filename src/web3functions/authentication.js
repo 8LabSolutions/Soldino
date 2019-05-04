@@ -33,7 +33,7 @@ const web3authentication = (function() {
             .send({from: account})
             .then(resolve)
             .catch(()=>{
-              reject("error during the registration of a new citizen, there is a problem with Web3 API");
+              reject("Error during the registration of a new citizen, maybe the user is already registered");
             })
           })
           .catch(reject)
@@ -57,7 +57,7 @@ const web3authentication = (function() {
             .send({from: account})
             .then(resolve)
             .catch(()=>{
-              reject("error during the registration of a new business, there is a problem with Web3 API");
+              reject("Error during the registration of a new business, maybe the user is already registered");
             })
           })
           .catch(reject)
@@ -79,7 +79,8 @@ const web3authentication = (function() {
           if (address === undefined){
             address = await web3util.getCurrentAccount()
           }
-          userLogicInstance.methods.getUserInfo(address).call()
+          userLogicInstance.methods.getUserInfo(address)
+          .call()
           .then((ris)=>{
             var hashIPFS = ris[0];
             var hashFun = ris[1];

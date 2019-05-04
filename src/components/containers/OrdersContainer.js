@@ -1,13 +1,19 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
+import { withToastManager } from 'react-toast-notifications';
 import userActionCreator from "../../actionsCreator/userActionCreator"
 import Orders from '../presentational/Orders';
+import { ERRORTOAST } from '../../constants/fixedValues';
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { toastManager } = ownProps;
   return {
     getOrdersList: ()=> {
-      userActionCreator.getOrdersList().then((action)=>{
+      userActionCreator.getOrdersList()
+      .then((action)=>{
         dispatch(action);
+      })
+      .catch((err)=>{
+        toastManager.add(err, ERRORTOAST);
       })
     }
   }
@@ -22,4 +28,4 @@ const mapStateToProps = (state) => {
 
 const OrdersContainer = connect(mapStateToProps, mapDispatchToProps)(Orders);
 
-export default OrdersContainer;
+export default withToastManager(OrdersContainer);
