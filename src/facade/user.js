@@ -6,10 +6,17 @@ import { round } from "../auxiliaryFunctions";
 //TODO resolve in buy function
 const user = (function(){
 
+  /**
+   * @returns The array of products passed sorted by seller
+   * @param {*} products The products to be sorted by seller
+   */
   function groupProductsBySeller(products){
     return products.sort((a,b) => (a.seller > b.seller) ? 1 : ((b.seller > a.seller) ? -1 : 0));
   }
-
+  /**
+   * @returns The function returns an array of array, gruping the products by seller
+   * @param {*} products An array of products sorted by seller
+   */
   function splitInSellerArray(products){
     var productAux = [];
     var prevSeller = products[0].seller;
@@ -26,7 +33,10 @@ const user = (function(){
     result.push(productAux);
     return result;
   }
-
+  /**
+   * @returns The total VAT amount of the given products
+   * @param {*} products An array of products
+   */
   function getTotalVAT(products){
     let netPrice = 0;
     let sumNetPrice = 0;
@@ -114,10 +124,8 @@ const user = (function(){
                   productQtn.push(orders[i][j].quantity)
                 }
               }
-              web3user.tokenTransferApprove(cartInfo.VAT+cartInfo.net).then(()=>{
-                console.log([cartInfo.VAT+cartInfo.net, products, remainingHash, hashSize, hashFun, productQtn])
-                web3user.purchase(products, remainingHash, hashSize, hashFun, productQtn).then(resolve)
-              })
+              web3user.purchase(cartInfo.VAT+cartInfo.net, products, remainingHash, hashSize, hashFun, productQtn)
+              .then(resolve)
             })
           })
         })

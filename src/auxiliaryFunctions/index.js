@@ -213,7 +213,7 @@ export function checkGovernment() {
 }
 
 export function round(numberToRound) {
-  return parseFloat(numberToRound).toFixed(2)
+  return parseFloat(parseFloat(numberToRound).toFixed(2))
 }
 
 export function getBase64(file) {

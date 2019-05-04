@@ -11,83 +11,82 @@ const web3user = (function(){
 
   return{
     /**
+     * @description Buy the products passed. The array must be ordered such that the i-th cell of each
+     * array refers to the same product. This function asks for two confirmation to the client, since
+     * it must firstly approve the Purchase contract to withdraw the total amount from the user address,
+     * and than it must confirm the final transaction.
      *
-     * @param {*} amount
+     * @param {*} amount The total amount that must be payed. The amount will be recalculated.
+     * @param {*} products Array containing the products JSON
+     * @param {*} remainingHash The respective product IPFS CID (ID)
+     * @param {*} hashSize The respective product IPFS CID (size)
+     * @param {*} hashFun The respective product IPFS CID (fun)
+     * @param {*} productQtn The respective product quantity
      */
-    tokenTransferApprove: function(amount) {
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
-          console.log("Cubit "+tokenInstance.options.address)
-          web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
-            web3util.getCurrentAccount().then((account)=>{
-              tokenInstance.methods.approve(purchaseInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
-              .send({from: account})
-              .then((txnHash) => {
-                return web3util.init()
-                .then((web3Instance) => {
-                  web3Instance.eth.getTransactionReceipt(txnHash)
-                  .then(resolve)
-                })
-              })
-            })
-          })
-        })
-      })
-    },
-
-    purchase: function(products, remainingHash, hashSize, hashFun, productQtn){
+    purchase: function(amount, products, remainingHash, hashSize, hashFun, productQtn){
 
       for (let i = 0; i< products.length; i++){
         products[i] = products[i].keyProd
       }
-      console.log("user.js web3 fun")
-      console.log(products)
-      console.log(productQtn)
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(Purchase).then((purchaseInstance)=>{
-          console.log("Chiamata acquisto a: "+purchaseInstance.options.address)
-          web3util.getCurrentAccount().then((account)=>{
-          console.log("user.js web3functions-----------------")
-            console.log("prod")
-            console.log(products)
-            console.log("orders")
-            console.log(remainingHash)
-            console.log("user.js web3functions----------------- FIN")
-            purchaseInstance.methods.saveAndPayOrder(
-              products,
-              productQtn,
-              remainingHash,
-              hashFun,
-              hashSize,
-              web3util.getVATPeriod())
-            .send({from: account, gas: 2000000})
-            .then(resolve)
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(Purchase)
+        .then((purchaseInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
+            web3util.tokenTransferApprove(amount, Purchase)
+            .then(()=>{
+              purchaseInstance.methods.saveAndPayOrder(
+                products,
+                productQtn,
+                remainingHash,
+                hashFun,
+                hashSize,
+                web3util.getVATPeriod())
+              .send({from: account, gas: 2000000})
+              .then(resolve)
+              .catch(()=>{
+                reject("There were some problems with the payment, please contanct the system administrator")
+              })
+            })
+            .catch(reject)
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
      * @returns Returns the balance of the logged account
      */
     getBalance: function(){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            tokenInstance.methods.balanceOf(account).call().then((balance)=>{
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(TokenCubit)
+        .then((tokenInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
+            tokenInstance.methods.balanceOf(account)
+            .call()
+            .then((balance)=>{
               if(balance!==0)
                 balance/=web3util.TOKENMULTIPLIER;
               resolve(round(balance))
             })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns The function returns all the IPFS hashes of the current account,
+     * from which it is possible to retrieve all the information
+     */
     getPurchase: function(){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         web3util.getContractInstance(OrderLogic)
         .then((orderLogicInstance) => {
-          web3util.getCurrentAccount().then((account) => {
+          web3util.getCurrentAccount()
+          .then((account) => {
             orderLogicInstance.getPastEvents("PurchaseOrderInserted", {filter: {_buyer: account},
             fromBlock: 0,
             toBlock: 'latest'})
@@ -101,29 +100,45 @@ const web3user = (function(){
               for (let i = 0; i< orderHashes.length; i++){
                 orderIPFS.push(
                   new Promise((resolve)=>{
-                    web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
-                      web3util.getCurrentAccount().then((account)=>{
+                    web3util.getContractInstance(OrderLogic)
+                    .then((orderLogicInstance)=>{
+                      web3util.getCurrentAccount()
+                      .then((account)=>{
                         orderLogicInstance.methods.getOrderCid(orderHashes[i])
                         .call({from: account})
                         .then((hashParts)=>{
                           resolve(web3util.recomposeIPFSHash(hashParts[0], hashParts[2], hashParts[1]))
                         })
+                        .catch(()=>{
+                          reject("Not able to find the order CID. Please contanct the system administrator")
+                        })
                       })
+                      .catch(reject)
                     })
+                    .catch(reject)
                   })
                 )
               }
-              Promise.all(orderIPFS).then((ris)=>{
+              Promise.all(orderIPFS)
+              .then((ris)=>{
                 resolve(ris)
               })
+              .catch(reject)
+            })
+            .catch(()=>{
+              reject("Error retriving the events: PurchaseOrderInserted")
             })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns The function returns the number of purchases done by the current user
+     */
     getPurchaseNumber: function(){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         web3util.getContractInstance(OrderLogic)
         .then((orderLogicInstance) => {
           orderLogicInstance.getPastEvents("PurchaseOrderInserted", {
@@ -132,7 +147,11 @@ const web3user = (function(){
           .then((events) => {
             resolve(events.length)
           })
+          .catch(()=>{
+            reject("Error retriving the events: PurchaseOrderInserted")
+          })
         })
+        .catch(reject)
       })
     }
   }

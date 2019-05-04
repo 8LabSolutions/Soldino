@@ -5,7 +5,8 @@ import web3user from "../web3functions/user"
 const authentication = (function(){
   return{
     /**
-     * @description return a promise about the registration of the user
+     * @description return a promise that resolves if the registration of the user went well,
+     * otherwise reject with an error
      * @param {*} userType
      * @param {*} email
      * @param {*} streetName
@@ -15,7 +16,7 @@ const authentication = (function(){
      * @param {*} name
      * @param {*} details
     */
-    addUser: async function(userType, email, streetName, streetNumber, district, postCode, name, details){
+    addUser: function(userType, email, streetName, streetNumber, district, postCode, name, details){
       //istantiate the necessary costracts and returns the results
       if(userType === "CITIZEN") {
         var newCitizenJSON = {
@@ -28,12 +29,16 @@ const authentication = (function(){
           district: district,
           postCode: postCode
         }
-        return new Promise((resolve)=>{
-          ipfsModule.insertJSONintoIPFS(newCitizenJSON).then(async (hash)=>{
+        return new Promise((resolve, reject)=>{
+          ipfsModule.insertJSONintoIPFS(newCitizenJSON)
+          .then((hash)=>{
             //splitting the hash in three parts to save them into the blockchain
             //console.log(hash+' inserted')
-            web3authentication.addCitizen(hash).then(resolve)
+            web3authentication.addCitizen(hash)
+            .then(resolve)
+            .catch(reject)
           })
+          .catch(reject)
         })
       }
 
@@ -50,20 +55,29 @@ const authentication = (function(){
         }
         console.log(newBusinessJSON)
         //insert the json into ipfs
-        return new Promise((resolve)=>{
-          ipfsModule.insertJSONintoIPFS(newBusinessJSON).then(async (hash)=>{
+        return new Promise((resolve, reject)=>{
+          ipfsModule.insertJSONintoIPFS(newBusinessJSON)
+          .then((hash)=>{
             //splitting the hash in three parts to save them into the blockchain
-            web3authentication.addBusiness(hash).then(resolve)
+            web3authentication.addBusiness(hash)
+            .then(resolve)
+            .catch(reject)
           })
+          .catch(reject)
         })
       }
       //different registartions based on the userType
     },
 
+    /**
+     * @description REturns a promise that resolves with the user info if the user is registered,
+     * otherwise reject with an error
+     */
     userLogin: function() {
       return new Promise((resolve, reject)=>{
         //getUser returns: hashIPFS, state, userType
-        web3authentication.getUser().then(([hashIPFS, state, userType])=>{
+        web3authentication.getUser()
+        .then(([hashIPFS, state, userType])=>{
           //drop if the user is disabled
           if(state === false)
             reject("the account is disabled, please call the offices to get more infos");
@@ -77,15 +91,20 @@ const authentication = (function(){
             resolve(governmentJSON);
           }
           else {
-            ipfsModule.getJSONfromHash(hashIPFS).then((ris)=>{
+            ipfsModule.getJSONfromHash(hashIPFS)
+            .then((ris)=>{
               ris.state = state;
-              web3user.getBalance().then((balance)=>{
+              web3user.getBalance()
+              .then((balance)=>{
                 ris.balance = balance
                 resolve(ris)
               })
+              .catch(reject)
             })
+            .catch(reject)
           }
         })
+        .catch(reject)
       })
     },
     /**
@@ -93,9 +112,10 @@ const authentication = (function(){
      * one of them happen
      */
     listenForChanges: function(){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         web3authentication.listenForChanges()
         .then(resolve)
+        .catch(reject)
       })
     }
   }

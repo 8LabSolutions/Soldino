@@ -1,5 +1,7 @@
 import Web3 from 'web3';
 import ContractManager from "../contracts_build/ContractManager"
+import TokenCubit from "../contracts_build/TokenCubit"
+import { round } from '../auxiliaryFunctions';
 
 const web3util = (function() {
   var bs58 = require('bs58');
@@ -30,6 +32,63 @@ const web3util = (function() {
       }
     });
   }
+  /**
+     * @returns Promise: returns the current active account on MetaMask,
+     * otherwise rejects with an error
+     */
+  async function getCurrentAccount(){
+    if (web3js === undefined)
+        await init()
+
+    return new Promise(async (resolve, reject) =>{
+      //if there is no web3 instance reject with an error
+      if (web3js === undefined)
+        await init()
+
+      web3js.eth.getAccounts()
+      .then((account)=>{
+        resolve(account[0])
+      })
+      .catch(()=>{
+        reject("Error trying to get the active account on MetaMask, please check if you're logged in into MetaMask");
+      })
+    })
+  }
+  /**
+     * @description The function ask the current deployment address from the ContractManager,
+     * and returns the instance
+     * @returns The contract instance of the JSON
+     * @param {*} contractJSON The JSON representing the compiled contract, obtained from truffle-compile
+     * command
+     */
+  async function getContractInstance(contractJSON){
+    if (web3js === undefined)
+        await init()
+
+    let contractManagerInstance;
+    return new Promise((resolve, reject)=>{
+      web3js.eth.net.getId()
+      .then((id)=>{
+        //getting the contract manager instance
+        contractManagerInstance = new web3js.eth.Contract(ContractManager.abi,
+          ContractManager.networks[id].address);
+        //getting the deployment address of the Passed contract
+        contractManagerInstance.methods.getContractAddress(contractJSON.contractName)
+        .call()
+        .then((_contractAddress)=>{
+          //getting the instance of the deployed contract
+          var instance = new web3js.eth.Contract(contractJSON.abi, _contractAddress);
+          resolve(instance)
+        })
+        .catch(()=>{
+          reject("Error retriving the Contract "+contractJSON.contractName+" in the ContractManager, it is possible that the name of the contract is wrong")
+        })
+      })
+      .catch(()=>{
+        reject("Error retrieving the network ID, check the Web3 Object instance")
+      })
+    })
+  }
 
   //initialize web3
   init();
@@ -54,24 +113,7 @@ const web3util = (function() {
      * @returns Promise: returns the current active account on MetaMask,
      * otherwise rejects with an error
      */
-    getCurrentAccount: async function(){
-      if (web3js === undefined)
-          await init()
-
-      return new Promise(async (resolve, reject) =>{
-        //if there is no web3 instance reject with an error
-        if (web3js === undefined)
-          await init()
-
-        web3js.eth.getAccounts()
-        .then((account)=>{
-          resolve(account[0])
-        })
-        .catch(()=>{
-          reject("Error trying to get the active account on MetaMask, please check if you're logged in into MetaMask");
-        })
-      })
-    },
+    getCurrentAccount: getCurrentAccount,
     /**
      * @returns Return an array in the following format [remainingHash, size, fun], where:
      * \t 1) remainingHash: the ID of the object
@@ -116,32 +158,44 @@ const web3util = (function() {
      * @param {*} contractJSON The JSON representing the compiled contract, obtained from truffle-compile
      * command
      */
-    getContractInstance: async function(contractJSON){
-      if (web3js === undefined)
-          await init()
-
-      let contractManagerInstance;
+    getContractInstance: getContractInstance,
+    /**
+     * @description This function request the permission to let the passed Contract to withdraw
+     * the passed amount of Cubit. USe this function when a contract must withdraw, and the msg.sender
+     * in the solidity function is a contract instead of a user address.
+     * @param {*} amount The amount to be withdraw
+     * @param {*} contractJSON The JSON of the contract that must have the permissions to withdraw.
+     * The contract Manager will be used to get the current deployed instance.
+     */
+    tokenTransferApprove: function(amount, contractJSON) {
       return new Promise((resolve, reject)=>{
-        web3js.eth.net.getId()
-        .then((id)=>{
-          //getting the contract manager instance
-          contractManagerInstance = new web3js.eth.Contract(ContractManager.abi,
-            ContractManager.networks[id].address);
-          //getting the deployment address of the Passed contract
-          contractManagerInstance.methods.getContractAddress(contractJSON.contractName)
-          .call()
-          .then((_contractAddress)=>{
-            //getting the instance of the deployed contract
-            var instance = new web3js.eth.Contract(contractJSON.abi, _contractAddress);
-            resolve(instance)
+        getContractInstance(TokenCubit)
+        .then((tokenInstance)=>{
+          getContractInstance(contractJSON)
+          .then((contractInstance)=>{
+            getCurrentAccount()
+            .then((account)=>{
+              tokenInstance.methods.approve(contractInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
+              .send({from: account})
+              .then(resolve)
+              .catch((error)=>{
+                reject("The approval failed with the following error: " + error)
+              })
+              /* should wait the transaction to be mined
+              .then((txnHash) => {
+                web3util.init()
+                .then((web3Instance) => {
+                  web3Instance.eth.getTransactionReceipt(txnHash)
+                  .then(resolve)
+                })
+              })
+              */
+            })
+            .catch(reject)
           })
-          .catch(()=>{
-            reject("Error retriving the Contract in the ContractManager, it is possible that the name of the contract is wrong")
-          })
+          .catch(reject)
         })
-        .catch(()=>{
-          reject("Error retrieving the network ID, check the Web3 Object instance")
-        })
+        .catch(reject)
       })
     },
     //constant to multiply the amounts in order to get more precision in the solidity's functions
