@@ -1,6 +1,6 @@
 import government from "../facade/government"
 import user from "../facade/user"
-import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount, setVATrefund, setVATPeriod, resetVATPeriods, resetPeriod, setStatus} from "../actions/government"
+import {getCitizenList, getBusinessList, getGovernmentBalanceAndTotalAmount, setVATrefund, setVATPeriod, resetVATPeriods, resetPeriod, setStatus, resetVAT} from "../actions/government"
 import {CITIZEN, BUSINESS} from "../constants/actionTypes"
 import {store} from "../store/index"
 import { searchaction } from "../actions/searchaction";
@@ -126,6 +126,10 @@ const governmentActionCreator = (function(){
 
     resetPeriods: function(){
       return(resetVATPeriods())
+    },
+
+    resetVAT: function(){
+      return(resetVAT())
     },
 
     resetSearch: function(){

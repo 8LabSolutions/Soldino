@@ -259,7 +259,7 @@ const business = (function(){
                   console.log(["stato: ", state])
                   var deferred = false;
                   var defereable = false;
-                  var payable = false; //false
+                  var payable = false;
                   var resolved = false;
                   var outOfLimit = false;
                   //enum state {DUE, OVERDUE, PAID, TO_BE_REFUNDED, REFUNDED}

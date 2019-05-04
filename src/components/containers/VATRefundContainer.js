@@ -36,6 +36,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(governmentActionCreator.resetPeriod())
     },
 
+    resetVAT: function(){
+      dispatch(governmentActionCreator.resetVAT())
+    },
+
     setPeriod: function(period){
       dispatch(setPeriod(period))
       if(period.id !== "Select a quarter"){

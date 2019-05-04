@@ -1,4 +1,4 @@
-import {GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, SETVATREFUND, SETSTATUS, SELECTEDPERIOD, VATPERIODS } from "../constants/actionTypes";
+import {GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, SETVATREFUND, SETSTATUS, SELECTEDPERIOD, VATPERIODS, RESETVAT } from "../constants/actionTypes";
 
 
 export function getCitizenList(citizenList) {
@@ -62,5 +62,11 @@ export function setVATPeriod(periods) {
   return {
     type: VATPERIODS,
     periods
+  }
+}
+
+export function resetVAT() {
+  return {
+    type: RESETVAT
   }
 }

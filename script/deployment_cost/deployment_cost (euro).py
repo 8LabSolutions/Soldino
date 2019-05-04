@@ -2,11 +2,7 @@ import re
 import datetime
 
 INPUT_PATH = '../truffle_test/truffle_test_ris.txt'
-OUTPUT_PATH = 'call_cost.csv'
-
-def get_gas_cost(line):
-	items = line.split()
-	return items[9]
+OUTPUT_PATH = 'deployment_cost.csv'
 
 def calc_average(list):
 	sum = 0
@@ -21,37 +17,31 @@ def calc_average(list):
 with open (INPUT_PATH,'r') as cv:
 	lines = cv.readlines()
 	
-	
 	# flag
-	methods = False
+	deployments = False
 	# la maialata
-	begin = 'Methods'
-	end = 'Deployments' 
-	separator = '·················'
-	to_skip = 'Contract'
-	
+	separator = '·····································'
+	end = '·---------------------------------' 
 
 	ris = []
 	for line in lines:
 		
-		# considera solo le linee con i le chiamate
-		if begin in line: # costo delle chiamate
-			methods = True
+		# considera solo le linee con i prezzi di deployment
+		if 'Deployments'  in line: # prezzi di deployement
+			deployments = True
 			continue
 		elif end in line:
-			methods = False
+			deployments = False
 
-		if methods and separator not in line and to_skip not in line:
-			function_name = re.compile('·\s+(\w+)').search(line)
-			call_cost = get_gas_cost(line)
-			
-			
-			ris.append([function_name.group(1),call_cost])
-			
+		if deployments and separator not in line:
+			contract_name = re.compile('\w+').search(line)
+			contract_deploy_price = re.compile('(\d+\.\d+)\s[^\%]').search(line)
+			ris.append([contract_name.group(),contract_deploy_price.group(1)])
+
 			# ok, abbiamo nome e prezzo
 			# non ci resta che salvare in un array nomi e prezzi. poi calcola la media
 
-	with open (OUTPUT_PATH,'a') as out:
+	with open (OUTPUT_PATH,'a') as dep:
 		# data ISO
 		iso_time_and_date = datetime.datetime.now().isoformat()
 		iso_date = iso_time_and_date[:10]
@@ -67,7 +57,7 @@ with open (INPUT_PATH,'r') as cv:
 
 		values = []
 		values.append(iso_date)
-		# costi delle chiamate	
+		# valori di deployment	
 		for i in range(len(ris)):
 			#print (ris[i][1])
 			values.append(ris[i][1])
@@ -76,6 +66,5 @@ with open (INPUT_PATH,'r') as cv:
 		values.append(str(ave))
 		values = ','.join(values)
 
-		#out.write(names+'\n') # da stampare solo alla prima stampa
-		out.write(values+'\n')
-	
+		#dep.write(names+'\n') # da stampare solo alla prima stampa
+		dep.write(values+'\n')
