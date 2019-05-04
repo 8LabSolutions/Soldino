@@ -9,7 +9,7 @@ def calc_average(list):
 	for i in range(len(list)):
 		sum += float(list[i])
 	ave = sum/(len(list))
-	ave = (round(ave,2)) 
+	ave = int(ave)
 	return ave
 
 def get_gas_cost(line):
