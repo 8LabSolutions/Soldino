@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import ButtonProduct from '../containers/ButtonProduct';
 import { round } from '../../auxiliaryFunctions';
+import { store } from '../../store';
 
 class Product extends Component {
 
@@ -20,8 +21,13 @@ class Product extends Component {
     this.setState({value: event.target.value});
   }
 
-  render() {
+  printNotAllowed() {
+    return (
+      <p id="notAllowed">You are not allowed to buy your products.</p>
+    )
+  }
 
+  render() {
     let props = this.props;
     let maxQuantity = 50;
     let product = []
@@ -33,10 +39,15 @@ class Product extends Component {
     product[7] = props.seller
     product[8] = props.description
     let image
-    (props.image===null) ? image = "/default.png" : image = props.image;
+    let myVAT
+    let classDiv
+    {(store.getState().user.VATnumber!==undefined) ? myVAT=store.getState().user.VATnumber : myVAT=""}
+    {(props.image===null) ? image = "/default.png" : image = props.image;}
+    {(props.sellerVATNumber===myVAT) ? classDiv="card productOverlay" : classDiv="card" }
     return (
       <div className="col-sm-3">
-        <div className="card">
+        <div className={classDiv}>
+          {(props.sellerVATNumber===myVAT) ? this.printNotAllowed() : null}
           <img src={image} alt="product" />
           <div className="card-body">
             <div className="cardHeaderWrapper">

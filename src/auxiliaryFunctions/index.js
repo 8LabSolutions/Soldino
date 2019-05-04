@@ -162,30 +162,31 @@ export function ExportPDF(invoices, quarter) {
   console.log(quarter)
   //+invoices.map(i => {return(i.number)})+
   var returnRootComponent =
-  "<h2>"+quarter+" resume</h2><br />"+
-  "<h3>VAT status: "+/*getVATStatus(quarter)+*/" CC</h2><br/>"+
+  "<h2>"+periodToDate(quarter.id)+" resume</h2><br />"+
+  "<h3>VAT status: "+round(-1*quarter.amount)+" CC</h2><br/>"+
   "<p>_____________________________________________________________</p><br />"+
   invoices.map(i => {
     return(
       "<p>Invoice Number: "+i.number+"</p><br />"+
       "<p>Invoice Date: "+printDate(i.date)+"</p><br />"+
-      "<p>Order Date: "+printDate(i.orderDate)+"</p><br />"+
-      "<p>Order Number: "+i.orderNumber+"</p><br />"+
+      "<p>Order Date: "+printDate(i.date)+"</p><br />"+
+      "<p>Order Number: "+i.number+"</p><br />"+
       i.products.map(j => {
         return(
-          "<p>Product: "+j[0]+"</p><br />"+
-          "<p>Total Price: CC "+j[1]+"</p><br />"+
-          "<p>Net Price: CC "+j[2]+"</p><br />"+
-          "<p>VAT %: "+j[3]+"</p><br />"+
-          "<p>Description: "+j[4]+"</p><br />"+
-          "<p>Quantity: "+j[5]+"</p><br />"
+          "<p>Product: "+j.title+"</p><br />"+
+          "<p>Total Price: CC "+round(j.price*j.quantity)+"</p><br />"+
+          "<p>Net Price per unit: CC "+round(((j.price*100)/(+j.VAT + +100)))+"</p><br />"+ //
+          "<p>Quantity: "+j.quantity+"</p><br />"+
+          "<p>VAT %: "+j.VAT+"</p><br />"+
+          "<p>Description: "+j.description+"</p><br />"+
+          "<p>Quantity: "+j.quantity+"</p><br />"
         )
       })+
-      "<p>Total VAT: CC "+i.totalVAT+"</p><br />"+
-      "<p>Total Price: CC "+i.totalCC+"</p><br />"+
+      "<p>Total VAT: CC "+round((i.VAT/100)*i.net)+"</p><br />"+ //
+      "<p>Total Price: CC "+round((+(i.VAT/100)*i.net)+ +i.net)+"</p><br />"+ //
       "<p>Seller: "+i.sellerName+" "+i.sellerVATNumber+"</p><br />"+
-      "<p>Buyer: "+i.buyerName+" "+i.buyerDetails+"</p><br />"+
-      "<p>Shipment: "+i.shipment+"</p><br />"+
+      "<p>Buyer: "+i.buyerName+" "+i.buyerAddress+"</p><br />"+
+      "<p>Shipment: "+printShipment(i.address)+"</p><br />"+
       "<p>_____________________________________________________________</p><br />"
     )}
   )
