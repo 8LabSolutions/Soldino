@@ -15,8 +15,6 @@ contract Purchase {
     uint8[] internal orderProdQtn;
     //mapping(address => uint256) internal payments;
 
-    event OrderReceived(address _from, address _to, uint256 _amount);
-
     constructor(address _contractManager) public {
         contractManager = ContractManager(_contractManager);
         cubitToken = TokenCubit(contractManager.getContractAddress("TokenCubit"));
@@ -29,10 +27,13 @@ contract Purchase {
         uint8[] calldata _orderHashFun,
         uint8[] calldata _orderHashSize,
         string calldata _period
-        //uint256 _total
     )
         external
     {
+        require(_prodQtn.length == _prodHash.length, "Error during purchase, invalid quantity");
+        require(_orderHash.length == _prodHash.length, "Error during purchase, invalid order IPFS hash");
+        require(_orderHashFun.length == _prodHash.length, "Error during purchase, invalid ipfs hash function");
+        require(_orderHashSize.length == _prodHash.length, "Error during purchase, invalid ipfs hash size");
         bytes32 prevOrderHash = _orderHash[0];
         /*orderProd.push(_prodHash[0]);
         orderProdQtn.push(_prodQtn[0]);*/
