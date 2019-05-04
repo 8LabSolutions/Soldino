@@ -11,9 +11,6 @@ class TransactionsManager extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      lastQuarter: '2019-1'
-    };
   }
 
   componentWillMount(){
