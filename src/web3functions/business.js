@@ -295,7 +295,7 @@ const web3business = (function(){
     /**
      * @returns An array containing the IPFS Hashes of the Invoices related to the selected period
      * along with the invoiec type (selling/purchase)
-     * @param {*} VATPeriod VAT period in the following format
+     * @param {*} VATPeriod VAT period in the following format YYYY-Q (e.g., 2019-2)
      */
     getInvoices: function(VATPeriod = undefined) {
       //must get all the purchase order and the selling order

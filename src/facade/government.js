@@ -12,17 +12,21 @@ const government = (function(){
      * @param {*} period the period IDs (e.g., 2019-2) you want to get the business list
      */
     function getBusinessActiveInPeriod(period){
-      return new Promise((resolve)=>{
-        web3government.getInvoicesGovernment().then((invoicesIPFSHash)=>{
+      return new Promise((resolve, reject)=>{
+        web3government.getInvoicesGovernment()
+        .then((invoicesIPFSHash)=>{
           var invoicesJSON = []
           invoicesIPFSHash.forEach(invoceIPFSHash => {
             invoicesJSON.push(
-              new Promise((resolve)=>{
-                ipfsModule.getJSONfromHash(invoceIPFSHash).then(resolve)
+              new Promise((resolve,reject)=>{
+                ipfsModule.getJSONfromHash(invoceIPFSHash)
+                .then(resolve)
+                .catch(reject)
               })
             )
           });
-          Promise.all(invoicesJSON).then((ris)=>{
+          Promise.all(invoicesJSON)
+          .then((ris)=>{
             //get the date, then the periods
             invoicesJSON = ris
             var dates = []
@@ -51,26 +55,30 @@ const government = (function(){
                       businessAddresses.push(sellerAddress);
                     //the buyer must be inserted only if it is a business
                     let buyerAddress = invoicesJSON[i].buyerAddress;
-                    web3authentication.getUser(buyerAddress).then(([,,type])=>{
+                    web3authentication.getUser(buyerAddress)
+                    .then(([,,type])=>{
                       if(parseInt(type) === 2)
                         if (!businessAddresses.includes(buyerAddress))
                           businessAddresses.push(buyerAddress);
                       resolve()
                     })
+                    .catch(reject)
                   }
                 })
               )
             }
-            Promise.all(busAdrPromises).then(()=>{
+            Promise.all(busAdrPromises)
+            .then(()=>{
               //businessAddresses contains all the useful addresses
               resolve(businessAddresses)
             })
+            .catch(reject)
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     }
-
-
 
   return {
     /**
@@ -78,8 +86,10 @@ const government = (function(){
      * @param {} userAddress account address to be enabled
      */
     enableAccount: function(userAddress){
-      return new Promise((resolve)=>{
-        web3government.enableAccount(userAddress).then(resolve);
+      return new Promise((resolve, reject)=>{
+        web3government.enableAccount(userAddress)
+        .then(resolve)
+        .catch(reject)
       })
     },
 
@@ -88,34 +98,56 @@ const government = (function(){
      * @param {} userAddress account address to be disabled
      */
     disableAccount: function(userAddress){
-      return new Promise((resolve)=>{
-        web3government.disableAccount(userAddress).then(resolve);
+      return new Promise((resolve, reject)=>{
+        web3government.disableAccount(userAddress)
+        .then(resolve)
+        .catch(reject)
       })
     },
-
+    /**
+     * @description Returns a promise that resolves if the amount passed has been mined,
+     * reject with an error otherwise
+     * @param {*} amount
+     */
     mint: function(amount){
-      return new Promise((resolve)=>{
-        web3government.mint(amount).then(resolve);
+      return new Promise((resolve, reject)=>{
+        web3government.mint(amount)
+        .then(resolve)
+        .catch(reject)
       })
     },
-
+    /**
+     * @description Returns a promise that resolves if the amount passed has been transfered
+     * to the given addresses, reject with an error otherwise
+     * @param {*} amount The amount of Cubit to be transferred
+     * @param {*} address The addresses to transfer the Cubit to
+     */
     distribute: function(amount, address){
-
       if(address.length > 1){
-        return new Promise((resolve)=>{
-          web3government.distributeToMultipleAddresses(address, amount).then(resolve);
+        return new Promise((resolve, reject)=>{
+          web3government.distributeToMultipleAddresses(address, amount)
+          .then(resolve)
+          .catch(reject)
         })
       }
       else{
-        return new Promise((resolve)=>{
-          web3government.distribute(amount, address[0]).then(resolve);
+        return new Promise((resolve, reject)=>{
+          web3government.distribute(amount, address[0])
+          .then(resolve)
+          .catch(reject)
         })
       }
     },
-
+     /**
+     * @describe Refund the business on the VAT period passed
+     * @param {*} businessAddress business address you want to pay
+     * @param {*} period the VAT period you want to refund
+     */
     refundVAT: function(businessAddress, period){
-      return new Promise((resolve)=>{
-        web3government.refundVAT(businessAddress, period).then(resolve);
+      return new Promise((resolve, reject)=>{
+        web3government.refundVAT(businessAddress, period)
+        .then(resolve)
+        .catch(reject)
       })
     },
     /**
@@ -125,13 +157,16 @@ const government = (function(){
      * @param {*} index skipping the first index*amount citizen
      */
     getCitizenList: function(amount, index = 0){
-      return new Promise((resolve)=>{
-        web3government.getUserList(1, amount, index).then((resultsArray)=>{
+      return new Promise((resolve, reject)=>{
+        web3government.getUserList(1, amount, index)
+        .then((resultsArray)=>{
           //resultsArray content: array with 0:address, 1: hashIPFS, 2: userState (dis/able)
           var citizensJSON = [];
           for(let i = 0; i < resultsArray.length; i++){
             citizensJSON.push(new Promise((resolve)=>{
-              ipfsModule.getJSONfromHash(resultsArray[i][1]).then(resolve)
+              ipfsModule.getJSONfromHash(resultsArray[i][1])
+              .then(resolve)
+              .catch(reject)
             }))
           }
 
@@ -154,7 +189,9 @@ const government = (function(){
             }
             resolve(citizens)
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
@@ -164,8 +201,9 @@ const government = (function(){
      * @param {*} index from which to start getting the info, starting from index*amount
      */
     getBusinessList: function(amount, index = 0){
-      return new Promise((resolve)=>{
-        web3government.getUserList(2, amount, index).then((resultsArray)=>{
+      return new Promise((resolve, reject)=>{
+        web3government.getUserList(2, amount, index)
+        .then((resultsArray)=>{
           //resultsArray content: array with 0:address, 1: hashIPFS, 2: userState (dis/able)
 
           var businessJSON = [];
@@ -173,6 +211,7 @@ const government = (function(){
             businessJSON.push(new Promise((resolve)=>{
               ipfsModule.getJSONfromHash(resultsArray[i][1])
               .then(resolve)
+              .catch(reject)
             }))
           }
           var business = [];
@@ -194,21 +233,27 @@ const government = (function(){
             }
             resolve(business)
           })
+          .catch(reject)
         })
-      })
-    },
-
-    getTotalCubit: function(){
-      return new Promise((resolve)=>{
-        web3government.getTotalCubit()
-        .then(resolve)
+        .catch(reject)
       })
     },
     /**
-     * @returns Return an array with all the IDs (e.g., 2019-2) of the periods with at least a transaction
+   * @returns The function returns a promise that resolves with the current total supply of Cubit on Soldino
+   */
+    getTotalCubit: function(){
+      return new Promise((resolve, reject)=>{
+        web3government.getTotalCubit()
+        .then(resolve)
+        .catch(reject)
+      })
+    },
+    /**
+     * @returns Return a promise that resolves an array with all the
+     *  IDs (e.g., 2019-2) of the periods with at least a transaction
      */
     getPeriods: function() {
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         web3government.getInvoicesGovernment()
         .then((invoicesIPFSHash)=>{
           var invoicesJSON = []
@@ -217,6 +262,7 @@ const government = (function(){
               new Promise((resolve)=>{
                 ipfsModule.getJSONfromHash(invoceIPFSHash)
                 .then(resolve)
+                .catch(reject)
               })
             )
           });
@@ -238,125 +284,140 @@ const government = (function(){
             })
             resolve(periods)
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
-     * @returns An array containing all the businesses with the related VAT state of [period]
+     * @returns Return a promise that resolves an array containing all the businesses
+     * with the related VAT state of [period]
      * @param {*} period the period you want the businesses' state
      */
     getBusinessVATState: function(period){
-      return new Promise(async (resolve, reject)=>{
+      return new Promise((resolve, reject)=>{
         //getting the businesses' addresses
-        var businessAddresses = await getBusinessActiveInPeriod(period);
-        //creating the VAT keys with the period+business's address
 
-        var keyPromises = [];
-        businessAddresses.forEach((address)=>{
-          keyPromises.push(new Promise((resolve)=>{
-            web3government.getVATQuarterInfo(period, address)
-            .then(resolve)
-          }))
-        })
-        Promise.all(keyPromises)
-        .then((businessVATData)=>{
-          //businessVATData is an array of array with the following format
-          //[businessAddress, paymentStatus, amount]
-          let promises = []
-          for(let i = 0; i < businessVATData.length; i++){
-            promises.push(new Promise((resolve)=>{
-              console.log("business")
-              console.log(businessVATData[i])
-              web3authentication.getUser(businessVATData[i][0])
-              .then(([IPFSHash,,])=>{
-                console.log("Eccolo qua")
-                console.log(IPFSHash)
-                ipfsModule.getJSONfromHash(IPFSHash)
-                .then((businessJSON)=>{
-                  let paymentStatus = undefined;
-
-                  let currentVATPeriod = web3util.getVATPeriod();
-                  let oldVATPeriod = period;
-
-                  let [currYear, currMonth] = currentVATPeriod.split("-");
-                  let [oldYear, oldMonth] = oldVATPeriod.split("-");
-
-                  [currYear, currMonth] = currentVATPeriod.split("-");
-                  [oldYear, oldMonth] = oldVATPeriod.split("-");
-
-                   /* paymentStatus Options
-                    payed --> verde
-                    deferred --> yellow
-                    paying --> yellow
-                    waiting --> yellow
-                    late --> red
-                  */
-                  //set the state
-                  switch (parseInt(businessVATData[i][1])) {
-                    case 0:
-                    //DUE: the business must pay
-                      //check if it is late or in time (paying or late)
-                      if(((currYear-oldYear)*4+(currMonth-oldMonth))>1){
-                        paymentStatus = "late";
-                      }
-                      else {
-                        if(((currYear-oldYear)*4+(currMonth-oldMonth)) === 0){
-                          //current period ->
-                          paymentStatus = "current"
-                        }
-                        paymentStatus = "paying";
-                      }
-                      break;
-                    case 1:
-                    //OVERDUE: deferred payment
-                    //check if it is late or in time (paying or late)
-                      if(((currYear-oldYear)*4+(currMonth-oldMonth))>2){
-                        paymentStatus = "late";
-                      }
-                      else {
-                        paymentStatus = "deferred";
-                      }
-                      break;
-                    case 2:
-                    //PAID: the business paid the VAT
-                      paymentStatus = "payed";
-                      break;
-                    case 3:
-                    //TO_BE_REFUNDED: the government must pay the VAT
-                      paymentStatus = "waiting";
-                      break;
-                    case 4:
-                    //REFUNDED: the govenment refunded the VAT
-                      paymentStatus = "payed";
-                      break;
-                    default:
-                      reject("Wrong paymentStatus passed")
-                  }
-
-                  //adding the paymentStatus and amount to the business JSON
-
-                  businessJSON.paymentStatus = paymentStatus;
-                  businessJSON.amount = businessVATData[i][2];
-                  businessJSON.address = businessVATData[i][0];
-                  resolve(businessJSON)
-                })
-              })
+        getBusinessActiveInPeriod(period)
+        .then((businessAddresses)=>{
+          var keyPromises = [];
+          businessAddresses.forEach((address)=>{
+            keyPromises.push(new Promise((resolve)=>{
+              web3government.getVATQuarterInfo(period, address)
+              .then(resolve)
+              .catch(reject)
             }))
-          }
-          Promise.all(promises)
-          .then(resolve)
-        })
+          })
+          Promise.all(keyPromises)
+          .then((businessVATData)=>{
+            //businessVATData is an array of array with the following format
+            //[businessAddress, paymentStatus, amount]
+            let promises = []
+            for(let i = 0; i < businessVATData.length; i++){
+              promises.push(new Promise((resolve)=>{
+                console.log("business")
+                console.log(businessVATData[i])
+                web3authentication.getUser(businessVATData[i][0])
+                .then(([IPFSHash,,])=>{
+                  console.log("Eccolo qua")
+                  console.log(IPFSHash)
+                  ipfsModule.getJSONfromHash(IPFSHash)
+                  .then((businessJSON)=>{
+                    let paymentStatus = undefined;
+
+                    let currentVATPeriod = web3util.getVATPeriod();
+                    let oldVATPeriod = period;
+
+                    let [currYear, currMonth] = currentVATPeriod.split("-");
+                    let [oldYear, oldMonth] = oldVATPeriod.split("-");
+
+                    [currYear, currMonth] = currentVATPeriod.split("-");
+                    [oldYear, oldMonth] = oldVATPeriod.split("-");
+
+                    /* paymentStatus Options
+                      payed --> verde
+                      deferred --> yellow
+                      paying --> yellow
+                      waiting --> yellow
+                      late --> red
+                    */
+                    //set the state
+                    switch (parseInt(businessVATData[i][1])) {
+                      case 0:
+                      //DUE: the business must pay
+                        //check if it is late or in time (paying or late)
+                        if(((currYear-oldYear)*4+(currMonth-oldMonth))>1){
+                          paymentStatus = "late";
+                        }
+                        else {
+                          if(((currYear-oldYear)*4+(currMonth-oldMonth)) === 0){
+                            //current period ->
+                            paymentStatus = "current"
+                          }
+                          paymentStatus = "paying";
+                        }
+                        break;
+                      case 1:
+                      //OVERDUE: deferred payment
+                      //check if it is late or in time (paying or late)
+                        if(((currYear-oldYear)*4+(currMonth-oldMonth))>2){
+                          paymentStatus = "late";
+                        }
+                        else {
+                          paymentStatus = "deferred";
+                        }
+                        break;
+                      case 2:
+                      //PAID: the business paid the VAT
+                        paymentStatus = "payed";
+                        break;
+                      case 3:
+                      //TO_BE_REFUNDED: the government must pay the VAT
+                        paymentStatus = "waiting";
+                        break;
+                      case 4:
+                      //REFUNDED: the govenment refunded the VAT
+                        paymentStatus = "payed";
+                        break;
+                      default:
+                        reject("Wrong paymentStatus passed")
+                    }
+
+                    //adding the paymentStatus and amount to the business JSON
+
+                    businessJSON.paymentStatus = paymentStatus;
+                    businessJSON.amount = businessVATData[i][2];
+                    businessJSON.address = businessVATData[i][0];
+                    resolve(businessJSON)
+                  })
+                  .catch(reject)
+                })
+                .catch(reject)
+              }))
+            }
+            Promise.all(promises)
+            .then(resolve)
+            .catch(reject)
+          })
+          .catch(reject)
+          })
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns The function returns a promise that resolves if the business
+     *  has been correctly refunded, otherwise rejects with an error
+     * @param {*} period The period you want to refund
+     * @param {*} business The business address to be refunded
+     * @param {*} amount The amount to be refunded
+     */
     refund: function(period, business, amount){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         web3government.refundVAT(business, period, amount)
         .then(resolve)
+        .catch(reject)
       })
-
     }
-
   }
 }());
 

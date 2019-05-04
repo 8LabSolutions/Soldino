@@ -4,31 +4,12 @@ import web3util from "../web3functions/web_util";
 
 const business = (function(){
 
-  /**
-   * @description Shuffles array in place
-   * @param {Array} a items An array containing the items.
-   */
-  /*
-  function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-  */
-
-  /**
-   * @description The function return an array of promises that will resolve into products' JSON
-   *
-   * @param {*} ris the array o arrays [product-key, product IPFS hash]
-   * @param {*} amount the limit of products that will be returned
-   */
   function getProducts(ris) {
     var promises = [];
     for (let i = 0; i< ris.length; i++){
       promises.push(new Promise((resolve)=>{
-        getIPFSProduct(ris[i][1]).then((middle)=>{
+        getIPFSProduct(ris[i][1])
+        .then((middle)=>{
           middle.keyProd = ris[i][0]
           middle.seller = ris[i][2]
           resolve(middle);
@@ -37,15 +18,29 @@ const business = (function(){
     }
     return Promise.all(promises)
   }
-
+  /**
+   * @returns A promise that resolves with the JSON of the products passed
+   * @param {*} hashIPFS The IPFS CID of the products
+   */
   function getIPFSProduct(hashIPFS) {
     //only from ipfs
-    return new Promise((resolve)=>{
+    return new Promise((resolve, reject)=>{
       //get the user Info
-      ipfsModule.getJSONfromHash(hashIPFS).then(resolve)
+      ipfsModule.getJSONfromHash(hashIPFS)
+      .then(resolve)
+      .catch(reject)
     })
   }
-
+  /**
+   * @returns Return a JSON with the passed fields
+   * @param {*} title
+   * @param {*} description
+   * @param {*} netPrice
+   * @param {*} vatPercentage
+   * @param {*} image
+   * @param {*} sellerName
+   * @param {*} sellerVATNumber
+   */
   function getProductJSONfromFields(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
     var newProductJSON = {
       title: title,
@@ -62,89 +57,155 @@ const business = (function(){
 
   return{
     /**
-     * @description return a promise about the registration of the user
-     * @param {*} userType
-     * @param {*} email
-     * @param {*} streetName
-     * @param {*} streetNumber
-     * @param {*} district
-     * @param {*} postCode
-     * @param {*} name
-     * @param {*} details
-    */
+     * @returns The function returns a promise that resolves if the product is correctly inserted,
+     * otherwise rejects with an error
+     *
+     * @param {*} title
+     * @param {*} description
+     * @param {*} netPrice
+     * @param {*} vatPercentage
+     * @param {*} image
+     * @param {*} sellerName
+     * @param {*} sellerVATNumber
+     */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       //istantiate the necessary costracts and returns the results
       var newProductJSON = getProductJSONfromFields(
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
-      return new Promise((resolve)=>{
-        ipfsModule.insertJSONintoIPFS(newProductJSON).then((hash)=>{
-          web3business.addProduct(hash, vatPercentage, netPrice).then(resolve)
+      return new Promise((resolve, reject)=>{
+        ipfsModule.insertJSONintoIPFS(newProductJSON)
+        .then((hash)=>{
+          web3business.addProduct(hash, vatPercentage, netPrice)
+          .then(resolve)
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * The function returns a promise that resolves if the product is correctly modified,
+     * otherwise rejects with an error
+     *
+     * @param {*} keyProd
+     * @param {*} title
+     * @param {*} description
+     * @param {*} netPrice
+     * @param {*} vatPercentage
+     * @param {*} image
+     * @param {*} sellerName
+     * @param {*} sellerVATNumber
+     */
     modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       var newProductJSON = getProductJSONfromFields(
         title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
       console.log(image)
-      return new Promise((resolve)=>{
-        ipfsModule.insertJSONintoIPFS(newProductJSON).then((hash)=>{
-          web3business.modifyProduct(keyProd, hash, vatPercentage, netPrice).then(resolve)
+      return new Promise((resolve, reject)=>{
+        ipfsModule.insertJSONintoIPFS(newProductJSON)
+        .then((hash)=>{
+          web3business.modifyProduct(keyProd, hash, vatPercentage, netPrice)
+          .then(resolve)
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @description Delete the product corresponding to the key passed
+     * @param {*} key The key of the product you want to delete
+     */
     deleteProduct: function(keyProd){
-      return new Promise((resolve)=>{
-        web3business.deleteProduct(keyProd).then(resolve)
+      return new Promise((resolve, reject)=>{
+        web3business.deleteProduct(keyProd)
+        .then(resolve)
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns The functions return a promise that resolves the number ofproducts
+     * in the store, otherwise rejects an error
+     */
     getTotalStoreProduct: function(){
-      return new Promise((resolve)=>{
-        web3business.getTotalProducts().then(resolve)
+      return new Promise((resolve, reject)=>{
+        web3business.getTotalProducts()
+        .then(resolve)
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns The functions return a promise that resolves the number ofproducts
+     * currently sold by the calling business, otherwise rejects an error
+     */
     getTotalMyProduct: function(){
-      return new Promise((resolve)=>{
-        web3business.getTotalProducts(true).then(resolve)
+      return new Promise((resolve, reject)=>{
+        web3business.getTotalProducts(true)
+        .then(resolve)
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns The function returns a promise that resolves an array containing
+     * the requested business products JSONs.
+     * @param {*} amount The amount of products you want to get
+     * @param {*} index The statring point for getting the products, the returned products will
+     * start from the amount*index-th one
+     */
     getSenderProduct: function(amount, index) {
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         //scorrere gli eventi per trovare quelli con come seller l'account sender
-        web3business.getProducts(amount, index, true).then((ris)=>{
+        web3business.getProducts(amount, index, true)
+        .then((ris)=>{
           //ris contains the array of ipfs hash
-          getProducts(ris).then(resolve)
+          getProducts(ris)
+          .then(resolve)
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+     /**
+     * @returns The function returns a promise that resolves an array containing
+     * the requested store products JSONs.
+     * @param {*} amount The amount of products you want to get
+     * @param {*} index The statring point for getting the products, the returned products will
+     * start from the amount*index-th one
+     */
     getStoreProduct: function(amount, index) {
-      return new Promise((resolve)=>{
-        web3business.getProducts(amount, index).then((ris)=>{
+      return new Promise((resolve, reject)=>{
+        web3business.getProducts(amount, index)
+        .then((ris)=>{
           //ris contains the array of ipfs hash
           //ris = shuffle(ris)
-          getProducts(ris).then(resolve)
+          getProducts(ris)
+          .then(resolve)
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @returns An array containing the JSON of the Invoices related to the selected period
+     * along with the invoiec type (selling/purchase)
+     * @param {*} VATPeriod VAT period in the following format YYYY-Q (e.g., 2019-2)
+     */
     getInvoices: function(VATPeriod) {
-      return new Promise((resolve)=>{
-        web3business.getInvoices(VATPeriod).then((invoicesIPFSHash)=>{
+      return new Promise((resolve, reject)=>{
+        web3business.getInvoices(VATPeriod)
+        .then((invoicesIPFSHash)=>{
           var invoicesJSON = []
           invoicesIPFSHash.forEach(invoceIPFSHash => {
             invoicesJSON.push(
               new Promise((resolve)=>{
-                ipfsModule.getJSONfromHash(invoceIPFSHash).then(resolve)
+                ipfsModule.getJSONfromHash(invoceIPFSHash)
+                .then(resolve)
+                .catch(reject)
               })
             )
           });
-          Promise.all(invoicesJSON).then(resolve)
+          Promise.all(invoicesJSON)
+          .then(resolve)
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
@@ -160,17 +221,21 @@ const business = (function(){
         }
      */
     getPeriods: function() {
-      return new Promise((resolve)=>{
-        web3business.getInvoices().then((invoicesIPFSHash)=>{
+      return new Promise((resolve, reject)=>{
+        web3business.getInvoices()
+        .then((invoicesIPFSHash)=>{
           var invoicesJSON = []
           invoicesIPFSHash.forEach(invoceIPFSHash => {
             invoicesJSON.push(
               new Promise((resolve)=>{
-                ipfsModule.getJSONfromHash(invoceIPFSHash).then(resolve)
+                ipfsModule.getJSONfromHash(invoceIPFSHash)
+                .then(resolve)
+                .catch(reject)
               })
             )
           });
-          Promise.all(invoicesJSON).then((ris)=>{
+          Promise.all(invoicesJSON)
+          .then((ris)=>{
             //get the date, then the periods
             var dates = []
             ris.forEach(json => {
@@ -188,7 +253,8 @@ const business = (function(){
             var promises = []
             periods.forEach(period=>{
               promises.push(new Promise((resolve)=>{
-                web3business.getVATPeriodInfo(period).then(([, state, amount])=>{
+                web3business.getVATPeriodInfo(period)
+                .then(([, state, amount])=>{
                   //get the state of the period
                   console.log(["stato: ", state])
                   var deferred = false;
@@ -261,29 +327,46 @@ const business = (function(){
                     resolved: resolved,
                     outOfLimit: outOfLimit
                   }
-
                   resolve(vatJSON)
                 })
+                .catch(reject)
               }))
             })
-            Promise.all(promises).then(resolve)
+            Promise.all(promises)
+            .then(resolve)
+            .catch(reject)
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+     /**
+     * @description returns a promise that resolves if the payment succeded, reject with an error
+     * otherwise
+     *
+     * @param {*} period The period the business wants to pay the VAT tax
+     * @param {*} amount The amount of the tax, used to make the approve call,
+     * the amount is then checked again in solidity
+     */
     payVATPeriod: function(period, amount) {
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         web3business.payVATPeriod(period, amount)
         .then(resolve)
+        .catch(reject)
       })
 
     },
-
+    /**
+     * @description returns a promise that resolves if the payment succeded, reject with an error
+     * otherwise
+     * @param {*} period The VAT period the business wants to defer
+     */
     putOnHoldVATPeriod: function(period) {
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         web3business.putOnHoldVATPeriod(period)
         .then(resolve)
+        .catch(reject)
       })
     }
 
