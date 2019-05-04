@@ -24,7 +24,7 @@ with open (INPUT_PATH,'r') as cv:
 	begin = 'Methods'
 	end = 'Deployments' 
 	separator = '·················'
-	to_skip = '|  Contract        ·  Method                ·  Min     ·  Max     ·  Avg      ·  # calls         ·  eur (avg)     │'
+	to_skip = 'Contract'
 	
 
 	ris = []
@@ -39,9 +39,9 @@ with open (INPUT_PATH,'r') as cv:
 
 		if methods and separator not in line and to_skip not in line:
 			function_name = re.compile('·\s+(\w+)').search(line)
-			contract_call_cost = re.compile('\d+\.\d+').search(line)
-			
-			ris.append([function_name.group(1),contract_call_cost.group()])
+			call_cost = re.compile('\d+\.\d+').search(line)
+			#print (line)
+			ris.append([function_name.group(1),call_cost.group()])
 			
 			# ok, abbiamo nome e prezzo
 			# non ci resta che salvare in un array nomi e prezzi. poi calcola la media

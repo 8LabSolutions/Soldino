@@ -35,9 +35,8 @@ with open (INPUT_PATH,'r') as cv:
 
 		if deployments and separator not in line:
 			contract_name = re.compile('\w+').search(line)
-			contract_deploy_price = re.compile('\d+\.\d+').search(line)
-
-			ris.append([contract_name.group(),contract_deploy_price.group()])
+			contract_deploy_price = re.compile('(\d+\.\d+)\s[^\%]').search(line)
+			ris.append([contract_name.group(),contract_deploy_price.group(1)])
 
 			# ok, abbiamo nome e prezzo
 			# non ci resta che salvare in un array nomi e prezzi. poi calcola la media
