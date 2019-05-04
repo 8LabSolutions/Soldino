@@ -10,61 +10,121 @@ const web3government = (function(){
   web3util.init()
 
   return {
+    /**
+     * @description Returns a promise, resolve if the user has been enabled,
+     * reject with an error otherwise
+     * @param {*} userAddress The address of the user to be enabled
+     */
     enableAccount: function(userAddress){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(UserLogic).then((userLogicInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            userLogicInstance.methods.setUserState(userAddress, true).send({from: account})
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(UserLogic)
+        .then((userLogicInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
+            userLogicInstance.methods.setUserState(userAddress, true)
+            .send({from: account})
             .then(resolve)
+            .catch(()=>{
+              reject("Enabling went wrong")
+            })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @description Returns a promise, resolve if the user has been disabled,
+     * reject with an error otherwise
+     * @param {*} userAddress The address of the user to be disabled
+     */
     disableAccount: function(userAddress){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(UserLogic).then((userLogicInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            userLogicInstance.methods.setUserState(userAddress, false).send({from: account})
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(UserLogic)
+        .then((userLogicInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
+            userLogicInstance.methods.setUserState(userAddress, false)
+            .send({from: account})
             .then(resolve)
+            .catch(()=>{
+              reject("Disabling went wrong")
+            })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @description Returns a promise that resolves if the amount passed has been mined,
+     * reject with an error otherwise
+     * @param {*} amount
+     */
     mint: function(amount){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            tokenInstance.methods.mintToken(account, amount*web3util.TOKENMULTIPLIER)
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(TokenCubit)
+        .then((tokenInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
+            tokenInstance.methods.mintToken(account, round(amount*web3util.TOKENMULTIPLIER))
             .send({from: account})
             .then(resolve)
+            .catch(()=>{
+              reject("Minting the passed amount went wrong")
+            })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @description Returns a promise that resolves if the amount passed has been transfered
+     * to the given address, reject with an error otherwise
+     * @param {*} amount The amount of Cubit to be transferred
+     * @param {*} address The address to transfer the Cubit to
+     */
     distribute: function (amount, address){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            tokenInstance.methods.transfer(address, amount*web3util.TOKENMULTIPLIER)
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(TokenCubit)
+        .then((tokenInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
+            tokenInstance.methods.transfer(address, round(amount*web3util.TOKENMULTIPLIER))
             .send({from: account})
             .then(resolve)
+            .catch(()=>{
+              reject("The distribution went wrong")
+            })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
-
+    /**
+     * @description Returns a promise that resolves if the amount passed has been transfered
+     * to the given addresses, reject with an error otherwise
+     * @param {*} amount The amount of Cubit to be transferred to each account
+     * @param {*} address The addresses to transfer the Cubit to
+     */
     distributeToMultipleAddresses: function (addresses, amount){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            tokenInstance.methods.distributeToMultipleAddresses(addresses, amount*web3util.TOKENMULTIPLIER)
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(TokenCubit)
+        .then((tokenInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
+            tokenInstance.methods.distributeToMultipleAddresses(addresses, round(amount*web3util.TOKENMULTIPLIER))
             .send({from: account})
             .then(resolve)
+            .catch(()=>{
+              reject("The distribution went wrong")
+            })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
@@ -73,26 +133,32 @@ const web3government = (function(){
      * @param {*} period the VAT period you want to refund
      */
     refundVAT: function(businessAddress, period, amount){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
-          web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
-            web3util.getCurrentAccount().then((account)=>{
-              tokenInstance.methods.approve(vatLogicInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
-              .send({from: account})
-              .then(()=>{
-                web3util.getCurrentAccount().then((account)=>{
-                  vatLogicInstance.methods.createVatKey(businessAddress, period)
-                  .call({from:account})
-                  .then((key)=>{
-                    vatLogicInstance.methods.refundVat(key)
-                    .send({from:account})
-                    .then(resolve)
-                  })
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(VatLogic)
+        .then((vatLogicInstance)=>{
+          //approve the withdraw
+          web3util.tokenTransferApprove(parseInt(round(amount*web3util.TOKENMULTIPLIER)), VatLogic)
+          .then(()=>{
+            web3util.getCurrentAccount()
+            .then((account)=>{
+              vatLogicInstance.methods.createVatKey(businessAddress, period)
+              .call({from:account})
+              .then((key)=>{
+                vatLogicInstance.methods.refundVat(key)
+                .send({from:account})
+                .then(resolve)
+                .catch(()=>{
+                  reject("Unable to refund the given period")
                 })
               })
             })
+            .catch(()=>{
+              reject("Unable to get the VAT key for the given period")
+            })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
@@ -103,9 +169,11 @@ const web3government = (function(){
      * @description uses the events emitted by solidity to get the information about the users
      */
     getUserList: function(type, amount, index=0){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(UserLogic).then((userLogicInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(UserLogic)
+        .then((userLogicInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
             //*** 1 - getting the addresses ***
             var users = []
             userLogicInstance.getPastEvents('UserInserted', {
@@ -136,26 +204,39 @@ const web3government = (function(){
               }
               Promise.all(userInfo).then(resolve)
             })
+            .catch(()=>{
+              reject("Error trying to get the UserInserted events")
+            })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
-     * @returns the total supply of Cubit
+     * @returns the total supply of Cubit in Soldino
      */
     getTotalCubit: function(){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(TokenCubit).then((tokenInstance)=>{
-          web3util.getCurrentAccount().then((account)=>{
-            tokenInstance.methods.totalSupply().call({from: account})
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(TokenCubit)
+        .then((tokenInstance)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
+            tokenInstance.methods.totalSupply()
+            .call({from: account})
             .then((amount)=>{
               if(amount!==0)
                 amount/=web3util.TOKENMULTIPLIER;
-              resolve(amount);
+              resolve(round(amount));
             })
-          })
+            .catch(()=>{
+              reject("Unable to get the total supply")
+            })
 
+          })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
@@ -163,8 +244,9 @@ const web3government = (function(){
      */
     getInvoicesGovernment: function() {
       //must get all the purchase order and the selling order
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(OrderLogic)
+        .then((orderLogicInstance)=>{
           var query;
 
           query = {
@@ -190,23 +272,34 @@ const web3government = (function(){
               for (let j = 0; j < invoicesKey.length; j++){
                 invoicesIPFS.push(
                   new Promise((resolve)=>{
-                    web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
+                    web3util.getContractInstance(OrderLogic)
+                    .then((orderLogicInstance)=>{
                       web3util.getCurrentAccount().then((account)=>{
                         orderLogicInstance.methods.getOrderCid(invoicesKey[j])
                         .call({from: account})
                         .then((hashParts)=>{
                           resolve(web3util.recomposeIPFSHash(hashParts[0], hashParts[2], hashParts[1]))
                         })
+                        .catch(()=>{
+                          reject("Error trying to get the order CID")
+                        })
                       })
                     })
+                    .catch(reject)
                   })
                 )
               }
               Promise.all(invoicesIPFS).then(resolve)
             })
+            .catch(()=>{
+              reject("Error trying to get the SellOrderInserted events")
+            })
+          })
+          .catch(()=>{
+            reject("Error trying to get the PurchaseOrderInserted events")
           })
         })
-
+        .catch(reject)
       })
     },
     /**
@@ -218,8 +311,9 @@ const web3government = (function(){
      * @param {*} businessAddress
      */
     getVATQuarterInfo: function(period, businessAddress){
-      return new Promise((resolve)=>{
-        web3util.getContractInstance(VatLogic).then((vatLogicInstance)=>{
+      return new Promise((resolve, reject)=>{
+        web3util.getContractInstance(VatLogic)
+        .then((vatLogicInstance)=>{
           vatLogicInstance.methods.createVatKey(businessAddress, period)
           .call()
           .then((key)=>{
@@ -227,10 +321,17 @@ const web3government = (function(){
             .call()
             .then((ris)=>{
               //arrives in the following order [businessAddress, state, amount]
-              resolve([ris[0], ris[1], ris[2]/web3util.TOKENMULTIPLIER])
+              resolve([ris[0], ris[1], round(ris[2]/web3util.TOKENMULTIPLIER)])
+            })
+            .catch(()=>{
+              reject("Unable to get the VAT data for the given key")
             })
           })
+          .catch(()=>{
+            reject("Unable to get the VAT key for the given period")
+          })
         })
+        .catch(reject)
       })
     }
   }

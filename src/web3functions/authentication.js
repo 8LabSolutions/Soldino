@@ -36,7 +36,9 @@ const web3authentication = (function() {
               reject("error during the registration of a new citizen, there is a problem with Web3 API");
             })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
      /**
@@ -46,9 +48,11 @@ const web3authentication = (function() {
      */
     addBusiness: function(hash) {
       return new Promise((resolve,reject)=>{
-        web3util.getContractInstance(UserLogic).then((userLogicInstance) =>{
+        web3util.getContractInstance(UserLogic)
+        .then((userLogicInstance) =>{
           let [hashIpfs, hashSize, hashFun] = web3util.splitIPFSHash(hash);
-          web3util.getCurrentAccount().then((account)=>{
+          web3util.getCurrentAccount()
+          .then((account)=>{
             userLogicInstance.methods.addBusiness(hashIpfs, hashSize, hashFun)
             .send({from: account})
             .then(resolve)
@@ -56,7 +60,9 @@ const web3authentication = (function() {
               reject("error during the registration of a new business, there is a problem with Web3 API");
             })
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
     },
     /**
@@ -67,7 +73,7 @@ const web3authentication = (function() {
      * @param {*} address Address you want to know datas
      */
     getUser: async function(address = undefined) {
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         web3util.getContractInstance(UserLogic)
         .then(async (userLogicInstance)=>{
           if (address === undefined){
@@ -82,8 +88,10 @@ const web3authentication = (function() {
 
             var type = ris[4];
             resolve([web3util.recomposeIPFSHash(hashIPFS, hashSize, hashFun), state, type]);
-          });
+          })
+          .catch("The user seem not to be registered")
         })
+        .catch(reject)
       })
     }
   }
