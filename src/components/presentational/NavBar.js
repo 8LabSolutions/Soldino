@@ -56,7 +56,9 @@ class NavBar extends Component {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           {navLinks}
         </div>
-        <ButtonAuth text={authText} />
+        <span id="logButton">
+          <ButtonAuth text={authText}  />
+        </span>
       </nav>
     )
   }

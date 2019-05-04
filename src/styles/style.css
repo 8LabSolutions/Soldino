@@ -414,3 +414,24 @@ input:checked + .slider {
 #downloadPDF {
   line-height: 1 !important;
 }
+
+@media only screen and (max-width: 991px)  {
+  .navbar .badge {
+    display: none;
+  }
+
+  #logButton button {
+    position: absolute;
+    right: 0px;
+    top: 4px;
+  }
+
+  #logo {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 14px;
+  }
+}
