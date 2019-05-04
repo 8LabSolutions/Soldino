@@ -4,10 +4,6 @@ import datetime
 INPUT_PATH = '../truffle_test/truffle_test_ris.txt'
 OUTPUT_PATH = 'call_cost.csv'
 
-def get_gas_cost(line):
-	items = line.split()
-	return items[9]
-
 def calc_average(list):
 	sum = 0
 	for i in range(len(list)):
@@ -43,10 +39,9 @@ with open (INPUT_PATH,'r') as cv:
 
 		if methods and separator not in line and to_skip not in line:
 			function_name = re.compile('·\s+(\w+)').search(line)
-			call_cost = get_gas_cost(line)
-			
-			
-			ris.append([function_name.group(1),call_cost])
+			call_cost = re.compile('\d+\.\d+').search(line)
+			#print (line)
+			ris.append([function_name.group(1),call_cost.group()])
 			
 			# ok, abbiamo nome e prezzo
 			# non ci resta che salvare in un array nomi e prezzi. poi calcola la media

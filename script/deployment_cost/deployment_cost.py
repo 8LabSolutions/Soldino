@@ -1,7 +1,7 @@
 import re
 import datetime
 
-INPUT_PATH = '../coverage/coverage.txt'
+INPUT_PATH = '../truffle_test/truffle_test_ris.txt'
 OUTPUT_PATH = 'deployment_cost.csv'
 
 def calc_average(list):
@@ -12,6 +12,10 @@ def calc_average(list):
 	ave = (round(ave,2)) 
 	return ave
 
+def get_gas_cost(line):
+	items = line.split()
+	return items[7]
+	
 
 # SCRIPT: prendo i prezzi di deploy dei contratti. 
 with open (INPUT_PATH,'r') as cv:
@@ -33,11 +37,12 @@ with open (INPUT_PATH,'r') as cv:
 		elif end in line:
 			deployments = False
 
-		if deployments and separator not in line:
+		if deployments and separator not in line: #allora è una riga buona
+			contract_deploy_price = get_gas_cost(line)
 			contract_name = re.compile('\w+').search(line)
-			contract_deploy_price = re.compile('\d+\.\d+').search(line)
-
-			ris.append([contract_name.group(),contract_deploy_price.group()])
+			#contract_deploy_price = re.compile('(\d+\.\d+)\s[^\%]').search(line)
+			contract_deploy_price = get_gas_cost(line)
+			ris.append([contract_name.group(),contract_deploy_price])
 
 			# ok, abbiamo nome e prezzo
 			# non ci resta che salvare in un array nomi e prezzi. poi calcola la media
