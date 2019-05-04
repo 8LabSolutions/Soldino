@@ -49,6 +49,9 @@ class NavBar extends Component {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <button className="navbar-toggler" id="burger" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon" />
+        </button>
         <NavLink className="nav-item nav-link material-icons" to="/"><img alt="Logo" id="logo" src="logo.png" /></NavLink>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           {navLinks}

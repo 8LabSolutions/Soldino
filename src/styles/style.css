@@ -398,3 +398,19 @@ input:checked + .slider {
 .popover-inner, .popover {
   max-width: 500px;
 }
+
+.navbar {
+  padding: 0px !important;
+}
+
+#burger {
+  border: none !important;
+}
+
+#burger::before {
+  display: none !important;
+}
+
+#downloadPDF {
+  line-height: 1 !important;
+}

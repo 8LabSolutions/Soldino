@@ -13,9 +13,10 @@ class VATRefund extends Component {
   }
 
   componentWillMount() {
-    let {resetSearch, setStatus, resetPeriod, getVATPeriods} = this.props;
+    let {resetSearch, setStatus, resetPeriod, getVATPeriods, resetVAT} = this.props;
     resetSearch();
     resetPeriod();
+    resetVAT();
     setStatus("");
     getVATPeriods();
     //setVATRefund();
