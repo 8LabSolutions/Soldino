@@ -7,7 +7,7 @@ import { getBase64 } from '../../auxiliaryFunctions';
 import { beginLoading, endLoading } from '../../actions/login';
 import { store } from '../../store';
 import history from '../../store/history'
-import { amountStore, defaultIndex, ERRORTOAST } from '../../constants/fixedValues';
+import { amountStore, defaultIndex, ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { toastManager } = ownProps;
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         parametersArray[5]===null
       ){
         //nothing has changed
-        history.push("/erroredit")
+        toastManager.add("You have to edit at least one field.", ERRORTOAST)
       }else{
         //something has changed, need to check what has been changed and change it/them
         dispatch(beginLoading())
@@ -45,6 +45,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               businessActionCreator.getMyProducts(amountStore, defaultIndex)
               .then((action)=>{
                 dispatch(action)
+                toastManager.add("Product edited successfully.", SUCCESSTOAST)
                 dispatch(endLoading())
                 history.push("/productsmanager")
               })
@@ -67,6 +68,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             businessActionCreator.getMyProducts(amountStore, defaultIndex)
             .then((action)=>{
               dispatch(action)
+              toastManager.add("Product edited successfully.", SUCCESSTOAST)
               dispatch(endLoading())
               history.push("/productsmanager")
             })
