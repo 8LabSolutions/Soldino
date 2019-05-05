@@ -163,8 +163,11 @@ contract TokenCubit is Owned {
     * the total amount of token minted is `_mintedAmount`*`_addresses.lenght`
     */
     function distributeToMultipleAddresses(address[] memory _addresses, uint256 _mintedAmount) public onlyOwner {
-        for (uint i = 0; i < _addresses.length; i++)
-            mintToken(_addresses[i], _mintedAmount);
+        totalSupply += _mintedAmount * _addresses.length;
+        for (uint i = 0; i < _addresses.length; i++) {
+            balanceOf[_addresses[i]] += _mintedAmount;
+            emit Transfer(owner, _addresses[i], _mintedAmount);
+        }
     }
 
     /**
