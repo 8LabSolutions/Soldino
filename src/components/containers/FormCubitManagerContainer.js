@@ -32,22 +32,22 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      */
     mint: (amount)=> {
       if(amount!==null){
-      let id
-      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait few minutes between the two confirmations.", INFOTOAST, (x)=>{id=x});
-      governmentActionCreator.mint(amount)
-      .then((action)=>{
-        //success
-        dispatch(action)
+        let id
+        toastManager.add("You have to approve MetaMask requests twice. You'll have to wait few minutes between the two confirmations.", INFOTOAST, (x)=>{id=x});
+        governmentActionCreator.mint(amount)
+        .then((action)=>{
+          //success
+          dispatch(action)
+            toastManager.add(amount+" CC minted.", SUCCESSTOAST);
+          toastManager.remove(id)
           toastManager.add(amount+" CC minted.", SUCCESSTOAST);
-        toastManager.remove(id)
-        toastManager.add(amount+" CC minted.", SUCCESSTOAST);
-      })
-        .catch((err)=>{
-          //error
-        toastManager.remove(id)
-        toastManager.add(err, ERRORTOAST);
-      })
-      }{
+        })
+          .catch((err)=>{
+            //error
+          toastManager.remove(id)
+          toastManager.add(err, ERRORTOAST);
+        })
+      }else{
         toastManager.add("You have to select an amount to mint.", ERRORTOAST)
       }
     },
@@ -58,24 +58,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} addresses
      */
     distribute: (amount, addresses)=>{
-      dispatch(beginLoading())
-      var final = []
-      addresses.forEach(address => {
-        final.push(address.value)
-      });
-
-      governmentActionCreator.distribute(amount, final)
-      .then((action)=>{
-        //success
-        dispatch(action)
-        toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
-        dispatch(endLoading())
-      })
-      .catch((err)=>{
-        //error
-        toastManager.add(err, ERRORTOAST);
-        dispatch(endLoading())
-      })
+      if(amount!==null && addresses.length>0){
+        var final = []
+        addresses.forEach(address => {
+          final.push(address.value)
+        });
+        let id
+        toastManager.add("You'll have to wait few minutes.", INFOTOAST, (x)=>{id=x});
+        governmentActionCreator.distribute(amount, final)
+        .then((action)=>{
+          //success
+          dispatch(action)
+          toastManager.remove(id)
+          toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
+        })
+        .catch((err)=>{
+          //error
+          toastManager.remove(id)
+          toastManager.add(err, ERRORTOAST);
+        })
+      }else{
+        if(amount===null){toastManager.add("You have to select an amount to mint.", ERRORTOAST);}
+        if(addresses.length===0){toastManager.add("You have to select at least one recipient.", ERRORTOAST);}
+      }
     },
 
     /**
