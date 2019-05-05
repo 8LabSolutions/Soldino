@@ -9,13 +9,27 @@ import { printShipment } from '../../auxiliaryFunctions';
 import { searchaction } from '../../actions/searchaction';
 import { ERRORTOAST } from '../../constants/fixedValues';
 
+/**
+ * @description map the resetSearch, getUserList, printUser actions into the UsersList component
+ * @param {*} dispatch
+ * @param {*} ownProps
+ */
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { toastManager } = ownProps;
   return {
+
+    /**
+     * @description reset the searched string
+     */
     resetSearch: () => {
       dispatch(searchaction(""))
     },
 
+    /**
+     * @description get all the citizen users in a list
+     * @param {*} amount users to get
+     * @param {*} index start value (index*amount is the first user position)
+     */
     getUserList: (amount, index)=> {
       governmentActionCreator.getUserList(amount, index, CITIZEN)
       .then((action)=>{
@@ -26,6 +40,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
     },
 
+    /**
+     * @description print a formatted citizen user
+     * @param {*} citizen to print
+     */
     printUser: (citizen)=>{
       let dynamicText
       (citizen.state===true) ? dynamicText="Disable" : dynamicText="Enable";
@@ -54,6 +72,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
+/**
+ * @description map the citizenList and searchProduct state values into the UsersList component
+ * @param {*} state
+ */
 const mapStateToProps = (state) => {
   return {
     userList: state.citizenList,
@@ -61,6 +83,9 @@ const mapStateToProps = (state) => {
   }
 }
 
+/**
+ * @description connect the state and action to the UsersList props
+ */
 const CitizenListContainer = connect(mapStateToProps, mapDispatchToProps)(UsersList);
 
 export default withToastManager(CitizenListContainer);
