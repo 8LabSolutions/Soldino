@@ -33,19 +33,23 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} amount in CC
      */
     mint: (amount)=> {
-      dispatch(beginLoading())
-      governmentActionCreator.mint(amount)
-      .then((action)=>{
-        //success
-        dispatch(action)
-        toastManager.add(amount+" CC minted.", SUCCESSTOAST);
-        dispatch(endLoading())
-      })
-      .catch((err)=>{
-        //error
-        dispatch(endLoading())
-        toastManager.add(err, ERRORTOAST);
-      })
+      if(amount!==null){
+        dispatch(beginLoading())
+        governmentActionCreator.mint(amount)
+        .then((action)=>{
+          //success
+          dispatch(action)
+          toastManager.add(amount+" CC minted.", SUCCESSTOAST);
+          dispatch(endLoading())
+        })
+        .catch((err)=>{
+          //error
+          dispatch(endLoading())
+          toastManager.add(err, ERRORTOAST);
+        })
+      }{
+        toastManager.add("You have to select an amount to mint.", ERRORTOAST)
+      }
     },
 
     /**
@@ -54,24 +58,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} addresses
      */
     distribute: (amount, addresses)=>{
-      dispatch(beginLoading())
-      var final = []
-      addresses.forEach(address => {
-        final.push(address.value)
-      });
+      if(addresses.length>0 && amount!==null){
+        dispatch(beginLoading())
+        var final = []
+        addresses.forEach(address => {
+          final.push(address.value)
+        });
 
-      governmentActionCreator.distribute(amount, final)
-      .then((action)=>{
-        //success
-        dispatch(action)
-        toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
-        dispatch(endLoading())
-      })
-      .catch((err)=>{
-        //error
-        toastManager.add(err, ERRORTOAST);
-        dispatch(endLoading())
-      })
+        governmentActionCreator.distribute(amount, final)
+        .then((action)=>{
+          //success
+          dispatch(action)
+          toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
+          dispatch(endLoading())
+        })
+        .catch((err)=>{
+          //error
+          toastManager.add(err, ERRORTOAST);
+          dispatch(endLoading())
+        })
+      }else{
+        if(addresses.length===0){toastManager.add("You have to select at least one recipient.", ERRORTOAST);}
+        if(amount===null){toastManager.add("You have to select an amount to distribute.", ERRORTOAST)}
+      }
     },
 
     /**
