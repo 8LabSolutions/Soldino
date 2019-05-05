@@ -9,6 +9,30 @@ const web3user = (function(){
   //initializing web3
   web3util.init()
 
+  /**
+   * @returns The function returns a promise that resolve with the balance of the current user,
+   * otherwise reject with an error
+   */
+  function getBalance(){
+    return new Promise((resolve, reject)=>{
+      web3util.getContractInstance(TokenCubit)
+      .then((tokenInstance)=>{
+        web3util.getCurrentAccount()
+        .then((account)=>{
+          tokenInstance.methods.balanceOf(account)
+          .call()
+          .then((balance)=>{
+            if(balance!==0)
+              balance/=web3util.TOKENMULTIPLIER;
+            resolve(round(balance))
+          })
+        })
+        .catch(reject)
+      })
+      .catch(reject)
+    })
+  }
+
   return{
     /**
      * @description Buy the products passed. The array must be ordered such that the i-th cell of each
@@ -33,20 +57,26 @@ const web3user = (function(){
         .then((purchaseInstance)=>{
           web3util.getCurrentAccount()
           .then((account)=>{
-            web3util.tokenTransferApprove(amount, Purchase)
-            .then(()=>{
-              purchaseInstance.methods.saveAndPayOrder(
-                products,
-                productQtn,
-                remainingHash,
-                hashFun,
-                hashSize,
-                web3util.getVATPeriod())
-              .send({from: account, gas: 2000000})
-              .then(resolve)
-              .catch(()=>{
-                reject("There were some problems with the payment, please contanct the system administrator")
+            getBalance()
+            .then((balance)=>{
+              if(balance<amount)
+                reject("You have not enough Cubit to complete the purchase :(")
+              web3util.tokenTransferApprove(amount, Purchase)
+              .then(()=>{
+                purchaseInstance.methods.saveAndPayOrder(
+                  products,
+                  productQtn,
+                  remainingHash,
+                  hashFun,
+                  hashSize,
+                  web3util.getVATPeriod())
+                .send({from: account, gas: 2000000})
+                .then(resolve)
+                .catch((err)=>{
+                  reject("There were some problems with the payment, please contanct the system administrator. "+err)
+                })
               })
+              .catch(reject)
             })
             .catch(reject)
           })
@@ -59,25 +89,7 @@ const web3user = (function(){
      * @returns The function returns a promise that resolve with the balance of the current user,
      * otherwise reject with an error
      */
-    getBalance: function(){
-      return new Promise((resolve, reject)=>{
-        web3util.getContractInstance(TokenCubit)
-        .then((tokenInstance)=>{
-          web3util.getCurrentAccount()
-          .then((account)=>{
-            tokenInstance.methods.balanceOf(account)
-            .call()
-            .then((balance)=>{
-              if(balance!==0)
-                balance/=web3util.TOKENMULTIPLIER;
-              resolve(round(balance))
-            })
-          })
-          .catch(reject)
-        })
-        .catch(reject)
-      })
-    },
+    getBalance: getBalance,
     /**
      * @returns The function returns all the IPFS hashes of the current account,
      * from which it is possible to retrieve all the information

@@ -37,8 +37,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         //starting listening for account chages
         authentication.listenForChanges()
         .then(()=>{
-          dispatch(logOut())
           history.push('/')
+          dispatch(logOut())
         })
         toastManager.add(message, SUCCESSTOAST);
         history.push('/')
