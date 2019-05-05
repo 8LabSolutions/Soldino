@@ -111,9 +111,9 @@ const web3government = (function(){
      */
     distributeToMultipleAddresses: function (addresses, amount){
       return new Promise((resolve, reject)=>{
-        let totalAmount = round(amount*(addresses.length))
-        web3util.tokenTransferApprove(totalAmount, TokenCubit)
-        .then(()=>{
+        //let totalAmount = round(amount*(addresses.length))
+        //web3util.tokenTransferApprove(totalAmount, TokenCubit)
+        //.then(()=>{
           web3util.getContractInstance(TokenCubit)
           .then((tokenInstance)=>{
             web3util.getCurrentAccount()
@@ -128,8 +128,8 @@ const web3government = (function(){
             .catch(reject)
           })
           .catch(reject)
-        })
-        .catch(reject)
+        //})
+        //.catch(reject)
       })
     },
     /**
