@@ -5,19 +5,18 @@ const businessActionCreator = (function(){
   return {
 
     /**
-     * @description Generates a list of products in sale and returns it as param by returning a redux action 
+     * @description Generates a list of products in sale and returns it as param by returning a redux action
      * @returns The function returns a promise that resolves success of getting all products, otherwise rejects an error.
      * @param {*} number of products
      * @param {*} index of first product (firstProduct.position === index*amount)
      */
     getStoreProducts: function(amount, index){
-      return new Promise((resolve)=>{
-        business.getStoreProduct(amount, index).then((results)=>{
+      return new Promise((resolve, reject)=>{
+        business.getStoreProduct(amount, index)
+        .then((results)=>{
           resolve(getStoreProducts(results));
         })
-        .catch(()=>{
-          //should resolve with an error message
-        })
+        .catch(reject)
       })
     },
 
@@ -28,13 +27,12 @@ const businessActionCreator = (function(){
      * @param {*} index of first product (firstProduct.position === index*amount)
      */
     getMyProducts: function(amount, index){
-      return new Promise((resolve)=>{
-        business.getSenderProduct(amount, index).then((results)=>{
+      return new Promise((resolve, reject)=>{
+        business.getSenderProduct(amount, index)
+        .then((results)=>{
           resolve(getMyProducts(results));
         })
-        .catch(()=>{
-          //should resolve with an error message
-        })
+        .catch(reject)
       })
     },
 
@@ -50,9 +48,10 @@ const businessActionCreator = (function(){
      * @param {*} seller VAT number of the product
      */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.addProduct(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber)
         .then(resolve)
+        .catch(reject)
       })
     },
 
@@ -68,9 +67,10 @@ const businessActionCreator = (function(){
      * @param {*} seller VAT number of the product
      */
     modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.modifyProduct(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber)
         .then(resolve)
+        .catch(reject)
       })
     },
 
@@ -80,9 +80,10 @@ const businessActionCreator = (function(){
      * @param {*} key of the product
      */
     deleteProduct: function(keyProd){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.deleteProduct(keyProd)
         .then(resolve)
+        .catch(reject)
       })
     },
 
@@ -91,9 +92,10 @@ const businessActionCreator = (function(){
      * @returns The function returns a promise that resolves the number of products in the store, otherwise rejects an error.
      */
     getTotalStoreProduct: function(){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.getTotalStoreProduct()
         .then(resolve)
+        .catch(reject)
       })
     },
 
@@ -102,9 +104,10 @@ const businessActionCreator = (function(){
      * @returns The function returns a promise that resolves the number of my products in the store, otherwise rejects an error.
      */
     getTotalMyProduct: function(){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.getTotalMyProduct()
         .then(resolve)
+        .catch(reject)
       })
     },
 
@@ -115,11 +118,12 @@ const businessActionCreator = (function(){
      * for example, 2019-2 means that the quarter is the second of 2019, so from April to June 2019
      */
     getInvoices: function(VATPeriod){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.getInvoices(VATPeriod)
         .then((invoices)=>{
           resolve(setInvoices(invoices));
         })
+        .catch(reject)
       })
     },
 
@@ -128,11 +132,12 @@ const businessActionCreator = (function(){
      * @returns The function returns a promise that resolves the number of the invoices in a quarter by a specific business, otherwise rejects an error.
      */
     getBusinessPeriod: function(){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.getPeriods()
         .then((periods)=>{
           resolve(setPeriods(periods))
         })
+        .catch(reject)
       })
     },
 
@@ -143,9 +148,10 @@ const businessActionCreator = (function(){
      * @param {*} amount to pay
      */
     payVATPeriod: function(period, amount){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.payVATPeriod(period, amount)
         .then(resolve)
+        .catch(reject)
       })
     },
 
@@ -153,11 +159,12 @@ const businessActionCreator = (function(){
      * @description Defer the debt of a quarter to the next quarter.
      * @returns The function returns a promise that resolves the deferment, otherwise rejects an error.
      * @param {*} selected period
-     */    
+     */
     putOnHoldVATPeriod: function(period){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         business.putOnHoldVATPeriod(period)
         .then(resolve)
+        .catch(reject)
       })
     }
   }

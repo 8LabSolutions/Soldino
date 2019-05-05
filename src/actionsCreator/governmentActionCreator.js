@@ -16,24 +16,22 @@ const governmentActionCreator = (function(){
      */
     getUserList: function(amount, index, type){
       if(type === CITIZEN)
-        return new Promise((resolve)=>{
-          government.getCitizenList(amount, index).then((results)=>{
+        return new Promise((resolve, reject)=>{
+          government.getCitizenList(amount, index)
+          .then((results)=>{
             //get all Citizens
             resolve(getCitizenList(results))
           })
-          .catch(()=>{
-            //should resolve an error that says "No user found."
-          })
+          .catch(reject)
         })
       if(type === BUSINESS)
-        return new Promise((resolve)=>{
-          government.getBusinessList(amount, index).then((results)=>{
+        return new Promise((resolve, reject)=>{
+          government.getBusinessList(amount, index)
+          .then((results)=>{
             //get all Businesses
             resolve(getBusinessList(results))
           })
-          .catch(()=>{
-            //should resolve an error that says "No user found."
-          })
+          .catch(reject)
         })
     },
     /**
@@ -41,11 +39,12 @@ const governmentActionCreator = (function(){
      * @param {*} period the VAT period you want to get the business info
      */
     setVATrefund: function(period){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         government.getBusinessVATState(period)
         .then((businessStateArray)=>{
           resolve(setVATrefund(businessStateArray))
         })
+        .catch(reject)
       })
     },
 
@@ -54,11 +53,12 @@ const governmentActionCreator = (function(){
      * @returns The function returns a promise that resolves the receivement of the quarters, otherwise rejects an error.
      */
     getVATPeriods: function(){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         government.getPeriods()
         .then((periods)=>{
           resolve(setVATPeriod(periods))
         })
+        .catch(reject)
       })
 
     },
@@ -68,13 +68,17 @@ const governmentActionCreator = (function(){
      * @returns The function returns a promise that resolves the receivement of the balance and total amount, otherwise rejects an error.
      */
     getBalanceAndTotalAmount: function(){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         //prendere l'amount ed il totale dei cubit
-        government.getTotalCubit().then((total)=>{
-          user.getBalance().then((balance)=>{
+        government.getTotalCubit()
+        .then((total)=>{
+          user.getBalance()
+          .then((balance)=>{
             resolve(getGovernmentBalanceAndTotalAmount(balance, total))
           })
+          .catch(reject)
         })
+        .catch(reject)
       })
 
     },
@@ -85,14 +89,12 @@ const governmentActionCreator = (function(){
      * @param {*} amount in CC to mint
      */
     mint: function(amount){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         government.mint(amount)
         .then(()=>{
           resolve(this.getBalanceAndTotalAmount())
         })
-        .catch(()=>{
-          //should resolve an error that says "Minting not possible.."
-        })
+        .catch(reject)
       })
     },
 
@@ -103,14 +105,12 @@ const governmentActionCreator = (function(){
      * @param {*} address, where to send the CC
      */
     distribute: function(amount, address){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         government.distribute(amount, address)
         .then(()=>{
           resolve(this.getBalanceAndTotalAmount())
         })
-        .catch(()=>{
-          //should resolve an error that says "Minting not possible.."
-        })
+        .catch(reject)
       })
     },
 
@@ -122,13 +122,14 @@ const governmentActionCreator = (function(){
      * @param {*} type of user [CITIZEN, BUSINESS]
      */
     changeUserState: function(address, state, type){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         var stateAction;
         if(state === true)
           stateAction = government.disableAccount
         else
           stateAction = government.enableAccount
-        stateAction(address).then(()=>{
+        stateAction(address)
+        .then(()=>{
           if(type === CITIZEN){
             let newList = store.getState().citizenList;
             for (let i = 0; i < newList.length; i++){
@@ -148,12 +149,14 @@ const governmentActionCreator = (function(){
             resolve(getBusinessList(newList));
           }
         })
+        .catch(reject)
       })
     },
     refund: function(address, period, amount){
-      return new Promise((resolve)=>{
+      return new Promise((resolve, reject)=>{
         government.refund(period, address, amount)
         .then(resolve)
+        .catch(reject)
       })
 
     },

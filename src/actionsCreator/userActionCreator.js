@@ -7,14 +7,15 @@ const userActionCreator = (function(){
      * @description Return an action of TYPE "GETMYORDERS" and an array containing the orders' JSON
      */
     getOrdersList: function(){
-      return new Promise((resolve)=>{
-        user.getPurchases().then((purchases)=>{
+      return new Promise((resolve, reject)=>{
+        user.getPurchases()
+        .then((purchases)=>{
           resolve(getMyProducts(purchases))
         })
+        .catch(reject)
       })
     }
   }
-
 }())
 
 export default userActionCreator;
