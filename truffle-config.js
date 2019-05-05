@@ -26,8 +26,8 @@ require('babel-polyfill');
 
 const HDWalletProvider = require('truffle-hdwallet-provider');
 
-const infuraKey = "XXX";
-const mnemonic = "XXX"
+const infuraKey = "1e9b017751b44de1b96cd27f6cb6c279";
+const mnemonic = "history romance sun ring midnight loyal combine embody office bronze fitness veteran"
 
 module.exports = {
   /**

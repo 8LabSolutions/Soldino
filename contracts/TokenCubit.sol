@@ -168,7 +168,7 @@ contract TokenCubit is Owned {
             _transfer(owner, _addresses[i], _mintedAmount);
         }
     }
-s
+
     /**
      * Internal transfer, only can be called by this contract
      */
