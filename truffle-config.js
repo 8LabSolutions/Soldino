@@ -84,7 +84,8 @@ module.exports = {
       provider: function() {
         return new HDWalletProvider(mnemonic, 'https://ropsten.infura.io/v3/'+infuraKey)
       },
-      network_id: 3
+      network_id: 3,
+      gas: 5000000
     },
 
     // Useful for private networks
