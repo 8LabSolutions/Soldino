@@ -108,7 +108,7 @@ class FormRegistration extends Component {
     const { userType } = this.state;
     return (
       <form>
-        <h3>Welcome to Soldino</h3>
+        <h3>WELCOME TO SOLDINO</h3>
         <div className="container">
           <div className="row">
             <div className="col-sm-12" onChange={this.handleOptionChange}>

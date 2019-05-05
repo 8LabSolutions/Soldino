@@ -107,9 +107,10 @@ class VATRefund extends Component {
     return (
       <div>
         <NavBar />
+        <h3>VAT REFUND</h3>
         <div className="container">
           <div className="row">
-            <div className="col-sm-12 userlist-margin">
+            <div className="col-sm-12">
               <div className="container">
                 <div className="row">
                   <div className="col-sm-6">

@@ -95,7 +95,7 @@ class Orders extends Component {
     return (
       <div>
         <NavBar />
-        <h3>Orders</h3>
+        <h3>ORDERS</h3>
         <div className="container">
           <div className="row">
             <div className="col-sm-12">

@@ -66,7 +66,7 @@ class Store extends Component {
       list = storeProducts.map(i => this.printProduct(i))
     return (
       <div>
-        <h3>Store</h3>
+        <h3>STORE</h3>
         <div className="container">
           <div className="row">
             <SearchContainer />

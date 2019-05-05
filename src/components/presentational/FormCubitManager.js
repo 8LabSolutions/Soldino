@@ -77,15 +77,16 @@ class FormCubitManager extends Component {
     this.options = fullList;
     return (
       <form>
-        <div className="container userlist-margin">
+        <h3>CUBIT MANAGER</h3>
+        <div className="container">
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-6 top-2rem">
               <p>Total supply: {round(totalSupply)} CC</p>
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-6 top-2rem">
               <p>Government supply: {round(governmentSupply)} CC</p>
             </div>
-            <div className="form-group col-sm-6 offset-sm-3 top-2rem">
+            <div className="form-group col-sm-6 offset-sm-3">
               <label htmlFor="InputAmount">Amount</label>
               <input className="form-control" id="InputAmount" name="distributeAmount" placeholder="Enter amount" type="number" min="1" max={governmentSupply} onChange={this.handleChange} />
             </div>
