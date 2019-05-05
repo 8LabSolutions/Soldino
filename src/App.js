@@ -54,7 +54,7 @@ class App extends Component {
         <ToastProvider>
           <div>
             <p id="loading">LOADING</p>
-            <span id="loading" className="loading-small">Please check MetaMask</span>
+            <span id="loading" className="loading-small">{props.loadingMessage}</span>
             <Particles params={PARTICLES} />
           </div>
         </ToastProvider>

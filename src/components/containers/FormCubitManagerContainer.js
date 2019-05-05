@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import { withToastManager } from 'react-toast-notifications';
 import FormCubitManager from '../presentational/FormCubitManager';
 import governmentActionCreator from "../../actionsCreator/governmentActionCreator"
-import { beginLoading, endLoading } from '../../actions/login';
 import { CITIZEN, BUSINESS } from '../../constants/actionTypes';
-import { amountStore, defaultIndex, amountUser, ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
+import { defaultIndex, amountUser, ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
 
 /**
  * @description map the getBalanceAndTotalAmount, mint, distribute, getCitizenList, getBusinessList actions into the FormCubitManager component
@@ -34,19 +32,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      */
     mint: (amount)=> {
       if(amount!==null){
-        dispatch(beginLoading())
-        governmentActionCreator.mint(amount)
-        .then((action)=>{
-          //success
-          dispatch(action)
+      let id
+      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait few minutes between the two confirmations.", INFOTOAST, (x)=>{id=x});
+      governmentActionCreator.mint(amount)
+      .then((action)=>{
+        //success
+        dispatch(action)
           toastManager.add(amount+" CC minted.", SUCCESSTOAST);
-          dispatch(endLoading())
-        })
+        toastManager.remove(id)
+        toastManager.add(amount+" CC minted.", SUCCESSTOAST);
+      })
         .catch((err)=>{
           //error
-          dispatch(endLoading())
-          toastManager.add(err, ERRORTOAST);
-        })
+        toastManager.remove(id)
+        toastManager.add(err, ERRORTOAST);
+      })
       }{
         toastManager.add("You have to select an amount to mint.", ERRORTOAST)
       }
@@ -58,29 +58,24 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} addresses
      */
     distribute: (amount, addresses)=>{
-      if(addresses.length>0 && amount!==null){
-        dispatch(beginLoading())
-        var final = []
-        addresses.forEach(address => {
-          final.push(address.value)
-        });
+      dispatch(beginLoading())
+      var final = []
+      addresses.forEach(address => {
+        final.push(address.value)
+      });
 
-        governmentActionCreator.distribute(amount, final)
-        .then((action)=>{
-          //success
-          dispatch(action)
-          toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
-          dispatch(endLoading())
-        })
-        .catch((err)=>{
-          //error
-          toastManager.add(err, ERRORTOAST);
-          dispatch(endLoading())
-        })
-      }else{
-        if(addresses.length===0){toastManager.add("You have to select at least one recipient.", ERRORTOAST);}
-        if(amount===null){toastManager.add("You have to select an amount to distribute.", ERRORTOAST)}
-      }
+      governmentActionCreator.distribute(amount, final)
+      .then((action)=>{
+        //success
+        dispatch(action)
+        toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
+        dispatch(endLoading())
+      })
+      .catch((err)=>{
+        //error
+        toastManager.add(err, ERRORTOAST);
+        dispatch(endLoading())
+      })
     },
 
     /**

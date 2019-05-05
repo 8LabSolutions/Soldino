@@ -4,6 +4,7 @@ import Button from '../presentational/Button';
 import authentication from "../../facade/authentication"
 import { beginLoading, endLoading } from '../../actions/login';
 import { SUCCESSTOAST, ERRORTOAST } from '../../constants/fixedValues';
+import { setLoadingMessage } from '../../actions/user';
 
 
 /**
@@ -38,7 +39,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
          voidValue[6]===false &&
          voidValue[7]===false){
            //continue only if fields are not void
+        dispatch(setLoadingMessage("We are activating your account. Please wait some minutes (miners!)"))
         dispatch(beginLoading())
+
         authentication.addUser(...parametersArray).then(()=>{
           //success
           toastManager.add("Registration completed. Now you can login and start using Soldino.", SUCCESSTOAST)
