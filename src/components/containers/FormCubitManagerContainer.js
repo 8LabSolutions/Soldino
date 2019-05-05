@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import { withToastManager } from 'react-toast-notifications';
 import FormCubitManager from '../presentational/FormCubitManager';
 import governmentActionCreator from "../../actionsCreator/governmentActionCreator"
-import { beginLoading, endLoading } from '../../actions/login';
 import { CITIZEN, BUSINESS } from '../../constants/actionTypes';
-import { amountStore, defaultIndex, amountUser, ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
+import { defaultIndex, amountUser, ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
 
 /**
  * @description map the getBalanceAndTotalAmount, mint, distribute, getCitizenList, getBusinessList actions into the FormCubitManager component
@@ -33,17 +31,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} amount in CC
      */
     mint: (amount)=> {
-      dispatch(beginLoading())
+      let id
+      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait few minutes between the two confirmations.", INFOTOAST, (x)=>{id=x});
       governmentActionCreator.mint(amount)
       .then((action)=>{
         //success
         dispatch(action)
+        toastManager.remove(id)
         toastManager.add(amount+" CC minted.", SUCCESSTOAST);
-        dispatch(endLoading())
       })
       .catch((err)=>{
-        //error
-        dispatch(endLoading())
+        toastManager.remove(id)
         toastManager.add(err, ERRORTOAST);
       })
     },
@@ -54,7 +52,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} addresses
      */
     distribute: (amount, addresses)=>{
-      dispatch(beginLoading())
+      let id
+      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait few minutes between the two confirmations.", INFOTOAST, (x)=>{id=x});
       var final = []
       addresses.forEach(address => {
         final.push(address.value)
@@ -65,12 +64,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         //success
         dispatch(action)
         toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
-        dispatch(endLoading())
+        toastManager.remove(id)
       })
       .catch((err)=>{
         //error
         toastManager.add(err, ERRORTOAST);
-        dispatch(endLoading())
+        toastManager.remove(id)
       })
     },
 

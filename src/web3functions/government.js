@@ -111,16 +111,21 @@ const web3government = (function(){
      */
     distributeToMultipleAddresses: function (addresses, amount){
       return new Promise((resolve, reject)=>{
-        web3util.getContractInstance(TokenCubit)
-        .then((tokenInstance)=>{
-          web3util.getCurrentAccount()
-          .then((account)=>{
-            tokenInstance.methods.distributeToMultipleAddresses(addresses, round(amount*web3util.TOKENMULTIPLIER))
-            .send({from: account})
-            .then(resolve)
-            .catch(()=>{
-              reject("The distribution went wrong")
+        let totalAmount = round(amount*(addresses.length))
+        web3util.tokenTransferApprove(totalAmount, TokenCubit)
+        .then(()=>{
+          web3util.getContractInstance(TokenCubit)
+          .then((tokenInstance)=>{
+            web3util.getCurrentAccount()
+            .then((account)=>{
+              tokenInstance.methods.distributeToMultipleAddresses(addresses, round(amount*web3util.TOKENMULTIPLIER))
+              .send({from: account})
+              .then(resolve)
+              .catch(()=>{
+                reject("The distribution went wrong")
+              })
             })
+            .catch(reject)
           })
           .catch(reject)
         })

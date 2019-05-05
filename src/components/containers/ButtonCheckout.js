@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       let id
       //show info message
       dispatch(resetCart())
-      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
+      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait few minutes between the two confirmations.", INFOTOAST, (x)=>{id=x});
       //buy the cart content
       user.buy(cart)
       .then(()=>{

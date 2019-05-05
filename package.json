@@ -74,7 +74,8 @@
     "test": "react-scripts test",
     "solidity-test": "truffle test",
     "coverage": "cp sol_coverage_patch/parser.js node_modules/solidity-parser-sc/build/ && ./node_modules/.bin/solidity-coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "migrateropsten": "./node_modules/.bin/truffle migrate --network ropsten"
   },
   "pre-commit": "lint",
   "author": "8Lab Solutions",

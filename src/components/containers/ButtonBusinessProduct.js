@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import { withToastManager } from 'react-toast-notifications';
 import Button from '../presentational/Button';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import { getBase64 } from '../../auxiliaryFunctions';
-import { beginLoading, endLoading } from '../../actions/login';
-import { amountStore, defaultIndex, ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
+import { amountStore, defaultIndex, ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
 
 
 /**
@@ -34,7 +32,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
          voidValue[2]===false &&
          voidValue[3]===false){
         //continue only if title, description, netPrice and VATPercentage are not void
-        dispatch(beginLoading())
+        let id
+        toastManager.add("You have to approve MetaMask request. You'll have to wait few minutes for the confirmation.", INFOTOAST, (x)=>{id=x});
         if(parametersArray[4]!==null){
           //if image is not null => set the image passed by arg
           getBase64(parametersArray[4]).then((base64Image)=>{
@@ -44,13 +43,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               businessActionCreator.getMyProducts(amountStore, defaultIndex)
               .then((action)=>{
                 dispatch(action)
-                toastManager.add("Product added successfully.", SUCCESSTOAST)
-                dispatch(endLoading())
+                toastManager.add(parametersArray[0].toUpperCase()+" added successfully.", SUCCESSTOAST)
+                toastManager.remove(id)
               })
             })
             .catch((err)=>{
               toastManager.add(err, ERRORTOAST)
-              dispatch(endLoading())
+              toastManager.remove(id)
             })
           })
         }else{
@@ -61,12 +60,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             .then((action)=>{
               dispatch(action)
               toastManager.add("Product added successfully.", SUCCESSTOAST)
-              dispatch(endLoading())
+              toastManager.remove(id)
             })
           })
           .catch((err)=>{
             toastManager.add(err, ERRORTOAST)
-            dispatch(endLoading())
+            toastManager.remove(id)
           })
         }
       }else{
