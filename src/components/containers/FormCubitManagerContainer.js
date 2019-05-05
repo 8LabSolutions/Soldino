@@ -8,7 +8,7 @@ import { CITIZEN, BUSINESS } from '../../constants/actionTypes';
 import { amountStore, defaultIndex, amountUser, ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
 
 /**
- * @description map the getBalanceAndTotalAmount, mint, distribute, getCitizenList, getBusinessList actions into the Button component
+ * @description map the getBalanceAndTotalAmount, mint, distribute, getCitizenList, getBusinessList actions into the FormCubitManager component
  * @param {*} dispatch
  * @param {*} ownProps
  */
@@ -108,7 +108,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 /**
- * @description map the totalSupply, governmentSupply, citizenList, businessList state values into the Button component
+ * @description map the totalSupply, governmentSupply, citizenList, businessList state values into the FormCubitManager component
  * @param {*} state
  */
 const mapStateToProps = (state) => {
@@ -122,7 +122,7 @@ const mapStateToProps = (state) => {
 }
 
 /**
- * @description connect the state and action to the Button props
+ * @description connect the state and action to the FormCubitManager props
  */
 const FormCubitManagerContainer = connect(mapStateToProps, mapDispatchToProps)(FormCubitManager);
 
