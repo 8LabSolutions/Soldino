@@ -1,6 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS, PASSKEYPROD, GETMYORDERS, RESETCART, SETINVOICES, SETPERIODS, SELECTEDPERIOD, RESETINVOICES, SETVATREFUND, SETSTATUS, VATPERIODS, RESETVAT} from "../constants/actionTypes";
+import { LOGIN, LOGOUT, RESET, BUSINESS, CITIZEN, GOVERN, SEARCH, ADDTOCART, REMOVEFROMCART, INCREASEQUANTITY, DECREASEQUANTITY, CARTTOPENDING, CARTTOORDERS, BEGINLOADING, ENDLOADING, GETBUSINESSLIST, GETCITIZENLIST, MINTANDDISTRIBUTE, GETMYPRODUCTS, GETSTOREPRODUCTS, INCREASEINDEX, DECREASEINDEX, RESETINDEX, SETTOTALNUMBEROFPRODUCTS, SETTOTALNUMBEROFMYPRODUCTS, PASSKEYPROD, GETMYORDERS, RESETCART, SETINVOICES, SETPERIODS, SELECTEDPERIOD, RESETINVOICES, SETVATREFUND, SETSTATUS, VATPERIODS, RESETVAT, SETLOADINGMESSAGE} from "../constants/actionTypes";
 import { defaultIndex } from '../constants/fixedValues';
 
 const initialState = {
@@ -22,7 +22,8 @@ const initialState = {
   selectedPeriod: {id: "Select a quarter", amount: null, payable: false},
   VATRefundList: [],
   selectedStatus: "",
-  VATPeriods: []
+  VATPeriods: [],
+  loadingMessage: ""
 };
 export function rootReducer(state = initialState, action) {
   if (action.type === BEGINLOADING || action.type === ENDLOADING) {
@@ -241,7 +242,7 @@ export function rootReducer(state = initialState, action) {
       VATRefundList: []
     })
   }
-  
+
 
   if(action.type === SETVATREFUND) {
     return Object.assign({}, state, {
@@ -261,6 +262,12 @@ export function rootReducer(state = initialState, action) {
     })
   }
 
+  if(action.type === SETLOADINGMESSAGE) {
+    return Object.assign({}, state, {
+      loadingMessage: action.message
+    })
+  }
+
   //returning the state
   return state;
 }
@@ -269,7 +276,7 @@ export const persistConfig = {
   key: 'root',
   storage: storage,
   /** 'cart', 'ordersList' prima della presentazione */
-  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct', 'myProductsArray', 'ordersList', 'businessList', 'citizenList', 'editProd', 'periods', 'invoices', 'selectedPeriod', 'VATRefundList']
+  blacklist: ['searchProduct', 'logged', 'user', 'loading', 'index', 'myProductsArray', 'totalStoreProduct', 'totalMyProduct', 'myProductsArray', 'ordersList', 'businessList', 'citizenList', 'editProd', 'periods', 'invoices', 'selectedPeriod', 'VATRefundList', 'loadingMessage']
 };
 
 export default persistReducer(persistConfig, rootReducer);
