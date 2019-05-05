@@ -160,7 +160,7 @@ class Checkout extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
-              <h3>Checkout</h3>
+              <h3>CHECKOUT</h3>
               <div className="col-sm-12" onChange={this.handleOptionChange}>
                 <p>Please, insert a shipment address.</p>
                 <label htmlFor="ship1Radio">

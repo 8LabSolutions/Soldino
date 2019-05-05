@@ -65,7 +65,7 @@ class ProductsManager extends Component {
     return (
       <div>
         <NavBar />
-        <h3>ProductsManager</h3>
+        <h3>PRODUCTS MANAGER</h3>
         <div className="container">
           <div className="row">
             <div className="col-sm-12">

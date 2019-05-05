@@ -19,8 +19,7 @@ class UsersList extends Component {
     //need to check if user type is government, else redirect to home like previous line
     let list;
     let searchList = [];
-    var {printUser, userList} = this.props;
-    let {searchProduct} = this.props;
+    var {printUser, userList, searchProduct, history} = this.props;
     let pushed = false;
     if(userList!== undefined && userList.length>0){
       for(let i=0; i< userList.length; i++){
@@ -64,12 +63,15 @@ class UsersList extends Component {
       }
       list = searchList.map(i => printUser(i));
     }
+    let title
+    (history.location.pathname==="/userslist") ? title="USERS LIST" : title = "BUSINESS LIST"
     return (
       <div>
         <NavBar />
+        <h3>{title}</h3>
         <div className="container">
           <div className="row">
-            <div className="col-sm-12 userlist-margin">
+            <div className="col-sm-12">
               <SearchContainer />
               <ul className="list-group list-group-flush">
                 {list}

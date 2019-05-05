@@ -43,30 +43,30 @@ class EditProductsManager extends Component {
     return (
       <div>
         <NavBar />
-        <h3>Edit product</h3>
+        <h3>EDIT PRODUCT</h3>
         <div className="container">
           <div className="row">
             <div className="col-sm-6 offset-sm-3">
               <label htmlFor="InputTitle" className="form-group col-sm-12">
                 <span>Title</span>
-                <input className="form-control" id="InputTitle" placeholder="Enter Title" name="title" onChange={this.handleChangeField} maxlength="28" />
+                <input className="form-control" id="InputTitle" placeholder="Enter New Title (optional)" name="title" onChange={this.handleChangeField} maxlength="28" />
               </label>
               <label htmlFor="InputDescription" className="form-group col-sm-12">
                 <span>Description</span>
-                <input className="form-control" id="InputDescription" placeholder="Enter Description" name="description" onChange={this.handleChangeField} />
+                <input className="form-control" id="InputDescription" placeholder="Enter New Description (optional)" name="description" onChange={this.handleChangeField} />
               </label>
               <label htmlFor="InputNetPrice" className="form-group col-sm-12">
                 <span>Net Price</span>
-                <input type="number" className="form-control" id="InputNetPrice" placeholder="Enter Net Price in CC" name="netPrice" onChange={this.handleChangeField}  />
+                <input type="number" className="form-control" id="InputNetPrice" placeholder="Enter New Net Price in CC (optional)" name="netPrice" onChange={this.handleChangeField}  />
               </label>
               <label htmlFor="InputVAT" className="form-group col-sm-12">
                 <span>VAT</span>
-                <input type="number" className="form-control" id="InputVAT" placeholder="Enter VAT in %" name="vatPercentage" onChange={this.handleChangeField} />
+                <input type="number" className="form-control" id="InputVAT" placeholder="Enter New VAT in % (optional)" name="vatPercentage" onChange={this.handleChangeField} />
               </label>
               <div className="form-group col-sm-12">
                 <input type="file" id="imageUploader" onChange={this.handleChange} />
                 <label for="imageUploader">
-                  <span className="btn btn-light" id="spanUploader">Choose an image</span>
+                  <span className="btn btn-light" id="spanUploader">Choose a new image (optional)</span>
                 </label>
                 <img id="uploadedImage" src={this.state.url} />
               </div>
