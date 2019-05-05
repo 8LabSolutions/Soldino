@@ -1,7 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
-import jsPDF from 'jspdf';
 import NavBar from './NavBar'
 import { printDate, ExportPDF, checkBusiness, round, printShipment, periodToDate, dateToPeriod } from '../../auxiliaryFunctions/index'
 
@@ -21,8 +20,7 @@ class TransactionsManager extends Component {
 
   downloadPDF() {
     let {selectedPeriod} = this.props;
-    var doc = new jsPDF()
-    doc.fromHTML(ExportPDF(this.props.invoices, selectedPeriod) , 1, 1)
+    var doc = ExportPDF(this.props.invoices, selectedPeriod)
     return(
       doc.save("invoices "+this.selectedQuarter+".pdf")
     )
@@ -181,8 +179,8 @@ class TransactionsManager extends Component {
                 <p>Total VAT</p>
               </div>
               <div className="col-sm-2">
-                {(selectedPeriod.id==="Select a quarter") 
-                ? <button type="button" className="btn btn-light disabled" id="downloadPDF"><span className="material-icons">cloud_download</span></button> 
+                {(selectedPeriod.id==="Select a quarter")
+                ? <button type="button" className="btn btn-light disabled" id="downloadPDF"><span className="material-icons">cloud_download</span></button>
                 : <button type="button" className="btn btn-light" id="downloadPDF" onClick={() => this.downloadPDF()}><span className="material-icons">cloud_download</span></button>}
               </div>
             </div>
