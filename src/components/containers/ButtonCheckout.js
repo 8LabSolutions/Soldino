@@ -4,7 +4,6 @@ import Button from '../presentational/Button';
 import user from "../../facade/user"
 import { getTodayDate, getVAT, getNet } from '../../auxiliaryFunctions';
 import { store } from '../../store';
-import { beginLoading, endLoading } from '../../actions/login';
 import { resetCart } from '../../actions/cart';
 import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
 
@@ -21,7 +20,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} order
      */
     action: (order) => {
-      dispatch(beginLoading())
+      //dispatch(beginLoading())
       //get the cart content
       var cart = {
         products: [...order[0]],
@@ -34,7 +33,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
       let id
       //show info message
-      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
+      dispatch(resetCart())
+      toastManager.add("You have to approve MetaMask requests twice. You'll have to wait few minutes between the two confirmations.", INFOTOAST, (x)=>{id=x});
       //buy the cart content
       user.buy(cart)
       .then(()=>{
@@ -42,14 +42,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         toastManager.add("Purchase succeded", SUCCESSTOAST);
         toastManager.remove(id)
         //after success, reset cart content
-        dispatch(resetCart())
-        dispatch(endLoading())
+        //dispatch(endLoading())
       })
       .catch((err)=>{
         //error
         toastManager.add(err, ERRORTOAST);
         toastManager.remove(id)
-        dispatch(endLoading())
+        //dispatch(endLoading())
       })
     }
   }

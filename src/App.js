@@ -53,8 +53,8 @@ class App extends Component {
       return(
         <ToastProvider>
           <div>
-            <p id="loading">Loading</p>
-            <span id="loading" className="loading-small">Please check MetaMask</span>
+            <p id="loading">LOADING</p>
+            <span id="loading" className="loading-small">{props.loadingMessage}</span>
             <Particles params={PARTICLES} />
           </div>
         </ToastProvider>

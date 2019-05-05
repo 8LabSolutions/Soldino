@@ -1,13 +1,11 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux';
 import { withToastManager } from 'react-toast-notifications';
 import Button from '../presentational/Button';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import { getBase64 } from '../../auxiliaryFunctions';
-import { beginLoading, endLoading } from '../../actions/login';
 import { store } from '../../store';
 import history from '../../store/history'
-import { amountStore, defaultIndex, ERRORTOAST, SUCCESSTOAST } from '../../constants/fixedValues';
+import { amountStore, defaultIndex, ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
 
 /**
  * @description map the editProduct action into the Button component
@@ -35,7 +33,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         toastManager.add("You have to edit at least one field.", ERRORTOAST)
       }else{
         //something has changed, need to check what has been changed and change it/them
-        dispatch(beginLoading())
+        let id
+        toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
         //product key
         let editedProduct = [parametersArray[0][0]];
         //title
@@ -51,7 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         //seller name
         editedProduct[6] = parametersArray[6]
         //seller VAT number
-        editedProduct[7] = parametersArray[7] 
+        editedProduct[7] = parametersArray[7]
         //need to check if picture has changed
         if(parametersArray[5]!==null){
           //picture has changed
@@ -64,17 +63,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               .then((action)=>{
                 dispatch(action)
                 toastManager.add("Product edited successfully.", SUCCESSTOAST)
-                dispatch(endLoading())
+                toastManager.remove(id)
                 history.push("/productsmanager")
               })
               .catch((err)=>{
                 toastManager.add(err, ERRORTOAST);
-                dispatch(endLoading())
+                toastManager.remove(id)
               })
             })
             .catch((err)=>{
               toastManager.add(err, ERRORTOAST);
-              dispatch(endLoading())
+              toastManager.remove(id)
             })
           })
         }else{
@@ -86,17 +85,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             .then((action)=>{
               dispatch(action)
               toastManager.add("Product edited successfully.", SUCCESSTOAST)
-              dispatch(endLoading())
+              toastManager.remove(id)
               history.push("/productsmanager")
             })
             .catch((err)=>{
               toastManager.add(err, ERRORTOAST);
-              dispatch(endLoading())
+              toastManager.remove(id)
             })
           })
           .catch((err)=>{
             toastManager.add(err, ERRORTOAST);
-            dispatch(endLoading())
+            toastManager.remove(id)
           })
         }
       }

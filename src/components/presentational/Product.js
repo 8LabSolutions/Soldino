@@ -41,7 +41,9 @@ class Product extends Component {
     let image
     let myVAT
     let classDiv
-    {(store.getState().user.VATnumber!==undefined) ? myVAT=store.getState().user.VATnumber : myVAT=""}
+    if(store.getState().user!==null) {
+      (store.getState().user.VATnumber!==undefined) ? myVAT=store.getState().user.VATnumber : myVAT=""
+    }
     {(props.image===null) ? image = "/default.png" : image = props.image;}
     {(props.sellerVATNumber===myVAT) ? classDiv="card productOverlay" : classDiv="card" }
     return (

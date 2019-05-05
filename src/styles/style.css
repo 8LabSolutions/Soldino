@@ -476,3 +476,38 @@ h1, h2, h3 {
   z-index: 9999;
   margin-top: 52px;
 }
+
+.noOrders {
+  animation: 5s fadeIn;
+  animation-fill-mode: forwards;
+  visibility: hidden;
+}
+
+.loadingOrders {
+  animation: 5s fadeOut;
+  animation-fill-mode: forwards;
+  visibility: visible;
+}
+
+@keyframes fadeIn {
+  69% {
+    visibility: hidden;
+  }
+  70% {
+    visibility: visible;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
+@keyframes fadeOut {
+  69% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

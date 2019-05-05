@@ -380,7 +380,7 @@ class TransactionsManager extends Component {
     return (
       <div>
         <NavBar />
-        <h3>Transactions Manager</h3>
+        <h3>TRANSACTIONS MANAGER</h3>
         <div className="container">
           <div className="row">
             <div className="col-sm-12">

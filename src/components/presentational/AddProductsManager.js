@@ -42,7 +42,7 @@ class AddProductsManager extends Component {
     return (
       <div>
         <NavBar />
-        <h3>Add new product</h3>
+        <h3>ADD NEW PRODUCT</h3>
         <div className="container">
           <div className="row">
             <div className="col-sm-6 offset-sm-3">

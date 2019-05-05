@@ -23,8 +23,6 @@ class CartProduct extends Component {
   }
   render() {
     let props = this.props;
-    console.log("RENDER PRODOTTO NEL CARRELLO")
-    console.log(props)
     let product = [props.title, props.quantity, props.price, props.VAT, props.sellerName, props.sellerVATNumber, props.keyProd, props.seller, props.description]
     return (
       <div className="col-sm-4">

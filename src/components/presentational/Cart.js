@@ -50,7 +50,7 @@ class Cart extends Component {
     return (
       <div>
         <NavBar />
-        <h3>Cart</h3>
+        <h3>CART</h3>
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
