@@ -46,7 +46,7 @@ with open (INPUT_PATH,'r') as ra:
 		np = take_number_from_line(failed) # tests not passed
 		total = p + np # total number of tests
 		
-		ftcp = round((float(np)/float(total)),2 )
+		ftcp = round( (float(np)/float(total))*100 ,2 )
 		ptcp = 100 - ftcp
 	
 	
