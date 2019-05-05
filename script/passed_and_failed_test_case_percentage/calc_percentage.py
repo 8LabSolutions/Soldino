@@ -1,8 +1,14 @@
+# ABBREVIATIONS
+# ptcp = passed test cases percentage
+# ftcp = failed tets cases percentage
+
 import re
 import datetime
 
 INPUT_PATH = "../coverage/coverage.txt"
-OUTPUT_PATH = "densitaerrori.csv"
+OUTPUT_PATH_PASSED = "passed.csv"
+OUTPUT_PATH_FAILED = "failed.csv"
+
 def search_pattern_in_string(pat,str):
 	ris = re.compile(pat).search(str)
 	return ris.group()
@@ -14,7 +20,9 @@ def take_number_from_line(l):
 	return ris
 
 # SCRIPT
-density = 0.0
+ftcp = 0.00
+ptcp = 0.00
+
 with open (INPUT_PATH,'r') as ra:
 	
 	lines = ra.readlines()
@@ -28,19 +36,26 @@ with open (INPUT_PATH,'r') as ra:
 			failed = line
 
 	if passed == '' and failed != '':
-		density = 100.00 # no passed
+		ftcp = 100.00 # no passed
+		ptcp = 0.00
 	elif failed == '' and passed != '':
-		density = 0.00 # no failed
+		ftcp = 0.00 # no failed
+		ptcp = 100.00
 	else:
 		p = take_number_from_line(passed) # tests passed
 		np = take_number_from_line(failed) # tests not passed
 		total = p + np # total number of tests
 		
-		density = round((float(np)/float(total)),2 )
-		#print ('density = ' + str(density))
+		ftcp = round((float(np)/float(total)),2 )
+		ptcp = 100 - ftcp
+	
+	
 
 
-with open(OUTPUT_PATH,'a') as d:
-	line = str(datetime.datetime.now().isoformat()[:10])+','+str(density)+'\n'
+with open(OUTPUT_PATH_PASSED,'a') as d:
+	line = str(datetime.datetime.now().isoformat()[:10])+','+str(ptcp)+'\n'
 	d.write(line)
 
+with open(OUTPUT_PATH_FAILED,'a') as d:
+	line = str(datetime.datetime.now().isoformat()[:10])+','+str(ftcp)+'\n'
+	d.write(line)

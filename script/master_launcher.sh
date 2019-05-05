@@ -15,22 +15,19 @@ cd ..
 echo "doing coverage"
 cd	coverage
 bash launcher_coverage.sh
-cd ..
-
 echo "splitting coverage"
-cd	coverage
 bash launcher_splitter.sh
 cd ..
 
-echo "doing densità errori"
-cd	densita_errori
+echo "doing passed and failed test case percentage"
+cd	passed_and_failed_test_case_percentage
 bash launcher.sh
 cd ..
 
 # truffle test used from here
 echo "doing truffle test"
 cd truffle_test
-bash launcher_test.sh
+bash launcher.sh
 cd ..
 
 echo "doing deployment cost"
