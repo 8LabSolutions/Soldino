@@ -37,9 +37,7 @@ module.exports = function(deployer, network, accounts) {
 
     return deployer.deploy(TokenCubit,9999999999, "Cubit", "CC", GOVERNMENT)
     .then((tokenInstance) => {
-      return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address).then(() => {
-        return tokenInstance.transfer(accounts[3], 200000)
-      })
+      return contractManagerInstance.setContractAddress("TokenCubit", tokenInstance.address)
     })
     .then(() => {
       deployer.deploy(Purchase, contractManagerInstance.address)
