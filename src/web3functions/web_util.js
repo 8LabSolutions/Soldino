@@ -68,10 +68,10 @@ const web3util = (function() {
     let contractManagerInstance;
     return new Promise((resolve, reject)=>{
       web3js.eth.net.getId()
-      .then((id)=>{
+      .then(()=>{
         //getting the contract manager instance
         contractManagerInstance = new web3js.eth.Contract(ContractManager.abi,
-          ContractManager.networks[id].address);
+          "0xD40AC75433D3BdB8Cf39BA58F7744E9fC17D0206");
         //getting the deployment address of the Passed contract
         contractManagerInstance.methods.getContractAddress(contractJSON.contractName)
         .call()

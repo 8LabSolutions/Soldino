@@ -74,10 +74,9 @@ module.exports = {
     // NB: It's important to wrap the provider as a function.
     ropsten: {
       provider: function() {
-        return new HDWalletProvider(mnemonic, 'https://ropsten.infura.io/'+infuraKey)
+        return new HDWalletProvider(mnemonic, 'https://ropsten.infura.io/v3/'+infuraKey)
       },
-      network_id: 3,       // Ropsten's id
-      gas: 4000000        // Ropsten has a lower block limit than mainnet
+      network_id: 3
     },
 
     // Useful for private networks
