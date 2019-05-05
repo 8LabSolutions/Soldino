@@ -1,5 +1,5 @@
 import user from "../facade/user"
-import getMyProducts from "../actions/user"
+import { getMyProducts } from "../actions/user"
 
 const userActionCreator = (function(){
   return{

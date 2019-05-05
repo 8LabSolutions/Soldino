@@ -99,7 +99,7 @@ class Orders extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
-              { totalOrders===0 ? <p>Nothing here</p> : ordersList.map(i => {return this.printOrder(i)}) }
+              { totalOrders===0 ? <div><p className="noOrders">No orders found.</p><img className="loadingOrders" alt="loading" src="/loadingProducts.gif" /></div> : ordersList.map(i => {return this.printOrder(i)}) }
             </div>
           </div>
         </div>

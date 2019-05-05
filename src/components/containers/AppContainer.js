@@ -2,12 +2,13 @@ import { connect } from 'react-redux';
 import App from '../../App'
 
 /**
- * @description map the loading state value into the App component
+ * @description map the loading and the loading message state value into the App component
  * @param {*} state
  */
 const mapStateToProps = (state) => {
   return {
-    loading: state.loading
+    loading: state.loading,
+    loadingMessage: state.loadingMessage
   }
 }
 

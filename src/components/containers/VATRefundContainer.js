@@ -4,7 +4,6 @@ import VATRefund from '../presentational/VATRefund';
 import governmentActionCreator from '../../actionsCreator/governmentActionCreator';
 import { setPeriod, setVATrefund } from '../../actions/government';
 import history from '../../store/history';
-import { beginLoading, endLoading } from '../../actions/login';
 import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
 
 /**
@@ -107,22 +106,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} amount
      */
     refund : function(address, period, amount){
-      dispatch(beginLoading())
       let id
       toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
       governmentActionCreator.refund(address, period, amount)
       .then(()=>{
         //success
-        dispatch(endLoading())
-        toastManager.add("Business refunded.", SUCCESSTOAST);
         toastManager.remove(id)
+        toastManager.add("Business refunded.", SUCCESSTOAST);
         history.push("/vatrefund")
       })
       .catch((err)=>{
         //error
-        toastManager.add(err, ERRORTOAST);
         toastManager.remove(id)
-        dispatch(endLoading())
+        toastManager.add(err, ERRORTOAST);
       })
     }
   }
