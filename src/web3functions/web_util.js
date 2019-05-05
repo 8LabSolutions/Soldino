@@ -67,25 +67,18 @@ const web3util = (function() {
 
     let contractManagerInstance;
     return new Promise((resolve, reject)=>{
-      web3js.eth.net.getId()
-      .then(()=>{
-        //getting the contract manager instance
-        contractManagerInstance = new web3js.eth.Contract(ContractManager.abi,
-          "0x3F27AB8A059D287A1e44a453622d0e035f766Eb9");
-        //getting the deployment address of the Passed contract
-        contractManagerInstance.methods.getContractAddress(contractJSON.contractName)
-        .call()
-        .then((_contractAddress)=>{
-          //getting the instance of the deployed contract
-          var instance = new web3js.eth.Contract(contractJSON.abi, _contractAddress);
-          resolve(instance)
-        })
-        .catch(()=>{
-          reject("Error retriving the Contract "+contractJSON.contractName+" in the ContractManager, it is possible that the name of the contract is wrong")
-        })
+      contractManagerInstance = new web3js.eth.Contract(ContractManager.abi,
+        "0x3F27AB8A059D287A1e44a453622d0e035f766Eb9");
+      //getting the deployment address of the Passed contract
+      contractManagerInstance.methods.getContractAddress(contractJSON.contractName)
+      .call()
+      .then((_contractAddress)=>{
+        //getting the instance of the deployed contract
+        var instance = new web3js.eth.Contract(contractJSON.abi, _contractAddress);
+        resolve(instance)
       })
       .catch(()=>{
-        reject("Error retrieving the network ID, check the Web3 Object instance")
+        reject("Error retriving the Contract "+contractJSON.contractName+" in the ContractManager, it is possible that the name of the contract is wrong")
       })
     })
   }

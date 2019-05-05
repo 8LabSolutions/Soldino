@@ -32,4 +32,4 @@ jobs:
         domain: soldino.surge.sh
         project: ./build/
         on:
-          all_branches: true
+          branch: final
