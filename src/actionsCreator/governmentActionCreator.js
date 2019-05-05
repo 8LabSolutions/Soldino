@@ -7,11 +7,18 @@ import { searchaction } from "../actions/searchaction";
 
 const governmentActionCreator = (function(){
   return{
+    /**
+     * @description Get the list of all registered users.
+     * @returns The function returns a promise that resolves the receivement of the users, otherwise rejects an error.
+     * @param {*} number of users
+     * @param {*} index of first user (firstUser.position === index*amount)
+     * @param {*} type of users [CITIZEN, BUSINESS]
+     */
     getUserList: function(amount, index, type){
       if(type === CITIZEN)
         return new Promise((resolve)=>{
           government.getCitizenList(amount, index).then((results)=>{
-            //resolves the getUserListAction
+            //get all Citizens
             resolve(getCitizenList(results))
           })
           .catch(()=>{
@@ -21,7 +28,7 @@ const governmentActionCreator = (function(){
       if(type === BUSINESS)
         return new Promise((resolve)=>{
           government.getBusinessList(amount, index).then((results)=>{
-            //resolves the getUserListAction
+            //get all Businesses
             resolve(getBusinessList(results))
           })
           .catch(()=>{
@@ -30,7 +37,7 @@ const governmentActionCreator = (function(){
         })
     },
     /**
-     * @returns Return an array of the business JSON with the VAT period info
+     * @returns Returns an array of the business JSON with the VAT period info
      * @param {*} period the VAT period you want to get the business info
      */
     setVATrefund: function(period){
@@ -42,6 +49,10 @@ const governmentActionCreator = (function(){
       })
     },
 
+    /**
+     * @description Get the list of all quarters.
+     * @returns The function returns a promise that resolves the receivement of the quarters, otherwise rejects an error.
+     */
     getVATPeriods: function(){
       return new Promise((resolve)=>{
         government.getPeriods()
@@ -52,6 +63,10 @@ const governmentActionCreator = (function(){
 
     },
 
+    /**
+     * @description Get the government current balance in CC and the total amount.
+     * @returns The function returns a promise that resolves the receivement of the balance and total amount, otherwise rejects an error.
+     */
     getBalanceAndTotalAmount: function(){
       return new Promise((resolve)=>{
         //prendere l'amount ed il totale dei cubit
@@ -63,6 +78,12 @@ const governmentActionCreator = (function(){
       })
 
     },
+
+    /**
+     * @description Mint an amount of Cubit.
+     * @returns The function returns a promise that resolves the completion of the mint operation, otherwise rejects an error.
+     * @param {*} amount in CC to mint
+     */
     mint: function(amount){
       return new Promise((resolve)=>{
         government.mint(amount)
@@ -75,6 +96,12 @@ const governmentActionCreator = (function(){
       })
     },
 
+    /**
+     * @description Distribute an amount of Cubit to a specific address.
+     * @returns The function returns a promise that resolves the completion of the distribute operation, otherwise rejects an error.
+     * @param {*} amount in CC to distribute
+     * @param {*} address, where to send the CC
+     */
     distribute: function(amount, address){
       return new Promise((resolve)=>{
         government.distribute(amount, address)
@@ -87,6 +114,13 @@ const governmentActionCreator = (function(){
       })
     },
 
+    /**
+     * @description Enable or disable a user.
+     * @returns The function returns a promise that resolves the completion of the state change operation, otherwise rejects an error.
+     * @param {*} address of the user
+     * @param {*} new state
+     * @param {*} type of user [CITIZEN, BUSINESS]
+     */
     changeUserState: function(address, state, type){
       return new Promise((resolve)=>{
         var stateAction;
@@ -124,22 +158,43 @@ const governmentActionCreator = (function(){
 
     },
 
+    /**
+     * @description Reset the list of periods into the redux store.
+     * @returns resetVATPeriods redux action.
+     */
     resetPeriods: function(){
       return(resetVATPeriods())
     },
 
+    /**
+     * @description Reset the invoices list into the redux store.
+     * @returns resetVAT redux action.
+     */
     resetVAT: function(){
       return(resetVAT())
     },
 
+    /**
+     * @description Reset the searched string into the redux store.
+     * @returns searchaction redux action with blank searched string.
+     */
     resetSearch: function(){
       return(searchaction(""))
     },
 
+    /**
+     * @description Reset the selected period into the redux store.
+     * @returns resetPeriod redux action.
+     */
     resetPeriod: function(){
       return(resetPeriod())
     },
 
+    /**
+     * @description Set a specific status into the redux store, for optimizing the search of the VAT list.
+     * @returns setStatus redux action.
+     * @param {*} The status can be [deferred, late, payed, paying, waiting].
+     */
     setStatus: function(status){
       return(setStatus(status))
     }

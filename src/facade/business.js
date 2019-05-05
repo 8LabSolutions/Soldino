@@ -121,7 +121,7 @@ const business = (function(){
       })
     },
     /**
-     * @returns The functions return a promise that resolves the number ofproducts
+     * @returns The functions return a promise that resolves the number of products
      * in the store, otherwise rejects an error
      */
     getTotalStoreProduct: function(){

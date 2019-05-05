@@ -10,13 +10,28 @@ import { printShipment } from '../../auxiliaryFunctions';
 import { searchaction } from '../../actions/searchaction';
 import { ERRORTOAST } from '../../constants/fixedValues';
 
+
+/**
+ * @description map the resetSearch, getUserList, printUser actions into the UsersList component
+ * @param {*} dispatch
+ * @param {*} ownProps
+ */
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { toastManager } = ownProps;
   return {
+
+    /**
+     * @description reset the searched string
+     */
     resetSearch: () => {
       dispatch(searchaction(""))
     },
 
+    /**
+     * @description get all the business users in a list
+     * @param {*} amount users to get
+     * @param {*} index start value (index*amount is the first user position)
+     */
     getUserList: (amount, index)=> {
       governmentActionCreator.getUserList(amount, index, BUSINESS)
       .then((action)=>{
@@ -27,6 +42,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
     },
 
+    /**
+     * @description print a formatted business user
+     * @param {*} business to print
+     */
     printUser: (business)=>{
       let dynamicText
       (business.state===true) ? dynamicText="Disable" : dynamicText="Enable";
@@ -57,6 +76,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
+/**
+ * @description map the businessList and searchProduct state values into the UsersList component
+ * @param {*} state
+ */
 const mapStateToProps = (state) => {
   return {
     userList: state.businessList,
@@ -64,6 +87,9 @@ const mapStateToProps = (state) => {
   }
 }
 
+/**
+ * @description connect the state and action to the UsersList props
+ */
 const BusinessListContainer = connect(mapStateToProps, mapDispatchToProps)(UsersList);
 
 export default withToastManager(BusinessListContainer);
