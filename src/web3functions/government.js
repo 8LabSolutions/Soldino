@@ -92,9 +92,16 @@ const web3government = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             tokenInstance.methods.transfer(address, round(amount*web3util.TOKENMULTIPLIER))
-            .send({from: account})
-            .then(resolve)
+            .send({from: account, gas: 500000})
+            .on("Tranfer", ()=>{
+              console.log("transfer")
+            })
+            .then((x)=>{
+              console.log(x)
+              resolve(x)
+            })
             .catch(()=>{
+              console.log("NOOOO")
               reject("The distribution went wrong")
             })
           })

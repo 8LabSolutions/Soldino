@@ -65,9 +65,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         });
         let id
         toastManager.add("You'll have to wait few minutes.", INFOTOAST, (x)=>{id=x});
+
         governmentActionCreator.distribute(amount, final)
         .then((action)=>{
-          //success
+          //success+
           dispatch(action)
           toastManager.remove(id)
           toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
@@ -78,8 +79,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           toastManager.add(err, ERRORTOAST);
         })
       }else{
-        if(amount===null){toastManager.add("You have to select an amount to mint.", ERRORTOAST);}
-        if(addresses.length===0){toastManager.add("You have to select at least one recipient.", ERRORTOAST);}
+        if(amount===null){
+          toastManager.add("You have to select an amount to mint.", ERRORTOAST);
+        }
+        if(addresses.length===0){
+          toastManager.add("You have to select at least one recipient.", ERRORTOAST);
+        }
       }
     },
 
