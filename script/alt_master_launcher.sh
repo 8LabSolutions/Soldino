@@ -11,21 +11,26 @@ cd ccr
 python3 ccr.py
 cd ..
 
-#echo "doing coverage"
-#cd	coverage
-#bash launcher_coverage.sh
-#cd ..
-echo "skipping coverage, coverage taken from coverage.txt"
-
-echo "splitting coverage"
+# npm run coverage used from here
+echo "not doing coverage. Taking coverage from file"
 cd	coverage
+#bash launcher_coverage.sh
+echo "splitting coverage"
 bash launcher_splitter.sh
 cd ..
 
-echo "doing densità errori"
-cd	densita_errori
+echo "doing passed and failed test case percentage"
+cd	passed_and_failed_test_case_percentage
 bash launcher.sh
 cd ..
+
+# truffle test used from here
+echo "skipping truffle test"
+: '
+cd truffle_test
+bash launcher.sh
+cd ..
+'
 
 echo "doing deployment cost"
 cd	deployment_cost
