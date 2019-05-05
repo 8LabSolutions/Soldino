@@ -1,5 +1,9 @@
+import jsPDF from 'jspdf';
 import { store } from '../store/index';
 import { BUSINESS, CITIZEN, GOVERN } from '../constants/actionTypes';
+import 'jspdf-autotable';
+
+
 
 export function getTodayDate() {
   var today = new Date();
@@ -160,38 +164,44 @@ export function quarterToInvoices(quarter) {
 export function ExportPDF(invoices, quarter) {
   console.log(invoices)
   console.log(quarter)
-  //+invoices.map(i => {return(i.number)})+
-  var returnRootComponent =
-  "<h2>"+periodToDate(quarter.id)+" resume</h2><br />"+
-  "<h3>VAT status: "+round(-1*quarter.amount)+" CC</h2><br/>"+
-  "<p>_____________________________________________________________</p><br />"+
+  var doc = new jsPDF()
+  var high = 100
+  doc.text(20, 20, periodToDate(quarter.id) + ' resume');
+  doc.setLineWidth(0.5);
+  doc.line(20, 25, 100, 25);
+  doc.text(20, 40, 'VAT status: '+ round(-1*quarter.amount)+ ' CC');
+  doc.setLineWidth(0.5);
+  doc.line(20, 45, 100, 45);
   invoices.map(i => {
     return(
-      "<p>Invoice Number: "+i.number+"</p><br />"+
-      "<p>Invoice Date: "+printDate(i.date)+"</p><br />"+
-      "<p>Order Date: "+printDate(i.date)+"</p><br />"+
-      "<p>Order Number: "+i.number+"</p><br />"+
-      i.products.map(j => {
-        return(
-          "<p>Product: "+j.title+"</p><br />"+
-          "<p>Total Price: CC "+round(j.price*j.quantity)+"</p><br />"+
-          "<p>Net Price per unit: CC "+round(((j.price*100)/(+j.VAT + +100)))+"</p><br />"+ //
-          "<p>Quantity: "+j.quantity+"</p><br />"+
-          "<p>VAT %: "+j.VAT+"</p><br />"+
-          "<p>Description: "+j.description+"</p><br />"+
-          "<p>Quantity: "+j.quantity+"</p><br />"
-        )
-      })+
-      "<p>Total VAT: CC "+round((i.VAT/100)*i.net)+"</p><br />"+ //
-      "<p>Total Price: CC "+round((+(i.VAT/100)*i.net)+ +i.net)+"</p><br />"+ //
-      "<p>Seller: "+i.sellerName+" "+i.sellerVATNumber+"</p><br />"+
-      "<p>Buyer: "+i.buyerName+" "+i.buyerAddress+"</p><br />"+
-      "<p>Shipment: "+printShipment(i.address)+"</p><br />"+
-      "<p>_____________________________________________________________</p><br />"
-    )}
-  )
+      doc.autoTable({
+        margin: {left: 20},
+        startY: 50,
+        columnStyles: {0:{ halign: 'center'},1:{ halign: 'center'},2:{ halign: 'center'},3:{ halign: 'center'},7:{ halign: 'center'}},
+        headStyles: {cellWidth: 20, halign: 'center', fillColor: [20,29,37]},
+        bodyStyles: {cellWidth: 20},
+        head: [['Invoice Number', 'Invoice Date', 'Order Date', 'Order Number','Total VAT','Seller','Buyer','Shipment']],
+        body: [
+            [i.number,printDate(i.date),printDate(i.date),round((i.VAT/100)*i.net),i.sellerName+" "+i.sellerVATNumber,i.buyerName+" "+i.buyerAddress,printShipment(i.address),i.number,
+            ]
+          ]
+      }),
+      doc.autoTable({
+        columnStyles: {1:{ halign: 'center'},2:{ halign: 'center'},3:{ halign: 'center'},4:{ halign: 'center'},6:{ halign: 'center'}},
+        headStyles: {cellWidth: 20, halign: 'center', fillColor: [0,128,0]},
+        bodyStyles: {cellWidth: 20, valign: 'middle'},
+        margin: {left: 20},
+        startY: high,
+        head: [['Product', 'Total Price', 'Net price per unit', 'Quantity','VAT %','Description','Quantity']],
+        body:
+          i.products.map(j => {return(
+            [j.title,round(j.price*j.quantity),round(((j.price*100)/(+j.VAT + +100))),j.quantity,j.VAT,j.description,j.quantity]
+          )})
+      }),
+      doc.addPage())
+  })
   return(
-    returnRootComponent
+    doc
   )
 }
 

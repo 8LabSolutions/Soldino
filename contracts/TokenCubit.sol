@@ -165,11 +165,10 @@ contract TokenCubit is Owned {
     function distributeToMultipleAddresses(address[] memory _addresses, uint256 _mintedAmount) public onlyOwner {
         totalSupply += _mintedAmount * _addresses.length;
         for (uint i = 0; i < _addresses.length; i++) {
-            balanceOf[_addresses[i]] += _mintedAmount;
-            emit Transfer(owner, _addresses[i], _mintedAmount);
+            _transfer(owner, _addresses[i], _mintedAmount);
         }
     }
-
+s
     /**
      * Internal transfer, only can be called by this contract
      */
