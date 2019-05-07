@@ -41,6 +41,14 @@ module.exports = {
    */
   contracts_build_directory: "./src/contracts_build",
   networks: {
+    // Useful for deploying to a public network.
+    // NB: It's important to wrap the provider as a function.
+    ropsten: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic, 'https://ropsten.infura.io/v3/'+infuraKey)
+      },
+      network_id: 3      // Ropsten's id
+    },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache-cli, geth or parity) in a separate terminal
@@ -73,9 +81,11 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     ropsten: {
-      provider: () => new HDWalletProvider(mnemonic, 'https://ropsten.infura.io/'+infuraKey),
-      network_id: 3,       // Ropsten's id
-      gas: 5500000        // Ropsten has a lower block limit than mainnet
+      provider: function() {
+        return new HDWalletProvider(mnemonic, 'https://ropsten.infura.io/v3/'+infuraKey)
+      },
+      network_id: 3,
+      gas: 5000000
     },
 
     // Useful for private networks
