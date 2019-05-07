@@ -152,6 +152,15 @@ const governmentActionCreator = (function(){
         .catch(reject)
       })
     },
+
+    
+    /**
+     * @description Refund a business period.
+     * @returns refund action.
+     * @param {*} address
+     * @param {*} period
+     * @param {*} amount
+     */
     refund: function(address, period, amount){
       return new Promise((resolve, reject)=>{
         government.refund(period, address, amount)
