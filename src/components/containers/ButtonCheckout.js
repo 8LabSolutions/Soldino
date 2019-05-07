@@ -6,6 +6,7 @@ import { getTodayDate, getVAT, getNet } from '../../auxiliaryFunctions';
 import { store } from '../../store';
 import { resetCart } from '../../actions/cart';
 import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
+import userActionCreator from '../../actionsCreator/userActionCreator'
 
 /**
  * @description map the checkout action into the Button component
@@ -39,6 +40,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       user.buy(cart)
       .then(()=>{
         //success
+        dispatch(userActionCreator.updateBalance())
         toastManager.add("Purchase succeded", SUCCESSTOAST);
         toastManager.remove(id)
         //after success, reset cart content

@@ -1,5 +1,5 @@
 import user from "../facade/user"
-import { getMyProducts } from "../actions/user"
+import { getMyProducts, updateBalance } from "../actions/user"
 
 const userActionCreator = (function(){
   return{
@@ -11,6 +11,18 @@ const userActionCreator = (function(){
         user.getPurchases()
         .then((purchases)=>{
           resolve(getMyProducts(purchases))
+        })
+        .catch(reject)
+      })
+    },
+    /**
+     * @returns The function returns the UPDATEBALANCE ACTION with the current account balance
+     */
+    updateBalance: function(){
+      return new Promise((resolve, reject)=>{
+        user.getBalance()
+        .then((balance)=>{
+          resolve(updateBalance(balance))
         })
         .catch(reject)
       })
