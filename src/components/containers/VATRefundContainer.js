@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       governmentActionCreator.refund(address, period, amount)
       .then(()=>{
         //success
-        dispatch(userActionCreator.updateBalance())
+        userActionCreator.updateBalance().then(dispatch)
         toastManager.remove(id)
         toastManager.add("Business refunded.", SUCCESSTOAST);
         history.push("/vatrefund")
