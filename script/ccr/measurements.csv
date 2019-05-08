@@ -17,7 +17,7 @@ government.js,43,275
 user.js,20,137
 authentication.js,14,76
 web_util.js,51,125
-governmentActionCreator.js,37,131
+governmentActionCreator.js,42,131
 businessActionCreator.js,46,92
 userActionCreator.js,1,16
 serviceWorker.js,31,92
@@ -80,7 +80,7 @@ CitizenListContainer.js,12,60
 ButtonCartAdd.js,6,12
 ButtonCheckout.js,15,38
 index.js,5,249
-index.js,12,244
+index.js,58,201
 searchaction.js,2,7
 business.js,0,54
 store.js,0,16
