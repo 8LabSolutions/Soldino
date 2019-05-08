@@ -176,26 +176,39 @@ export function ExportPDF(invoices, quarter) {
     return(
       doc.autoTable({
         margin: {left: 20},
-        startY: 50,
+        startY: 70,
         columnStyles: {0:{ halign: 'center'},1:{ halign: 'center'},2:{ halign: 'center'},3:{ halign: 'center'},7:{ halign: 'center'}},
         headStyles: {cellWidth: 20, halign: 'center', fillColor: [20,29,37]},
         bodyStyles: {cellWidth: 20},
-        head: [['Invoice Number', 'Invoice Date', 'Order Date', 'Order Number','Total VAT','Seller','Buyer','Shipment']],
+        head: [['Invoice Number', 'Invoice Date', 'Order Date','Total VAT','Seller','Buyer']],
         body: [
-            [i.number,printDate(i.date),printDate(i.date),round((i.VAT/100)*i.net),i.sellerName+" "+i.sellerVATNumber,i.buyerName+" "+i.buyerAddress,printShipment(i.address),i.number,
+            [i.number,printDate(i.date),
+              printDate(i.date),
+              round((i.VAT/100)*i.net).toFixed(2)+' CC',
+              i.sellerName+" "+i.sellerVATNumber,
+              i.buyerName
             ]
           ]
       }),
+      doc.setFontSize(9),
+      doc.text(20, 55, 'Seller\'s wallet address: '+i.sellerAddress),
+      doc.text(20, 60, 'Buyer\'s wallet address: '+i.buyerAddress),
       doc.autoTable({
-        columnStyles: {1:{ halign: 'center'},2:{ halign: 'center'},3:{ halign: 'center'},4:{ halign: 'center'},6:{ halign: 'center'}},
+        columnStyles: {1:{ halign: 'center'},2:{ halign: 'center'},3:{ halign: 'center'},4:{ halign: 'center'},5:{ halign: 'center'}},
         headStyles: {cellWidth: 20, halign: 'center', fillColor: [0,128,0]},
         bodyStyles: {cellWidth: 20, valign: 'middle'},
         margin: {left: 20},
         startY: high,
-        head: [['Product', 'Total Price', 'Net price per unit', 'Quantity','VAT %','Description','Quantity']],
+        head: [['Product', 'Net price per unit','VAT %','Quantity','Total Price','Total VAT']],
         body:
           i.products.map(j => {return(
-            [j.title,round(j.price*j.quantity),round(((j.price*100)/(+j.VAT + +100))),j.quantity,j.VAT,j.description,j.quantity]
+            [j.title,
+              round(((j.price*100)/(+j.VAT + +100))).toFixed(2),
+              j.VAT,
+              j.quantity,
+              round(j.price*j.quantity).toFixed(2),
+              round(round(j.price*j.quantity)-round(((j.price*100)/(+j.VAT + +100))*j.quantity)).toFixed(2)
+            ]
           )})
       }),
       doc.addPage())
