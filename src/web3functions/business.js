@@ -24,10 +24,12 @@ const web3business = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             productLogicInstance.methods.addProduct(
-              hashIpfs, hashSize, hashFun, vatPercentage, round(netPrice*web3util.TOKENMULTIPLIER))
+              hashIpfs, hashSize, hashFun, parseInt(round(vatPercentage)), parseInt(round(netPrice*web3util.TOKENMULTIPLIER)))
             .send({from: account})
             .then(resolve)
-            .catch("Error adding the new product")
+            .catch(()=>{
+              reject("Error adding the new product")
+            })
           })
           .catch(reject)
         })
@@ -50,7 +52,7 @@ const web3business = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             productLogicInstance.methods.modifyProduct(
-              key, hashIpfs, hashSize, hashFun, newVatPercentage, newNetPrice*web3util.TOKENMULTIPLIER)
+              key, hashIpfs, hashSize, hashFun, parseInt(round(newVatPercentage)), parseInt(round(newNetPrice*web3util.TOKENMULTIPLIER)))
             .send({from: account})
             .then(resolve)
             .catch(()=>{
@@ -166,9 +168,13 @@ const web3business = (function(){
               .then(()=>{
                 resolve(products.length)
               })
-              .catch("Error retrieving the events: ProductDeleted")
+              .catch(()=>{
+                reject("Error retrieving the events: ProductDeleted")
+              })
             })
-            .catch("Error retrieving the events: ProductDeleted")
+            .catch(()=>{
+              reject("Error retrieving the events: ProductInserted")
+            })
           })
           .catch(reject)
         })

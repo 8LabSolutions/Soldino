@@ -72,8 +72,8 @@ const web3user = (function(){
                   web3util.getVATPeriod())
                 .send({from: account, gas: 2000000})
                 .then(resolve)
-                .catch((err)=>{
-                  reject("There were some problems with the payment, please contanct the system administrator. "+err)
+                .catch(()=>{
+                  reject("There were some problems with the payment, please contanct the system administrator. ")
                 })
               })
               .catch(reject)

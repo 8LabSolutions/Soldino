@@ -116,7 +116,7 @@ const user = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             for(let i = 0; i < orders.length; i++){
-              promises.push(new Promise((resolve)=>{
+              promises.push(new Promise((resolve, reject)=>{
                 var order = {
                   products: orders[i],
                   date: cartInfo.date,
@@ -153,7 +153,7 @@ const user = (function(){
                   productQtn.push(orders[i][j].quantity)
                 }
               }
-              web3user.purchase(cartInfo.VAT+cartInfo.net, products, remainingHash, hashSize, hashFun, productQtn)
+              web3user.purchase(round(cartInfo.VAT+cartInfo.net), products, remainingHash, hashSize, hashFun, productQtn)
               .then(resolve)
               .catch(reject)
             })

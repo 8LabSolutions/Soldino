@@ -40,6 +40,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             parametersArray[4] = base64Image
             businessActionCreator.addProduct(...parametersArray)
             .then(()=>{
+
               businessActionCreator.getMyProducts(amountStore, defaultIndex)
               .then((action)=>{
                 dispatch(action)

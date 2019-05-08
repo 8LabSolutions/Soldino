@@ -46,6 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
       .catch((err)=>{
         //error
+        console.log(err)
         toastManager.add(err, ERRORTOAST);
         toastManager.remove(id)
       })
