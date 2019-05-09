@@ -166,7 +166,7 @@ const government = (function(){
           //resultsArray content: array with 0:address, 1: hashIPFS, 2: userState (dis/able)
           var citizensJSON = [];
           for(let i = 0; i < resultsArray.length; i++){
-            citizensJSON.push(new Promise((resolve)=>{
+            citizensJSON.push(new Promise((resolve, reject)=>{
               ipfsModule.getJSONfromHash(resultsArray[i][1])
               .then(resolve)
               .catch(reject)
@@ -211,7 +211,7 @@ const government = (function(){
 
           var businessJSON = [];
           for(let i = 0; i < resultsArray.length; i++){
-            businessJSON.push(new Promise((resolve)=>{
+            businessJSON.push(new Promise((resolve, reject)=>{
               ipfsModule.getJSONfromHash(resultsArray[i][1])
               .then(resolve)
               .catch(reject)

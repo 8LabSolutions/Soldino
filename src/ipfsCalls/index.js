@@ -2,23 +2,26 @@
 const IPFS = require('ipfs-http-client');
 //connection to IPFS
 const ipfs = IPFS({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' });
-
+const axios = require('axios')
 
 var ipfsModule = (function() {
+
+
   return {
     /**
      * @returns The JSON object corresponding to the given CID
      * @param {*} hash The IPFS CID has you want to get the JSON
      */
     getJSONfromHash: function(cid){
+
       return new Promise((resolve, reject)=>{
-        ipfs.get(cid)
-        .then((result)=>{
-          console.log(result)
-          resolve(JSON.parse(result[0].content.toString('utf-8')))
+        axios.get('https://ipfs.infura.io/ipfs/'+cid)
+        .then((response)=>{
+          console.log(response.data)
+          resolve(response.data)
         })
         .catch(()=>{
-          reject('error reading ' + cid + ' from IPFS API')
+          reject("Error in reading from ipfs")
         })
       })
     },
@@ -28,7 +31,6 @@ var ipfsModule = (function() {
      */
     insertJSONintoIPFS: function(productJSON) {
       return new Promise((resolve, reject)=>{
-        console.log(JSON.stringify(productJSON))
         const content = IPFS.Buffer.from(JSON.stringify(productJSON))
         ipfs.add(content)
         .then((result)=>{
@@ -40,6 +42,7 @@ var ipfsModule = (function() {
       })
     }
   }
+  // OLD VERSION using ipfs-mini
   // return {
   //   /**
   //    * @returns The JSON object corresponding to the given CID
