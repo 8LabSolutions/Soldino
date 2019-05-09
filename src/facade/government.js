@@ -318,12 +318,8 @@ const government = (function(){
             let promises = []
             for(let i = 0; i < businessVATData.length; i++){
               promises.push(new Promise((resolve)=>{
-                console.log("business")
-                console.log(businessVATData[i])
                 web3authentication.getUser(businessVATData[i][0])
                 .then(([IPFSHash,,])=>{
-                  console.log("Eccolo qua")
-                  console.log(IPFSHash)
                   ipfsModule.getJSONfromHash(IPFSHash)
                   .then((businessJSON)=>{
                     let paymentStatus = undefined;

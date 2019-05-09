@@ -17,7 +17,6 @@ var ipfsModule = (function() {
       return new Promise((resolve, reject)=>{
         axios.get('https://ipfs.infura.io/ipfs/'+cid)
         .then((response)=>{
-          console.log(response.data)
           resolve(response.data)
         })
         .catch(()=>{
