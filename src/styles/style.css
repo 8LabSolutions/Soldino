@@ -478,13 +478,13 @@ h1, h2, h3 {
 }
 
 .noOrders {
-  animation: 5s fadeIn;
+  animation: 10s fadeIn;
   animation-fill-mode: forwards;
   visibility: hidden;
 }
 
 .loadingOrders {
-  animation: 5s fadeOut;
+  animation: 10s fadeOut;
   animation-fill-mode: forwards;
   visibility: visible;
 }
