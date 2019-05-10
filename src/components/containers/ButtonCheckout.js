@@ -43,6 +43,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       .then(()=>{
         //success
         userActionCreator.updateBalance().then(dispatch)
+        userActionCreator.getOrdersList()
+        .then((action)=>{
+          //success
+          dispatch(action);
+        })
+        .catch((err)=>{
+          //error
+          toastManager.add(err, ERRORTOAST);
+        })
         toastManager.add("Purchase succeded", SUCCESSTOAST);
         toastManager.remove(id)
         toastManager.remove(id2)
