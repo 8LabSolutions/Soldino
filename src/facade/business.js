@@ -1,6 +1,7 @@
 import web3business from "../web3functions/business"
 import ipfsModule from "../ipfsCalls/index"
 import web3util from "../web3functions/web_util";
+import { round } from "../auxiliaryFunctions";
 
 const business = (function(){
 
@@ -71,7 +72,7 @@ const business = (function(){
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       //istantiate the necessary costracts and returns the results
       var newProductJSON = getProductJSONfromFields(
-        title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
+        title, description, parseInt(round(netPrice)), parseInt(round(vatPercentage)), image, sellerName, sellerVATNumber);
       return new Promise((resolve, reject)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON)
         .then((hash)=>{
@@ -97,7 +98,7 @@ const business = (function(){
      */
     modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       var newProductJSON = getProductJSONfromFields(
-        title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
+        title, description, parseInt(round(netPrice)), parseInt(round(vatPercentage)), image, sellerName, sellerVATNumber);
       console.log(image)
       return new Promise((resolve, reject)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON)

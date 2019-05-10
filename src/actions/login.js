@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-// src/js/actions/index.js
 import { LOGIN, LOGOUT, BUSINESS, GOVERN, CITIZEN, BEGINLOADING, ENDLOADING } from "../constants/actionTypes";
 
 export function logIn(user) {
@@ -52,3 +50,4 @@ export function endLoading() {
     loading: false
   };
 }
+

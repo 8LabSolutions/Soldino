@@ -1,4 +1,4 @@
-import { GETMYORDERS ,SETLOADINGMESSAGE } from "../constants/actionTypes";
+import { GETMYORDERS ,SETLOADINGMESSAGE, UPDATEBALANCE } from "../constants/actionTypes";
 
 export function getMyProducts(ordersList) {
   return {
@@ -14,3 +14,10 @@ export function setLoadingMessage(message) {
   }
 }
 
+
+export function updateBalance(balance) {
+  return {
+    type: UPDATEBALANCE,
+    balance
+  }
+}

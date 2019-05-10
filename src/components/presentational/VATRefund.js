@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import NavBar from './NavBar'
-import { checkGovernment } from '../../auxiliaryFunctions';
+import { checkGovernment, periodToDate, dateToPeriod } from '../../auxiliaryFunctions';
 import SearchContainer from '../containers/SearchContainer';
 import { businessStatus } from '../../constants/fixedValues';
 
@@ -28,7 +28,7 @@ class VATRefund extends Component {
     let {resetPeriod} = this.props;
     (type==="status")
       ? (event.target.value==="Select a status") ? setStatus("") : setStatus(event.target.value)
-      : (event.target.value==="Select a quarter") ? resetPeriod() : setPeriod({id: event.target.value, amount: null, payable: false})
+      : (event.target.value==="Select a quarter") ? resetPeriod() : setPeriod({id: dateToPeriod(event.target.value), amount: null, payable: false})
   }
 
   printBusiness(business) {
@@ -132,7 +132,7 @@ class VATRefund extends Component {
                     <div className="form-group">
                       <select className="form-control" id="exampleFormControlSelect2" onChange={(event) => {this.handleChange(event, "period")}}>
                         <option>Select a period</option>
-                        {VATPeriods.map((i) => <option key={i}>{i}</option>)}
+                        {VATPeriods.map((i) => <option key={i}>{periodToDate(i)}</option>)}
                       </select>
                     </div>
                   </div>

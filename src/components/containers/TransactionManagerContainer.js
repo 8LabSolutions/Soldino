@@ -3,7 +3,6 @@ import { withToastManager } from 'react-toast-notifications';
 import TransactionsManager from '../presentational/TransactionsManager';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import history from '../../store/history'
-import { beginLoading, endLoading } from '../../actions/login';
 import { selectedPeriod, resetInvoices } from '../../actions/business';
 import { store } from '../../store';
 import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
@@ -42,7 +41,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
       .catch((err)=>{
         //error
-        dispatch(endLoading())
         toastManager.add(err, ERRORTOAST);
       })
     },
@@ -55,20 +53,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} amount of the period
      */
     payVATPeriod: function(period, amount){
-      dispatch(beginLoading())
       let id
       toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
       businessActionCreator.payVATPeriod(period, amount)
       .then(()=>{
         //success
-        dispatch(endLoading())
         toastManager.add("VAT period paid.", SUCCESSTOAST);
         toastManager.remove(id)
         history.push("/transactionsmanager")
       })
       .catch((err)=>{
         //error
-        dispatch(endLoading())
         toastManager.remove(id)
         toastManager.add(err, ERRORTOAST);
       })
@@ -79,11 +74,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      * @param {*} period to defer
      */
     putOnHoldVATPeriod: function(period){
-      dispatch(beginLoading())
       businessActionCreator.putOnHoldVATPeriod(period)
       .then(()=>{
         //success
-        dispatch(endLoading())
         getBusinessPeriods()
         dispatch(resetInvoices())
         toastManager.add("VAT period deferred.", SUCCESSTOAST);
@@ -91,7 +84,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
       .catch((err)=>{
         //error
-        dispatch(endLoading())
         toastManager.add(err, ERRORTOAST);
       })
     },

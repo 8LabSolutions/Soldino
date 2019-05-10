@@ -93,15 +93,8 @@ const web3government = (function(){
           .then((account)=>{
             tokenInstance.methods.transfer(address, round(amount*web3util.TOKENMULTIPLIER))
             .send({from: account, gas: 500000})
-            .on("Tranfer", ()=>{
-              console.log("transfer")
-            })
-            .then((x)=>{
-              console.log(x)
-              resolve(x)
-            })
+            .then(resolve)
             .catch(()=>{
-              console.log("NOOOO")
               reject("The distribution went wrong")
             })
           })
@@ -296,7 +289,9 @@ const web3government = (function(){
                   })
                 )
               }
-              Promise.all(invoicesIPFS).then(resolve)
+              Promise.all(invoicesIPFS)
+              .then(resolve)
+              .catch(reject)
             })
             .catch(()=>{
               reject("Error trying to get the SellOrderInserted events")

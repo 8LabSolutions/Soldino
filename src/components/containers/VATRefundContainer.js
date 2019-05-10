@@ -5,6 +5,7 @@ import governmentActionCreator from '../../actionsCreator/governmentActionCreato
 import { setPeriod, setVATrefund } from '../../actions/government';
 import history from '../../store/history';
 import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
+import userActionCreator from "../../actionsCreator/userActionCreator"
 
 /**
  * @description map the setVATRefund, getVATPeriods, resetPeriods, resetSearch, resetPeriod, resetVAT, setPeriod, setStatus, refund action into the VATRefund component
@@ -111,6 +112,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       governmentActionCreator.refund(address, period, amount)
       .then(()=>{
         //success
+        userActionCreator.updateBalance().then(dispatch)
         toastManager.remove(id)
         toastManager.add("Business refunded.", SUCCESSTOAST);
         history.push("/vatrefund")
