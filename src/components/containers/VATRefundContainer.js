@@ -119,6 +119,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         toastManager.remove(id)
         toastManager.remove(id2)
         toastManager.add("Business refunded.", SUCCESSTOAST);
+        dispatch(setPeriod({id: "Select a quarter", amount: null, payable: false}))
+        setVATrefund([])
         history.push("/vatrefund")
       })
       .catch((err)=>{
