@@ -3,8 +3,9 @@ import { withToastManager } from 'react-toast-notifications';
 import Button from '../presentational/Button';
 import authentication from "../../facade/authentication"
 import { beginLoading, endLoading } from '../../actions/login';
-import { SUCCESSTOAST, ERRORTOAST } from '../../constants/fixedValues';
+import { SUCCESSTOAST, ERRORTOAST, DIDYOUKNOWTOAST } from '../../constants/fixedValues';
 import { setLoadingMessage } from '../../actions/user';
+import { didYouKnowThat } from '../../auxiliaryFunctions';
 
 
 /**
@@ -41,14 +42,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
            //continue only if fields are not void
         dispatch(setLoadingMessage("We are activating your account. Please wait some minutes (miners!)"))
         dispatch(beginLoading())
-
+        let id2;
+        toastManager.add(didYouKnowThat(), DIDYOUKNOWTOAST, (x)=>{id2=x})
         authentication.addUser(...parametersArray).then(()=>{
           //success
+          toastManager.remove(id2)
           toastManager.add("Registration completed. Now you can login and start using Soldino.", SUCCESSTOAST)
           dispatch(endLoading())
         })
         .catch((err)=>{
           //error
+          toastManager.remove(id2)
           toastManager.add(err.message, ERRORTOAST)
           dispatch(endLoading())
         })
