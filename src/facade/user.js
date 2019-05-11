@@ -129,7 +129,8 @@ const user = (function(){
                   buyerDetails: cartInfo.buyerDetails,
                   buyerAddress: account,
                   sellerName: orders[i][0].sellerName,
-                  sellerVATNumber: orders[i][0].sellerVATNumber
+                  sellerVATNumber: orders[i][0].sellerVATNumber,
+                  sellerAddress: orders[i][0].sellerAddress
                 }
                 ipfsModule.insertJSONintoIPFS(order)
                 .then(resolve)

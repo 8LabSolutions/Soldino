@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         })
         .catch((err)=>{
           //error
-          toastManager.add(err.message, ERRORTOAST)
+          toastManager.add(err, ERRORTOAST)
           dispatch(endLoading())
         })
       }else{
