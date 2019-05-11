@@ -5,7 +5,8 @@ import businessActionCreator from '../../actionsCreator/businessActionCreator';
 import history from '../../store/history'
 import { selectedPeriod, resetInvoices } from '../../actions/business';
 import { store } from '../../store';
-import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
+import { ERRORTOAST, SUCCESSTOAST, INFOTOAST, DIDYOUKNOWTOAST } from '../../constants/fixedValues';
+import { didYouKnowThat } from '../../auxiliaryFunctions';
 
 /**
  * @description map the getInvoices, getBusinessPeriods, payVATPeriod, putOnHoldVATPeriod, resetInvoices, selectPeriod action into the TransactionsManager component
@@ -55,16 +56,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     payVATPeriod: function(period, amount){
       let id
       toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
+      let id2;
+      toastManager.add(didYouKnowThat(), DIDYOUKNOWTOAST, (x)=>{id2=x})
       businessActionCreator.payVATPeriod(period, amount)
       .then(()=>{
         //success
         toastManager.add("VAT period paid.", SUCCESSTOAST);
         toastManager.remove(id)
+        toastManager.remove(id2)
         history.push("/transactionsmanager")
       })
       .catch((err)=>{
         //error
         toastManager.remove(id)
+        toastManager.remove(id2)
         toastManager.add(err, ERRORTOAST);
       })
     },

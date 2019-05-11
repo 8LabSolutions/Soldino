@@ -477,6 +477,7 @@ h1, h2, h3 {
   margin-top: 52px;
 }
 
+/*
 .noOrders {
   animation: 10s fadeIn;
   animation-fill-mode: forwards;
@@ -511,3 +512,4 @@ h1, h2, h3 {
     visibility: hidden;
   }
 }
+*/

@@ -4,8 +4,9 @@ import VATRefund from '../presentational/VATRefund';
 import governmentActionCreator from '../../actionsCreator/governmentActionCreator';
 import { setPeriod, setVATrefund } from '../../actions/government';
 import history from '../../store/history';
-import { ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
+import { ERRORTOAST, SUCCESSTOAST, INFOTOAST, DIDYOUKNOWTOAST, INFOTOASTAUTOHIDE } from '../../constants/fixedValues';
 import userActionCreator from "../../actionsCreator/userActionCreator"
+import { didYouKnowThat, dateToPeriod } from '../../auxiliaryFunctions';
 
 /**
  * @description map the setVATRefund, getVATPeriods, resetPeriods, resetSearch, resetPeriod, resetVAT, setPeriod, setStatus, refund action into the VATRefund component
@@ -83,9 +84,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      */
     setPeriod: function(period){
       dispatch(setPeriod(period))
-      if(period.id !== "Select a quarter"){
+      if(period.id !== dateToPeriod("Select a period")){
         //if period is real
         setVATRefund(period.id)
+        toastManager.add("Retreiving data from IPFS.", INFOTOASTAUTOHIDE);
       }else{
         //if period is "Select a quarter"
         setVATrefund([])
@@ -109,17 +111,23 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     refund : function(address, period, amount){
       let id
       toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
+      let id2;
+      toastManager.add(didYouKnowThat(), DIDYOUKNOWTOAST, (x)=>{id2=x})
       governmentActionCreator.refund(address, period, amount)
       .then(()=>{
         //success
         userActionCreator.updateBalance().then(dispatch)
         toastManager.remove(id)
+        toastManager.remove(id2)
         toastManager.add("Business refunded.", SUCCESSTOAST);
+        dispatch(setPeriod({id: "Select a quarter", amount: null, payable: false}))
+        setVATrefund([])
         history.push("/vatrefund")
       })
       .catch((err)=>{
         //error
         toastManager.remove(id)
+        toastManager.remove(id2)
         toastManager.add(err, ERRORTOAST);
       })
     }

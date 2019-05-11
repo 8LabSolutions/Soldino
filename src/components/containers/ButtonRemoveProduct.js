@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { withToastManager } from 'react-toast-notifications';
 import Button from '../presentational/Button';
 import businessActionCreator from '../../actionsCreator/businessActionCreator';
-import { amountStore, defaultIndex, ERRORTOAST, SUCCESSTOAST, INFOTOAST } from '../../constants/fixedValues';
+import { amountStore, defaultIndex, ERRORTOAST, SUCCESSTOAST, INFOTOAST, DIDYOUKNOWTOAST } from '../../constants/fixedValues';
+import { didYouKnowThat } from '../../auxiliaryFunctions';
 
 /**
  * @description map the removeProduct action into the Button component
@@ -19,23 +20,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     action: (keyProd) => {
       let id
       toastManager.add("You have to approve MetaMask request. You'll have to wait few minutes for the confirmation.", INFOTOAST, (x)=>{id=x});
+      let id2;
+      toastManager.add(didYouKnowThat(), DIDYOUKNOWTOAST, (x)=>{id2=x})
       businessActionCreator.deleteProduct(keyProd)
       .then(()=>{
         businessActionCreator.getMyProducts(amountStore, defaultIndex)
         .then((action)=>{
           //success
           toastManager.remove(id)
+          toastManager.remove(id2)
           toastManager.add("Product removed successfully.", SUCCESSTOAST)
           dispatch(action)
         })
         .catch((err)=>{
           //error
           toastManager.remove(id)
+          toastManager.remove(id2)
           toastManager.add(err, ERRORTOAST);
         })
       })
       .catch((err)=>{
         //error
+        toastManager.remove(id)
+        toastManager.remove(id2)
         toastManager.add(err, ERRORTOAST);
       })
     }

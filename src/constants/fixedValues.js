@@ -10,9 +10,15 @@ export const businessStatus = {
 }
 
 export const INFOTOAST = {
-  appearance: 'info',
+  appearance: 'warning',
   autoDismiss: false,
   pauseOnHover: false,
+}
+
+export const INFOTOASTAUTOHIDE = {
+  appearance: 'warning',
+  autoDismiss: true,
+  pauseOnHover: true,
 }
 
 export const SUCCESSTOAST = {
@@ -25,6 +31,12 @@ export const ERRORTOAST = {
   appearance: 'error',
   autoDismiss: true,
   pauseOnHover: true,
+}
+
+export const DIDYOUKNOWTOAST = {
+  appearance: 'info',
+  autoDismiss: false,
+  pauseOnHover: false,
 }
 
 export const PARTICLES = {
