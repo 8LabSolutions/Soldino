@@ -15,6 +15,12 @@ export const INFOTOAST = {
   pauseOnHover: false,
 }
 
+export const INFOTOASTAUTOHIDE = {
+  appearance: 'warning',
+  autoDismiss: true,
+  pauseOnHover: true,
+}
+
 export const SUCCESSTOAST = {
   appearance: 'success',
   autoDismiss: true,

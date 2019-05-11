@@ -4,9 +4,9 @@ import VATRefund from '../presentational/VATRefund';
 import governmentActionCreator from '../../actionsCreator/governmentActionCreator';
 import { setPeriod, setVATrefund } from '../../actions/government';
 import history from '../../store/history';
-import { ERRORTOAST, SUCCESSTOAST, INFOTOAST, DIDYOUKNOWTOAST } from '../../constants/fixedValues';
+import { ERRORTOAST, SUCCESSTOAST, INFOTOAST, DIDYOUKNOWTOAST, INFOTOASTAUTOHIDE } from '../../constants/fixedValues';
 import userActionCreator from "../../actionsCreator/userActionCreator"
-import { didYouKnowThat } from '../../auxiliaryFunctions';
+import { didYouKnowThat, dateToPeriod } from '../../auxiliaryFunctions';
 
 /**
  * @description map the setVATRefund, getVATPeriods, resetPeriods, resetSearch, resetPeriod, resetVAT, setPeriod, setStatus, refund action into the VATRefund component
@@ -84,9 +84,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
      */
     setPeriod: function(period){
       dispatch(setPeriod(period))
-      if(period.id !== "Select a quarter"){
+      if(period.id !== dateToPeriod("Select a period")){
         //if period is real
         setVATRefund(period.id)
+        toastManager.add("Retreiving data from IPFS.", INFOTOASTAUTOHIDE);
       }else{
         //if period is "Select a quarter"
         setVATrefund([])
