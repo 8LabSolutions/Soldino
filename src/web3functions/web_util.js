@@ -175,7 +175,7 @@ const web3util = (function() {
           .then((contractInstance)=>{
             getCurrentAccount()
             .then((account)=>{
-              tokenInstance.methods.approve(contractInstance.options.address, parseInt(round(amount)*web3util.TOKENMULTIPLIER)+1)
+              tokenInstance.methods.approve(contractInstance.options.address, parseInt(round(amount+1)*web3util.TOKENMULTIPLIER))
               .send({from: account})
               .then(resolve)
               .catch(()=>{

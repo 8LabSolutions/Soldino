@@ -43,14 +43,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             parametersArray[4] = base64Image
             businessActionCreator.addProduct(...parametersArray)
             .then(()=>{
-
+              toastManager.add(parametersArray[0].toUpperCase()+" added successfully.", SUCCESSTOAST)
+              history.push("/productsmanager")
+              toastManager.remove(id)
+              toastManager.remove(id2)
               businessActionCreator.getMyProducts(amountStore, defaultIndex)
               .then((action)=>{
                 dispatch(action)
-                toastManager.add(parametersArray[0].toUpperCase()+" added successfully.", SUCCESSTOAST)
-                history.push("/productsmanager")
-                toastManager.remove(id)
-                toastManager.remove(id2)
               })
             })
             .catch((err)=>{
@@ -63,13 +62,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           //set the default image by setting no image
           businessActionCreator.addProduct(...parametersArray)
           .then(()=>{
+            toastManager.add("Product added successfully.", SUCCESSTOAST)
+            toastManager.remove(id)
+            toastManager.remove(id2)
+            history.push("/productsmanager")
             businessActionCreator.getMyProducts(amountStore, defaultIndex)
             .then((action)=>{
               dispatch(action)
-              toastManager.add("Product added successfully.", SUCCESSTOAST)
-              toastManager.remove(id)
-              toastManager.remove(id2)
-              history.push("/productsmanager")
             })
           })
           .catch((err)=>{

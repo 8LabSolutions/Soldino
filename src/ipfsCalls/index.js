@@ -2,6 +2,7 @@
 const IPFS = require('ipfs-http-client');
 //connection to IPFS
 const ipfs = IPFS({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' });
+//const ipfs = new IPFSMini({ host: 'localhost', port: '5001', protocol: 'http' });
 const axios = require('axios')
 
 var ipfsModule = (function() {
