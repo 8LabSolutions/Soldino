@@ -5,8 +5,6 @@ import { getTodayDate, getVAT, getNet, getDetails, getName } from "../auxiliaryF
 
 /*args: title, quantity, price*/
 export function addToCart(product) {
-  console.log('cart.js')
-  console.log(product)
   return {
     type: ADDTOCART,
       product: {

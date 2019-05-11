@@ -14,7 +14,6 @@ import ButtonEditProduct from '../containers/ButtonEditProduct';
 class EditProductsManager extends Component {
   constructor(props){
     super(props)
-    console.log(this.props);
     this.state = {
       file: null,
       url: null,
@@ -31,7 +30,6 @@ class EditProductsManager extends Component {
       file: event.target.files,
       url: URL.createObjectURL(event.target.files[0])
     })
-    console.log(event.target.files)
   }
   handleChangeField(e) {
     this.setState({
@@ -49,7 +47,7 @@ class EditProductsManager extends Component {
             <div className="col-sm-6 offset-sm-3">
               <label htmlFor="InputTitle" className="form-group col-sm-12">
                 <span>Title</span>
-                <input className="form-control" id="InputTitle" placeholder="Enter New Title (optional)" name="title" onChange={this.handleChangeField} maxlength="28" />
+                <input className="form-control" id="InputTitle" placeholder="Enter New Title (optional)" name="title" onChange={this.handleChangeField} />
               </label>
               <label htmlFor="InputDescription" className="form-group col-sm-12">
                 <span>Description</span>
@@ -65,7 +63,7 @@ class EditProductsManager extends Component {
               </label>
               <div className="form-group col-sm-12">
                 <input type="file" id="imageUploader" onChange={this.handleChange} />
-                <label for="imageUploader">
+                <label htmlFor="imageUploader">
                   <span className="btn btn-light" id="spanUploader">Choose a new image (optional)</span>
                 </label>
                 <img id="uploadedImage" src={this.state.url} />

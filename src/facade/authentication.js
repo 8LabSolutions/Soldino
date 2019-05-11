@@ -33,7 +33,6 @@ const authentication = (function(){
           ipfsModule.insertJSONintoIPFS(newCitizenJSON)
           .then((hash)=>{
             //splitting the hash in three parts to save them into the blockchain
-            //console.log(hash+' inserted')
             web3authentication.addCitizen(hash)
             .then(resolve)
             .catch(reject)
@@ -53,7 +52,6 @@ const authentication = (function(){
           district: district,
           postCode: postCode
         }
-        console.log(newBusinessJSON)
         //insert the json into ipfs
         return new Promise((resolve, reject)=>{
           ipfsModule.insertJSONintoIPFS(newBusinessJSON)

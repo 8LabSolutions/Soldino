@@ -56,7 +56,7 @@ class VATRefund extends Component {
       break;
     }
     return (
-      <li className={rowColor}>
+      <li className={rowColor} key={business.address+business.amount}>
         <div className="container">
           <div className="row">
             <div className="col-sm-2 offset-sm-1 itemVAT">

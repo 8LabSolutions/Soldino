@@ -99,7 +99,6 @@ const business = (function(){
     modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       var newProductJSON = getProductJSONfromFields(
         title, description, parseInt(round(netPrice)), parseInt(round(vatPercentage)), image, sellerName, sellerVATNumber);
-      console.log(image)
       return new Promise((resolve, reject)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON)
         .then((hash)=>{
@@ -257,7 +256,6 @@ const business = (function(){
                 web3business.getVATPeriodInfo(period)
                 .then(([, state, amount])=>{
                   //get the state of the period
-                  console.log(["stato: ", state])
                   var deferred = false;
                   var defereable = false;
                   var payable = false;
@@ -315,8 +313,6 @@ const business = (function(){
                     //the government did the refund
                       resolved = true;
                       break;
-                    default:
-                      console.log('ERRORE PERIODO')
 
                   }
                   var vatJSON = {
