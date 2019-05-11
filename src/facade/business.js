@@ -71,8 +71,11 @@ const business = (function(){
      */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       //istantiate the necessary costracts and returns the results
+      console.log("INSERIMENTO PRODOTTO IPFS:")
+      console.log((round(netPrice)))
+      console.log(round(vatPercentage))
       var newProductJSON = getProductJSONfromFields(
-        title, description, parseInt(round(netPrice)), parseInt(round(vatPercentage)), image, sellerName, sellerVATNumber);
+        title, description, round(netPrice), round(vatPercentage), image, sellerName, sellerVATNumber);
       return new Promise((resolve, reject)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON)
         .then((hash)=>{

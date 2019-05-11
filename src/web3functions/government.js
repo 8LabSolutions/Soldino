@@ -137,7 +137,7 @@ const web3government = (function(){
         web3util.getContractInstance(VatLogic)
         .then((vatLogicInstance)=>{
           //approve the withdraw
-          web3util.tokenTransferApprove(parseInt(round(amount)), VatLogic)
+          web3util.tokenTransferApprove((round(amount)), VatLogic)
           .then(()=>{
             web3util.getCurrentAccount()
             .then((account)=>{

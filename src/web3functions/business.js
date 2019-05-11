@@ -26,7 +26,19 @@ const web3business = (function(){
             productLogicInstance.methods.addProduct(
               hashIpfs, hashSize, hashFun, parseInt(round(vatPercentage)), parseInt(round(netPrice*web3util.TOKENMULTIPLIER)))
             .send({from: account})
-            .then(resolve)
+            .then(() => {
+              productLogicInstance.getPastEvents('ProductInserted', {
+                filter: {_keyHash: hashIpfs},
+                fromBlock: 0,
+                toBlock: 'latest'
+              })
+              .then((events) => {
+                console.log("PRODOTTO INSERITO:")
+                console.log(events)
+                resolve()
+              })
+
+            })
             .catch(()=>{
               reject("Error adding the new product")
             })

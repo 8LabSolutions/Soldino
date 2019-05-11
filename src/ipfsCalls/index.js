@@ -1,26 +1,25 @@
 //module to get an IPFS instance
 const IPFS = require('ipfs-http-client');
 //connection to IPFS
-const ipfs = IPFS({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' });
+const ipfs = IPFS('ipfs.infura.io','5001', {protocol: 'https' });
 //const ipfs = new IPFSMini({ host: 'localhost', port: '5001', protocol: 'http' });
-const axios = require('axios')
+//const axios = require('axios')
 
 var ipfsModule = (function() {
-
 
   return {
     /**
      * @returns The JSON object corresponding to the given CID
      * @param {*} hash The IPFS CID has you want to get the JSON
      */
-    getJSONfromHash: function(cid){
-
+    getJSONfromHash: function(cid) {
       return new Promise((resolve, reject)=>{
-        axios.get('https://ipfs.infura.io/ipfs/'+cid)
+        ipfs.cat("/ipfs/"+cid)
         .then((response)=>{
-          resolve(response.data)
+          resolve(JSON.parse(response.toString('utf8')))
         })
-        .catch(()=>{
+        .catch((err)=>{
+          console.log(err)
           reject("Error in reading from ipfs")
         })
       })
