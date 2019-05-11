@@ -10,7 +10,7 @@ export const businessStatus = {
 }
 
 export const INFOTOAST = {
-  appearance: 'warning',
+  appearance: 'info', //'warning',
   autoDismiss: false,
   pauseOnHover: false,
 }

@@ -5,10 +5,6 @@ import { BUSINESS } from '../../constants/actionTypes';
 import { printShipment } from "../../auxiliaryFunctions/index";
 
 export default class UserInfo extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   printInfo() {
     let {user, logged} = this.props;
     if(logged===true){
