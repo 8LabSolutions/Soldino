@@ -9,7 +9,7 @@ contract ProductLogic {
     ProductStorage internal productStorage;
     ContractManager internal contractManager;
 
-    event ProductInserted(bytes32 indexed _keyHash, address indexed _seller);
+    event ProductInserted(bytes32 indexed _keyHash, address indexed _seller, uint256 _netPrice, uint8 _vat, uint256 _totalPrice);
 
     event ProductModified(
         bytes32 indexed _keyHash,
@@ -83,7 +83,7 @@ contract ProductLogic {
             msg.sender
         );
 
-        emit ProductInserted(_hashIPFS, msg.sender);
+        emit ProductInserted(_hashIPFS, msg.sender, _netPrice, _vatPercentage, (_netPrice*(100+_vatPercentage)/100));
     }
 
     function modifyProduct(
