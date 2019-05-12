@@ -16,7 +16,7 @@ export const INFOTOAST = {
 }
 
 export const INFOTOASTAUTOHIDE = {
-  appearance: 'warning',
+  appearance: 'info', //warning
   autoDismiss: true,
   pauseOnHover: true,
 }
