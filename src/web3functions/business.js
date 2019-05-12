@@ -24,7 +24,7 @@ const web3business = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             productLogicInstance.methods.addProduct(
-              hashIpfs, hashSize, hashFun, parseInt(round(vatPercentage)), parseInt(round(netPrice*web3util.TOKENMULTIPLIER)))
+              hashIpfs, hashSize, hashFun, round(vatPercentage*web3util.TOKENMULTIPLIER), (round(netPrice*web3util.TOKENMULTIPLIER)))
             .send({from: account})
             .then(() => {
               productLogicInstance.getPastEvents('ProductInserted', {
