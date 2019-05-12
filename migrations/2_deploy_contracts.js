@@ -14,6 +14,8 @@ var VatLogic = artifacts.require("VatLogic")
 
 var Purchase = artifacts.require("Purchase")
 
+var UpgradeTest = artifacts.require("UpgradeTest")
+var UpgradeTestCaller = artifacts.require("UpgradeTestCaller")
 
 module.exports = function(deployer, network, accounts) {
   var contractManagerInstance;
@@ -115,6 +117,15 @@ module.exports = function(deployer, network, accounts) {
           return contractManagerInstance.setContractAddress("OrderLogic", orderLocicInstance.address)
         })
       })
+    })
+    .then(() => {
+      return deployer.deploy(UpgradeTest)
+      .then((instace) => {
+        return contractManagerInstance.setContractAddress("UpgradeTest", instace.address)
+      })
+    })
+    .then(() => {
+      return deployer.deploy(UpgradeTestCaller, contractManagerInstance.address)
     })
   })
 }
