@@ -130,11 +130,9 @@ const government = (function(){
         })
       }
       else{
-        console.log("singola")
         return new Promise((resolve, reject)=>{
           web3government.distribute(amount, address[0])
           .then((x)=>{
-            console.log("nel then")
             resolve(x)
           })
           .catch(reject)

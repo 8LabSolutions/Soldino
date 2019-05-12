@@ -162,8 +162,6 @@ Date.prototype.addMonths = function (value) {
  * @param {*} quarter
  */
 export function ExportPDF(invoices, quarter) {
-  console.log(invoices)
-  console.log(quarter)
   var doc = new jsPDF()
   var high = 100
   doc.text(20, 20, periodToDate(quarter.id) + ' resume');

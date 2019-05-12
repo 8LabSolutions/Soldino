@@ -269,8 +269,6 @@ export function rootReducer(state = initialState, action) {
   }
 
   if(action.type === UPDATEBALANCE) {
-    console.log('new balance')
-    console.log(action.balance)
     return Object.assign({}, state, {
       user: {
         ...state.user,
