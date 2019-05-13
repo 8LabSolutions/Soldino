@@ -8,11 +8,11 @@ contract ProductStorage is Authorizable {
     struct ProductInfo {
         uint256 netPrice;
         bytes32 lastestHashIPFS;
+        uint256 VATPercentage;
+        uint256 index;
         uint8 hashSize;
         uint8 hashFunction;
-        uint8 VATPercentage;
         address seller;
-        uint256 index;
     }
 
     bytes32[] public productsHash;
@@ -35,7 +35,7 @@ contract ProductStorage is Authorizable {
         hashToProduct[_keyHash].hashFunction = _hashFunction;
     }
 
-    function setVatPercentage(bytes32 _keyHash, uint8 _vatPercentage) external onlyAuthorized {
+    function setVatPercentage(bytes32 _keyHash, uint256 _vatPercentage) external onlyAuthorized {
         hashToProduct[_keyHash].VATPercentage = _vatPercentage;
     }
 
@@ -51,7 +51,7 @@ contract ProductStorage is Authorizable {
         bytes32 _keyHash,
         uint8 _hashSize,
         uint8 _hashFunction,
-        uint8 _vatPercentage,
+        uint256 _vatPercentage,
         uint256 _netPrice,
         address _seller
     )
@@ -78,7 +78,7 @@ contract ProductStorage is Authorizable {
             bytes32,
             uint8,
             uint8,
-            uint8,
+            uint256,
             uint256,
             address
         )
@@ -97,7 +97,7 @@ contract ProductStorage is Authorizable {
         return hashToProduct[_keyHash].netPrice;
     }
 
-    function getProductVat(bytes32 _keyHash) external view returns(uint8) {
+    function getProductVat(bytes32 _keyHash) external view returns(uint256) {
         return hashToProduct[_keyHash].VATPercentage;
     }
 

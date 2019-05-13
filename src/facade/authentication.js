@@ -35,7 +35,6 @@ const authentication = (function(){
           ipfsModule.insertJSONintoIPFS(newCitizenJSON)
           .then((hash)=>{
             //splitting the hash in three parts to save them into the blockchain
-            //console.log(hash+' inserted')
             web3authentication.addCitizen(hash)
             .then(resolve)
             .catch(reject)

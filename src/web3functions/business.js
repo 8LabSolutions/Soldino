@@ -24,9 +24,21 @@ const web3business = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             productLogicInstance.methods.addProduct(
-              hashIpfs, hashSize, hashFun, parseInt(round(vatPercentage)), parseInt(round(netPrice*web3util.TOKENMULTIPLIER)))
+              hashIpfs, hashSize, hashFun, round(vatPercentage*web3util.TOKENMULTIPLIER), (round(netPrice*web3util.TOKENMULTIPLIER)))
             .send({from: account})
-            .then(resolve)
+            .then(() => {
+              productLogicInstance.getPastEvents('ProductInserted', {
+                filter: {_keyHash: hashIpfs},
+                fromBlock: 0,
+                toBlock: 'latest'
+              })
+              .then((events) => {
+                console.log("PRODOTTO INSERITO:")
+                console.log(events)
+                resolve()
+              })
+
+            })
             .catch(()=>{
               reject("Error adding the new product")
             })
@@ -367,26 +379,22 @@ const web3business = (function(){
 
               orderLogicInstance.getPastEvents("PurchaseOrderInserted", queryPurchase)
               .then((events)=>{
-                console.log(events)
                 for(let i = 0; i < events.length; i++){
                   invoicesKey.push(events[i].returnValues._keyHash);
                 }
 
                 orderLogicInstance.getPastEvents("SellOrderInserted", querySelling)
                 .then((events)=>{
-                  console.log(events)
                   for(let i = 0; i < events.length; i++){
                     invoicesKey.push(events[i].returnValues._keyHash);
                   }
                   //invoicesKey contains all the 32byte key, getting the IPFS hashes
                   var invoicesIPFS = []
-                  console.log(invoicesKey)
                   for (let j = 0; j < invoicesKey.length; j++){
                     invoicesIPFS.push(
                       new Promise((resolve)=>{
                         web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
                           web3util.getCurrentAccount().then((account)=>{
-                            console.log(invoicesKey[j])
                             orderLogicInstance.methods.getOrderCid(invoicesKey[j])
                             .call({from: account})
                             .then((hashParts)=>{

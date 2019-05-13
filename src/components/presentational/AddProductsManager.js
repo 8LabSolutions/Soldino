@@ -30,7 +30,6 @@ class AddProductsManager extends Component {
       file: event.target.files,
       url: URL.createObjectURL(event.target.files[0])
     })
-    console.log(event.target.files)
   }
   handleChangeField(e) {
     this.setState({
@@ -48,7 +47,7 @@ class AddProductsManager extends Component {
             <div className="col-sm-6 offset-sm-3">
               <label htmlFor="InputTitle" className="form-group col-sm-12">
                 <span>Title</span>
-                <input className="form-control" id="InputTitle" placeholder="Enter Title" name="title" onChange={this.handleChangeField} maxLength="28" />
+                <input className="form-control" id="InputTitle" placeholder="Enter Title" name="title" onChange={this.handleChangeField} />
               </label>
               <label htmlFor="InputDescription" className="form-group col-sm-12">
                 <span>Description</span>
@@ -64,7 +63,7 @@ class AddProductsManager extends Component {
               </label>
               <div className="form-group col-sm-12">
                 <input type="file" id="imageUploader" onChange={this.handleChange} />
-                <label for="imageUploader">
+                <label htmlFor="imageUploader">
                   <span className="btn btn-light" id="spanUploader">Choose an image</span>
                 </label>
                 <img id="uploadedImage" src={this.state.url} />
