@@ -91,7 +91,7 @@ const web3user = (function(){
      */
     getBalance: getBalance,
     /**
-     * @returns The function returns all the IPFS hashes of the current account,
+     * @returns The function returns all the purchases' IPFS hashes of the current account,
      * from which it is possible to retrieve all the information
      */
     getPurchase: function(){

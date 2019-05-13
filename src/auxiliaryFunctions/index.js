@@ -173,6 +173,8 @@ export function ExportPDF(invoices, quarter) {
   doc.setLineWidth(0.5);
   doc.line(20, 45, 100, 45);
   invoices.map(i => {
+    console.log('Wooooo')
+    console.log(i)
     return(
       doc.autoTable({
         margin: {left: 20},
@@ -191,7 +193,7 @@ export function ExportPDF(invoices, quarter) {
           ]
       }),
       doc.setFontSize(9),
-      doc.text(20, 55, 'Seller\'s wallet address: '+i.sellerAddress),
+      doc.text(20, 55, 'Seller\'s wallet address: '+i.products[0].seller),
       doc.text(20, 60, 'Buyer\'s wallet address: '+i.buyerAddress),
       doc.autoTable({
         columnStyles: {1:{ halign: 'center'},2:{ halign: 'center'},3:{ halign: 'center'},4:{ halign: 'center'},5:{ halign: 'center'}},

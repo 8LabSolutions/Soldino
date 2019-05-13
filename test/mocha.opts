@@ -1,0 +1,2 @@
+# mocha.opts
+  -r jsdom-global/register

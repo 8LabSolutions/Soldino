@@ -87,7 +87,7 @@ const user = (function(){
 
   return {
     /**
-     *
+     * @returns A promise that resolves if the purchase succeded, reject with an error otherwise
      * @param {*} cartInfo A JSON representing the cart information. The JSON must have the following format:
      *
      * var cart = {
@@ -177,8 +177,7 @@ const user = (function(){
       })
     },
     /**
-     * @returns The function returns all the IPFS hashes of the current account,
-     * from which it is possible to retrieve all the information
+     * @returns The function returns all the products' JSONs
      */
     getPurchases: function(){
       return new Promise((resolve, reject)=>{
