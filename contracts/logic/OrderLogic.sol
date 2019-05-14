@@ -100,9 +100,10 @@ contract OrderLogic {
     }
 
     function calculateOrderTotal(bytes32[] memory  _productsHash, uint8[] memory _prodQtn)
-        public view returns(uint256, uint256)
+        public returns(uint256, uint256)
     {
         require(_productsHash.length > 0, "Empty array");
+        setProductLogic();
         uint256 total = 0;
         address seller = productLogic.getProductSeller(_productsHash[0]);
 
