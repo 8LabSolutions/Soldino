@@ -18,44 +18,43 @@ const authentication = (function(){
     */
     addUser: function(userType, email, streetName, streetNumber, district, postCode, name, details){
       //istantiate the necessary costracts and returns the results
-      if(userType === "CITIZEN") {
-        var newCitizenJSON = {
-          userType: userType,
-          email: email,
-          name: name,
-          surname: details,
-          streetName: streetName,
-          streetNumber: streetNumber,
-          district: district,
-          postCode: postCode
-        }
-        return new Promise((resolve, reject)=>{
+      return new Promise((resolve, reject)=>{
+
+        if(userType === "CITIZEN") {
+          var newCitizenJSON = {
+            userType: userType,
+            email: email,
+            name: name,
+            surname: details,
+            streetName: streetName,
+            streetNumber: streetNumber,
+            district: district,
+            postCode: postCode
+          }
+
           ipfsModule.insertJSONintoIPFS(newCitizenJSON)
           .then((hash)=>{
             //splitting the hash in three parts to save them into the blockchain
-            //console.log(hash+' inserted')
             web3authentication.addCitizen(hash)
             .then(resolve)
             .catch(reject)
           })
           .catch(reject)
-        })
-      }
 
-      else if(userType === "BUSINESS") {
-        var newBusinessJSON = {
-          userType: userType,
-          email: email,
-          name: name,
-          VATnumber: details,
-          streetName: streetName,
-          streetNumber: streetNumber,
-          district: district,
-          postCode: postCode
         }
-        console.log(newBusinessJSON)
-        //insert the json into ipfs
-        return new Promise((resolve, reject)=>{
+
+        else if(userType === "BUSINESS") {
+          var newBusinessJSON = {
+            userType: userType,
+            email: email,
+            name: name,
+            VATnumber: details,
+            streetName: streetName,
+            streetNumber: streetNumber,
+            district: district,
+            postCode: postCode
+          }
+          //insert the json into ipfs
           ipfsModule.insertJSONintoIPFS(newBusinessJSON)
           .then((hash)=>{
             //splitting the hash in three parts to save them into the blockchain
@@ -64,8 +63,8 @@ const authentication = (function(){
             .catch(reject)
           })
           .catch(reject)
-        })
-      }
+        }
+      })
       //different registartions based on the userType
     },
 

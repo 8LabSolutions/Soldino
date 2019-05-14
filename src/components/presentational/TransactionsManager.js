@@ -29,11 +29,11 @@ class TransactionsManager extends Component {
   printQuarters(quarter) {
     if(quarter.id==="Select a quarter"){
       return(
-        <option>{quarter.id}</option>
+        <option key={quarter.id}>{quarter.id}</option>
       )
     }else{
       return(
-        <option>{periodToDate(quarter.id)}</option>
+        <option key={quarter.id}>{periodToDate(quarter.id)}</option>
       )
     }
   }

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, {Component} from 'react';
 import NavBar from './NavBar'
-import { checkGovernment } from '../../auxiliaryFunctions';
+import { checkGovernment, periodToDate, dateToPeriod } from '../../auxiliaryFunctions';
 import SearchContainer from '../containers/SearchContainer';
 import { businessStatus } from '../../constants/fixedValues';
 
@@ -28,7 +28,7 @@ class VATRefund extends Component {
     let {resetPeriod} = this.props;
     (type==="status")
       ? (event.target.value==="Select a status") ? setStatus("") : setStatus(event.target.value)
-      : (event.target.value==="Select a quarter") ? resetPeriod() : setPeriod({id: event.target.value, amount: null, payable: false})
+      : (event.target.value==="Select a quarter") ? resetPeriod() : setPeriod({id: dateToPeriod(event.target.value), amount: null, payable: false})
   }
 
   printBusiness(business) {
@@ -56,7 +56,7 @@ class VATRefund extends Component {
       break;
     }
     return (
-      <li className={rowColor}>
+      <li className={rowColor} key={business.address+business.amount}>
         <div className="container">
           <div className="row">
             <div className="col-sm-2 offset-sm-1 itemVAT">
@@ -69,7 +69,7 @@ class VATRefund extends Component {
               <span className="customCursor">{business.paymentStatus}</span>
             </div>
             <div className="col-sm-2 itemVAT">
-              <span className="customCursor">{business.amount}</span>
+              {(business.amount<0) ? <span className="customCursor">{-1*business.amount}</span> : <span className="customCursor">{business.amount}</span>}
             </div>
             <div className="col-sm-2 itemVAT">
               <button type="button" className={refundButtonClasses} onClick={() => {refund(business.address, selectedPeriod.id, business.amount*(-1))}}>Refund</button>
@@ -132,7 +132,7 @@ class VATRefund extends Component {
                     <div className="form-group">
                       <select className="form-control" id="exampleFormControlSelect2" onChange={(event) => {this.handleChange(event, "period")}}>
                         <option>Select a period</option>
-                        {VATPeriods.map((i) => <option key={i}>{i}</option>)}
+                        {VATPeriods.map((i) => <option key={i}>{periodToDate(i)}</option>)}
                       </select>
                     </div>
                   </div>

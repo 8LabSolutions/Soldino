@@ -24,10 +24,24 @@ const web3business = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             productLogicInstance.methods.addProduct(
-              hashIpfs, hashSize, hashFun, vatPercentage, round(netPrice*web3util.TOKENMULTIPLIER))
+              hashIpfs, hashSize, hashFun, round(vatPercentage*web3util.TOKENMULTIPLIER), (round(netPrice*web3util.TOKENMULTIPLIER)))
             .send({from: account})
-            .then(resolve)
-            .catch("Error adding the new product")
+            .then(() => {
+              productLogicInstance.getPastEvents('ProductInserted', {
+                filter: {_keyHash: hashIpfs},
+                fromBlock: 0,
+                toBlock: 'latest'
+              })
+              .then((events) => {
+                console.log("PRODOTTO INSERITO:")
+                console.log(events)
+                resolve()
+              })
+
+            })
+            .catch(()=>{
+              reject("Error adding the new product")
+            })
           })
           .catch(reject)
         })
@@ -50,7 +64,7 @@ const web3business = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             productLogicInstance.methods.modifyProduct(
-              key, hashIpfs, hashSize, hashFun, newVatPercentage, newNetPrice*web3util.TOKENMULTIPLIER)
+              key, hashIpfs, hashSize, hashFun, parseInt(round(newVatPercentage)), parseInt(round(newNetPrice*web3util.TOKENMULTIPLIER)))
             .send({from: account})
             .then(resolve)
             .catch(()=>{
@@ -166,9 +180,13 @@ const web3business = (function(){
               .then(()=>{
                 resolve(products.length)
               })
-              .catch("Error retrieving the events: ProductDeleted")
+              .catch(()=>{
+                reject("Error retrieving the events: ProductDeleted")
+              })
             })
-            .catch("Error retrieving the events: ProductDeleted")
+            .catch(()=>{
+              reject("Error retrieving the events: ProductInserted")
+            })
           })
           .catch(reject)
         })
@@ -176,8 +194,11 @@ const web3business = (function(){
       })
     },
     /**
+     * @description The funztion returns the information related to the
+     * products in the store by defualt, or related the business logged in
+     * if the sender flag is set to true.
      * @returns The function returns an array of array with the following format:
-     *  [product key (ID), IPFSHash, seller]
+     *  [product key (ID), IPFSHash, seller].
      *
      * @param {*} amount The amount of products you want to get
      * @param {*} index The statring point for getting the products, the returned products will
@@ -294,7 +315,7 @@ const web3business = (function(){
     },
     /**
      * @returns An array containing the IPFS Hashes of the Invoices related to the selected period
-     * along with the invoiec type (selling/purchase)
+     * along with the invoice type (selling/purchase)
      * @param {*} VATPeriod VAT period in the following format YYYY-Q (e.g., 2019-2)
      */
     getInvoices: function(VATPeriod = undefined) {
@@ -358,26 +379,22 @@ const web3business = (function(){
 
               orderLogicInstance.getPastEvents("PurchaseOrderInserted", queryPurchase)
               .then((events)=>{
-                console.log(events)
                 for(let i = 0; i < events.length; i++){
                   invoicesKey.push(events[i].returnValues._keyHash);
                 }
 
                 orderLogicInstance.getPastEvents("SellOrderInserted", querySelling)
                 .then((events)=>{
-                  console.log(events)
                   for(let i = 0; i < events.length; i++){
                     invoicesKey.push(events[i].returnValues._keyHash);
                   }
                   //invoicesKey contains all the 32byte key, getting the IPFS hashes
                   var invoicesIPFS = []
-                  console.log(invoicesKey)
                   for (let j = 0; j < invoicesKey.length; j++){
                     invoicesIPFS.push(
                       new Promise((resolve)=>{
                         web3util.getContractInstance(OrderLogic).then((orderLogicInstance)=>{
                           web3util.getCurrentAccount().then((account)=>{
-                            console.log(invoicesKey[j])
                             orderLogicInstance.methods.getOrderCid(invoicesKey[j])
                             .call({from: account})
                             .then((hashParts)=>{
@@ -407,7 +424,7 @@ const web3business = (function(){
       })
     },
     /**
-     *@returns The function return the VAT info of a VAT period, of the logged-in business. The
+     *@returns The function returns the VAT info of a VAT period of the logged-in business. The
      is returned as follow: [businessAddress, state, amount]
      *
      * @param {*} period The var period given as YYYY-Q (e.g., 2019-2)

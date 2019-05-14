@@ -72,8 +72,8 @@ const web3user = (function(){
                   web3util.getVATPeriod())
                 .send({from: account, gas: 2000000})
                 .then(resolve)
-                .catch((err)=>{
-                  reject("There were some problems with the payment, please contanct the system administrator. "+err)
+                .catch(()=>{
+                  reject("There were some problems with the payment, please contanct the system administrator. ")
                 })
               })
               .catch(reject)
@@ -91,7 +91,7 @@ const web3user = (function(){
      */
     getBalance: getBalance,
     /**
-     * @returns The function returns all the IPFS hashes of the current account,
+     * @returns The function returns all the purchases' IPFS hashes of the current account,
      * from which it is possible to retrieve all the information
      */
     getPurchase: function(){

@@ -168,21 +168,12 @@ const web3util = (function() {
           .then((contractInstance)=>{
             getCurrentAccount()
             .then((account)=>{
-              tokenInstance.methods.approve(contractInstance.options.address, parseInt(round(amount*web3util.TOKENMULTIPLIER)))
+              tokenInstance.methods.approve(contractInstance.options.address, parseInt(round(amount+1)*web3util.TOKENMULTIPLIER))
               .send({from: account})
               .then(resolve)
-              .catch((error)=>{
-                reject("The approval failed with the following error: " + error)
+              .catch(()=>{
+                reject("The approval failed with the following error")
               })
-              /* should wait the transaction to be mined
-              .then((txnHash) => {
-                web3util.init()
-                .then((web3Instance) => {
-                  web3Instance.eth.getTransactionReceipt(txnHash)
-                  .then(resolve)
-                })
-              })
-              */
             })
             .catch(reject)
           })

@@ -92,7 +92,7 @@ const web3government = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             tokenInstance.methods.transfer(address, round(amount*web3util.TOKENMULTIPLIER))
-            .send({from: account})
+            .send({from: account, gas: 500000})
             .then(resolve)
             .catch(()=>{
               reject("The distribution went wrong")
@@ -137,7 +137,7 @@ const web3government = (function(){
         web3util.getContractInstance(VatLogic)
         .then((vatLogicInstance)=>{
           //approve the withdraw
-          web3util.tokenTransferApprove(parseInt(round(amount*web3util.TOKENMULTIPLIER)), VatLogic)
+          web3util.tokenTransferApprove((round(amount)), VatLogic)
           .then(()=>{
             web3util.getCurrentAccount()
             .then((account)=>{
@@ -289,7 +289,9 @@ const web3government = (function(){
                   })
                 )
               }
-              Promise.all(invoicesIPFS).then(resolve)
+              Promise.all(invoicesIPFS)
+              .then(resolve)
+              .catch(reject)
             })
             .catch(()=>{
               reject("Error trying to get the SellOrderInserted events")

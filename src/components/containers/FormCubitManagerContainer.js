@@ -34,17 +34,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       if(amount!==null){
         let id
         toastManager.add("You have to approve MetaMask requests twice. You'll have to wait few minutes between the two confirmations.", INFOTOAST, (x)=>{id=x});
+        //let id2;
+        //toastManager.add(didYouKnowThat(), DIDYOUKNOWTOAST, (x)=>{id2=x})
         governmentActionCreator.mint(amount)
         .then((action)=>{
           //success
           dispatch(action)
             toastManager.add(amount+" CC minted.", SUCCESSTOAST);
           toastManager.remove(id)
+          //toastManager.remove(id2)
           toastManager.add(amount+" CC minted.", SUCCESSTOAST);
         })
           .catch((err)=>{
             //error
           toastManager.remove(id)
+          //toastManager.remove(id2)
           toastManager.add(err, ERRORTOAST);
         })
       }else{
@@ -65,21 +69,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         });
         let id
         toastManager.add("You'll have to wait few minutes.", INFOTOAST, (x)=>{id=x});
+        //let id2;
+        //toastManager.add(didYouKnowThat(), DIDYOUKNOWTOAST, (x)=>{id2=x})
         governmentActionCreator.distribute(amount, final)
         .then((action)=>{
-          //success
+          //success+
           dispatch(action)
           toastManager.remove(id)
+          //toastManager.remove(id2)
           toastManager.add(amount*addresses.length +" CC distributed.", SUCCESSTOAST);
         })
         .catch((err)=>{
           //error
           toastManager.remove(id)
+          //toastManager.remove(id2)
           toastManager.add(err, ERRORTOAST);
         })
       }else{
-        if(amount===null){toastManager.add("You have to select an amount to mint.", ERRORTOAST);}
-        if(addresses.length===0){toastManager.add("You have to select at least one recipient.", ERRORTOAST);}
+        if(amount===null){
+          toastManager.add("You have to select an amount to mint.", ERRORTOAST);
+        }
+        if(addresses.length===0){
+          toastManager.add("You have to select at least one recipient.", ERRORTOAST);
+        }
       }
     },
 

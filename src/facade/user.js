@@ -87,7 +87,7 @@ const user = (function(){
 
   return {
     /**
-     *
+     * @returns A promise that resolves if the purchase succeded, reject with an error otherwise
      * @param {*} cartInfo A JSON representing the cart information. The JSON must have the following format:
      *
      * var cart = {
@@ -116,7 +116,7 @@ const user = (function(){
           web3util.getCurrentAccount()
           .then((account)=>{
             for(let i = 0; i < orders.length; i++){
-              promises.push(new Promise((resolve)=>{
+              promises.push(new Promise((resolve, reject)=>{
                 var order = {
                   products: orders[i],
                   date: cartInfo.date,
@@ -129,7 +129,8 @@ const user = (function(){
                   buyerDetails: cartInfo.buyerDetails,
                   buyerAddress: account,
                   sellerName: orders[i][0].sellerName,
-                  sellerVATNumber: orders[i][0].sellerVATNumber
+                  sellerVATNumber: orders[i][0].sellerVATNumber,
+                  sellerAddress: orders[i][0].sellerAddress
                 }
                 ipfsModule.insertJSONintoIPFS(order)
                 .then(resolve)
@@ -153,7 +154,7 @@ const user = (function(){
                   productQtn.push(orders[i][j].quantity)
                 }
               }
-              web3user.purchase(cartInfo.VAT+cartInfo.net, products, remainingHash, hashSize, hashFun, productQtn)
+              web3user.purchase(round(cartInfo.VAT+cartInfo.net), products, remainingHash, hashSize, hashFun, productQtn)
               .then(resolve)
               .catch(reject)
             })
@@ -176,8 +177,7 @@ const user = (function(){
       })
     },
     /**
-     * @returns The function returns all the IPFS hashes of the current account,
-     * from which it is possible to retrieve all the information
+     * @returns The function returns all the products' JSONs
      */
     getPurchases: function(){
       return new Promise((resolve, reject)=>{

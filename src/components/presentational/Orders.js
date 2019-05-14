@@ -17,7 +17,7 @@ class Orders extends Component {
   printSeller(product) {
 
     return(
-      <div>
+      <div key={this.lastSeller}>
         {(this.lastSeller!=="") ? <hr /> : null}
         <div className="container">
           <div className="row">
@@ -51,7 +51,7 @@ class Orders extends Component {
     order.products.sort((a, b) => (a.sellerName > b.sellerName) ? 1 : (a.sellerName === b.sellerName) ? ((a.sellerName > b.sellerName) ? 1 : -1) : -1 )
     order.products.map (i => orderCost += (i.price*i.quantity))
     return(
-      <div>
+      <div key={order.number}>
         <ul className="list-group">
           <div className="col-sm-12">
             <li className="list-group-item">
@@ -99,7 +99,7 @@ class Orders extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
-              { totalOrders===0 ? <div><p className="noOrders">No orders found.</p><img className="loadingOrders" alt="loading" src="/loadingProducts.gif" /></div> : ordersList.map(i => {return this.printOrder(i)}) }
+              { totalOrders===0 ? <div><p className="noOrders">No orders found.</p><small>We are checking if you have placed some orders.</small><img className="loadingOrders" alt="loading" src="/loadingProducts.gif" /></div> : ordersList.map(i => {return this.printOrder(i)}) }
             </div>
           </div>
         </div>

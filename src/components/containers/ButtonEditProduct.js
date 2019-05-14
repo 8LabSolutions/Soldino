@@ -35,6 +35,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         //something has changed, need to check what has been changed and change it/them
         let id
         toastManager.add("You have to approve MetaMask requests twice. You'll have to wait SOME MINUTES between the two confirmations.", INFOTOAST, (x)=>{id=x});
+        //let id2;
+        //toastManager.add(didYouKnowThat(), DIDYOUKNOWTOAST, (x)=>{id2=x})
         //product key
         let editedProduct = [parametersArray[0][0]];
         //title
@@ -64,16 +66,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 dispatch(action)
                 toastManager.add("Product edited successfully.", SUCCESSTOAST)
                 toastManager.remove(id)
+                //toastManager.remove(id2)
                 history.push("/productsmanager")
               })
               .catch((err)=>{
                 toastManager.add(err, ERRORTOAST);
                 toastManager.remove(id)
+                //toastManager.remove(id2)
               })
             })
             .catch((err)=>{
               toastManager.add(err, ERRORTOAST);
               toastManager.remove(id)
+              //toastManager.remove(id2)
             })
           })
         }else{
@@ -86,16 +91,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               dispatch(action)
               toastManager.add("Product edited successfully.", SUCCESSTOAST)
               toastManager.remove(id)
+              //toastManager.remove(id2)
               history.push("/productsmanager")
             })
             .catch((err)=>{
               toastManager.add(err, ERRORTOAST);
               toastManager.remove(id)
+              //toastManager.remove(id2)
             })
           })
           .catch((err)=>{
             toastManager.add(err, ERRORTOAST);
             toastManager.remove(id)
+            //toastManager.remove(id2)
           })
         }
       }

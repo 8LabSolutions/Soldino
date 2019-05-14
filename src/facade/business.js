@@ -1,6 +1,7 @@
 import web3business from "../web3functions/business"
 import ipfsModule from "../ipfsCalls/index"
 import web3util from "../web3functions/web_util";
+import { round } from "../auxiliaryFunctions";
 
 const business = (function(){
 
@@ -41,7 +42,7 @@ const business = (function(){
    * @param {*} sellerName
    * @param {*} sellerVATNumber
    */
-  function getProductJSONfromFields(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
+  function getProductJSONfromFields(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber, sellerAddress){
     var newProductJSON = {
       title: title,
       description: description,
@@ -50,6 +51,7 @@ const business = (function(){
       totalPrice: +netPrice + +netPrice*(+vatPercentage/100), //lordo
       sellerName: sellerName,
       sellerVATNumber: sellerVATNumber,
+      sellerAddress: sellerAddress,
       image: image,
     }
     return newProductJSON;
@@ -70,17 +72,23 @@ const business = (function(){
      */
     addProduct: function(title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       //istantiate the necessary costracts and returns the results
-      var newProductJSON = getProductJSONfromFields(
-        title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
       return new Promise((resolve, reject)=>{
-        ipfsModule.insertJSONintoIPFS(newProductJSON)
-        .then((hash)=>{
-          web3business.addProduct(hash, vatPercentage, netPrice)
-          .then(resolve)
+        web3util.getCurrentAccount().then((account)=>{
+          var newProductJSON = getProductJSONfromFields(
+            title, description, parseInt(round(netPrice)),
+            parseInt(round(vatPercentage)), image, sellerName,
+            sellerVATNumber, account);
+
+          ipfsModule.insertJSONintoIPFS(newProductJSON)
+          .then((hash)=>{
+            web3business.addProduct(hash, vatPercentage, netPrice)
+            .then(resolve)
+            .catch(reject)
+          })
           .catch(reject)
         })
-        .catch(reject)
-      })
+        })
+
     },
     /**
      * The function returns a promise that resolves if the product is correctly modified,
@@ -97,8 +105,7 @@ const business = (function(){
      */
     modifyProduct: function(keyProd, title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber){
       var newProductJSON = getProductJSONfromFields(
-        title, description, netPrice, vatPercentage, image, sellerName, sellerVATNumber);
-      console.log(image)
+        title, description, parseInt(round(netPrice)), parseInt(round(vatPercentage)), image, sellerName, sellerVATNumber);
       return new Promise((resolve, reject)=>{
         ipfsModule.insertJSONintoIPFS(newProductJSON)
         .then((hash)=>{
@@ -256,7 +263,6 @@ const business = (function(){
                 web3business.getVATPeriodInfo(period)
                 .then(([, state, amount])=>{
                   //get the state of the period
-                  console.log(["stato: ", state])
                   var deferred = false;
                   var defereable = false;
                   var payable = false;
@@ -314,8 +320,6 @@ const business = (function(){
                     //the government did the refund
                       resolved = true;
                       break;
-                    default:
-                      console.log('ERRORE PERIODO')
 
                   }
                   var vatJSON = {

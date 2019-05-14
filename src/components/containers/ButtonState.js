@@ -24,16 +24,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       //tell the user to wait until the transaction is mined
       let id
       toastManager.add("The status of the user will be changed in few minutes. Once the transaction is mined, you'll receive a confirmation.", INFOTOAST, (x)=>{id=x})
-
+      //let id2;
+      //toastManager.add(didYouKnowThat(), DIDYOUKNOWTOAST, (x)=>{id2=x})
       governmentActionCreator.changeUserState(ownProps.address, ownProps.state, ownProps.type)
       .then((action)=>{
         dispatch(action)
         toastManager.remove(id)
+        //toastManager.remove(id2)
         toastManager.add("User state changed successfully.", SUCCESSTOAST)
         history.push(redirectUrl)
       })
       .catch((err)=>{
         toastManager.remove(id)
+        //toastManager.remove(id2)
         toastManager.add(err, ERRORTOAST)
       })
     }

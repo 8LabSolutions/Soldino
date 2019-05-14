@@ -10,7 +10,7 @@ import { checkCitizen, checkBusiness } from '../../auxiliaryFunctions';
 
 function printProduct(product) {
   return(
-    <CartProduct keyProd={product[6]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} seller={product[7]} description={product[8]} />
+    <CartProduct key={product[6]} keyProd={product[6]} title={product[0]} quantity={product[1]} price={product[2]} VAT={product[3]} sellerName={product[4]} sellerVATNumber={product[5]} seller={product[7]} description={product[8]} />
   )
 }
 

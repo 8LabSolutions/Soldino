@@ -9,7 +9,7 @@ contract ProductLogic {
     ProductStorage internal productStorage;
     ContractManager internal contractManager;
 
-    event ProductInserted(bytes32 indexed _keyHash, address indexed _seller);
+    event ProductInserted(bytes32 indexed _keyHash, address indexed _seller, uint256 _netPrice, uint256 _vat, uint256 _totalPrice);
 
     event ProductModified(
         bytes32 indexed _keyHash,
@@ -67,7 +67,7 @@ contract ProductLogic {
         bytes32 _hashIPFS,
         uint8 _hashSize,
         uint8 _hashFunction,
-        uint8 _vatPercentage,
+        uint256 _vatPercentage,
         uint256 _netPrice
     )
         public
@@ -83,7 +83,7 @@ contract ProductLogic {
             msg.sender
         );
 
-        emit ProductInserted(_hashIPFS, msg.sender);
+        emit ProductInserted(_hashIPFS, msg.sender, _netPrice, _vatPercentage, (_netPrice*(10000+_vatPercentage)/10000));
     }
 
     function modifyProduct(
@@ -91,7 +91,7 @@ contract ProductLogic {
         bytes32 _hashIpfs,
         uint8 _hashSize,
         uint8 _hashFunction,
-        uint8 _vatPercentage,
+        uint256 _vatPercentage,
         uint256 _netPrice
     )
         public
@@ -127,13 +127,10 @@ contract ProductLogic {
     }
 
     function calculateProductVat(bytes32 _keyHash) public view returns (uint256) {
-        return (productStorage.getProductNetPrice(_keyHash) * productStorage.getProductVat(_keyHash) / 100);
+        return (productStorage.getProductNetPrice(_keyHash) * productStorage.getProductVat(_keyHash) / 10000);
     }
 
     function calculateProductGrossPrice(bytes32 _keyHash) public view returns (uint) {
-        uint _netPrice = productStorage.getProductNetPrice(_keyHash);
-        return (_netPrice + (_netPrice * productStorage.getProductVat(_keyHash) / 100));
+        return (productStorage.getProductNetPrice(_keyHash)*(10000+productStorage.getProductVat(_keyHash))/10000);
     }
-
-
 }

@@ -5,10 +5,6 @@ import { BUSINESS } from '../../constants/actionTypes';
 import { printShipment } from "../../auxiliaryFunctions/index";
 
 export default class UserInfo extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   printInfo() {
     let {user, logged} = this.props;
     if(logged===true){
@@ -32,7 +28,6 @@ export default class UserInfo extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <span id="Popover1" className="nav-item nav-link material-icons customCursorPointer">account_circle</span>
