@@ -1,0 +1,11 @@
+{
+  "extends": "solhint:default",
+  "rules": {
+    "compiler-fixed": "default",
+    "indent": ["warn", 4],
+    "max-line-length": 120,
+    "max-states-count": 15,
+    "no-spaces-before-semicolon": "default",
+    "multiple-sends": "defualt"
+  }
+}
