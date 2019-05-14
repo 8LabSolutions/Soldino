@@ -1,18 +1,18 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from "./store/index";
-import App from './App';
-
-
-// src/index.js
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from "./store/index";
+import AppContainer from './components/containers/AppContainer';
+import './styles/flat-ui.css';
+import './styles/style.css';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <AppContainer />
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );
 
-//da rimuovere
-window.store = store;

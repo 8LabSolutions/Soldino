@@ -1,0 +1,303 @@
+
+> soldino@0.1.0 coverage /home/iaito/git/Soldino-PoC
+> cp sol_coverage_patch/parser.js node_modules/solidity-parser-sc/build/ && ./node_modules/.bin/solidity-coverage
+
+Generating coverage environment
+Running: truffle compile --network coverage
+(this can take a few seconds)...
+
+Compiling your contracts...
+===========================
+> Compiling ./../contracts/Authorizable.sol
+> Compiling ./../contracts/ContractManager.sol
+> Compiling ./../contracts/Owned.sol
+> Compiling ./../contracts/Purchase.sol
+> Compiling ./../contracts/TokenCubit.sol
+> Compiling ./../contracts/logic/OrderLogic.sol
+> Compiling ./../contracts/logic/ProductLogic.sol
+> Compiling ./../contracts/logic/VatLogic.sol
+> Compiling ./../contracts/storage/OrderStorage.sol
+> Compiling ./../contracts/storage/ProductStorage.sol
+> Compiling ./../contracts/storage/UserStorage.sol
+> Compiling ./../contracts/storage/VatStorage.sol
+> Compiling ./contracts/Authorizable.sol
+> Compiling ./contracts/ContractManager.sol
+> Compiling ./contracts/Migrations.sol
+> Compiling ./contracts/Owned.sol
+> Compiling ./contracts/Purchase.sol
+> Compiling ./contracts/TokenCubit.sol
+> Compiling ./contracts/logic/OrderLogic.sol
+> Compiling ./contracts/logic/ProductLogic.sol
+> Compiling ./contracts/logic/UserLogic.sol
+> Compiling ./contracts/logic/VatLogic.sol
+> Compiling ./contracts/storage/OrderStorage.sol
+> Compiling ./contracts/storage/ProductStorage.sol
+> Compiling ./contracts/storage/UserStorage.sol
+> Compiling ./contracts/storage/VatStorage.sol
+> Artifacts written to /home/iaito/git/Soldino-PoC/coverageEnv/src/contracts_build
+> Compiled successfully using:
+   - solc: 0.5.6+commit.b259423e.Emscripten.clang
+
+Instrumenting  ./coverageEnv/contracts/Authorizable.sol
+Instrumenting  ./coverageEnv/contracts/ContractManager.sol
+Instrumenting  ./coverageEnv/contracts/logic/OrderLogic.sol
+Instrumenting  ./coverageEnv/contracts/logic/ProductLogic.sol
+Instrumenting  ./coverageEnv/contracts/logic/UserLogic.sol
+Instrumenting  ./coverageEnv/contracts/logic/VatLogic.sol
+Skipping instrumentation of  ./coverageEnv/contracts/Migrations.sol
+Instrumenting  ./coverageEnv/contracts/Owned.sol
+Instrumenting  ./coverageEnv/contracts/Purchase.sol
+Instrumenting  ./coverageEnv/contracts/storage/OrderStorage.sol
+Instrumenting  ./coverageEnv/contracts/storage/ProductStorage.sol
+Instrumenting  ./coverageEnv/contracts/storage/UserStorage.sol
+Instrumenting  ./coverageEnv/contracts/storage/VatStorage.sol
+Instrumenting  ./coverageEnv/contracts/TokenCubit.sol
+Running: truffle compile --network coverage
+(this can take a few seconds)...
+
+Compiling your contracts...
+===========================
+> Compiling ./../contracts/Owned.sol
+> Compiling ./../contracts/TokenCubit.sol
+> Compiling ./contracts/Authorizable.sol
+> Compiling ./contracts/ContractManager.sol
+> Compiling ./contracts/Migrations.sol
+> Compiling ./contracts/Owned.sol
+> Compiling ./contracts/Purchase.sol
+> Compiling ./contracts/TokenCubit.sol
+> Compiling ./contracts/logic/OrderLogic.sol
+> Compiling ./contracts/logic/ProductLogic.sol
+> Compiling ./contracts/logic/UserLogic.sol
+> Compiling ./contracts/logic/VatLogic.sol
+> Compiling ./contracts/storage/OrderStorage.sol
+> Compiling ./contracts/storage/ProductStorage.sol
+> Compiling ./contracts/storage/UserStorage.sol
+> Compiling ./contracts/storage/VatStorage.sol
+> Artifacts written to /home/iaito/git/Soldino-PoC/coverageEnv/src/contracts_build
+> Compiled successfully using:
+   - solc: 0.5.6+commit.b259423e.Emscripten.clang
+
+Launched testrpc on port 8545
+Running: truffle test --network coverage
+(this can take a few seconds)...
+Using network 'coverage'.
+
+
+Compiling your contracts...
+===========================
+> Compiling ./../contracts/TokenCubit.sol
+> Artifacts written to /tmp/test-11949-4840-1lv3q62.66qf
+> Compiled successfully using:
+   - solc: 0.5.6+commit.b259423e.Emscripten.clang
+
+
+  Contract: VatLogic
+test1
+    ✓ should create a vat key
+    ✓ should register Vat input movement (89095 gas)
+    ✓ should register Vat output movement (91025 gas)
+    ✓ should pay vat input movement (190921 gas)
+    ✓ should pay vat output movement (182335 gas)
+
+  Contract: OrderLogic
+    ✓ should set authorizations (70330 gas)
+    ✓ should add a new order (1466655 gas)
+    ✓ should revert the order, buyer is the same of the seller (60815 gas)
+
+  Contract: Owned
+    ✓ Should transfer ownership (32956 gas)
+
+  Contract: Test IPFS functions
+
+    1) should test IPFS Product insertProduct and getProduct
+    > No events were emitted
+
+  Contract: VatLogic
+    ✓ should insert a VAT input movement (78683 gas)
+    ✓ should insert  a VAT output movement (80613 gas)
+
+  Contract: Purchase
+    ✓ should set authorizations (70330 gas)
+    ✓ should buy some products (3221273 gas)
+
+  Contract: Authorizable
+    ✓ Should add an authorized (50120 gas)
+    ✓ Should remove the previous authorized (22083 gas)
+
+  Contract: UserStorage
+    ✓ should add a new User (123092 gas)
+    ✓ should check if the user type is correct (26772 gas)
+    ✓ should ban a user (30008 gas)
+
+  Contract: ProductStorage
+    ✓ should set the ProductLogic contract as authorized contract (35142 gas)
+    ✓ should add a new product (157635 gas)
+    ✓ should set the NetPrice of a product (32366 gas)
+    ✓ should set the VAT percentage of a product (32612 gas)
+    ✓ should set the Seller of a product (33957 gas)
+    ✓ should set the Hash Size of a product (32734 gas)
+    ✓ should set the Hash Function of a product (32697 gas)
+    ✓ should set the Latest Hash Ipfs of a product (32602 gas)
+    ✓ should update Hash of a product (128033 gas)
+    ✓ should delete a product (34470 gas)
+
+  Contract: ProductLogic
+    ✓ should check if product logic is added to the authorized contract of ProductStorage
+    ✓ should add a new product successfully (292800 gas)
+    ✓ should modify a product (110845 gas)
+    ✓ should delete a product (42314 gas)
+
+  Contract: OrderStorage
+    ✓ should add a new order (377534 gas)
+
+  Contract: UserLogic
+    ✓ should check if user logic is added to the authorized contract of UserStorage
+    ✓ Should add a new Citizen (109742 gas)
+    ✓ Should add a new Business (109808 gas)
+
+  Contract: TokenCubit
+0
+1
+2
+3
+    ✓ should distribute token to multiple addresses (148612 gas)
+
+·--------------------------------------------------------------------------------------|-----------------------------------·
+|                                         Gas                                          ·  Block limit: 17592186044415 gas  │
+·····················································|·································|····································
+|  Methods                                           ·           21 gwei/gas           ·          150.80 eur/eth           │
+···················|·································|··········|··········|···········|··················|·················
+|  Contract        ·  Method                         ·  Min     ·  Max     ·  Avg      ·  # calls         ·  eur (avg)     │
+···················|·································|··········|··········|···········|··················|·················
+|  Authorizable    ·  addAuthorized                  ·       -  ·       -  ·    50120  ·               1  ·          0.16  │
+···················|·································|··········|··········|···········|··················|·················
+|  Authorizable    ·  removeAuthorized               ·       -  ·       -  ·    22083  ·               1  ·          0.07  │
+···················|·································|··········|··········|···········|··················|·················
+|  OrderLogic      ·  registerOrder                  ·       -  ·       -  ·   518911  ·               1  ·          1.64  │
+···················|·································|··········|··········|···········|··················|·················
+|  OrderStorage    ·  addAuthorized                  ·       -  ·       -  ·    35187  ·               2  ·          0.11  │
+···················|·································|··········|··········|···········|··················|·················
+|  OrderStorage    ·  addOrder                       ·       -  ·       -  ·   377534  ·               1  ·          1.20  │
+···················|·································|··········|··········|···········|··················|·················
+|  Owned           ·  transferOwnership              ·       -  ·       -  ·    32956  ·               1  ·          0.10  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductLogic    ·  addProduct                     ·  181968  ·  182032  ·   181989  ·              12  ·          0.58  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductLogic    ·  deleteProduct                  ·       -  ·       -  ·    42314  ·               1  ·          0.13  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductLogic    ·  modifyProduct                  ·       -  ·       -  ·   110845  ·               1  ·          0.35  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  addAuthorized                  ·       -  ·       -  ·    35142  ·               1  ·          0.11  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  addProduct                     ·       -  ·       -  ·   157635  ·               1  ·          0.50  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  deleteProduct                  ·       -  ·       -  ·    34470  ·               1  ·          0.11  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  setHashFunction                ·   32697  ·   47697  ·    40197  ·               2  ·          0.13  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  setHashSize                    ·       -  ·       -  ·    32734  ·               2  ·          0.10  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  setLatestHashIpfs              ·   32602  ·   47602  ·    40102  ·               2  ·          0.13  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  setNetPrice                    ·       -  ·       -  ·    32366  ·               1  ·          0.10  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  setSeller                      ·       -  ·       -  ·    33957  ·               1  ·          0.11  │
+···················|·································|··········|··········|···········|··················|·················
+|  ProductStorage  ·  setVatPercentage               ·       -  ·       -  ·    32612  ·               1  ·          0.10  │
+···················|·································|··········|··········|···········|··················|·················
+|  Purchase        ·  saveAndPayOrder                ·       -  ·       -  ·  1519571  ·               1  ·          4.81  │
+···················|·································|··········|··········|···········|··················|·················
+|  TokenCubit      ·  approve                        ·       -  ·       -  ·    45419  ·               3  ·          0.14  │
+···················|·································|··········|··········|···········|··················|·················
+|  TokenCubit      ·  distributeToMultipleAddresses  ·       -  ·       -  ·   148612  ·               1  ·          0.47  │
+···················|·································|··········|··········|···········|··················|·················
+|  TokenCubit      ·  mintToken                      ·   38275  ·   53275  ·    45775  ·               2  ·          0.14  │
+···················|·································|··········|··········|···········|··················|·················
+|  TokenCubit      ·  transfer                       ·       -  ·       -  ·    53083  ·               1  ·          0.17  │
+···················|·································|··········|··········|···········|··················|·················
+|  UserLogic       ·  addBusiness                    ·  109808  ·  110832  ·   109954  ·               7  ·          0.35  │
+···················|·································|··········|··········|···········|··················|·················
+|  UserLogic       ·  addCitizen                     ·       -  ·       -  ·   109742  ·               1  ·          0.35  │
+···················|·································|··········|··········|···········|··················|·················
+|  UserStorage     ·  addUser                        ·       -  ·       -  ·    96320  ·               1  ·          0.31  │
+···················|·································|··········|··········|···········|··················|·················
+|  UserStorage     ·  getUserType                    ·       -  ·       -  ·    26772  ·               2  ·          0.08  │
+···················|·································|··········|··········|···········|··················|·················
+|  UserStorage     ·  setEnable                      ·       -  ·       -  ·    30008  ·               1  ·          0.10  │
+···················|·································|··········|··········|···········|··················|·················
+|  VatLogic        ·  payVat                         ·       -  ·       -  ·    92227  ·               1  ·          0.29  │
+···················|·································|··········|··········|···········|··················|·················
+|  VatLogic        ·  refundVat                      ·       -  ·       -  ·    98641  ·               1  ·          0.31  │
+···················|·································|··········|··········|···········|··················|·················
+|  VatLogic        ·  registerVat                    ·   89095  ·   91025  ·    90060  ·               2  ·          0.29  │
+···················|·································|··········|··········|···········|··················|·················
+|  VatStorage      ·  addAuthorized                  ·       -  ·       -  ·    35143  ·               2  ·          0.11  │
+···················|·································|··········|··········|···········|··················|·················
+|  VatStorage      ·  insertVatAndSetState           ·   78683  ·   80613  ·    79648  ·               2  ·          0.25  │
+···················|·································|··········|··········|···········|··················|·················
+|  Deployments                                       ·                                 ·  % of limit      ·                │
+·····················································|··········|··········|···········|··················|·················
+|  Authorizable                                      ·       -  ·       -  ·  1502432  ·             0 %  ·          4.76  │
+·····················································|··········|··········|···········|··················|·················
+|  ContractManager                                   ·       -  ·       -  ·  1361268  ·             0 %  ·          4.31  │
+·····················································|··········|··········|···········|··················|·················
+|  OrderLogic                                        ·       -  ·       -  ·  3696156  ·             0 %  ·         11.70  │
+·····················································|··········|··········|···········|··················|·················
+|  OrderStorage                                      ·       -  ·       -  ·  5680720  ·             0 %  ·         17.99  │
+·····················································|··········|··········|···········|··················|·················
+|  Owned                                             ·       -  ·       -  ·   463968  ·             0 %  ·          1.47  │
+·····················································|··········|··········|···········|··················|·················
+|  ProductLogic                                      ·       -  ·       -  ·  3987769  ·             0 %  ·         12.63  │
+·····················································|··········|··········|···········|··················|·················
+|  ProductStorage                                    ·       -  ·       -  ·  5592834  ·             0 %  ·         17.71  │
+·····················································|··········|··········|···········|··················|·················
+|  Purchase                                          ·       -  ·       -  ·  2409601  ·             0 %  ·          7.63  │
+·····················································|··········|··········|···········|··················|·················
+|  TokenCubit                                        ·       -  ·       -  ·  1661887  ·             0 %  ·          5.26  │
+·····················································|··········|··········|···········|··················|·················
+|  UserLogic                                         ·       -  ·       -  ·  2323870  ·             0 %  ·          7.36  │
+·····················································|··········|··········|···········|··················|·················
+|  UserStorage                                       ·       -  ·       -  ·  2948713  ·             0 %  ·          9.34  │
+·····················································|··········|··········|···········|··················|·················
+|  VatLogic                                          ·       -  ·       -  ·  3588016  ·             0 %  ·         11.36  │
+·····················································|··········|··········|···········|··················|·················
+|  VatStorage                                        ·       -  ·       -  ·  2993780  ·             0 %  ·          9.48  │
+·----------------------------------------------------|----------|----------|-----------|------------------|----------------·
+
+  37 passing (34s)
+  1 failing
+
+  1) Contract: Test IPFS functions
+       should test IPFS Product insertProduct and getProduct:
+     Error: the string "It seems like IPFS API are not working in this moment :( Please try later.\n Error: Error: [ipfs-mini] while parsing data: '{\"title\":\"Palla\",\"quantity\":\"4\",\"price\":13.13,\"VAT\":0.7,\"sellerName\":\"8Lab Solutions s.p.a\",\"sellerVATNumber\":\"1234567890\"}ipfs method not allowed\n', error: SyntaxError: Unexpected token i in JSON at position 123 with provider: 'https://ipfs.infura.io:5001/api/v0'" was thrown, throw an Error :)
+      at processTicksAndRejections (internal/process/task_queues.js:86:5)
+
+
+
+----------------------|----------|----------|----------|----------|----------------|
+File                  |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+----------------------|----------|----------|----------|----------|----------------|
+ contracts/           |     45.9 |     37.5 |    57.14 |    52.78 |                |
+  Authorizable.sol    |      100 |       50 |      100 |      100 |                |
+  ContractManager.sol |      100 |       50 |      100 |      100 |                |
+  Owned.sol           |      100 |       50 |      100 |      100 |                |
+  Purchase.sol        |      100 |    64.29 |      100 |      100 |                |
+  TokenCubit.sol      |        0 |        0 |        0 |        0 |... 186,187,189 |
+ contracts/logic/     |    84.78 |    42.42 |       70 |    83.05 |                |
+  OrderLogic.sol      |    84.85 |       45 |    54.55 |    79.49 |... ,35,125,129 |
+  ProductLogic.sol    |    86.96 |       50 |    84.62 |    91.18 |     51,134,135 |
+  UserLogic.sol       |       80 |    33.33 |     62.5 |    73.68 | 17,18,27,51,52 |
+  VatLogic.sol        |    85.71 |    38.89 |       75 |    84.62 |    75,80,82,83 |
+ contracts/storage/   |       80 |      100 |    67.44 |    79.41 |                |
+  OrderStorage.sol    |    59.09 |      100 |       40 |    59.09 |... 41,45,49,94 |
+  ProductStorage.sol  |       85 |      100 |       75 |    82.61 | 47,105,109,113 |
+  UserStorage.sol     |      100 |      100 |      100 |      100 |                |
+  VatStorage.sol      |       90 |      100 |    83.33 |       90 |             40 |
+----------------------|----------|----------|----------|----------|----------------|
+All files             |    72.48 |    42.73 |    66.35 |    73.64 |                |
+----------------------|----------|----------|----------|----------|----------------|
+
+Istanbul coverage reports generated
+Cleaning up...
+Shutting down testrpc-sc (pid 4819)
+Some truffle tests failed while running coverage
