@@ -146,5 +146,5 @@ and click "Save" button.
 - [Matteo Santinon](https://github.com/MatteoSantinon)
 
 ## Costs
-
-![](images/gpvc.pdf)
+![rotella](./images/rotella.png)
+![gpvc](images/gpvc.pdf)
