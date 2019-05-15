@@ -138,16 +138,20 @@ and click "Save" button.
 ## Costs
  
 Soldino runs on Ethereum, where every transaction performed has a cost. 
-Every transaction comes with a gas price. Gas is like the fuel of Ethereum. Here we have the gas cost of deploying the contracts and calling the functions contained in those contracts.
+Every transaction comes with a gas price. Gas is like the fuel of Ethereum.
+Here we have the gas cost of deploying the contracts and calling the functions contained in those contracts.
 ![gpvc](images/gas_price_vs._contracts.png)
 ![gpvc](images/gas_price_vs._functions.png)
 
-You may wanna try Soldino on Ropsten, a test network for Ethereum, before taking the big step. These are the costs on Ropsten.
+You may wanna try Soldino on Ropsten, a test network for Ethereum, before taking the big step.
+These are the costs on Ropsten.
 ![gpvc](images/ropsten_price_in_ETH_vs._contracts.png)
-![gpvc](images/mainnet_price_in_ETH_vs._contracts.png)
-
-When you feel ready, land on the Main net, and enjoy the revenue of Soldino! These are the costs.
 ![gpvc](images/ropsten_price_in_ETH_vs._functions.png)
+
+When you feel ready, land on the Main net, and enjoy the revenue of Soldino!
+These are the costs.
+
+![gpvc](images/mainnet_price_in_ETH_vs._contracts.png)
 ![gpvc](images/mainnet_price_in_ETH_vs._functions.png)
 
 ## Authors
