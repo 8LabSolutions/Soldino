@@ -145,3 +145,6 @@ and click "Save" button.
 - [Paolo Pozzan](https://github.com/pozza96)
 - [Matteo Santinon](https://github.com/MatteoSantinon)
 
+## Costs
+
+![](images/gpvc.pdf)
