@@ -134,19 +134,20 @@ and click "Save" button.
 
 ## Contracts on Ropsten
 The following table shows all addresses of contracts deployed on Ropsten testnet.
-| Contract Name   	| Address                                    	|
+
+| Contract Name 	| Address 	|
 |-----------------	|--------------------------------------------	|
 | ContractManager 	| 0x9B100eDD94153eB36d2B1834d6521fa77D7DB1BE 	|
-| TokenCubit      	| 0x74B9cca5Ae48246624F32731bFEb0132b23B5954 	|
-| Purchase        	| 0xD6D6a403B0578F5A921063c5886D2e756B972510 	|
-| UserStorage     	| 0x71Ba92391d6a9e154c3efD69235c073a3964f001 	|
-| UserLogic       	| 0x1EcaDb432122C026C09ee15254c7aCCdf355ADcB 	|
-| ProductStorage  	| 0x1D8b52E19DC821b5CC92DEEf90ffc290488EbAdD 	|
-| ProductLogic    	| 0x584Faf63b83afce744adD08a94CbFED4a4634531 	|
-| VatStorage      	| 0x3ec469C9ac71d15221CB972C9806A5B1bf4ae73B 	|
-| VatLogic        	| 0xa31523460085D5CC2AE048b3b014DE09Fe5C7166 	|
-| OrderStorage    	| 0xb3d03B5E96e16BE2923ec1da7be60fa1044d29BE 	|
-| OrderLogic      	| 0x7fB927297B7E8133021E2bB7CA849c3c06a41D8c 	|
+| TokenCubit 	| 0x74B9cca5Ae48246624F32731bFEb0132b23B5954 	|
+| Purchase 	| 0xD6D6a403B0578F5A921063c5886D2e756B972510 	|
+| UserStorage 	| 0x71Ba92391d6a9e154c3efD69235c073a3964f001 	|
+| UserLogic 	| 0x1EcaDb432122C026C09ee15254c7aCCdf355ADcB 	|
+| ProductStorage 	| 0x1D8b52E19DC821b5CC92DEEf90ffc290488EbAdD 	|
+| ProductLogic 	| 0x584Faf63b83afce744adD08a94CbFED4a4634531 	|
+| VatStorage 	| 0x3ec469C9ac71d15221CB972C9806A5B1bf4ae73B 	|
+| VatLogic 	| 0xa31523460085D5CC2AE048b3b014DE09Fe5C7166 	|
+| OrderStorage 	| 0xb3d03B5E96e16BE2923ec1da7be60fa1044d29BE 	|
+| OrderLogic 	| 0x7fB927297B7E8133021E2bB7CA849c3c06a41D8c 	|
 
 ## Authors
 
