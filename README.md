@@ -8,9 +8,7 @@
   * [Ubuntu](#ubuntu)
   * [Windows](#windows)
   * [Content of the repository](#content-of-the-repository)
-  * [Configure Soldino for the local envirorment](#configure-soldino-for-the-local-envirorment)
-    + [Configure Ganache](#configure-ganache)
-    + [Run Soldino on the development environment](#run-soldino-on-the-development-environment)
+- [Ropsten](#contracts-on-ropsten)
 + [Authors](#authors)
 
 ## References
@@ -83,54 +81,6 @@ The folders organization separates the back end ad front end.
 
 ------
 
-### Configure Soldino for the local envirorment
-
-In the `truffle-config.js` you can set all the options for your environment. There are three default environments configured:
-
-- `development` : used as local environment it has the 9545 port set.
-
-- `coverage`: used for the test coverage environment, port 8545. 
-
-  To use this environment for run `$ npm run coverage`, it will not open the web page. 
-
-  **Note: npm run coverage doesn't work on Windows.**
-
-- `ropsten`: used to migrate contracts onto Ropsten test network.
-
-#### Configure Ganache
-
-In order to run Soldino DApp you have to open Ganache first. If you want to use `ganache-cli` open a new terminal and run `$ ganache-cli -p 9545` this will open a local blockchain on the port 9545. To see other configuration options please visit the [ganache-cli repository](https://github.com/trufflesuite/ganache-cli).
-
-Otherwise, if you want to use Ganache GUI please follow these steps:
-
-1. Open Ganache and click on "quickstart".
-2. Click on the gear icon ![rotella](./images/rotella.png) in the top-left corner.
-3. In the "SERVER" tab set 9545 in the "PORT NUMBER" field.
-4. Click the "Save and restart" button in the top-left corner.
-
-#### Run Soldino on the development environment
-
-Run `$ npm start`. This command will deploy the contracts in `migrations/2_deploy_contracts.js`, Soldino will run on the `development` environment.
-
-Soldino will open in your default browser on address: [localhost:3000](http://localhost:3000). 
-
-Metamask will open at the same time. 
-
-On Metamask tab, use option `Import using account seed phrase`.
-
-Copy and paste MNEMONIC phrase that you can find on `Ganache GUI` on top of homepage.
-
-Otherwise, if you use `ganache-cli` you can find it in terminal where you run `$ ganache-cli -p 9545`.
-
-Insert new password, confirm it and click "Restore".
-
-When you are logged in on Metamask, click the link on top-right of the tab and select "Custom RPC".
-
-In "New RPC URL" textbox insert http://localhost:9545. 
-
-and click "Save" button.
-
-**Now you can enjoy Soldino!!**
 
 ## Contracts on Ropsten
 The following table shows all addresses of contracts deployed on Ropsten testnet.
