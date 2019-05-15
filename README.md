@@ -169,4 +169,4 @@ These are the costs.
 - [Paolo Pozzan](https://github.com/pozza96)
 - [Matteo Santinon](https://github.com/MatteoSantinon)
 
-![gpvc](images/logo8.png)
+![gpvc](images/logo8_large.png)
