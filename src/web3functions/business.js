@@ -33,7 +33,6 @@ const web3business = (function(){
                 toBlock: 'latest'
               })
               .then((events) => {
-                console.log("PRODOTTO INSERITO:")
                 console.log(events)
                 resolve()
               })

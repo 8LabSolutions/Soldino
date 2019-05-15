@@ -171,8 +171,6 @@ export function ExportPDF(invoices, quarter) {
   doc.setLineWidth(0.5);
   doc.line(20, 45, 100, 45);
   invoices.map(i => {
-    console.log('Wooooo')
-    console.log(i)
     return(
       doc.autoTable({
         margin: {left: 20},
