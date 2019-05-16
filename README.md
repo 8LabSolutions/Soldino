@@ -1,4 +1,6 @@
 
+![gpvc](images/logo8_large.png)
+
 # Soldino
 
 ## Table of contents
@@ -167,5 +169,3 @@ These are the costs.
 - [Samuele Giuliano Piazzetta](https://github.com/piaz97)
 - [Paolo Pozzan](https://github.com/pozza96)
 - [Matteo Santinon](https://github.com/MatteoSantinon)
-
-![gpvc](images/logo8_large.png)
