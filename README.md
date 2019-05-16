@@ -134,6 +134,30 @@ and click "Save" button.
 
 **Now you can enjoy Soldino!!**
 
+
+## Costs
+ 
+Soldino runs on Ethereum, where every transaction performed has a cost.<br/>
+Every transaction comes with a gas price. Gas is like the fuel of Ethereum.<br/>
+Here we have the gas cost of deploying the contracts and calling the functions contained in those contracts.
+
+
+![gpvc](images/gas_price_vs._contracts.png)
+![gpvc](images/gas_price_vs._functions.png)
+
+You may wanna try Soldino on Ropsten, a test network for Ethereum, before taking the big step.<br/>
+These are the costs on Ropsten.
+
+
+![gpvc](images/ropsten_price_in_ETH_vs._contracts.png)
+![gpvc](images/ropsten_price_in_ETH_vs._functions.png)
+
+When you feel ready, land on the Main net, and enjoy the revenue of Soldino!<br/>
+These are the costs.
+
+![gpvc](images/mainnet_price_in_ETH_vs._contracts.png)
+![gpvc](images/mainnet_price_in_ETH_vs._functions.png)
+
 ## Authors
 
 - [Federico Bicciato](https://github.com/nevepura)
@@ -145,3 +169,4 @@ and click "Save" button.
 - [Paolo Pozzan](https://github.com/pozza96)
 - [Matteo Santinon](https://github.com/MatteoSantinon)
 
+![gpvc](images/logo8_large.png)
