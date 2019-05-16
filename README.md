@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/8LabSolutions/Soldino-PoC.svg?branch=final)](https://travis-ci.com/8LabSolutions/Soldino-PoC)
-[![Coverage Status](https://coveralls.io/repos/github/8LabSolutions/Soldino-PoC/badge.svg?branch=final)](https://coveralls.io/github/8LabSolutions/Soldino-PoC?branch=final)
+
 # Soldino
 
 ## Table of contents
