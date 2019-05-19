@@ -22,7 +22,7 @@ class TransactionsManager extends Component {
     let {selectedPeriod} = this.props;
     var doc = ExportPDF(this.props.invoices, selectedPeriod)
     return(
-      doc.save("invoices "+this.selectedQuarter+".pdf")
+      doc.save("invoices_"+periodToDate(selectedPeriod.id)+".pdf")
     )
   }
 
