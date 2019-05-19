@@ -1,8 +1,8 @@
 //module to get an IPFS instance
 const IPFS = require('ipfs-mini');
 //connection to IPFS
-//const ipfs = new IPFS({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' }); //infura
-const ipfs = new IPFS({ host: 'localhost', port: '5001', protocol: 'http' });         //local node
+const ipfs = new IPFS({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' }); //infura
+//const ipfs = new IPFS({ host: 'localhost', port: '5001', protocol: 'http' });         //local node
 
 var ipfsModule = (function() {
   return {
