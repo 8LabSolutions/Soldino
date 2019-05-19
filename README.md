@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.com/8LabSolutions/Soldino-PoC.svg?branch=final)](https://travis-ci.com/8LabSolutions/Soldino-PoC)
-[![Coverage Status](https://coveralls.io/repos/github/8LabSolutions/Soldino-PoC/badge.svg?branch=final)](https://coveralls.io/github/8LabSolutions/Soldino-PoC?branch=final)
+
+![gpvc](images/logo8_large.png)
+
 # Soldino
 
 ## Table of contents
@@ -168,5 +169,3 @@ These are the costs.
 - [Samuele Giuliano Piazzetta](https://github.com/piaz97)
 - [Paolo Pozzan](https://github.com/pozza96)
 - [Matteo Santinon](https://github.com/MatteoSantinon)
-
-![gpvc](images/logo8_large.png)
