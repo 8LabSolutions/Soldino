@@ -3,6 +3,9 @@
 
 # Soldino
 
+## Demo
+Try the site here: [http://soldino.surge.sh/](http://soldino.surge.sh/).
+
 ## Table of contents
 
 - [References](#references)
